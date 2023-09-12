@@ -1,0 +1,20 @@
+services:
+  transcendence:
+    build: ./
+    depends_on:
+      - postgres
+    ports:
+      - 127.0.0.1:80:3000
+    volumes:
+      - ./src:/transcendence/src
+  postgres:
+    image: postgres:bookworm
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
