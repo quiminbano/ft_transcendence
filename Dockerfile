@@ -4,5 +4,5 @@ FROM node:bookworm
 WORKDIR /app
 COPY . .
 RUN npm install
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:debug"]
 EXPOSE 3000
