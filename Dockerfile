@@ -5,5 +5,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD ["npm", "run", "start:debug"]
+RUN npm i --save-dev @swc/cli @swc/core
+CMD ["npm", "run", "start:debug", "-b", "swc"]
 EXPOSE 3000
