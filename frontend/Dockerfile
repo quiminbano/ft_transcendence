@@ -2,12 +2,12 @@ FROM node:bookworm
 
 WORKDIR /app
 
-COPY package.json .
-COPY package-lock.json .
+COPY package.json /app
+COPY package-lock.json /app
 
 RUN npm install
 
-COPY . .
+COPY . /app
 
-EXPOSE 3001
+EXPOSE 3000
 CMD ["npm", "start"]

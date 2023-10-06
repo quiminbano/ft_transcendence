@@ -1,9 +1,8 @@
 
-
-export const Homepage = () :JSX.Element => {
+export const Homepage = ()=> {
 	return (
 		<div>
-			<h1>Ft-transcendese</h1>
+			<h1>Ft-transcendence</h1>
 		</div>
 	)
 }

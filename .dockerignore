@@ -1,3 +1,36 @@
-/node_modules
+node_modules
 .env
 /build
+
+# Ignore development and build-related files
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+*.log
+*.swp
+.DS_Store
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignore build output
+/build
+/dist
+
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore package manager files
+package-lock.json
+yarn.lock
+
+# Ignore editor files
+.vscode/
+.idea/
+
+# Ignore test and documentation files
+__tests__/
+doc/
