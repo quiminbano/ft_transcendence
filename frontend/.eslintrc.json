@@ -1,4 +1,9 @@
 {
+	"settings": {
+		"react": {
+		  "version": "detect"
+		}
+	},
     "env": {
         "browser": true,
         "es2021": true
@@ -51,6 +56,10 @@
 		"no-shadow": "error",
 		"@typescript-eslint/no-shadow": "error",
 		"camelcase": "error",
-		"no-nested-ternary": "error"
+		"no-nested-ternary": "error",
+		"object-curly-spacing": ["error", "always", {
+			"arraysInObjects": true,
+			"objectsInObjects": true
+		}]
 	}
 }
