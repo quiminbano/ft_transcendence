@@ -48,8 +48,6 @@
 				"maxEOF": 0
 			}
 		],
-		"@typescript-eslint/no-unnecessary-condition": "error",
-		"@typescript-eslint/no-floating-promises": "error",
 		"no-shadow": "error",
 		"@typescript-eslint/no-shadow": "error",
 		"camelcase": "error",
