@@ -1,16 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
+import { Button, Container, Col, Row } from "react-bootstrap";
 
 export const Homepage = () => {
 	const navigate = useNavigate();
 	const goToRegistrationPage = () => {
-		navigate("/registration");
+		navigate("/login");
 	};
 	return (
-		<div>
-			<h1>Ft-transcendence</h1>
-			<p>André - Carlos - Hans - João - Lucas</p>
-			<button onClick={() => goToRegistrationPage()}>Register</button>
-		</div>
+		<Container id="homepage-container" fluid>
+			<Row id="homepage-info-area">
+				<Row id="homepage-info-title">
+					<Col >
+						<h1 id="homepage-title">Ft-transcendence</h1>
+						<p id="homepage-subtitle">Your 42 pong game</p>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<Button onClick={() => goToRegistrationPage()} variant="outline-success" id="homepage-button">Play now</Button>
+					</Col>
+				</Row>
+			</Row>
+		</Container>
 	);
 };
