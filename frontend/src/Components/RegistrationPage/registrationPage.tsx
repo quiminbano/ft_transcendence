@@ -7,6 +7,11 @@ interface profileDataProps {
 	setUsername: (value: string) => void;
 }
 
+interface signUpErrorProps {
+	message: string;
+	showError: boolean;
+}
+
 export const RegistrationPage = () => {
 	const [username, setUsername] = useState("");
 	return (
@@ -33,9 +38,20 @@ const TitleArea = () => {
 const ProfileDataFrom42 = (props: profileDataProps) => {
 	const navigate = useNavigate();
 	const [username, setUsername] = useState("");
+	const [showError, setShowError] = useState(false);
+	const [message, setMessage] = useState("invalid login");
+
 	const handleConfirmation = () => {
 		console.log(username);
 		setUsername("");
+		if (username.length < 1) {
+			setMessage("Empty username is not valid!");
+			setShowError(true);
+		}
+		if (username.length > 1 && showError)
+			setShowError(false);
+
+		//TODO: handle proper registration here!!!
 	};
 	const handleCancelSignUp = () => {
 		navigate("/");
@@ -52,6 +68,7 @@ const ProfileDataFrom42 = (props: profileDataProps) => {
 						setUsername(e.target.value)}
 					value={username}
 				/>
+				<ErrorMessage showError={showError} message={message} />
 				<Button
 					className="login-buttons"
 					variant="success"
@@ -65,4 +82,13 @@ const ProfileDataFrom42 = (props: profileDataProps) => {
 			</Form.Group>
 		</Form>
 	);
+};
+
+const ErrorMessage = (props: signUpErrorProps) : JSX.Element | null => {
+
+	if (props.showError) {
+		return (
+			<p id="login-error">{props.message}</p>
+		);
+	}
 };
