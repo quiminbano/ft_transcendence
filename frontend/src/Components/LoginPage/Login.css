@@ -1,8 +1,39 @@
 .login-container {
 	width: 35%;
-	min-height: 100vh;
 }
 
 #login-box {
 	margin-top: 20%;
+	padding: 10vh 5vw;
+	border: 1px solid black;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	border-radius: 15px;
+}
+
+#login-title {
+	margin-bottom: 10vh;
+}
+
+#login-form-label {
+	text-align: left;
+	margin-bottom: 1.5vh;
+}
+
+#login-button {
+	margin-top: 5vh;
+	width: 90%;
+}
+
+@media only screen and (max-width: 576px)
+{
+	.login-container {
+		width: 90%;
+	}
+	#login-box {
+		margin-top: 50%;
+		padding: 4vh 5vw;
+		border: 1px solid black;
+		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+		border-radius: 15px;
+	}
 }
