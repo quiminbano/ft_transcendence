@@ -1,12 +1,21 @@
+.signIn-signUp-pages {
+	min-height: 100vh;
+	background-image: url("https://img.freepik.com/premium-vector/network-connection-background-abstract-style_23-2148875738.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding-top: 10vh;
+}
+
 .login-container {
 	width: 35%;
 }
 
-#login-box {
-	margin-top: 20%;
+.signIn-signUp-box {
+	background-color: white;
 	padding: 10vh 5vw;
 	border: 1px solid black;
-	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 	border-radius: 15px;
 }
 
@@ -14,26 +23,38 @@
 	margin-bottom: 10vh;
 }
 
+#login-form {
+	margin-bottom: 5vh;
+}
+
 #login-form-label {
 	text-align: left;
 	margin-bottom: 1.5vh;
 }
 
-#login-button {
-	margin-top: 5vh;
+.login-buttons {
+	margin-top: 3vh;
 	width: 90%;
+}
+
+#login-error {
+	width: 100%;
+	background-color: red;
+	margin-top: 10px;
+	border-radius: 3px;
+	font-size: 0.9rem;
+	padding: 5px 8px;
 }
 
 @media only screen and (max-width: 576px)
 {
+	.signIn-signUp-pages {
+		padding-top: 25vh;
+	}
 	.login-container {
 		width: 90%;
 	}
-	#login-box {
-		margin-top: 50%;
+	.signIn-signUp-box{
 		padding: 4vh 5vw;
-		border: 1px solid black;
-		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-		border-radius: 15px;
 	}
 }

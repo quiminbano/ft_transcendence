@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Container, Row, Form } from "react-bootstrap";
+import "./registrationPage.css";
+import { useNavigate } from "react-router-dom";
 
 interface profileDataProps {
 	setUsername: (value: string) => void;
@@ -8,18 +10,20 @@ interface profileDataProps {
 export const RegistrationPage = () => {
 	const [username, setUsername] = useState("");
 	return (
-		<Container>
-			<Row>
-				<TitleArea />
-				<ProfileDataFrom42 setUsername={setUsername} />
-			</Row>
-		</Container>
+		<div className="signIn-signUp-pages">
+			<Container className="login-container">
+				<Row className="signIn-signUp-box">
+					<TitleArea />
+					<ProfileDataFrom42 setUsername={setUsername} />
+				</Row>
+			</Container>
+		</div>
 	);
 };
 
 const TitleArea = () => {
 	return (
-		<div>
+		<div className="signup-title-area">
 			<h2>Create your profile</h2>
 			<p>Let us know who you are</p>
 		</div>
@@ -27,16 +31,38 @@ const TitleArea = () => {
 };
 
 const ProfileDataFrom42 = (props: profileDataProps) => {
-	const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		props.setUsername(e.target.value);
+	const navigate = useNavigate();
+	const [username, setUsername] = useState("");
+	const handleConfirmation = () => {
+		console.log(username);
+		setUsername("");
 	};
+	const handleCancelSignUp = () => {
+		navigate("/");
+	};
+
 	return (
-		<div>
-			<p>What is your 42 username?</p>
-			<input onChange={(e)=>handleValueChange(e)}/>
-			<div>
-				<Button variant="outline-success">Confirm</Button>
-			</div>
-		</div>
+		<Form id="login-form">
+			<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+				<Form.Label id="login-form-label">What is your 42 username?</Form.Label>
+				<Form.Control
+					type="text"
+					placeholder="your 42 username"
+					onChange={(e: React.FormEvent<HTMLInputElement>)=>
+						setUsername(e.target.value)}
+					value={username}
+				/>
+				<Button
+					className="login-buttons"
+					variant="success"
+					onClick={()=>handleConfirmation()}
+				>Confirm</Button>
+				<Button
+					className="login-buttons"
+					variant="danger"
+					onClick={()=>handleCancelSignUp()}
+				>Cancel</Button>
+			</Form.Group>
+		</Form>
 	);
 };
