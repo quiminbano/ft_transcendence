@@ -2,10 +2,13 @@ import { useState } from "react";
 import "./Login.css";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { Loading } from "../Loading";
 
 interface loginFormProps  {
 	setUsername: (value: string) => void;
 	username: string;
+	setIsLoading: (valie: boolean) => void;
+	isLoading: boolean;
 }
 interface loginErrorProps {
 	message: string;
@@ -14,17 +17,22 @@ interface loginErrorProps {
 
 export const Login = () : JSX.Element | null => {
 	const [username, setUsername] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	return (
-		<div className="signIn-signUp-pages">
-			<Container className="login-container">
-				<div className="signIn-signUp-box">
-					<h2 id="login-title">Login to your account</h2>
-					<LoginForm setUsername={setUsername} username={username} />
-					<NoAccountArea />
-				</div>
-			</Container>
-
-		</div>
+		<>
+			<div className="signIn-signUp-pages">
+				<Container className="login-container">
+					<div className="signIn-signUp-box">
+						<h2 id="login-title">Login to your account</h2>
+						<LoginForm setUsername={setUsername} username={username}
+							isLoading={isLoading} setIsLoading={setIsLoading}
+						/>
+						<NoAccountArea />
+					</div>
+				</Container>
+			</div>
+			{isLoading && <Loading type="border" variant="info" message=""/>}
+		</>
 	);
 };
 
@@ -37,11 +45,13 @@ const LoginForm = (props: loginFormProps) : JSX.Element | null => {
 		if (props.username.length < 1) {
 			setErrorMessage("Empty username not accepted");
 			setShowError(true);
+			return;
 		}
 		console.log(props.username);
 		props.setUsername("");
 		if (showError && props.username.length > 0)
 			setShowError(false);
+		props.setIsLoading(true);
 		// TODO: handle Login request here. Use errorMessage state to inform user of what happened
 	};
 	const handleCancelLogin = () => {

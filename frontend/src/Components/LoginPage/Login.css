@@ -49,7 +49,7 @@
 @media only screen and (max-width: 576px)
 {
 	.signIn-signUp-pages {
-		padding-top: 25vh;
+		padding-top: 10vh;
 	}
 	.login-container {
 		width: 90%;
