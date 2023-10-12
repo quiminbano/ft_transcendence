@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Button, Row, Col, Image } from "react-bootstrap";
 import { Loading } from "../Loading";
 import "./TwoFactorAuth.css";
-import { LoginState } from "./Login";
+import { AuthenticationMethod, LoginState } from "./Login";
 import { LoginButton } from "./LoginButton";
 
 interface TwoFactorAuthProps {
 	setIsLoading: (value: boolean)=> void;
 	setLoginState: (value: LoginState) => void;
+	setAuthMethod: (value: AuthenticationMethod) => void;
 }
 
 export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null => {
@@ -17,12 +18,12 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 
 	const ConfirmWithPhone = () => {
 		console.log("Should confirm now with the phone");
-		props.setIsLoading(true);
+		props.setAuthMethod(AuthenticationMethod.Phone);
 	};
 
 	const ConfirmWithGoogle = () => {
 		console.log("Should confirm now with google authenticator");
-		props.setIsLoading(true);
+		props.setAuthMethod(AuthenticationMethod.Google);
 	};
 
 	const CancelProcessOfRegistration = () => {
@@ -32,25 +33,16 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 	const buttonsInfo = [
 		{
 			func: ConfirmWithPhone,
-			offset: 3,
-			order: 0,
-			span: 6,
 			variant: "info",
 			message: "Confirm with phone"
 		},
 		{
 			func: ConfirmWithGoogle,
-			offset: 3,
-			order: 0,
-			span: 6,
 			variant: "warning",
 			message: "Confirm with google"
 		},
 		{
 			func: CancelProcessOfRegistration,
-			offset: 4,
-			order: 0,
-			span: 4,
 			variant: "danger",
 			message: "Cancel",
 			id: "two-factor-cancel-btn"
@@ -58,28 +50,20 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 	];
 
 	return (
-		<>
-			<Row>
-				<Col>
-					<Image src={profilePicture} alt="profile picture" id="two-factores-auth-profile-pic"></Image>
-				</Col>
-			</Row>
-			<Row>
-				{
-					buttonsInfo.map((btn, i) =>
-						<LoginButton
-							func={btn.func}
-							offset={btn.offset}
-							order={btn.order}
-							span={btn.span}
-							variant={btn.variant}
-							message={btn.message}
-							id={btn.id ? btn.id : ""}
-							key={i}
-						/>
-					)
-				}
-			</Row>
-		</>
+		<div className="two-factores-div">
+			<Image src={profilePicture} alt="profile picture" id="two-factores-auth-profile-pic"></Image>
+			<p id="two-factor-username">{userName}</p>
+			{
+				buttonsInfo.map((btn, i) =>
+					<LoginButton
+						func={btn.func}
+						variant={btn.variant}
+						message={btn.message}
+						id={btn.id ? btn.id : ""}
+						key={i}
+					/>
+				)
+			}
+		</div>
 	);
 };

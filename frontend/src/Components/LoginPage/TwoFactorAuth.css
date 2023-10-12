@@ -1,4 +1,21 @@
+.two-factores-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 #two-factores-auth-profile-pic {
-	width: 200px;
+	width: 30%;
 	margin-bottom: 1.5vh;
+}
+
+#two-factor-username {
+	font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 576px) {
+	#two-factores-auth-profile-pic {
+		width: 80%;
+	}
 }
