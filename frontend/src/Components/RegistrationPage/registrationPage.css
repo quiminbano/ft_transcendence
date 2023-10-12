@@ -1,5 +1,5 @@
 .signup-title-area {
-	margin-bottom: 5vh;
+	margin-bottom: 1vh;
 }
 
 #signup-profile-picture {
@@ -9,16 +9,11 @@
 }
 
 .signup-confirmation-buttons-row {
-	margin-top: 2.5vh;
+	margin-top: 1.5vh;
 }
 
 .signUp-confirmation-button {
-	width: 100%;
 	margin: 1vh 0;
 }
 
-#signUp-cancel-button {
-	width: auto;
-	min-width: 50%;
-	margin-top: 2vh;
-}
+

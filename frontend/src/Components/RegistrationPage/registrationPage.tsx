@@ -8,7 +8,7 @@ interface profileDataProps {
 	setUsername: (value: string) => void;
 	isLoading: boolean;
 	setIsLoading: (value: boolean) => void;
-	userWasFound: ()=>void;
+	setSignupState: (value: SignupState) => void;
 }
 
 interface signUpErrorProps {
@@ -18,17 +18,23 @@ interface signUpErrorProps {
 
 interface UserFoundRegistration {
 	setIsLoading: (value: boolean)=> void;
-	setIsUserFound: (value: boolean)=> void;
+	setSignupState: (value: SignupState) => void;
+}
+
+enum SignupState {
+	Unidentified,
+	Identified,
+	SignedUp
 }
 
 export const RegistrationPage = () => {
 	const [username, setUsername] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const [isUserFound, setIsUserFound] = useState(false);
+	const [signupState, setSignupState] = useState<SignupState>(SignupState.Unidentified);
 
 	const userWasFound = () => {
 		setTimeout(()=>{ //REMOVE THIS TIME OUT!!! IS JUST FOR TESTING!!!!!!!!
-			setIsUserFound(true);
+			setSignupState(SignupState.Identified);
 			setIsLoading(false);
 		},2000);
 	};
@@ -40,13 +46,13 @@ export const RegistrationPage = () => {
 			<Container className="login-container">
 				<Row className="signIn-signUp-box">
 					<TitleArea />
-					{!isUserFound && <ProfileDataFrom42 setUsername={setUsername}
+					{signupState === SignupState.Unidentified && <ProfileDataFrom42 setUsername={setUsername}
 						setIsLoading={setIsLoading}
 						isLoading={isLoading}
-						userWasFound={userWasFound}
+						setSignupState={setSignupState}
 					/>}
-					{isUserFound &&
-						<UserFoundRegistration setIsLoading={setIsLoading} setIsUserFound={setIsUserFound}/>}
+					{signupState === SignupState.Identified &&
+						<UserFoundRegistration setIsLoading={setIsLoading} setSignupState={setSignupState}/>}
 				</Row>
 			</Container>
 		</div>
@@ -79,7 +85,7 @@ const ProfileDataFrom42 = (props: profileDataProps) => {
 		if (username.length > 1 && showError)
 			setShowError(false);
 		props.setIsLoading(true);
-		props.userWasFound(); //REMOVE THIS!!!!!!!!!!
+		props.setSignupState(SignupState.Identified); //REMOVE THIS!!!!!!!!!!
 		//TODO: handle proper registration here!!!
 	};
 	const handleCancelSignUp = () => {
@@ -131,13 +137,13 @@ const UserFoundRegistration = (props: UserFoundRegistrationProps) : JSX.Element 
 		props.setIsLoading(true);
 	};
 
-	const ConfirmWithEmail = () => {
-		console.log("Should confirm now with email");
+	const ConfirmWithGoogle = () => {
+		console.log("Should confirm now with google authenticator");
 		props.setIsLoading(true);
 	};
 
 	const CancelProcessOfRegistration = () => {
-		props.setIsUserFound(false);
+		props.setSignupState(SignupState.Unidentified);
 	};
 
 	return (
@@ -145,21 +151,21 @@ const UserFoundRegistration = (props: UserFoundRegistrationProps) : JSX.Element 
 			<img alt="profile picture" src={profilePicture} id="signup-profile-picture"/>
 			<h4>{userName}</h4>
 			<Row className="signup-confirmation-buttons-row">
-				<Col xxl={{ offeset: 0, order: 0, span: 12 }}>
+				<Col xxl={{ offset: 0, order: 0, span: 12 }}>
 					<Button
 						className="signUp-confirmation-button"
 						variant="info"
 						onClick={()=>ConfirmWithPhone()}
 					>Confirm with phone</Button>
 				</Col>
-				<Col xxl={{ offeset: 0, order: 0, span: 12 }}>
+				<Col xxl={{ offset: 0, order: 0, span: 12 }}>
 					<Button
 						className="signUp-confirmation-button"
 						variant="warning"
-						onClick={()=>ConfirmWithEmail()}
-					>Confirm with email</Button>
+						onClick={()=>ConfirmWithGoogle()}
+					>Confirm with Google</Button>
 				</Col>
-				<Col xxl={{ offeset: 0, order: 0, span: 12 }}>
+				<Col xxl={{ offset: 2, order: 0, span: 8 }}>
 					<Button
 						className="signUp-confirmation-button"
 						id="signUp-cancel-button"
@@ -169,5 +175,15 @@ const UserFoundRegistration = (props: UserFoundRegistrationProps) : JSX.Element 
 				</Col>
 			</Row>
 		</div>
+	);
+};
+
+const ConfirmationOfRegistration = () : JSX.Element | null => {
+	return (
+		<Container>
+			<Row>
+				
+			</Row>
+		</Container>
 	);
 };
