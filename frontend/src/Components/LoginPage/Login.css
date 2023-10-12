@@ -4,18 +4,15 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	padding-top: 10vh;
 	overflow: hidden;
-}
-
-.login-container {
-	width: 35%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .signIn-signUp-box {
 	background-color: white;
 	padding: 5vh 5vw;
-	border: 1px solid black;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 	border-radius: 15px;
 	max-height: 90vh;
@@ -24,20 +21,6 @@
 
 #login-title {
 	margin-bottom: 10vh;
-}
-
-#login-form {
-	margin-bottom: 5vh;
-}
-
-#login-form-label {
-	text-align: left;
-	margin-bottom: 1.5vh;
-}
-
-.login-buttons {
-	margin-top: 3vh;
-	width: 90%;
 }
 
 #login-error {
@@ -53,9 +36,6 @@
 {
 	.signIn-signUp-pages {
 		padding-top: 10vh;
-	}
-	.login-container {
-		width: 90%;
 	}
 	.signIn-signUp-box{
 		padding: 4vh 5vw;

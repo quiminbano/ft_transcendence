@@ -3,104 +3,101 @@ import "./Login.css";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Loading } from "../Loading";
+import { TwoFactorAuth } from "./TwoFactorAuth";
+import { LoginButton } from "./LoginButton";
 
 interface loginFormProps  {
-	setUsername: (value: string) => void;
-	username: string;
 	setIsLoading: (valie: boolean) => void;
 	isLoading: boolean;
-}
-interface loginErrorProps {
-	message: string;
-	showError: boolean;
+	setLoginState: (value: LoginState) => void;
 }
 
+export enum LoginState {
+	Unidentified,
+	Identified,
+	SignedUp
+}
 export const Login = () : JSX.Element | null => {
-	const [username, setUsername] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [loginState, setLoginState] = useState<LoginState>(LoginState.Unidentified);
+
 	return (
-		<>
-			<div className="signIn-signUp-pages">
-				<Container className="login-container">
-					<div className="signIn-signUp-box">
-						<h2 id="login-title">Login to your account</h2>
-						<LoginForm setUsername={setUsername} username={username}
-							isLoading={isLoading} setIsLoading={setIsLoading}
-						/>
-						<NoAccountArea />
-					</div>
-				</Container>
-			</div>
+		<Container fluid className="signIn-signUp-pages">
 			{isLoading && <Loading type="border" variant="info" message=""/>}
-		</>
+			<Row className="signIn-signUp-box">
+				<Col xs={{ offset: 1, order: 0, span:10 }} >
+					<Row>
+						<Col xs={{ offset: 0, order: 0, span:12 }}>
+							<h2 id="login-title">Login to your account</h2>
+						</Col>
+					</Row>
+					<Row>
+						{loginState === LoginState.Unidentified &&
+							<LoginForm
+								isLoading={isLoading}
+								setIsLoading={setIsLoading}
+								setLoginState={setLoginState}
+							/>}
+						{loginState === LoginState.Identified &&
+							<TwoFactorAuth setIsLoading={setIsLoading} setLoginState={setLoginState} />}
+					</Row>
+				</Col>
+			</Row>
+		</Container>
 	);
 };
 
 const LoginForm = (props: loginFormProps) : JSX.Element | null => {
-	const [errorMessage, setErrorMessage] = useState("Something happened! Please try again");
-	const [showError, setShowError] = useState(false);
 	const navigate = useNavigate();
 
-	const handleSignIn = () => {
-		if (props.username.length < 1) {
-			setErrorMessage("Empty username not accepted");
-			setShowError(true);
-			return;
-		}
-		console.log(props.username);
-		props.setUsername("");
-		if (showError && props.username.length > 0)
-			setShowError(false);
+	const userWasFound = () => {
 		props.setIsLoading(true);
-		// TODO: handle Login request here. Use errorMessage state to inform user of what happened
+		setTimeout(()=>{ //REMOVE THIS TIME OUT!!! IS JUST FOR TESTING!!!!!!!!
+			props.setLoginState(LoginState.Identified);
+			props.setIsLoading(false);
+		},2000);
+	};
+	const handleSignIn = () => {
+		userWasFound();
+		// TODO: handle Login request here.
+		// Use errorMessage state to inform user of what happened
 	};
 	const handleCancelLogin = () => {
 		navigate("/");
 	};
+	const buttonsInfo =[
+		{
+			func: handleSignIn,
+			offset: 0,
+			order: 0,
+			span: 12,
+			variant: "primary",
+			message: "Sign in with 42"
+		},
+		{
+			func: handleCancelLogin,
+			offset: 0,
+			order: 0,
+			span: 12,
+			variant: "danger",
+			message: "Sign in with 42"
+		},
+	];
 	return (
-		<Form id="login-form">
-			<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-				<Form.Label id="login-form-label">What is your 42 username?</Form.Label>
-				<Form.Control
-					type="text"
-					placeholder="your 42 username"
-					onChange={(e: React.FormEvent<HTMLInputElement>)=>
-						props.setUsername(e.target.value)}
-					value={props.username}
-				/>
-				<ErrorMessage message={errorMessage} showError={showError}/>
-				<Button
-					className="login-buttons"
-					onClick={()=>handleSignIn()}
-				>Sign in</Button>
-				<Button
-					className="login-buttons"
-					variant="danger"
-					onClick={()=>handleCancelLogin()}
-				>Cancel</Button>
-			</Form.Group>
-		</Form>
+		<>
+			{
+				buttonsInfo.map((btn, i) =>
+					<LoginButton
+						func={btn.func}
+						offset={btn.offset}
+						order={btn.order}
+						span={btn.span}
+						variant={btn.variant}
+						message={btn.message}
+						key={i}
+					/>
+				)
+			}
+		</>
 	);
-};
-
-const NoAccountArea = () : JSX.Element => {
-	return (
-		<Row>
-			<Col>
-				<Link to="/signup">Don&rsquo;t have an account?</Link>
-			</Col>
-			<Col>
-				<a href="#">Forgot your password?</a>
-			</Col>
-		</Row>
-	);
-};
-
-const ErrorMessage = (props: loginErrorProps) : JSX.Element | null => {
-
-	if (props.showError) {
-		return (
-			<p id="login-error">{props.message}</p>
-		);
-	}
 };

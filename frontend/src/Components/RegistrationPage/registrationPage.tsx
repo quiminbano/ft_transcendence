@@ -32,13 +32,6 @@ export const RegistrationPage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [signupState, setSignupState] = useState<SignupState>(SignupState.Unidentified);
 
-	const userWasFound = () => {
-		setTimeout(()=>{ //REMOVE THIS TIME OUT!!! IS JUST FOR TESTING!!!!!!!!
-			setSignupState(SignupState.Identified);
-			setIsLoading(false);
-		},2000);
-	};
-
 	return (
 
 		<div className="signIn-signUp-pages">
@@ -74,6 +67,13 @@ const ProfileDataFrom42 = (props: profileDataProps) => {
 	const [showError, setShowError] = useState(false);
 	const [message, setMessage] = useState("invalid login");
 
+	const userWasFound = () => {
+		setTimeout(()=>{ //REMOVE THIS TIME OUT!!! IS JUST FOR TESTING!!!!!!!!
+			props.setSignupState(SignupState.Identified);
+			props.setIsLoading(false);
+		},2000);
+	};
+
 	const handleConfirmation = () => {
 		console.log(username);
 		setUsername("");
@@ -85,7 +85,7 @@ const ProfileDataFrom42 = (props: profileDataProps) => {
 		if (username.length > 1 && showError)
 			setShowError(false);
 		props.setIsLoading(true);
-		props.setSignupState(SignupState.Identified); //REMOVE THIS!!!!!!!!!!
+		userWasFound(); //REMOVE THIS!!!!!!!!!!
 		//TODO: handle proper registration here!!!
 	};
 	const handleCancelSignUp = () => {
@@ -182,7 +182,7 @@ const ConfirmationOfRegistration = () : JSX.Element | null => {
 	return (
 		<Container>
 			<Row>
-				
+
 			</Row>
 		</Container>
 	);
