@@ -1,7 +1,3 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, Row, Col, Image } from "react-bootstrap";
-import { Loading } from "../Loading";
 import "./TwoFactorAuth.css";
 import { AuthenticationMethod, LoginState } from "./Login";
 import { LoginButton } from "./LoginButton";
@@ -51,7 +47,7 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 
 	return (
 		<div className="two-factores-div">
-			<Image src={profilePicture} alt="profile picture" id="two-factores-auth-profile-pic"></Image>
+			<img src={profilePicture} alt="profile picture" id="two-factores-auth-profile-pic"></img>
 			<p id="two-factor-username">{userName}</p>
 			{
 				buttonsInfo.map((btn, i) =>

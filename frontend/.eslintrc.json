@@ -30,7 +30,7 @@
             "error",
             "tab"
         ],
-        
+
         "quotes": [
             "error",
             "double"
@@ -63,11 +63,11 @@
 		"max-len": [
 			"error", {
 				"code": 120,
-				"comments": 80,
+				"comments": 100,
 				"ignoreUrls": true,
 				"ignoreStrings": true,
 				"ignoreTemplateLiterals": true,
-				"ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\(" 
+				"ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
 			}
 		]
 	}
