@@ -17,7 +17,25 @@ interface SqaureProps {
 
 export const PhoneAuthentication = () : JSX.Element | null => {
 	const [code, setCode] = useState([NaN, NaN, NaN, NaN, NaN, NaN]);
+	const [currentIndex, setCurrentIndex] = useState(0);
 	const navigate = useNavigate();
+
+	const someMethodWithoutAccessToEvent = (val: boolean) => {
+		/*const active = document.activeElement;
+		if (val) {
+			if (active?.nextElementSibling)
+				(active.nextElementSibling as HTMLElement).focus();
+		}
+		else {
+			if (active?.previousElementSibling) {
+				(active.previousElementSibling as HTMLElement).focus;
+				console.log("Previous input should be called");
+			}
+		}*/
+		if (val) {
+			setCurrentIndex(currentIndex + 1);
+		}
+	};
 
 	const updateValueAtIndex  = (index: number, value: string) => {
 		console.log(value);
@@ -27,10 +45,15 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 		itemToUpdate = nbr;
 		items[index] = itemToUpdate;
 		setCode(items);
+		if (value.length < 1)
+			someMethodWithoutAccessToEvent(false);
+		else
+			someMethodWithoutAccessToEvent(true);
 	};
 
-	const connfirmActivation = () : void => {
+	const confirmActivation = () : void => {
 		console.log("Sending code");
+		console.log(code);
 	};
 	const cancelActivation = () : void => {
 		navigate("/");
@@ -49,7 +72,7 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 				</div>
 				<div>
 					<LoginButton
-						func={connfirmActivation}
+						func={confirmActivation}
 						message="Confirm"
 						variant="success"
 					/>
