@@ -25,8 +25,8 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 			(active.nextElementSibling as HTMLElement).focus();
 	};
 
-	const updateValueAtIndex  = (index: number, value: string) => {
-		const nbr  = parseInt(value);
+	const updateValueAtIndex = (index: number, value: string) => {
+		const nbr = parseInt(value);
 		const items = [...code];
 		let itemToUpdate = items[index];
 		itemToUpdate = nbr;

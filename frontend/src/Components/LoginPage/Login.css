@@ -12,6 +12,8 @@
 	position: relative;
 	background-color: whitesmoke;
 	border-radius: 15px;
+	height: 65vh;
+	width: 65vw;
 }
 
 .info-bg {
@@ -19,16 +21,19 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	position: absolute;
 }
 
-.side-right {
-	border-radius: 0 15px 15px 0;
-	height: 100%;
+.border-right {
+	animation-name: moveBgRightToLeft;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
 }
 
-.side-left {
-	border-radius: 15px 0 0 15px;
-	height: 100%;
+.border-left {
+	animation-name: moveBgLeftToRight;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
 }
 .small-screen-change-register {
 	display: none;
@@ -40,5 +45,94 @@
 	}
 	.info {
 		display: none;
+	}
+	.phone-hide {
+		display: none;
+	}
+	.sign-box {
+		height: auto;
+	}
+}
+
+@keyframes moveBgRightToLeft {
+	0%{
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin-right: 66.6%;
+		width: 33%;
+		border-radius: 15px 0 0 15px;
+		z-index: 0;
+	}
+	50% {
+		z-index: 99;
+	}
+	100% {
+		border-radius: 0 15px 15px 0;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		margin-left: 66.6%;
+		width: 33.3%;
+		z-index: 0;
+	}
+}
+
+@keyframes moveBgLeftToRight {
+	0%{
+		border-radius: 0 15px 15px 0;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		margin-left: 66.6%;
+		width: 33.3%;
+		z-index: 0;
+	}
+	50% {
+		z-index: 99;
+	}
+	100% {
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin-right: 66.6%;
+		width: 33%;
+		border-radius: 15px 0 0 15px;
+		z-index: 0;
+	}
+}
+
+.is-login {
+	animation-name: isLogin;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+.is-signup {
+	animation-name: isSignup;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes isLogin {
+	0% {
+		opacity: 0.;
+	}
+	90% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes isSignup{
+	0% {
+		opacity: 0.3;
+	}
+	90% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }

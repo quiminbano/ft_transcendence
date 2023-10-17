@@ -4,7 +4,7 @@ import "./Login.css";
 import { PhoneAuthentication } from "./PhoneAuthentication";
 import { SignUp } from "./SignUp";
 
-interface loginFormProps  {
+interface loginFormProps {
 	setIsLoading: (valie: boolean) => void;
 	isLoading: boolean;
 	setLoginState: (value: LoginState) => void;
@@ -31,20 +31,24 @@ export const Login = () : JSX.Element | undefined => {
 		return (
 			<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
 				<div className="row">
-					<div className="border border-danger col-10 offset-1 sign-box">
-						<div className="row d-flex align-items-center justify-content-center">
-							<div className={`col-12 col-md-8 d-flex align-items-center justify-content-center
-								order-${isLogin ? "0" : "1"}
-							`}>
-								{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}/>}
-								{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}/>}
+					<div className="col-10 sign-box">
+						<div className="row full-height align-items-center">
+							<div className={`info-bg ${isLogin ? "border-right" : "border-left"}`}></div>
+							<div className={`col-12 col-md-8 order-${isLogin ? "0 is-login" : "1 is-signup"}`} style={{ zIndex: 2 }}>
+								<div className="row">
+									<div className="col-12">
+										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin} />}
+										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin} />}
+									</div>
+								</div>
 							</div>
-							<div className={`col-12 col-md-4 d-flex align-items-center justify-content-center info
-								order-${isLogin ? "1 side-right" : "0 side-left"}
-							`}>
-								<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}/>
+							<div className={`phone-hide col-md-4 full-height ${isLogin ? "1 is-login" : "0 is-signup"}`} style={{ zIndex: 2 }}>
+								<div className="row full-height align-items-center">
+									<div className="col-12">
+										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin} />
+									</div>
+								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
