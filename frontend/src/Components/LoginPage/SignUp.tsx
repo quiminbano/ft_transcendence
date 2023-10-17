@@ -14,21 +14,21 @@ export const SignUp = (props: InfoToSignProps) : JSX.Element => {
 					<div className="col-10 offset-1">
 						<form>
 							<div className="row">
-								<div className="col-10 my-1">
+								<div className="col-10 offset-1 my-1">
 									<input
 										className=" form-control form-control"
 										placeholder="Username"
 										type="text"
 									/>
 								</div>
-								<div className="col-10 my-1">
+								<div className="col-10 offset-1 my-1">
 									<input
 										className="form-control form-control"
 										placeholder="Email"
 										type="email"
 									/>
 								</div>
-								<div className="col-10 my-1">
+								<div className="col-10 offset-1 my-1">
 									<input
 										className="form-control form-control"
 										placeholder="Password"
@@ -37,7 +37,9 @@ export const SignUp = (props: InfoToSignProps) : JSX.Element => {
 								</div>
 							</div>
 							<div className="row">
-								<button className="mt-4 btn btn-success w-100">SIGN UP</button>
+								<div className="col-10 offset-1">
+									<button className="mt-4 btn btn-success w-100">SIGN UP</button>
+								</div>
 							</div>
 							<div className="small-screen-change-register row">
 								<button onClick={()=>changeToSignInForm()} className="mt-4 btn btn-secondary w-80">Already registered? Login here</button>
