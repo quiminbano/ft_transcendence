@@ -1,5 +1,4 @@
 import "./LoginButton.css";
-import { Col, Button } from "react-bootstrap";
 
 interface LoginButtonProps {
 	func: ()=>void;
@@ -10,11 +9,10 @@ interface LoginButtonProps {
 
 export const LoginButton = (props: LoginButtonProps) => {
 	return (
-		<Button
-			className="login-buttons"
-			variant={props.variant}
+		<button
+			className={`login-buttons btn btn-${props.variant}`}
 			onClick={()=>props.func()}
 			id = {props.id ? props.id : ""}
-		>{props.message}</Button>
+		>{props.message}</button>
 	);
 };

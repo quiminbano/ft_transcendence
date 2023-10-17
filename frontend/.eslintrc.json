@@ -69,6 +69,7 @@
 				"ignoreTemplateLiterals": true,
 				"ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
 			}
-		]
+		],
+		"no-multi-spaces": "error"
 	}
 }

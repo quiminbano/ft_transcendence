@@ -2,13 +2,14 @@ import { useState } from "react";
 import "./Login.css";
 
 import { PhoneAuthentication } from "./PhoneAuthentication";
+import { SignUp } from "./SignUp";
 
 interface loginFormProps  {
 	setIsLoading: (valie: boolean) => void;
 	isLoading: boolean;
 	setLoginState: (value: LoginState) => void;
 }
-interface InfoToSignProps {
+export interface InfoToSignProps {
 	isLogin: boolean;
 	setIsLogin: (value: boolean) => void;
 }
@@ -30,13 +31,13 @@ export const Login = () : JSX.Element | undefined => {
 		return (
 			<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
 				<div className="row">
-					<div className="col-10 offset-1 col-md-12 offset-md-0 sign-box">
+					<div className="border border-danger col-10 offset-1 sign-box">
 						<div className="row d-flex align-items-center justify-content-center">
 							<div className={`col-12 col-md-8 d-flex align-items-center justify-content-center
 								order-${isLogin ? "0" : "1"}
 							`}>
 								{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}/>}
-								{!isLogin && <SignUpForm isLogin={isLogin} setIsLogin={setIsLogin}/>}
+								{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}/>}
 							</div>
 							<div className={`col-12 col-md-4 d-flex align-items-center justify-content-center info
 								order-${isLogin ? "1 side-right" : "0 side-left"}
@@ -142,48 +143,6 @@ const AlreadyAsAccount = (props: InfoToSignProps) : JSX.Element => {
 				<button
 					onClick={()=>changeToSignInForm()}
 					className="btn btn-primary w-100 my-5">SIGN IN</button>
-			</div>
-		</div>
-	);
-};
-
-const SignUpForm = (props: InfoToSignProps) : JSX.Element => {
-	const changeToSignInForm = () => {
-		props.setIsLogin(true);
-	};
-	return (
-		<div className="row d-flex align-items-center justify-content-center">
-			<div className="col-12 mb-3">
-				<h2>Create account</h2>
-			</div>
-			<div className="col-10 offset-1 d-flex align-items-center justify-content-center">
-				<div className="row">
-					<form className="col-10 offset-1">
-						<div className="row">
-							<input
-								className="col-10 my-1 form-control form-control"
-								placeholder="Username"
-								type="text"
-							/>
-							<input
-								className="col-10 my-1 form-control form-control"
-								placeholder="Email"
-								type="email"
-							/>
-							<input
-								className="col-10 my-1 form-control form-control"
-								placeholder="Password"
-								type="password"
-							/>
-						</div>
-						<div className="row">
-							<button className="mt-4 btn btn-success w-100">SIGN UP</button>
-						</div>
-						<div className="small-screen-change-register row">
-							<button onClick={()=>changeToSignInForm()} className="mt-4 btn btn-secondary w-80">Already registered? Login here</button>
-						</div>
-					</form>
-				</div>
 			</div>
 		</div>
 	);
