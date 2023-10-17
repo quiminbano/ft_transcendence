@@ -12,9 +12,8 @@
 	position: relative;
 	background-color: whitesmoke;
 	border-radius: 15px;
-	height: 65vh;
-	min-height: 300px;
 	width: 65vw;
+	padding: 10px 30px;
 }
 
 .info-bg {
