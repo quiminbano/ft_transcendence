@@ -1,7 +1,5 @@
 import "./PhoneAuthentication.css";
-import { Container, Row, Col } from "react-bootstrap";
-import { AuthenticationMethod } from "./Login";
-import { createRef, useEffect, useState } from "react";
+import { useState } from "react";
 import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
 

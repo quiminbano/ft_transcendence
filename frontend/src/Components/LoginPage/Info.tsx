@@ -2,9 +2,11 @@ import { InfoToSignProps } from "./Login";
 
 export const InfoToSign = (props: InfoToSignProps) :JSX.Element => {
 	if (props.isLogin)
-		return <StillHasNoAccount isLogin={props.isLogin} setIsLogin={props.setIsLogin}/>;
+		return <StillHasNoAccount isLogin={props.isLogin} setIsLogin={props.setIsLogin}
+			isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>;
 	else
-		return <AlreadyAsAccount isLogin={props.isLogin} setIsLogin={props.setIsLogin}/>;
+		return <AlreadyAsAccount isLogin={props.isLogin} setIsLogin={props.setIsLogin}
+			isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>;
 };
 
 const StillHasNoAccount = (props: InfoToSignProps) : JSX.Element => {

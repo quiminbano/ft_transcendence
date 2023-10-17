@@ -16,7 +16,8 @@ export const SignUp = (props: InfoToSignProps) : JSX.Element => {
 				<div className="row">
 					<div className="col-12 col-md-10 offset-md-1">
 						<p>or</p>
-						<SignUpForm isLogin={props.isLogin} setIsLogin={props.setIsLogin} />
+						<SignUpForm isLogin={props.isLogin} setIsLogin={props.setIsLogin}
+							isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>
 					</div>
 				</div>
 			</div>
@@ -66,7 +67,8 @@ const SignUpForm = (props: InfoToSignProps) : JSX.Element => {
 				</div>
 			</div>
 			<div className="row">
-				<AlreadyRegistered isLogin={props.isLogin} setIsLogin={props.setIsLogin} />
+				<AlreadyRegistered isLogin={props.isLogin} setIsLogin={props.setIsLogin}
+					isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>
 			</div>
 		</>
 	);
@@ -77,7 +79,7 @@ const AlreadyRegistered = (props: InfoToSignProps) : JSX.Element => {
 		props.setIsLogin(true);
 	};
 	return (
-		<div className="phone-only col-12">
+		<div className="only-phone col-12">
 			<button
 				onClick={()=>changeToSignInForm()}
 				className="mt-4 btn btn-secondary w-80">Already registered? Login here</button>

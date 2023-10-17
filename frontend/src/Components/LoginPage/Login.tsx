@@ -5,6 +5,7 @@ import { PhoneAuthentication } from "./PhoneAuthentication";
 import { SignUp } from "./SignUp";
 import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
+import { Loading } from "../Loading";
 
 interface loginFormProps {
 	setIsLoading: (valie: boolean) => void;
@@ -14,6 +15,8 @@ interface loginFormProps {
 export interface InfoToSignProps {
 	isLogin: boolean;
 	setIsLogin: (value: boolean) => void;
+	isLoading: boolean;
+	setIsLoading: (value: boolean) => void;
 }
 export enum LoginState {
 	Unidentified,
@@ -28,6 +31,7 @@ export enum AuthenticationMethod {
 export const Login = () : JSX.Element | undefined => {
 	const [authenticationMethod, setAuthenticationMethod] = useState(AuthenticationMethod.NULL);
 	const [isLogin, setIsLogin] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	if (authenticationMethod === AuthenticationMethod.NULL) {
 		return (
@@ -39,21 +43,25 @@ export const Login = () : JSX.Element | undefined => {
 							<div className={`col-12 col-md-8 order-${isLogin ? "0 is-login" : "1 is-signup"}`} style={{ zIndex: 2 }}>
 								<div className="row">
 									<div className="col-12">
-										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin} />}
-										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin} />}
+										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}
+											isLoading={isLoading} setIsLoading={setIsLoading}/>}
+										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}
+											isLoading={isLoading} setIsLoading={setIsLoading}/>}
 									</div>
 								</div>
 							</div>
 							<div className={`phone-hide col-md-4 full-height ${isLogin ? "1 is-login" : "0 is-signup"}`} style={{ zIndex: 2 }}>
 								<div className="row full-height align-items-center">
 									<div className="col-12">
-										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin} />
+										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}
+											isLoading={isLoading} setIsLoading={setIsLoading}/>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				{isLoading && <Loading type="border" message="" variant="success"/>}
 			</div>
 		);
 	}
