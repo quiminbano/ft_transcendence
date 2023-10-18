@@ -70,7 +70,7 @@ const SignInInputs = (props: SignInProps) : JSX.Element => {
 							} })}
 					/>
 				</div>
-				<p>{props.errors["username"]?.message}</p>
+				<p className="form-error-text">{props.errors["username"]?.message}</p>
 				<div className="input-group mb-3">
 					<input type="password" className="form-control" placeholder="Password"
 						{...props.register("password",{
@@ -81,7 +81,7 @@ const SignInInputs = (props: SignInProps) : JSX.Element => {
 							} })}
 					/>
 				</div>
-				<p>{props.errors.password?.message}</p>
+				<p className="form-error-text">{props.errors.password?.message}</p>
 			</div>
 		</div>
 	);

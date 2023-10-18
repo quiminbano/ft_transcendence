@@ -1,25 +1,19 @@
-import { useState } from "react";
 import { InfoToSignProps } from "./Login";
 import { ButtonFor42Register } from "./SignIn";
+import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 
 interface SignUpFormProps {
-	setUsername: (value: string) => void;
-	setEmail: (value: string) => void;
-	setPassword: (value: string) => void;
-}
-
-interface SignUpDataProps {
-	username: string,
-	email: string,
-	password: string
-	setLoading: (value: boolean) => void;
+	register: UseFormRegister<FieldValues>;
+	errors: FieldErrors<FieldValues>
 }
 
 export const SignUp = (props: InfoToSignProps) : JSX.Element => {
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 
+	const { register, handleSubmit, formState: { errors } } = useForm();
+	const signUp = (data: FieldValues) : void => {
+		console.log(data);
+		props.setIsLoading(true);
+	};
 	return (
 		<div className="container-fluid">
 			<SignUpTitle />
@@ -33,9 +27,10 @@ export const SignUp = (props: InfoToSignProps) : JSX.Element => {
 				<div className="row">
 					<div className="col-12 col-md-10 offset-md-1">
 						<p>or</p>
-						<SignUpForm setUsername={setUsername} setEmail={setEmail} setPassword={setPassword}/>
-						<SignUpButton username={username} email={email}
-							password={password} setLoading={props.setIsLoading}/>
+						<form onSubmit={handleSubmit(data => signUp(data))}>
+							<SignUpForm register={register} errors={errors}/>
+							<SignUpButton />
+						</form>
 						<div className="row">
 							<AlreadyRegistered isLogin={props.isLogin} setIsLogin={props.setIsLogin}
 								isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>
@@ -58,18 +53,7 @@ const SignUpTitle = () : JSX.Element => {
 };
 
 const SignUpForm = (props: SignUpFormProps) : JSX.Element => {
-	const changeUsername = (e :React.FormEvent<HTMLInputElement>) : void => {
-		const value = e.currentTarget.value;
-		props.setUsername(value);
-	};
-	const changePassword = (e :React.FormEvent<HTMLInputElement>) : void => {
-		const value = e.currentTarget.value;
-		props.setPassword(value);
-	};
-	const changeEmail = (e :React.FormEvent<HTMLInputElement>) : void => {
-		const value = e.currentTarget.value;
-		props.setEmail(value);
-	};
+	
 	return (
 		<>
 			<div className="row">
@@ -78,65 +62,54 @@ const SignUpForm = (props: SignUpFormProps) : JSX.Element => {
 						className="form-control"
 						placeholder="Username"
 						type="text"
-						onChange={e => changeUsername(e)}
+						{...props.register("username", {
+							required: "Username is required",
+							minLength: {
+								value: 6,
+								message: "Username must be at least 6 characters long"
+							}
+						} )}
 					/>
 				</div>
+				{props.errors["username"]?.message && <p className="form-error-text">{props.errors["username"]?.message}</p>}
 				<div className="col-12 col-md-10 offset-md-1 my-1">
 					<input
 						className="form-control"
 						placeholder="Email"
 						type="email"
-						onChange={e => changeEmail(e)}
+						{...props.register("email", {
+							required: "Email is required",
+						})}
 					/>
 				</div>
+				{props.errors["email"]?.message && <p className="form-error-text">{props.errors["email"]?.message}</p>}
 				<div className="col-12 col-md-10 offset-md-1 my-1">
 					<input
 						className="form-control"
 						placeholder="Password"
 						type="password"
-						onChange={e => changePassword(e)}
+						{...props.register("password", {
+							required: "Password is required",
+							minLength: {
+								value: 10,
+								message: "Password must be at least 10 characters long"
+							}
+						})}
 					/>
 				</div>
+				{props.errors["password"]?.message && <p className="form-error-text">{props.errors["password"]?.message}</p>}
 			</div>
 		</>
 	);
 };
 
-const SignUpButton = (props: SignUpDataProps) : JSX.Element | null => {
-	const isDataValid = () : boolean => {
-		if (props.username.length === 0) {
-			return false;
-		}
-		
-		if (props.email.length < 5) {
-			return false;
-		}
-		if (props.email.split("").filter(x => x === "@").length !== 1) {
-			return false;
-		}
-		if (props.email.indexOf(".") === -1) {
-			return false;
-		}
-		if (props.password.length < 6) {
-			return false;
-		}
-		return true;
-	};
-	const signUp = () : void => {
-		if (!isDataValid()) return;
-		const data = {
-			username: props.username,
-			email: props.email,
-			password: props.password
-		};
-		console.log(data);
-		props.setLoading(true);
-	};
+const SignUpButton = () : JSX.Element | null => {
+
 	return (
 		<div className="row">
 			<div className="col-12 col-md-10 offset-md-1">
 				<button
-					onClick={() => signUp()}
+					type="submit"
 					className="mt-4 btn btn-success w-100">SIGN UP</button>
 			</div>
 		</div>
