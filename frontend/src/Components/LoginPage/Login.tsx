@@ -7,11 +7,6 @@ import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
 import { Loading } from "../Loading";
 
-interface loginFormProps {
-	setIsLoading: (valie: boolean) => void;
-	isLoading: boolean;
-	setLoginState: (value: LoginState) => void;
-}
 export interface InfoToSignProps {
 	isLogin: boolean;
 	setIsLogin: (value: boolean) => void;

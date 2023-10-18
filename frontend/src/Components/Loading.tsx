@@ -11,8 +11,6 @@ type Variant = "primary" | "secondary" | "success" | "danger" | "warning" | "inf
 type Type = "border" | "grow";
 
 export const Loading = (props: loadingProps) : JSX.Element | null => {
-	const width = document.body.clientWidth;
-	const heigth = document.body.clientHeight;
 	return (
 		<div id="loading">
 			<div

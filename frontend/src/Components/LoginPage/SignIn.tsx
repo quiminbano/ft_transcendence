@@ -1,7 +1,6 @@
 import "./SignIn.css";
-import { useState } from "react";
 import { InfoToSignProps } from "./Login";
-import { FieldErrors, FieldValue, FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 
 interface SignInProps {
 	register: UseFormRegister<FieldValues>;
@@ -33,8 +32,7 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 						<ForgotPasssword />
 					</form>
 				</div>
-				<SwitcherPanel isLogin={props.isLogin} setIsLogin={props.setIsLogin}
-					isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>
+				<SwitcherPanel />
 			</div>
 		</div>
 	);
@@ -107,7 +105,7 @@ const ForgotPasssword = () : JSX.Element => {
 	);
 };
 
-const SwitcherPanel = (props: InfoToSignProps) : JSX.Element => {
+const SwitcherPanel = () : JSX.Element => {
 	return (
 		<div className="row only-phone mt-4">
 			<div className="col-8 offset-2">
