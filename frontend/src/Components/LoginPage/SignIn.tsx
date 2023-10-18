@@ -1,26 +1,19 @@
 import "./SignIn.css";
 import { useState } from "react";
 import { InfoToSignProps } from "./Login";
+import { FieldErrors, FieldValue, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 
 interface SignInProps {
-	setUsername: (value: string) => void;
-	setPassword: (value: string) => void;
+	register: UseFormRegister<FieldValues>;
+	errors: FieldErrors<FieldValues>;
 }
-interface SignInDataProps {
-	signIn: () => void;
-}
+
 export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-
-	const signIn = () => {
-		const data = {
-			username,
-			password
-		};
+	const { register, handleSubmit, formState: { errors } } = useForm();
+	const signIn = (data: FieldValues) => {
 		console.log(data);
-		if (username.length > 0 && password.length > 0)
+		if (data.username.length > 0 && data.password.length > 0)
 			props.setIsLoading(true);
 	};
 
@@ -34,9 +27,11 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 			<div className="row mt-5">
 				<ButtonFor42Register />
 				<div className="col-12 col-md-8 offset-md-2">
-					<SignInInputs setUsername={setUsername} setPassword={setPassword}/>
-					<SignInButton signIn={signIn}/>
-					<ForgotPasssword />
+					<form onSubmit={handleSubmit(data => signIn(data))}>
+						<SignInInputs register={register} errors={errors}/>
+						<SignInButton />
+						<ForgotPasssword />
+					</form>
 				</div>
 				<SwitcherPanel isLogin={props.isLogin} setIsLogin={props.setIsLogin}
 					isLoading={props.isLoading} setIsLoading={props.setIsLoading}/>
@@ -60,36 +55,43 @@ export const ButtonFor42Register = () : JSX.Element => {
 };
 
 const SignInInputs = (props: SignInProps) : JSX.Element => {
-	const changeUsername = (e :React.FormEvent<HTMLInputElement>) => {
-		const value = e.currentTarget.value;
-		console.log(value);
-		props.setUsername(value);
-	};
-	const changePassword = (e :React.FormEvent<HTMLInputElement>) => {
-		const value = e.currentTarget.value;
-		console.log(value);
-		props.setPassword(value);
-	};
+
 	return (
 		<div className="row mt-5">
 			<div className="col-12">
 				<p>or use your email account</p>
 				<div className="input-group mb-3">
-					<input type="text" className="form-control" placeholder="Username" onChange={e => changeUsername(e)}/>
+					<input type="text" className="form-control" placeholder="Username"
+						{...props.register("username", {
+							required: "This field is required",
+							minLength:  {
+								value: 6,
+								message: "Username must be at least 6 characters long"
+							} })}
+					/>
 				</div>
+				<p>{props.errors["username"]?.message}</p>
 				<div className="input-group mb-3">
-					<input type="password" className="form-control" placeholder="Password" onChange={e => changePassword(e)}/>
+					<input type="password" className="form-control" placeholder="Password"
+						{...props.register("password",{
+							required: "Password is required",
+							minLength: {
+								value: 10,
+								message: "Password must be at least 10 characters long"
+							} })}
+					/>
 				</div>
+				<p>{props.errors.password?.message}</p>
 			</div>
 		</div>
 	);
 };
 
-const SignInButton = (props: SignInDataProps) : JSX.Element => {
+const SignInButton = () : JSX.Element => {
 	return (
 		<div className="row">
 			<div className="col-12">
-				<button className="btn btn-success w-100" onClick={() => props.signIn()}>SIGN IN</button>
+				<button className="btn btn-success w-100" type="submit">SIGN IN</button>
 			</div>
 		</div>
 	);
@@ -110,7 +112,7 @@ const SwitcherPanel = (props: InfoToSignProps) : JSX.Element => {
 		<div className="row only-phone mt-4">
 			<div className="col-8 offset-2">
 				<button
-					onClick={()=>props.setIsLogin(false)}
+					type="submit"
 					className="btn btn-secondary w-100">Not registered? Sign up here
 				</button>
 			</div>
