@@ -1,5 +1,5 @@
 import "./SignIn.css";
-import { InfoToSignProps } from "./Login";
+import { AuthenticationMethod, InfoToSignProps } from "./Login";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 
 interface SignInProps {
@@ -12,8 +12,9 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 	const signIn = (data: FieldValues) => {
 		console.log(data);
-		if (data.username.length > 0 && data.password.length > 0)
+		if (data.username.length > 0 && data.password.length > 0) {
 			props.setIsLoading(true);
+		}
 	};
 
 	return (

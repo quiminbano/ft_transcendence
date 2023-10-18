@@ -6,12 +6,14 @@ import { SignUp } from "./SignUp";
 import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
 import { Loading } from "../Loading";
+import { TwoFactorAuth } from "./TwoFactorAuth";
 
 export interface InfoToSignProps {
 	isLogin: boolean;
 	setIsLogin: (value: boolean) => void;
 	isLoading: boolean;
 	setIsLoading: (value: boolean) => void;
+	setAuthMethod: (value: AuthenticationMethod) => void;
 }
 export enum LoginState {
 	Unidentified,
@@ -39,9 +41,11 @@ export const Login = () : JSX.Element | undefined => {
 								<div className="row">
 									<div className="col-12">
 										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}
-											isLoading={isLoading} setIsLoading={setIsLoading}/>}
+											setAuthMethod={setAuthenticationMethod} isLoading={isLoading}
+											setIsLoading={setIsLoading}/>}
 										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}
-											isLoading={isLoading} setIsLoading={setIsLoading}/>}
+											setAuthMethod={setAuthenticationMethod} isLoading={isLoading} 
+											setIsLoading={setIsLoading}/>}
 									</div>
 								</div>
 							</div>
@@ -49,7 +53,8 @@ export const Login = () : JSX.Element | undefined => {
 								<div className="row full-height align-items-center">
 									<div className="col-12">
 										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}
-											isLoading={isLoading} setIsLoading={setIsLoading}/>
+											isLoading={isLoading} setIsLoading={setIsLoading}
+											setAuthMethod={setAuthenticationMethod}/>
 									</div>
 								</div>
 							</div>
