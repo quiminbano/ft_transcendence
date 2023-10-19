@@ -32,3 +32,21 @@
 	padding: 1vh 3vw;
 	font-size: 1.5rem;
 }
+
+@media only screen and (max-width: 576px)
+{
+	#homepage-info-area {
+		width: 90%;
+	}
+	#homepage-info-title {
+		margin-top: 15vh;
+	}
+
+	#homepage-title {
+		font-size: 3.rem;
+	}
+
+	#homepage-subtitle {
+		font-size: 1.5rem;
+	}
+}

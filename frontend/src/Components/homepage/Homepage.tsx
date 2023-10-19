@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "./Homepage.css";
-import { Button, Container, Col, Row } from "react-bootstrap";
 
 export const Homepage = () => {
 	const navigate = useNavigate();
@@ -8,20 +7,20 @@ export const Homepage = () => {
 		navigate("/login");
 	};
 	return (
-		<Container id="homepage-container" fluid>
-			<Row id="homepage-info-area">
-				<Row id="homepage-info-title">
-					<Col >
+		<div className="container-fluid" id="homepage-container">
+			<div className="row" id="homepage-info-area">
+				<div className="row" id="homepage-info-title">
+					<div className="col" >
 						<h1 id="homepage-title">Ft-transcendence</h1>
 						<p id="homepage-subtitle">Your 42 pong game</p>
-					</Col>
-				</Row>
-				<Row>
-					<Col>
-						<Button onClick={() => goToRegistrationPage()} variant="outline-success" id="homepage-button">Play now</Button>
-					</Col>
-				</Row>
-			</Row>
-		</Container>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col">
+						<button onClick={() => goToRegistrationPage()} id="homepage-button">Play now</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 };

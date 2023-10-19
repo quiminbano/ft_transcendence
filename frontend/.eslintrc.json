@@ -30,7 +30,7 @@
             "error",
             "tab"
         ],
-        
+
         "quotes": [
             "error",
             "double"
@@ -53,13 +53,23 @@
 				"maxEOF": 0
 			}
 		],
-		"no-shadow": "error",
 		"@typescript-eslint/no-shadow": "error",
 		"camelcase": "error",
 		"no-nested-ternary": "error",
 		"object-curly-spacing": ["error", "always", {
 			"arraysInObjects": true,
 			"objectsInObjects": true
-		}]
+		}],
+		"max-len": [
+			"error", {
+				"code": 120,
+				"comments": 100,
+				"ignoreUrls": true,
+				"ignoreStrings": true,
+				"ignoreTemplateLiterals": true,
+				"ignorePattern": "^\\s*var\\s.+=\\s*require\\s*\\("
+			}
+		],
+		"no-multi-spaces": "error"
 	}
 }
