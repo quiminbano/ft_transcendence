@@ -1,7 +1,3 @@
-node_modules
-.env
-/build
-
 # Ignore development and build-related files
 node_modules/
 npm-debug.log
@@ -10,6 +6,7 @@ yarn-error.log
 *.log
 *.swp
 .DS_Store
+.env
 .env.local
 .env.development
 .env.test
