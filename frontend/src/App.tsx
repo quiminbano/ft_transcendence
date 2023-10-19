@@ -4,11 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Homepage } from "./Components/homepage/Homepage";
 import { Login } from "./Components/LoginPage/Login";
 import { MainMenu } from "./Components/MainMenu/MainMenu";
+import useUser from "./Hooks/useUser";
 
-function App() {
-	const [user, setUser] = useState();
+const App = () => {
+
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+	const user = useUser().user;
 	if (!isAuthenticated) {
 		return (
 			<div className="App">
@@ -33,6 +34,6 @@ function App() {
 			</div>
 		);
 	}
-}
+};
 
 export default App;

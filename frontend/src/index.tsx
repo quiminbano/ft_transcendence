@@ -4,13 +4,16 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { UserProvider } from "./Hooks/useUser";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+	document.getElementById("root") as HTMLElement
 );
 root.render(
 	<React.StrictMode>
-		<App />
+		<UserProvider user={{ username: "", name: "", password: "", twoFactAuth: true }}>
+			<App />
+		</UserProvider>
 	</React.StrictMode>
 );
 

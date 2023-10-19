@@ -3,7 +3,7 @@ const UsersDatabase = [
 		name: "André Miranda",
 		username: "andrferr",
 		password: "0123456789",
-		TwoFactAuth: true
+		twoFactAuth: true
 	},
 ];
 

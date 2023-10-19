@@ -1,8 +1,9 @@
 import "./SignIn.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InfoToSignProps } from "./Login";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
+import useUser from "../../Hooks/useUser";
 
 interface SignInProps {
 	register: UseFormRegister<FieldValues>;
@@ -17,21 +18,20 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
 	const signIn = async (data: FieldValues) => {
-		props.setIsLoading(true);
 		const user = await loginAPITest.getUsers(data.username);
+		props.setIsLoading(true);
 		setTimeout(() => {
 			if (user === null) {
 				setErrorMessage("Username or password are incorrect");
 				props.setIsLoading(false);
-				console.log("user is null");
 			}
 			else {
 				// Do something here!!!!!
-				if (user.TwoFactAuth)
+				const setUser = useUser();
+
+				if (user.twoFactAuth)
 					props.setIsTwoFactAuthRequired(true);
 				props.setIsLoading(false);
-				console.log("user is not null");
-				console.log(user);
 			}
 		}, 1500);
 	};
