@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./Login.css";
 
-import { PhoneAuthentication } from "./PhoneAuthentication";
 import { SignUp } from "./SignUp";
 import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
@@ -13,24 +12,15 @@ export interface InfoToSignProps {
 	setIsLogin: (value: boolean) => void;
 	isLoading: boolean;
 	setIsLoading: (value: boolean) => void;
-	setAuthMethod: (value: AuthenticationMethod) => void;
+	setIsTwoFactAuthRequired: (value: boolean) => void;
 }
-export enum LoginState {
-	Unidentified,
-	Identified,
-	SignedUp
-}
-export enum AuthenticationMethod {
-	NULL,
-	Phone,
-	Google
-}
+
 export const Login = () : JSX.Element | undefined => {
-	const [authenticationMethod, setAuthenticationMethod] = useState(AuthenticationMethod.NULL);
+	const [isTwoFactAuthRequired, setIsTwoFactAuthRequired] = useState(false);
 	const [isLogin, setIsLogin] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 
-	if (authenticationMethod === AuthenticationMethod.NULL) {
+	if (!isTwoFactAuthRequired) {
 		return (
 			<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
 				<div className="row">
@@ -41,11 +31,11 @@ export const Login = () : JSX.Element | undefined => {
 								<div className="row">
 									<div className="col-12">
 										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}
-											setAuthMethod={setAuthenticationMethod} isLoading={isLoading}
-											setIsLoading={setIsLoading}/>}
+											isLoading={isLoading} setIsLoading={setIsLoading}
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}/>}
 										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}
-											setAuthMethod={setAuthenticationMethod} isLoading={isLoading} 
-											setIsLoading={setIsLoading}/>}
+											isLoading={isLoading} setIsLoading={setIsLoading}
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}/>}
 									</div>
 								</div>
 							</div>
@@ -54,7 +44,7 @@ export const Login = () : JSX.Element | undefined => {
 									<div className="col-12">
 										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
-											setAuthMethod={setAuthenticationMethod}/>
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}/>
 									</div>
 								</div>
 							</div>
@@ -65,8 +55,6 @@ export const Login = () : JSX.Element | undefined => {
 			</div>
 		);
 	}
-	else if (authenticationMethod === AuthenticationMethod.Phone) {
-		return <PhoneAuthentication />;
-	}
-
+	if (isTwoFactAuthRequired)
+		return <TwoFactorAuth setIsLoading={setIsLoading} setIsAuthReq={setIsTwoFactAuthRequired}/>;
 };

@@ -1,11 +1,9 @@
 import "./TwoFactorAuth.css";
-import { AuthenticationMethod, LoginState } from "./Login";
 import { LoginButton } from "./LoginButton";
 
 interface TwoFactorAuthProps {
 	setIsLoading: (value: boolean)=> void;
-	setLoginState: (value: LoginState) => void;
-	setAuthMethod: (value: AuthenticationMethod) => void;
+	setIsAuthReq: (value: boolean) => void;
 }
 
 export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null => {
@@ -14,16 +12,16 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 
 	const ConfirmWithPhone = () => {
 		console.log("Should confirm now with the phone");
-		props.setAuthMethod(AuthenticationMethod.Phone);
+		//props.setAuthMethod(AuthenticationMethod.Phone);
 	};
 
 	const ConfirmWithGoogle = () => {
 		console.log("Should confirm now with google authenticator");
-		props.setAuthMethod(AuthenticationMethod.Google);
+		//props.setAuthMethod(AuthenticationMethod.Google);
 	};
 
 	const CancelProcessOfRegistration = () => {
-		props.setLoginState(LoginState.Unidentified);
+		props.setIsAuthReq(false);
 	};
 
 	const buttonsInfo = [
@@ -46,20 +44,24 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 	];
 
 	return (
-		<div className="two-factores-div">
-			<img src={profilePicture} alt="profile picture" id="two-factores-auth-profile-pic"></img>
-			<p id="two-factor-username">{userName}</p>
-			{
-				buttonsInfo.map((btn, i) =>
-					<LoginButton
-						func={btn.func}
-						variant={btn.variant}
-						message={btn.message}
-						id={btn.id ? btn.id : ""}
-						key={i}
-					/>
-				)
-			}
+		<div className="container-fluid two-factores-div signIn-signUp-pages">
+			<div className="row">
+				<div className="col-8 offset-2 col-md-6 offset-md-3 two-fact-box">
+					<img src={profilePicture} alt="profile picture" id="two-factores-auth-profile-pic"></img>
+					<p id="two-factor-username">{userName}</p>
+					{
+						buttonsInfo.map((btn, i) =>
+							<LoginButton
+								func={btn.func}
+								variant={btn.variant}
+								message={btn.message}
+								id={btn.id ? btn.id : ""}
+								key={i}
+							/>
+						)
+					}
+				</div>
+			</div>
 		</div>
 	);
 };

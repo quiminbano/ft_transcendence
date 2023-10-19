@@ -1,6 +1,6 @@
 import "./SignIn.css";
 import { useState } from "react";
-import { AuthenticationMethod, InfoToSignProps } from "./Login";
+import { InfoToSignProps } from "./Login";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
 
@@ -27,6 +27,8 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 			}
 			else {
 				// Do something here!!!!!
+				if (user.TwoFactAuth)
+					props.setIsTwoFactAuthRequired(true);
 				props.setIsLoading(false);
 				console.log("user is not null");
 				console.log(user);
