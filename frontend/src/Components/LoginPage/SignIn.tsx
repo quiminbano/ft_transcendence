@@ -1,4 +1,5 @@
 import "./SignIn.css";
+import { useState } from "react";
 import { AuthenticationMethod, InfoToSignProps } from "./Login";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
@@ -6,21 +7,31 @@ import loginAPITest from "../../DataTest/apiTest";
 interface SignInProps {
 	register: UseFormRegister<FieldValues>;
 	errors: FieldErrors<FieldValues>;
+	errorMessage: string;
+	setErrorMessage: (value: string) => void;
 }
 
 export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
+	const [errorMessage, setErrorMessage] = useState("");
 	const { register, handleSubmit, formState: { errors } } = useForm();
-	const getUser = async (username: string) => {
-		const user = await loginAPITest.getUsers(username);
-		console.log(user);
-	};
-	const signIn = (data: FieldValues) => {
-		console.log(data);
-		if (data.username.length > 0 && data.password.length > 0) {
-			props.setIsLoading(true);
-		}
-		getUser(data.username);
+
+	const signIn = async (data: FieldValues) => {
+		props.setIsLoading(true);
+		const user = await loginAPITest.getUsers(data.username);
+		setTimeout(() => {
+			if (user === null) {
+				setErrorMessage("Username or password are incorrect");
+				props.setIsLoading(false);
+				console.log("user is null");
+			}
+			else {
+				// Do something here!!!!!
+				props.setIsLoading(false);
+				console.log("user is not null");
+				console.log(user);
+			}
+		}, 1500);
 	};
 
 	return (
@@ -34,7 +45,8 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 				<ButtonFor42Register />
 				<div className="col-12 col-md-8 offset-md-2">
 					<form onSubmit={handleSubmit(data => signIn(data))}>
-						<SignInInputs register={register} errors={errors}/>
+						<SignInInputs register={register} errors={errors}
+							errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
 						<SignInButton />
 						<ForgotPasssword />
 					</form>
@@ -65,6 +77,7 @@ const SignInInputs = (props: SignInProps) : JSX.Element => {
 		<div className="row mt-5">
 			<div className="col-12">
 				<p>or use your email account</p>
+				<p className="form-error-text">{props.errorMessage}</p>
 				<div className="input-group mb-3">
 					<input type="text" className="form-control" placeholder="Username"
 						{...props.register("username", {
