@@ -1,6 +1,7 @@
 import "./SignIn.css";
 import { AuthenticationMethod, InfoToSignProps } from "./Login";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import loginAPITest from "../../DataTest/apiTest";
 
 interface SignInProps {
 	register: UseFormRegister<FieldValues>;
@@ -10,11 +11,16 @@ interface SignInProps {
 export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
 	const { register, handleSubmit, formState: { errors } } = useForm();
+	const getUser = async (username: string) => {
+		const user = await loginAPITest.getUsers(username);
+		console.log(user);
+	};
 	const signIn = (data: FieldValues) => {
 		console.log(data);
 		if (data.username.length > 0 && data.password.length > 0) {
 			props.setIsLoading(true);
 		}
+		getUser(data.username);
 	};
 
 	return (
