@@ -1,17 +1,10 @@
 import "./SignIn.css";
 import { useContext, useState } from "react";
-import { InfoToSignProps } from "./Login";
+import { InfoToSignProps, SignInProps } from "../../Props/Registration/LoginProps";
 import { useNavigate } from "react-router-dom";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
 import useUser from "../../Hooks/useUser";
-
-interface SignInProps {
-	register: UseFormRegister<FieldValues>;
-	errors: FieldErrors<FieldValues>;
-	errorMessage: string;
-	setErrorMessage: (value: string) => void;
-}
 
 export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 

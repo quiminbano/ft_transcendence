@@ -2,12 +2,7 @@ import "./TwoFactorAuth.css";
 import { LoginButton } from "./LoginButton";
 import useUser from "../../Hooks/useUser";
 import { TwoFactEnum } from "./Login";
-
-interface TwoFactorAuthProps {
-	setIsLoading: (value: boolean)=> void;
-	setIsAuthReq: (value: boolean) => void;
-	setTwoFactType: (value: TwoFactEnum) => void;
-}
+import { TwoFactorAuthProps } from "../../Props/Registration/LoginProps";
 
 export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null => {
 	const profilePicture = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -15,13 +10,12 @@ export const TwoFactorAuth = (props : TwoFactorAuthProps) : JSX.Element | null =
 
 	const ConfirmWithPhone = () => {
 		console.log("Should confirm now with the phone");
-		//props.setAuthMethod(AuthenticationMethod.Phone);
 		props.setTwoFactType(TwoFactEnum.Phone);
 	};
 
 	const ConfirmWithGoogle = () => {
 		console.log("Should confirm now with google authenticator");
-		//props.setAuthMethod(AuthenticationMethod.Google);
+		props.setTwoFactType(TwoFactEnum.Google);
 	};
 
 	const CancelProcessOfRegistration = () => {

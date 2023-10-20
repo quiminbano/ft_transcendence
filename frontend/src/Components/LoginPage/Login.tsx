@@ -1,29 +1,13 @@
 import { useState } from "react";
 import "./Login.css";
-
 import { SignUp } from "./SignUp";
 import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
 import { Loading } from "../Loading";
 import { TwoFactorAuth } from "./TwoFactorAuth";
 import { PhoneAuthentication } from "./PhoneAuthentication";
-
-export interface InfoToSignProps {
-	isLogin: boolean;
-	setIsLogin: (value: boolean) => void;
-	isLoading: boolean;
-	setIsLoading: (value: boolean) => void;
-	setIsTwoFactAuthRequired: (value: boolean) => void;
-	setIsAuth: (value: boolean) => void;
-	setTwoFactType: (value: TwoFactEnum) => void;
-}
-
-interface LoginProps {
-	isAuthenticated: boolean;
-	setIsAuthenticated: (value: boolean) => void;
-}
-
-export enum TwoFactEnum { Google, Phone, NULL }
+import { GoogleAuthenticaion } from "./GoogleAuth";
+import { LoginProps, TwoFactEnum } from "../../Props/Registration/LoginProps";
 
 export const Login = (props: LoginProps) : JSX.Element | undefined => {
 	const [isTwoFactAuthRequired, setIsTwoFactAuthRequired] = useState(false);
@@ -76,7 +60,9 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 				setIsAuthReq={setIsTwoFactAuthRequired} setTwoFactType={setTwoFactType}/>;
 		case TwoFactEnum.Phone:
 			return <PhoneAuthentication setAuthType={setTwoFactType} />;
+		case TwoFactEnum.Google:
+			return <GoogleAuthenticaion />;
 		}
 	}
-
 };
+export { TwoFactEnum };

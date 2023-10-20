@@ -4,20 +4,7 @@ import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
 import { TwoFactEnum } from "./Login";
 import { Loading } from "../Loading";
-
-interface CodeAreaProps {
-	code: number[];
-	updateAtIndex: (index: number, value: string) => void;
-}
-
-interface SqaureProps {
-	index: number;
-	updateAtIndex: (index: number, value: string) => void;
-}
-
-interface PhoneAuthProps {
-	setAuthType: (value: TwoFactEnum) => void;
-}
+import { PhoneAuthProps, CodeAreaProps, SqaureProps } from "../../Props/Registration/LoginProps";
 
 export const PhoneAuthentication = (props: PhoneAuthProps) : JSX.Element | null => {
 	const [code, setCode] = useState([NaN, NaN, NaN, NaN, NaN, NaN]);
