@@ -50,7 +50,7 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 					<h2>Sign in to Ft-Transcendence</h2>
 				</div>
 			</div>
-			<div className="row mt-5">
+			<div className="row mt-3 mt-md-5">
 				<ButtonFor42Register />
 				<div className="col-12 col-md-8 offset-md-2">
 					<form onSubmit={handleSubmit(data => signIn(data))}>
@@ -83,7 +83,7 @@ export const ButtonFor42Register = () : JSX.Element => {
 const SignInInputs = (props: SignInProps) : JSX.Element => {
 
 	return (
-		<div className="row mt-5">
+		<div className="row mt-2 mt-md-5">
 			<div className="col-12">
 				<p>or use your email account</p>
 				<p className="form-error-text">{props.errorMessage}</p>
@@ -126,7 +126,7 @@ const SignInButton = () : JSX.Element => {
 
 const ForgotPasssword = () : JSX.Element => {
 	return (
-		<div className="row mt-3">
+		<div className="row mt-1 mt-md-3">
 			<div className="col-12">
 				<button className="btn btn-link">Forgot your password?</button>
 			</div>
@@ -137,10 +137,10 @@ const ForgotPasssword = () : JSX.Element => {
 const SwitcherPanel = () : JSX.Element => {
 	return (
 		<div className="row only-phone mt-4">
-			<div className="col-8 offset-2">
+			<div className="col-12 col-md-8 offset-md-2">
 				<button
 					type="submit"
-					className="btn btn-secondary w-100">Not registered? Sign up here
+					className="btn btn-secondary w-100">Sign up here
 				</button>
 			</div>
 		</div>

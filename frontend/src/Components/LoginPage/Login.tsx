@@ -34,7 +34,7 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 	if (!isTwoFactAuthRequired) {
 		return (
 			<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
-				<div className="row">
+				<div className="row d-flex align-items-center justify-content-center">
 					<div className="col-10 sign-box">
 						<div className="row full-height align-items-center">
 							<div className={`info-bg ${isLogin ? "border-right" : "border-left"} phone-hide`}></div>
@@ -71,11 +71,11 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 	}
 	if (isTwoFactAuthRequired) {
 		switch (twoFactType) {
-		case TwoFactEnum.NULL: 
+		case TwoFactEnum.NULL:
 			return <TwoFactorAuth setIsLoading={setIsLoading}
 				setIsAuthReq={setIsTwoFactAuthRequired} setTwoFactType={setTwoFactType}/>;
 		case TwoFactEnum.Phone:
-			return <PhoneAuthentication />;
+			return <PhoneAuthentication setAuthType={setTwoFactType} />;
 		}
 	}
 

@@ -2,6 +2,8 @@ import "./PhoneAuthentication.css";
 import { useState } from "react";
 import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
+import { TwoFactEnum } from "./Login";
+import { Loading } from "../Loading";
 
 interface CodeAreaProps {
 	code: number[];
@@ -13,8 +15,13 @@ interface SqaureProps {
 	updateAtIndex: (index: number, value: string) => void;
 }
 
-export const PhoneAuthentication = () : JSX.Element | null => {
+interface PhoneAuthProps {
+	setAuthType: (value: TwoFactEnum) => void;
+}
+
+export const PhoneAuthentication = (props: PhoneAuthProps) : JSX.Element | null => {
 	const [code, setCode] = useState([NaN, NaN, NaN, NaN, NaN, NaN]);
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const focusNextInput = () => {
@@ -40,21 +47,20 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 	};
 
 	const confirmActivation = () : void => {
+		setIsLoading(true);
 		console.log("Sending code");
 		console.log(code);
 	};
 	const cancelActivation = () : void => {
-		navigate("/");
+		props.setAuthType(TwoFactEnum.NULL);
 	};
 
 	return (
 		<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
 			<div className="row">
-				<div className="col-10 offset-1 col-md-8 offset-md-2 two-fact-box">
+				<div className="col-12 offset-1 col-md-8 offset-md-2 two-fact-box">
 					<TitleArea />
-					<div className="code-area">
-						<CodeArea code={code} updateAtIndex={updateValueAtIndex}/>
-					</div>
+					<CodeArea code={code} updateAtIndex={updateValueAtIndex}/>
 					<div>
 						<LoginButton
 							func={confirmActivation}
@@ -69,6 +75,7 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 					</div>
 				</div>
 			</div>
+			{isLoading && <Loading type="border" variant="info" message=""/>}
 		</div>
 	);
 };
@@ -87,15 +94,18 @@ const TitleArea = () : JSX.Element => {
 
 const CodeArea = (props: CodeAreaProps) : JSX.Element | null => {
 	return (
-		<div className="row">
+		<div className="row code-area">
 			<div className="col-8 offset-2">
-				<div className="row">
-					{(() => {
-						const arr = [];
-						for (let i = 0; i < 6; i++)
-							arr.push(<PhoneCodeSquare key={i} index={i} updateAtIndex={props.updateAtIndex} />);
-						return arr;
-					})()}
+				<div className="row d-flex align-items-center justify-content-center">
+					<div className="col-12 d-flex align-items-center justify-content-center">
+						{(() => {
+							const arr = [];
+							for (let i = 0; i < 6; i++)
+								arr.push(<PhoneCodeSquare key={i}
+									index={i} updateAtIndex={props.updateAtIndex} />);
+							return arr;
+						})()}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -111,13 +121,11 @@ const PhoneCodeSquare = (props: SqaureProps) : JSX.Element | null => {
 		props.updateAtIndex(props.index, correctValue);
 	};
 	return (
-		<div className="col-1 offset-1 border border-success">
-			<input
-				className=""
-				value={value}
-				onChange={(e)=>handleChange(e)}
-				id={`phone-code-input-${props.index}`}
-			/>
-		</div>
+		<input
+			className="phone-input"
+			value={value}
+			onChange={(e)=>handleChange(e)}
+			id={`phone-code-input-${props.index}`}
+		/>
 	);
 };

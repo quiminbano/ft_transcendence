@@ -3,13 +3,20 @@
 	margin-bottom: 3vh;
 }
 
+.phone-input {
+	text-align: center;
+	width: 45px;
+	height: 45px;
+	margin: 1px;
+}
+
+
 @media only screen and (max-width: 576px) {
-	.phone-code-square {
-		border: 1px solid black;
+	.phone-input {
 		text-align: center;
 		width: 30px;
 		height: 30px;
-		margin: 3px;
+		margin: 1px;
 	}
 }
 

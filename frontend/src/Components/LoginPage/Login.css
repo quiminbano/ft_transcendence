@@ -136,3 +136,10 @@
 		opacity: 1;
 	}
 }
+
+
+@media only screen and (max-width: 576px) {
+	.sign-box {
+		width: 95%;
+	}
+}
