@@ -6,6 +6,7 @@ import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
 import { Loading } from "../Loading";
 import { TwoFactorAuth } from "./TwoFactorAuth";
+import { PhoneAuthentication } from "./PhoneAuthentication";
 
 export interface InfoToSignProps {
 	isLogin: boolean;
@@ -14,6 +15,7 @@ export interface InfoToSignProps {
 	setIsLoading: (value: boolean) => void;
 	setIsTwoFactAuthRequired: (value: boolean) => void;
 	setIsAuth: (value: boolean) => void;
+	setTwoFactType: (value: TwoFactEnum) => void;
 }
 
 interface LoginProps {
@@ -21,8 +23,11 @@ interface LoginProps {
 	setIsAuthenticated: (value: boolean) => void;
 }
 
+export enum TwoFactEnum { Google, Phone, NULL }
+
 export const Login = (props: LoginProps) : JSX.Element | undefined => {
 	const [isTwoFactAuthRequired, setIsTwoFactAuthRequired] = useState(false);
+	const [twoFactType, setTwoFactType] = useState<TwoFactEnum>(TwoFactEnum.NULL);
 	const [isLogin, setIsLogin] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -39,11 +44,11 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
 											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
-											setIsAuth={props.setIsAuthenticated}/>}
+											setIsAuth={props.setIsAuthenticated} setTwoFactType={setTwoFactType}/>}
 										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
 											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
-											setIsAuth={props.setIsAuthenticated}/>}
+											setIsAuth={props.setIsAuthenticated} setTwoFactType={setTwoFactType}/>}
 									</div>
 								</div>
 							</div>
@@ -53,7 +58,7 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
 											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
-											setIsAuth={props.setIsAuthenticated}/>
+											setIsAuth={props.setIsAuthenticated} setTwoFactType={setTwoFactType}/>
 									</div>
 								</div>
 							</div>
@@ -64,6 +69,14 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 			</div>
 		);
 	}
-	if (isTwoFactAuthRequired)
-		return <TwoFactorAuth setIsLoading={setIsLoading} setIsAuthReq={setIsTwoFactAuthRequired}/>;
+	if (isTwoFactAuthRequired) {
+		switch (twoFactType) {
+		case TwoFactEnum.NULL: 
+			return <TwoFactorAuth setIsLoading={setIsLoading}
+				setIsAuthReq={setIsTwoFactAuthRequired} setTwoFactType={setTwoFactType}/>;
+		case TwoFactEnum.Phone:
+			return <PhoneAuthentication />;
+		}
+	}
+
 };
