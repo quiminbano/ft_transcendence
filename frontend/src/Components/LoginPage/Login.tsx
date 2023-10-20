@@ -13,9 +13,15 @@ export interface InfoToSignProps {
 	isLoading: boolean;
 	setIsLoading: (value: boolean) => void;
 	setIsTwoFactAuthRequired: (value: boolean) => void;
+	setIsAuth: (value: boolean) => void;
 }
 
-export const Login = () : JSX.Element | undefined => {
+interface LoginProps {
+	isAuthenticated: boolean;
+	setIsAuthenticated: (value: boolean) => void;
+}
+
+export const Login = (props: LoginProps) : JSX.Element | undefined => {
 	const [isTwoFactAuthRequired, setIsTwoFactAuthRequired] = useState(false);
 	const [isLogin, setIsLogin] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
@@ -32,10 +38,12 @@ export const Login = () : JSX.Element | undefined => {
 									<div className="col-12">
 										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
-											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}/>}
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
+											setIsAuth={props.setIsAuthenticated}/>}
 										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
-											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}/>}
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
+											setIsAuth={props.setIsAuthenticated}/>}
 									</div>
 								</div>
 							</div>
@@ -44,7 +52,8 @@ export const Login = () : JSX.Element | undefined => {
 									<div className="col-12">
 										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
-											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}/>
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
+											setIsAuth={props.setIsAuthenticated}/>
 									</div>
 								</div>
 							</div>

@@ -30,6 +30,10 @@
 	cursor: pointer;
 	outline: inherit;
 	padding: 10px 0;
+	transition: all 0.25s linear;
+}
+.menu-button:hover {
+	transform: scale(1.05);
 }
 
 @media only screen and (max-width: 576px) {

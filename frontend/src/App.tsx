@@ -16,7 +16,9 @@ const App = () => {
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<Homepage />} />
-						<Route path="/login" element={<Login />} />
+						<Route path="/login" element={
+							<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+						} />
 					</Routes>
 				</BrowserRouter>
 			</div>
@@ -24,11 +26,12 @@ const App = () => {
 	}
 
 	if (user && isAuthenticated) {
+		console.log("Should show mainmenu now");
 		return (
 			<div className="App">
 				<BrowserRouter>
 					<Routes>
-						<Route path="/mainmenu" element={<MainMenu />} />
+						<Route path="/" element={<MainMenu />} />
 					</Routes>
 				</BrowserRouter>
 			</div>

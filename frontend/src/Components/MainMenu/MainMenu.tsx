@@ -1,3 +1,4 @@
+import useUser from "../../Hooks/useUser";
 import "./MainMenu.css";
 
 interface InputProps {
@@ -14,11 +15,11 @@ export const MainMenu = () : JSX.Element => {
 };
 
 const TitleArea = () : JSX.Element => {
-	const userExample = "Andre";
+	const userExample = useUser().user.username;
 	return (
 		<div className="row title-area">
 			<div className="col-12">
-				<h1>WELCOME TO ARCADE <br/>{userExample}</h1>
+				<h1>WELCOME TO ARCADE <br/>{userExample.toUpperCase()}</h1>
 			</div>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import "./SignIn.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { InfoToSignProps } from "./Login";
+import { useNavigate } from "react-router-dom";
 import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
 import useUser from "../../Hooks/useUser";
@@ -16,6 +17,8 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
 	const [errorMessage, setErrorMessage] = useState("");
 	const { register, handleSubmit, formState: { errors } } = useForm();
+	const setUser = useUser().setUser;
+	const navigate = useNavigate();
 
 	const signIn = async (data: FieldValues) => {
 		const user = await loginAPITest.getUsers(data.username);
@@ -27,11 +30,15 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 			}
 			else {
 				// Do something here!!!!!
-				const setUser = useUser();
-
+				//const setUser = useUser();
+				setUser(user);
+				props.setIsLoading(false);
 				if (user.twoFactAuth)
 					props.setIsTwoFactAuthRequired(true);
-				props.setIsLoading(false);
+				else {
+					props.setIsAuth(true);
+					navigate("/");
+				}
 			}
 		}, 1500);
 	};
