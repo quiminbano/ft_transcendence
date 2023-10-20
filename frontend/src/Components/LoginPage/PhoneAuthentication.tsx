@@ -48,28 +48,38 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 	};
 
 	return (
-		<div className="signIn-signUp-pages">
-			<div className="signIn-signUp-box">
-				<div>
-					<h2>Two authentication factor</h2>
-					<p>For security reasons we sent you a message with a code.
-						Please insert it in the following space to confirm your identity</p>
+		<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
+			<div className="row">
+				<div className="col-10 offset-1 col-md-8 offset-md-2 two-fact-box">
+					<TitleArea />
+					<div className="code-area">
+						<CodeArea code={code} updateAtIndex={updateValueAtIndex}/>
+					</div>
+					<div>
+						<LoginButton
+							func={confirmActivation}
+							message="Confirm"
+							variant="success"
+						/>
+						<LoginButton
+							func={cancelActivation}
+							message="Cancel"
+							variant="danger"
+						/>
+					</div>
 				</div>
-				<div className="code-area">
-					<CodeArea code={code} updateAtIndex={updateValueAtIndex}/>
-				</div>
-				<div>
-					<LoginButton
-						func={confirmActivation}
-						message="Confirm"
-						variant="success"
-					/>
-					<LoginButton
-						func={cancelActivation}
-						message="Cancel"
-						variant="danger"
-					/>
-				</div>
+			</div>
+		</div>
+	);
+};
+
+const TitleArea = () : JSX.Element => {
+	return (
+		<div className="row">
+			<div className="col-12">
+				<h2>Two authentication factor</h2>
+				<p>For security reasons we sent you a message with a code.
+					Please insert it in the following space to confirm your identity</p>
 			</div>
 		</div>
 	);
@@ -77,14 +87,18 @@ export const PhoneAuthentication = () : JSX.Element | null => {
 
 const CodeArea = (props: CodeAreaProps) : JSX.Element | null => {
 	return (
-		<>
-			{(() => {
-				const arr = [];
-				for (let i = 0; i < 6; i++)
-					arr.push(<PhoneCodeSquare key={i} index={i} updateAtIndex={props.updateAtIndex} />);
-				return arr;
-			})()}
-		</>
+		<div className="row">
+			<div className="col-8 offset-2">
+				<div className="row">
+					{(() => {
+						const arr = [];
+						for (let i = 0; i < 6; i++)
+							arr.push(<PhoneCodeSquare key={i} index={i} updateAtIndex={props.updateAtIndex} />);
+						return arr;
+					})()}
+				</div>
+			</div>
+		</div>
 	);
 };
 
@@ -97,11 +111,13 @@ const PhoneCodeSquare = (props: SqaureProps) : JSX.Element | null => {
 		props.updateAtIndex(props.index, correctValue);
 	};
 	return (
-		<input
-			className="phone-code-square"
-			value={value}
-			onChange={(e)=>handleChange(e)}
-			id={`phone-code-input-${props.index}`}
-		/>
+		<div className="col-1 offset-1 border border-success">
+			<input
+				className=""
+				value={value}
+				onChange={(e)=>handleChange(e)}
+				id={`phone-code-input-${props.index}`}
+			/>
+		</div>
 	);
 };
