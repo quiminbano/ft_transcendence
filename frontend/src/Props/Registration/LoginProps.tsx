@@ -40,6 +40,6 @@ export interface SqaureProps {
 	updateAtIndex: (index: number, value: string) => void;
 }
 
-export interface PhoneAuthProps {
+export interface AuthProps {
 	setAuthType: (value: TwoFactEnum) => void;
 }

@@ -4,9 +4,9 @@ import { LoginButton } from "./LoginButton";
 import { useNavigate } from "react-router-dom";
 import { TwoFactEnum } from "./Login";
 import { Loading } from "../Loading";
-import { PhoneAuthProps, CodeAreaProps, SqaureProps } from "../../Props/Registration/LoginProps";
+import { AuthProps, CodeAreaProps, SqaureProps } from "../../Props/Registration/LoginProps";
 
-export const PhoneAuthentication = (props: PhoneAuthProps) : JSX.Element | null => {
+export const PhoneAuthentication = (props: AuthProps) : JSX.Element | null => {
 	const [code, setCode] = useState([NaN, NaN, NaN, NaN, NaN, NaN]);
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
