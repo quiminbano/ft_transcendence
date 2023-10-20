@@ -13,9 +13,15 @@ const getUsers = async (username: string) => {
 		return null;
 	return user;
 };
+const isCodeCorrect = (code: string) => {
+	if (code === "123456")
+		return true;
+	return false;
+};
 
 const loginAPITest = {
 	getUsers,
+	isCodeCorrect
 };
 
 export default loginAPITest;

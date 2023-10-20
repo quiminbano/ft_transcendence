@@ -59,9 +59,9 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 			return <TwoFactorAuth setIsLoading={setIsLoading}
 				setIsAuthReq={setIsTwoFactAuthRequired} setTwoFactType={setTwoFactType}/>;
 		case TwoFactEnum.Phone:
-			return <PhoneAuthentication setAuthType={setTwoFactType} />;
+			return <PhoneAuthentication setAuthType={setTwoFactType} setIsAuth={props.setIsAuthenticated}/>;
 		case TwoFactEnum.Google:
-			return <GoogleAuthenticaion setAuthType={setTwoFactType}/>;
+			return <GoogleAuthenticaion setAuthType={setTwoFactType} setIsAuth={props.setIsAuthenticated}/>;
 		}
 	}
 };

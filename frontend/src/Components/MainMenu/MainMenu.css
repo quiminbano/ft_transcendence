@@ -1,6 +1,6 @@
 #main-menu-main-container {
 	min-height: 100vh;
-	background-image: url("../../Media/Images/MainMenu/main-menu-bg.png");
+	background-image: url("../../Media/Images/MainMenu/bg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	overflow: hidden;
@@ -41,7 +41,7 @@
 		font-size: 2rem;
 		padding-top: 28vh;
 	}
-	
+
 	.menu-input-area {
 		padding-top: 4vh;
 		font-size: 1.3rem;
@@ -55,7 +55,7 @@
 		font-size: 4rem;
 		padding-top: 28vh;
 	}
-	
+
 	.menu-input-area {
 		padding-top: 10vh;
 		font-size: 2rem;

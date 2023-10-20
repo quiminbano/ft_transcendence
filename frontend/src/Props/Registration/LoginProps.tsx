@@ -42,4 +42,15 @@ export interface SqaureProps {
 
 export interface AuthProps {
 	setAuthType: (value: TwoFactEnum) => void;
+	setIsAuth: (value: boolean) => void;
+}
+
+export interface CodeStateProps {
+	code: string;
+	setCode: (value: string) => void;
+}
+
+export interface ConfirmCode {
+	setIsCodeCorrect: (value: boolean) => void;
+	code: string;
 }
