@@ -1,8 +1,8 @@
 import "./SignIn.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { InfoToSignProps, SignInProps } from "../../Props/Registration/LoginProps";
 import { useNavigate } from "react-router-dom";
-import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
 import useUser from "../../Hooks/useUser";
 
@@ -44,16 +44,20 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 				</div>
 			</div>
 			<div className="row mt-3 mt-md-5">
-				<ButtonFor42Register />
-				<div className="col-12 col-md-8 offset-md-2">
-					<form onSubmit={handleSubmit(data => signIn(data))}>
-						<SignInInputs register={register} errors={errors}
-							errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
-						<SignInButton />
-						<ForgotPasssword />
-					</form>
+				<div className="col-12">
+					<ButtonFor42Register />
+					<div className="row">
+						<div className="col-12 col-md-8 offset-md-2">
+							<form onSubmit={handleSubmit(data => signIn(data))}>
+								<SignInInputs register={register} errors={errors}
+									errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+								<SignInButton />
+								<ForgotPasssword />
+							</form>
+						</div>
+					</div>
+					<SwitcherPanel />
 				</div>
-				<SwitcherPanel />
 			</div>
 		</div>
 	);
@@ -61,13 +65,11 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
 export const ButtonFor42Register = () : JSX.Element => {
 	return (
-		<div className="col-12">
-			<div className="row">
-				<div className="col-12 col-md-8 offset-md-2">
-					<button className="btn btn-outline-secondary w-100">
-						<img alt="42 school logo" id="logo-42-school" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/800px-42_Logo.svg.png"></img>
-					</button>
-				</div>
+		<div className="row">
+			<div className="col-12 col-md-8 offset-md-2">
+				<button className="btn btn-outline-secondary w-100">
+					<img alt="42 school logo" id="logo-42-school" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/800px-42_Logo.svg.png"></img>
+				</button>
 			</div>
 		</div>
 	);
@@ -133,7 +135,7 @@ const SwitcherPanel = () : JSX.Element => {
 			<div className="col-12 col-md-8 offset-md-2">
 				<button
 					type="submit"
-					className="btn btn-secondary w-100">Sign up here
+					className="btn btn-secondary w-100">Not registered?<br/>Sign up here
 				</button>
 			</div>
 		</div>

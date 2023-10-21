@@ -1,42 +1,36 @@
 import "./PhoneAuthentication.css";
 import { useState } from "react";
 import { LoginButton } from "./LoginButton";
-import { useNavigate } from "react-router-dom";
 import { TwoFactEnum } from "./Login";
 import { Loading } from "../Loading";
-import { AuthProps, CodeAreaProps, SqaureProps } from "../../Props/Registration/LoginProps";
+import { AuthProps } from "../../Props/Registration/LoginProps";
+import { OtpInputComponent } from "../InputCode";
+import loginAPITest from "../../DataTest/apiTest";
+import { useNavigate } from "react-router-dom";
 
 export const PhoneAuthentication = (props: AuthProps) : JSX.Element | null => {
-	const [code, setCode] = useState([NaN, NaN, NaN, NaN, NaN, NaN]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [otp, setOtp] = useState("");
+	const onChange = (value: string) => setOtp(value);
+	const [errorMessage, setErrorMessage] = useState("");
+
 	const navigate = useNavigate();
-
-	const focusNextInput = () => {
-		const active = document.activeElement;
-		if (active?.nextElementSibling)
-			(active.nextElementSibling as HTMLElement).focus();
-	};
-
-	const updateValueAtIndex = (index: number, value: string) => {
-		const nbr = parseInt(value);
-		const items = [...code];
-		let itemToUpdate = items[index];
-		itemToUpdate = nbr;
-		items[index] = itemToUpdate;
-		setCode(items);
-		if (value.length > 0)
-			focusNextInput();
-		else {
-			const prevInput = document.getElementById(`phone-code-input-${index - 1}`);
-			console.log(prevInput);
-			prevInput?.focus();
-		}
-	};
-
+	//This is JUST FOR TESTING PURPOSES!!!
 	const confirmActivation = () : void => {
 		setIsLoading(true);
 		console.log("Sending code");
-		console.log(code);
+		setTimeout(() => {
+			if (loginAPITest.isCodeCorrect(otp)) {
+				props.setIsAuth(true);
+				navigate("/");
+			}
+			else {
+				setErrorMessage("Invalid code");
+			}
+			setIsLoading(false);
+		}, 1000);
+		//Handle code validtion here!! useSetErrorMEssage in case of error
+		
 	};
 	const cancelActivation = () : void => {
 		props.setAuthType(TwoFactEnum.NULL);
@@ -45,9 +39,14 @@ export const PhoneAuthentication = (props: AuthProps) : JSX.Element | null => {
 	return (
 		<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
 			<div className="row">
-				<div className="col-12 offset-1 col-md-8 offset-md-2 two-fact-box">
+				<div className="col-10 offset-1 col-md-8 offset-md-2 two-fact-box">
 					<TitleArea />
-					<CodeArea code={code} updateAtIndex={updateValueAtIndex}/>
+					<div className="row">
+						<div className="col-12 d-flex align-items-center justify-content-center">
+							<OtpInputComponent value={otp} valueLength={6} onChange={onChange}/>
+						</div>
+						<p className="form-error-text">{errorMessage}</p>
+					</div>
 					<div>
 						<LoginButton
 							func={confirmActivation}
@@ -76,43 +75,5 @@ const TitleArea = () : JSX.Element => {
 					Please insert it in the following space to confirm your identity</p>
 			</div>
 		</div>
-	);
-};
-
-const CodeArea = (props: CodeAreaProps) : JSX.Element | null => {
-	return (
-		<div className="row code-area">
-			<div className="col-8 offset-2">
-				<div className="row d-flex align-items-center justify-content-center">
-					<div className="col-12 d-flex align-items-center justify-content-center">
-						{(() => {
-							const arr = [];
-							for (let i = 0; i < 6; i++)
-								arr.push(<PhoneCodeSquare key={i}
-									index={i} updateAtIndex={props.updateAtIndex} />);
-							return arr;
-						})()}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-};
-
-const PhoneCodeSquare = (props: SqaureProps) : JSX.Element | null => {
-	const [value, setValue] = useState("");
-
-	const handleChange = (e :React.FormEvent<HTMLInputElement>) : void => {
-		const correctValue = e.currentTarget.value. length === 0 ? e.currentTarget.value : e.currentTarget.value[0];
-		setValue(correctValue);
-		props.updateAtIndex(props.index, correctValue);
-	};
-	return (
-		<input
-			className="phone-input"
-			value={value}
-			onChange={(e)=>handleChange(e)}
-			id={`phone-code-input-${props.index}`}
-		/>
 	);
 };

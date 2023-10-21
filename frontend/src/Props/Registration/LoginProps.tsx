@@ -30,16 +30,6 @@ export interface TwoFactorAuthProps {
 	setTwoFactType: (value: TwoFactEnum) => void;
 }
 
-export interface CodeAreaProps {
-	code: number[];
-	updateAtIndex: (index: number, value: string) => void;
-}
-
-export interface SqaureProps {
-	index: number;
-	updateAtIndex: (index: number, value: string) => void;
-}
-
 export interface AuthProps {
 	setAuthType: (value: TwoFactEnum) => void;
 	setIsAuth: (value: boolean) => void;
@@ -53,4 +43,5 @@ export interface CodeStateProps {
 export interface ConfirmCode {
 	setIsCodeCorrect: (value: boolean) => void;
 	code: string;
+	setIsLoading: (value: boolean) => void;
 }
