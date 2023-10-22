@@ -1,3 +1,10 @@
+:root {
+	--primary: #0091ff;
+	--dark: #061b28;
+	--gray: #756388;
+	--light: #ffffff;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -19,6 +26,10 @@ code {
 
 .form-error-text {
 	color: red;
+}
+
+.full-page {
+	min-height: 100vh;
 }
 
 

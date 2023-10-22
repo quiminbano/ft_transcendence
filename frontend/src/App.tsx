@@ -5,6 +5,7 @@ import { Homepage } from "./Components/homepage/Homepage";
 import { Login } from "./Components/LoginPage/Login";
 import { MainMenu } from "./Components/MainMenu/MainMenu";
 import useUser from "./Hooks/useUser";
+import { PlayGround } from "./Components/PlayGround/PlayGround";
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
 						<Route path="/login" element={
 							<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 						} />
+						<Route path="/playground" element={<PlayGround />} />
 					</Routes>
 				</BrowserRouter>
 			</div>
@@ -32,6 +34,7 @@ const App = () => {
 				<BrowserRouter>
 					<Routes>
 						<Route path="/" element={<MainMenu />} />
+						<Route path="/playground" element={<PlayGround />} />
 					</Routes>
 				</BrowserRouter>
 			</div>

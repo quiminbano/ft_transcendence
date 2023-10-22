@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import "./MainMenu.css";
 
 interface InputProps {
 	name: string;
+	to: string;
 }
 
 export const MainMenu = () : JSX.Element => {
@@ -28,18 +30,25 @@ const TitleArea = () : JSX.Element => {
 const MenuInput = () : JSX.Element => {
 	return (
 		<div className="row menu-input-area">
-			<InputButton name="PLAY" />
-			<InputButton name="SETTINGS" />
-			<InputButton name="EXIT" />
+			<InputButton name="PLAY" to="/playground" />
+			<InputButton name="SETTINGS" to="/settings"/>
+			<InputButton name="EXIT" to="/"/>
 		</div>
 
 	);
 };
 
-const InputButton = ({ name } : InputProps) : JSX.Element => {
+const InputButton = (props: InputProps) : JSX.Element => {
+	const navigate = useNavigate();
+	const handleClick = () => {
+		navigate(props.to);
+	};
 	return (
 		<div className="col-12">
-			<button className="menu-button">{name}</button>
+			<button
+				className="menu-button"
+				onClick={() => handleClick()}
+			>{props.name}</button>
 		</div>
 	);
 };
