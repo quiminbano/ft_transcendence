@@ -6,6 +6,12 @@ interface SideBarProps {
 	expanded: boolean;
 }
 
+interface MenuItemProps {
+	expanded: boolean;
+	url: string;
+	name: string;
+}
+
 export const SideBar = () : JSX.Element => {
 	const [expanded, setExpanded] = useState(false);
 
@@ -21,13 +27,18 @@ export const SideBar = () : JSX.Element => {
 const NavHeading = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
 	return (
 		<div className="row">
-			<div className="col-12 d-flex align-items-center justify-content-center nav-heading ">
-				{expanded && <div className="row">
-					<div className="col-3 d-flex align-items-center justify-content-center">
-						<img id="logo-icon" alt="logo" src="https://cdn-icons-png.flaticon.com/128/5977/5977575.png"/>
+			<div className="col-12 nav-heading">
+				{expanded && <div className="row mb-3">
+					<div className="col-4 offset-4 d-flex align-items-center justify-content-center">
+						<img id="profile-pic" alt="profile picture" src="https://img.icons8.com/?size=100&id=7820&format=png"/>
 					</div>
-					<div className="col-6 d-flex align-items-center justify-content-center">
-						<h2 id="nav-title">Ft-transcendence</h2>
+				</div>}
+				{expanded && <div className="row">
+					<div className="col-6 offset-3 d-flex align-items-center justify-content-center">
+						<div className="nav-footer-info">
+							<p className="nav-footer-user-name">André Miranda</p>
+							<p className="nav-footer-user-position">Builder</p>
+						</div>
 					</div>
 				</div>}
 			</div>
@@ -52,7 +63,7 @@ const NavHamburger = ({ expanded, setExpanded } : SideBarProps) : JSX.Element =>
 const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
 	const menuItems = [
 		{
-			text: "Dashboard",
+			text: "Playground",
 			icon: "https://img.icons8.com/?size=160&id=6rfR2m3WUfBr&format=png"
 		},
 		{
@@ -60,33 +71,38 @@ const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => 
 			icon: "https://cdn-icons-png.flaticon.com/128/1828/1828765.png"
 		},
 		{
-			text: "Dashboard",
+			text: "Challenges",
 			icon: "https://cdn-icons-png.flaticon.com/128/1828/1828765.png"
 		},
 		{
-			text: "Dashboard",
+			text: "Chat",
 			icon: "https://cdn-icons-png.flaticon.com/128/1828/1828765.png"
 		},
 	];
 	return (
 		<div className="row">
 			<div className="col-12 nav-menu">
-				{
-					menuItems.map((item, i) => (
-						<div className="row" key={i}>
-							<div className={`col-12 ${expanded ? "menu-item" : "menu-item menu-item-NX"} `}>
-								<div className="row side-nav-btn">
-									<div className={`d-flex align-items-center justify-content-center ${expanded ? "col-4" : "col-12"}`}>
-										<img className="nav-item-logo" src={item.icon} alt={item.text}/>
-									</div>
-									{expanded && <div className="col-8">
-										<p className="w-auto nav-item-name">{item.text}</p>
-									</div>}
-								</div>
-							</div>
+				{menuItems.map((item, i) =>
+					<MenuItem key={i} expanded={expanded} name={item.text} url={item.icon}/>)}
+			</div>
+		</div>
+	);
+};
+
+const MenuItem = ({ url, expanded, name }: MenuItemProps) : JSX.Element => {
+	return (
+		<div className="container-fluid">
+			<div className="row">
+				<div className="col-10 offset-1 nav-menu-item">
+					<div className="row">
+						<div className={`${expanded ? "col-4" : "col-12"}`}>
+							<img alt={name} src={url} className="nav-item-logo"/>
 						</div>
-					))
-				}
+						{expanded && <div className="col-8 nav-item-name">
+							{name}
+						</div>}
+					</div>
+				</div>
 			</div>
 		</div>
 	);
@@ -94,23 +110,10 @@ const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => 
 
 const SideBarFooter = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
 	return (
-		<div className="nav-footer">
+		<div className="container-fluid">
 			<div className="row">
-				<div className="col-12">
-					<div className="row">
-						{expanded && <div className="col-4 d-flex align-items-center justify-content-center">
-							<img alt="logo" src="https://img.icons8.com/?size=24&id=Fx70T4fgtNmt&format=gif" />
-						</div>}
-						{expanded && <div className="col-5 d-flex align-items-center justify-content-center phone-only">
-							<div className="nav-footer-info">
-								<p className="nav-footer-user-name">André Miranda</p>
-								<p className="nav-footer-user-position">Administrator</p>
-							</div>
-						</div>}
-						<div className={`d-flex align-items-center justify-content-center ${expanded ? "col-3" : "col-8 offset-2"}`}>
-							<img className="logout-icon" src="https://img.icons8.com/?size=50&id=2445&format=png"/>
-						</div>
-					</div>
+				<div className="nav-footer col-12">
+					<img className="logout-icon" src="https://img.icons8.com/?size=50&id=2445&format=png"/>
 				</div>
 			</div>
 		</div>
