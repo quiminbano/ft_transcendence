@@ -64,19 +64,19 @@ const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => 
 	const menuItems = [
 		{
 			text: "Playground",
-			icon: "https://img.icons8.com/?size=160&id=6rfR2m3WUfBr&format=png"
+			icon: "https://img.icons8.com/?size=160&id=RCQdxueNvljL&format=png"
 		},
 		{
 			text: "Dashboard",
-			icon: "https://cdn-icons-png.flaticon.com/128/1828/1828765.png"
+			icon: "https://img.icons8.com/?size=160&id=puOfmvUEqEzU&format=png"
 		},
 		{
 			text: "Challenges",
-			icon: "https://cdn-icons-png.flaticon.com/128/1828/1828765.png"
+			icon: "https://img.icons8.com/?size=160&id=OYkH0eceKGLV&format=png"
 		},
 		{
 			text: "Chat",
-			icon: "https://cdn-icons-png.flaticon.com/128/1828/1828765.png"
+			icon: "https://img.icons8.com/?size=160&id=hCvhdugyicF1&format=png"
 		},
 	];
 	return (
@@ -113,7 +113,7 @@ const SideBarFooter = ({ setExpanded, expanded } : SideBarProps) : JSX.Element =
 		<div className="container-fluid">
 			<div className="row">
 				<div className="nav-footer col-12">
-					<img className="logout-icon" src="https://img.icons8.com/?size=50&id=2445&format=png"/>
+					<img className="logout-icon" src="https://img.icons8.com/?size=160&id=875YZQzHsTV6&format=png"/>
 				</div>
 			</div>
 		</div>

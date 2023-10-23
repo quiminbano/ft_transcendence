@@ -1,19 +1,11 @@
 import { MenuBars } from "../MenuBars/MenuBars";
+import { GameSlider } from "./GameSlider";
 import "./PlayGround.css";
 
 export const PlayGround = () : JSX.Element => {
 	return (
 		<MenuBars>
-			<div>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-				<p>aslkfjhoi</p>
-			</div>
+			<GameSlider />
 		</MenuBars>
 	);
 };
