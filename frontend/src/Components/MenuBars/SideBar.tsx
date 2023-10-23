@@ -30,7 +30,7 @@ const NavHeading = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
 			<div className="col-12 nav-heading">
 				{expanded && <div className="row mb-3">
 					<div className="col-4 offset-4 d-flex align-items-center justify-content-center">
-						<img id="profile-pic" alt="profile picture" src="https://img.icons8.com/?size=100&id=7820&format=png"/>
+						<img id="profile-pic" alt="profile picture" src="https://img.icons8.com/?size=96&id=kDoeg22e5jUY&format=png"/>
 					</div>
 				</div>}
 				{expanded && <div className="row">
