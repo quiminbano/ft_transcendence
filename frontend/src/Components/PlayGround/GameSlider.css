@@ -4,6 +4,7 @@
 	flex-direction: row;
 	align-items: center;
 	position: relative;
+	margin-top: 15vh;
 }
 .gallery-container {
 	width: 100%;
@@ -18,7 +19,7 @@
 .slider-img {
 	height: 200px;
 	opacity: 1;
-	width: 330px;
+	width: 100%;
 	position: absolute;
 	transition: all 0.3s ease-in-out;
 	z-index: 0;
@@ -56,3 +57,28 @@
 	transform: translateX(-50%);
 	transition: all 0.3s ease-in-out;
 }
+
+.slide-button {
+	border: none;
+	background-color: transparent;
+	margin: auto 30px;
+	transition: all 0.25s linear;
+}
+.slide-button:hover {
+	transform: scale(1.1);
+}
+
+.previous-slide-button {
+	transform: rotateY(180deg);
+}
+
+@media only screen and (max-width: 576px) {
+	.slider-image-0, .slider-image-2 {
+		width: 80%;
+	}
+	.slider-image-1{
+		width: 80%;
+	}
+}
+
+

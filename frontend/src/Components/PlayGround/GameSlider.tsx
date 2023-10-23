@@ -5,23 +5,34 @@ export const GameSlider = () : JSX.Element => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const nextSlide = () => {
-		const index = currentIndex + 1 < 3 ? currentIndex + 1 : 0;
+		const index = currentIndex + 1 < data.length ? currentIndex + 1 : 0;
 		setCurrentIndex(index);
-		console.log(index);
+	};
+	const previousSlide = () => {
+		const index = currentIndex - 1 < 0 ? data.length - 1 : currentIndex - 1;
+		setCurrentIndex(index);
 	};
 
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<div className="col-6 offset-3 slider-box">
-					<div className="gallery-container border border-success">
-						<img alt="pic" src={data[currentIndex % 3].name} className={`slider-img slider-image-${currentIndex % 3}`}/>
-						<img alt="pic" src={data[(currentIndex + 1) % 3].name} className={`slider-img slider-image-${(currentIndex + 1) % 3}`}/>
-						<img alt="pic" src={data[(currentIndex + 2) % 3].name} className={`slider-img slider-image-${(currentIndex + 2) % 3}`}/>
+				<div className="col-12 col-md-6 offset-md-3 slider-box">
+					<div className="gallery-container">
+						<img alt="pic" src={data[0].name} className={`slider-img slider-image-${currentIndex % 3}`}/>
+						<img alt="pic" src={data[1].name} className={`slider-img slider-image-${(currentIndex + 1) % 3}`}/>
+						<img alt="pic" src={data[2].name} className={`slider-img slider-image-${(currentIndex + 2) % 3}`}/>
 					</div>
 				</div>
-				<button onClick={() => setCurrentIndex(currentIndex === 0 ? 2 : currentIndex - 1)}>Previous</button>
-				<button onClick={() => nextSlide()}>Next</button>
+				<div className="row">
+					<div className="col-12">
+						<button className="slide-button" onClick={() => previousSlide()}>
+							<img alt="Next slide" className="previous-slide-button" src="https://img.icons8.com/?size=50&id=26138&format=png"></img>
+						</button>
+						<button className="slide-button" onClick={() => nextSlide()}>
+							<img alt="next slide" src="https://img.icons8.com/?size=50&id=26138&format=png"/>	
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

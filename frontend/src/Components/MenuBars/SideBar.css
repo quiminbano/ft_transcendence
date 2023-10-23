@@ -8,6 +8,7 @@
 	transition: 0.4s;
 	display: flex;
 	flex-direction: column;
+	z-index: 99;
 }
 .side-nav-container-NX {
 	width: 100px;
