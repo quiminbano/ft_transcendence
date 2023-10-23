@@ -1,26 +1,23 @@
 .side-nav-container {
-	right: 0;
+	left: 0;
 	background-color: var(--dark);
-	width: 20vw;
+	width: 300px;
 	min-height: 100vh;
-	position: relative;
+	position: fixed;
 	color: var(--light);
 	transition: 0.4s;
 	display: flex;
 	flex-direction: column;
 }
 .side-nav-container-NX {
-	width: 7vw;
+	width: 100px;
 }
 #nav-title {
 	font-size: 1.2rem;
 }
 #logo-icon {
 	width: 75%;
-}
-
-.nav-upper, .nav-heading, .nav-menu .menu-item {
-	display: grid;
+	margin: auto;
 }
 
 .nav-heading {
@@ -29,14 +26,6 @@
 	min-height: 10vh;
 }
 
-.nav-brand {
-	display: flex;
-}
-
-.nav-brand img {
-	width: 40px;
-	padding: 0 10px;
-}
 .hamburger {
 	position: absolute;
 	right: 0;
@@ -116,7 +105,8 @@
 	margin: auto;
 }
 .nav-item-logo {
-	width: 100%;
+	margin: auto;
+	width: 80%;
 }
 .menu-item-NX {
 	margin: auto;
@@ -163,9 +153,62 @@
 	transform: scale(1.05);
 }
 
+
 @media only screen and (max-width: 576px) {
 	.side-nav-container {
 		width: 90vw;
 	}
+	.side-nav-container-NX {
+		width: 60px;
+	}
+	.hamburger {
+		position: absolute;
+		right: 0;
+		top: 3px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		margin: auto -25px;
+		background-color: var(--primary);
+		border: 2px solid var(--light);
+		padding: 20px;
+		border-radius: 90px;
+		height: 51px;
+		width: 54px;
+	}
 	
+	.hamburger span {
+		display: block;
+		margin-top: 5px;
+		background-color: white;
+		border-radius: 15px;
+		height: 4px;
+		width: 30px;
+		transition: 0.4s;
+	}
+	.hamburger:hover span{
+		margin: auto;
+	}
+	.hamburger-in:hover span:nth-child(1){
+		width: 25px;
+		transform: translate(-3px, 8px) rotate(30deg);
+	}
+	.hamburger-in:hover span:nth-child(2){
+		display: none;
+	}
+	.hamburger-in:hover span:nth-child(3){
+		width: 25px;
+		transform: translate(-3px, -8px) rotate(-30deg);
+	}
+	.hamburger-out:hover span:nth-child(1){
+		width: 25px;
+		transform: translate(0px, 8px) rotate(-30deg);
+	}
+	.hamburger-out:hover span:nth-child(2){
+		display: none;
+	}
+	.hamburger-out:hover span:nth-child(3){
+		width: 25px;
+		transform: translate(0px, -8px) rotate(30deg);
+	}
 }

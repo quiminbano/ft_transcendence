@@ -7,7 +7,7 @@ interface SideBarProps {
 }
 
 export const SideBar = () : JSX.Element => {
-	const [expanded, setExpanded] = useState(true);
+	const [expanded, setExpanded] = useState(false);
 	
 	return (
 		<div className={`${expanded ? "side-nav-container" : "side-nav-container side-nav-container-NX"}`}>
@@ -31,15 +31,21 @@ const NavHeading = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
 					</div>
 				</div>}
 			</div>
-			<button
-				className={`hamburger ${expanded ? "hamburger-in" : "hamburger-out"}`}
-				onClick={() => setExpanded(!expanded)}
-			>
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
+			<NavHamburger setExpanded={setExpanded} expanded={expanded} />
 		</div>
+	);
+};
+
+const NavHamburger = ({ expanded, setExpanded } : SideBarProps) : JSX.Element => {
+	return (
+		<button
+			className={`hamburger ${expanded ? "hamburger-in" : "hamburger-out"}`}
+			onClick={() => setExpanded(!expanded)}
+		>
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
 	);
 };
 
@@ -73,9 +79,9 @@ const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => 
 									<div className={`d-flex align-items-center justify-content-center ${expanded ? "col-4" : "col-12"}`}>
 										<img className="nav-item-logo" src={item.icon} alt={item.text}/>
 									</div>
-									<div className="col-md-8">
-										{expanded && <p className="w-auto nav-item-name">{item.text}</p>}
-									</div>
+									{expanded && <div className="col-8">
+										<p className="w-auto nav-item-name">{item.text}</p>
+									</div>}
 								</div>
 							</div>
 						</div>
@@ -95,7 +101,7 @@ const SideBarFooter = ({ setExpanded, expanded } : SideBarProps) : JSX.Element =
 						{expanded && <div className="col-4 d-flex align-items-center justify-content-center">
 							<img alt="logo" src="https://img.icons8.com/?size=24&id=Fx70T4fgtNmt&format=gif" />
 						</div>}
-						{expanded && <div className="col-5 d-flex align-items-center justify-content-center">
+						{expanded && <div className="col-5 d-flex align-items-center justify-content-center phone-only">
 							<div className="nav-footer-info">
 								<p className="nav-footer-user-name">André Miranda</p>
 								<p className="nav-footer-user-position">Administrator</p>
