@@ -8,7 +8,7 @@ interface SideBarProps {
 
 export const SideBar = () : JSX.Element => {
 	const [expanded, setExpanded] = useState(false);
-	
+
 	return (
 		<div className={`${expanded ? "side-nav-container" : "side-nav-container side-nav-container-NX"}`}>
 			<NavHeading setExpanded={setExpanded} expanded={expanded}/>
@@ -53,7 +53,7 @@ const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => 
 	const menuItems = [
 		{
 			text: "Dashboard",
-			icon: "https://img.icons8.com/?size=50&id=vFqlDrzMYOT0&format=png"
+			icon: "https://img.icons8.com/?size=160&id=6rfR2m3WUfBr&format=png"
 		},
 		{
 			text: "Dashboard",
