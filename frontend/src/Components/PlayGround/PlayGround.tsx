@@ -1,12 +1,19 @@
-import { NavBar } from "./NavBar";
+import { MenuBars } from "../MenuBars/MenuBars";
 import "./PlayGround.css";
-import { SideBar } from "./SideBar";
 
 export const PlayGround = () : JSX.Element => {
 	return (
-		<>
-			<NavBar />
-			<SideBar />
-		</>
+		<MenuBars>
+			<div>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+				<p>aslkfjhoi</p>
+			</div>
+		</MenuBars>
 	);
 };
