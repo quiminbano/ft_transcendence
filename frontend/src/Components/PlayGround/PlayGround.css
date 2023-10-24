@@ -1,26 +1,4 @@
-#playground-container {
-	background-image: url(../../Media/Images/MainMenu/bg.jpg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	flex-basis: 100%;
-	transition: padding-left 1s;
-}
-
-.playground-page-with-sidebar {
-	padding-left: 15%;
-}
-#playground-overlay {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.268);
-}
-
-@media only screen and (max-width: 767px) {
-	.playground-page-with-sidebar {
-		margin-left: 75%;
-	}
+.playground-page {
+	padding-top: 35px;
+	min-height: 100vh;
 }

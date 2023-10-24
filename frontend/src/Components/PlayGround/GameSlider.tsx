@@ -14,24 +14,24 @@ export const GameSlider = () : JSX.Element => {
 	};
 
 	return (
-		<div className="row">
-			<div className="col-12 mt-5">
-				<div className="row">
-					<div className="col-12 col-md-6 offset-md-3 slider-box">
+		<div className="row h-100">
+			<div className="col-12 d-flex justify-content-center align-items-center">
+				<div className="row sliderbox">
+					<div className="col-6 col-sm-2 order-1 order-md-0">
+						<button className="slide-button" onClick={() => previousSlide()}>
+							<img alt="Next slide" className="previous-slide-button" src="https://img.icons8.com/?size=50&id=26138&format=png" />
+						</button>
+					</div>
+					<div className="col-12 col-sm-6 offset-sm-1 order-0 order-sm-1">
 						<div className="gallery-container">
 							<img alt="pic" src={data[1].name} className={`slider-img slider-image-${(currentIndex + 1) % 3}`}/>
 							<img alt="pic" src={data[0].name} className={`slider-img slider-image-${currentIndex % 3}`}/>
 							<img alt="pic" src={data[2].name} className={`slider-img slider-image-${(currentIndex + 2) % 3}`}/>
 						</div>
 					</div>
-				</div>
-				<div className="row mt-md-5">
-					<div className="col-12 d-flex align-items-center justify-content-center">
-						<button className="slide-button" onClick={() => previousSlide()}>
-							<img alt="Next slide" className="previous-slide-button" src="https://img.icons8.com/?size=50&id=26138&format=png"></img>
-						</button>
+					<div className="col-6 col-sm-2 offset-md-1 order-2">
 						<button className="slide-button" onClick={() => nextSlide()}>
-							<img alt="next slide" src="https://img.icons8.com/?size=50&id=26138&format=png"/>	
+							<img alt="next slide" src="https://img.icons8.com/?size=50&id=26138&format=png"/>
 						</button>
 					</div>
 				</div>

@@ -5,7 +5,11 @@ import "./PlayGround.css";
 export const PlayGround = () : JSX.Element => {
 	return (
 		<MenuBars>
-			<GameSlider />
+			<div className="row">
+				<div className="col-12 playground-page">
+					<GameSlider />
+				</div>
+			</div>
 		</MenuBars>
 	);
 };

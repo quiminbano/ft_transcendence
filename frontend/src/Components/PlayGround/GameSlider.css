@@ -5,6 +5,9 @@
 	position: relative;
 	border: 1px solid red;
 }
+.sliderbox {
+	width: 100%;
+}
 .gallery-container {
 	width: 100%;
 	display: flex;
@@ -75,6 +78,9 @@
 	.slider-image-1{
 		height: auto;
 		width: 80%;
+	}
+	.slide-button {
+		margin: 130px 0 0 0;
 	}
 }
 
