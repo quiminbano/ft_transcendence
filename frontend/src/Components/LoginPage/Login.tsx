@@ -9,7 +9,7 @@ import { PhoneAuthentication } from "./PhoneAuthentication";
 import { GoogleAuthenticaion } from "./GoogleAuth";
 import { LoginProps, TwoFactEnum } from "../../Props/Registration/LoginProps";
 
-export const Login = (props: LoginProps) : JSX.Element | undefined => {
+export const Login = (props: LoginProps) : JSX.Element => {
 	const [isTwoFactAuthRequired, setIsTwoFactAuthRequired] = useState(false);
 	const [twoFactType, setTwoFactType] = useState<TwoFactEnum>(TwoFactEnum.NULL);
 	const [isLogin, setIsLogin] = useState(true);
@@ -64,5 +64,6 @@ export const Login = (props: LoginProps) : JSX.Element | undefined => {
 			return <GoogleAuthenticaion setAuthType={setTwoFactType} setIsAuth={props.setIsAuthenticated}/>;
 		}
 	}
+	return <Loading type="border" variant="primary" message="" />;
 };
 export { TwoFactEnum };

@@ -1,3 +1,4 @@
+import useUser from "../../Hooks/useUser";
 import "./SideBar.css";
 import { useState } from "react";
 
@@ -25,6 +26,7 @@ export const SideBar = () : JSX.Element => {
 };
 
 const NavHeading = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
+	const { name, coalition } = useUser().user;
 	return (
 		<div className="row">
 			<div className="col-12 nav-heading">
@@ -36,8 +38,8 @@ const NavHeading = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => {
 				{expanded && <div className="row">
 					<div className="col-6 offset-3 d-flex align-items-center justify-content-center">
 						<div className="nav-footer-info">
-							<p className="nav-footer-user-name">André Miranda</p>
-							<p className="nav-footer-user-position">Builder</p>
+							<p className="nav-footer-user-name">{name || ""}</p>
+							<p className="nav-footer-user-position">{coalition || ""}</p>
 						</div>
 					</div>
 				</div>}

@@ -1,7 +1,12 @@
-const UsersDatabase = [
+import { UserProps } from "../Props/User";
+
+const UsersDatabase : Array<UserProps> = [
 	{
 		name: "André Miranda",
 		username: "andrferr",
+		coalition: "Builder",
+		level: 2,
+		xp: 3740,
 		password: "0123456789",
 		twoFactAuth: true
 	},
