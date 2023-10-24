@@ -22,3 +22,8 @@
 	color: white;
 	margin: auto;
 }
+
+.children-area {
+	padding-top: 35px;
+	min-height: 100vh;
+}

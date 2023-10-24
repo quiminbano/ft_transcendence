@@ -20,7 +20,11 @@ export const MenuBars = ({ children } : MenuBarsProp) : JSX.Element => {
 				<div className="col-10 col-sm-11">
 					<div className="row">
 						<div className="col-12">
-							{children}
+							<div className="row">
+								<div className="col-12 children-area">
+									{children}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -6,6 +6,7 @@ import { Login } from "./Components/LoginPage/Login";
 import { MainMenu } from "./Components/MainMenu/MainMenu";
 import useUser from "./Hooks/useUser";
 import { PlayGround } from "./Components/PlayGround/PlayGround";
+import { Dashboard } from "./Components/Dashboard/Dashboard";
 
 const App = () => {
 
@@ -20,7 +21,7 @@ const App = () => {
 						<Route path="/login" element={
 							<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 						} />
-						<Route path="/playground" element={<PlayGround />} />
+						<Route path="/dashboard" element={<Dashboard />} />
 					</Routes>
 				</BrowserRouter>
 			</div>
@@ -35,6 +36,7 @@ const App = () => {
 					<Routes>
 						<Route path="/" element={<MainMenu />} />
 						<Route path="/playground" element={<PlayGround />} />
+						<Route path="/dashboard" element={<Dashboard />} />
 					</Routes>
 				</BrowserRouter>
 			</div>
