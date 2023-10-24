@@ -1,0 +1,40 @@
+.svg-pi-wrapper {
+	position: relative;
+}
+
+.svg-pi {
+	transform: rotate(-90deg);
+}
+.svg-pi-indicator-spinner {
+	animation: spinner 0.75s linear infinite;
+	transform-origin: center;
+}
+.svg-pi-label {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+.svg-pi-label-loading {
+	opacity: 0.5;
+	font-size: 0.75em;
+}
+
+.svg-pi-label-progress {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.svg-pi-label-loading,
+.svg-pi-label-progress {
+	display: block;
+}
+@keyframes spinner {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

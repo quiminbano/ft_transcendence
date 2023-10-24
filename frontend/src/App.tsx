@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Homepage } from "./Components/homepage/Homepage";
 import { Login } from "./Components/LoginPage/Login";
 import { MainMenu } from "./Components/MainMenu/MainMenu";
@@ -22,6 +22,10 @@ const App = () => {
 							<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 						} />
 						<Route path="/dashboard" element={<Dashboard />} />
+						<Route
+							path="*"
+							element={<Navigate to="/" replace />}
+						/>
 					</Routes>
 				</BrowserRouter>
 			</div>
@@ -37,6 +41,10 @@ const App = () => {
 						<Route path="/" element={<MainMenu />} />
 						<Route path="/playground" element={<PlayGround />} />
 						<Route path="/dashboard" element={<Dashboard />} />
+						<Route
+							path="*"
+							element={<Navigate to="/" replace />}
+						/>
 					</Routes>
 				</BrowserRouter>
 			</div>
