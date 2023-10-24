@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
 import "./SideBar.css";
 import { useState } from "react";
@@ -92,10 +93,15 @@ const SideBarMenu = ({ setExpanded, expanded } : SideBarProps) : JSX.Element => 
 };
 
 const MenuItem = ({ url, expanded, name }: MenuItemProps) : JSX.Element => {
+	const navigate = useNavigate();
+	const handleNavigate = () => {
+		const location = "/" + name.toLowerCase();
+		navigate(location);
+	};
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<div className="col-10 offset-1 nav-menu-item">
+				<div className="col-10 offset-1 nav-menu-item" onClick={() => handleNavigate()}>
 					<div className="row">
 						<div className={`${expanded ? "col-4" : "col-12"}`}>
 							<img alt={name} src={url} className="nav-item-logo"/>
