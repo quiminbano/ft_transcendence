@@ -19,9 +19,13 @@ export const SideBar = () : JSX.Element => {
 
 	return (
 		<div className={`${expanded ? "side-nav-container" : "side-nav-container side-nav-container-NX"}`}>
-			<NavHeading setExpanded={setExpanded} expanded={expanded}/>
-			<SideBarMenu setExpanded={setExpanded} expanded={expanded} />
-			<SideBarFooter setExpanded={setExpanded} expanded={expanded} />
+			<div className="sidebar-div border">
+				<NavHeading setExpanded={setExpanded} expanded={expanded}/>
+				<SideBarMenu setExpanded={setExpanded} expanded={expanded} />
+				<div className="border">
+					<SideBarFooter setExpanded={setExpanded} expanded={expanded} />
+				</div>
+			</div>
 		</div>
 	);
 };

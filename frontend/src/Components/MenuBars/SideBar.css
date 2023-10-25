@@ -2,13 +2,21 @@
 	left: 0;
 	background-color: var(--dark);
 	width: 300px;
-	min-height: 100vh;
+	height: 100vh;
 	position: fixed;
 	color: var(--light);
 	transition: 0.4s;
 	display: flex;
 	flex-direction: column;
 	z-index: 99;
+}
+.sidebar-div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
 }
 .side-nav-container-NX {
 	width: 100px;
