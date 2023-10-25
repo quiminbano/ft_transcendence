@@ -42,7 +42,6 @@ const ExperienceBar = () : JSX.Element => {
 const ProgressBar = () : JSX.Element => {
 	const { xp, level } = useUser().user;
 	const progress = xp / (5000 * level) * 100;
-	console.log(progress);
 	return (
 		<div className="progress">
 			<div

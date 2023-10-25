@@ -127,12 +127,9 @@
 .nav-footer {
 	width: 100%;
 	display: flex;
-	min-height: 3vh;
 	justify-items: center;
 	align-items: center;
 }
-
-
 .nav-footer-user-name {
 	font-size: 18px;
 	font-weight: 900;

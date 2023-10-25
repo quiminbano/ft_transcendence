@@ -22,7 +22,7 @@ export const SideBar = () : JSX.Element => {
 			<div className="sidebar-div border">
 				<NavHeading setExpanded={setExpanded} expanded={expanded}/>
 				<SideBarMenu setExpanded={setExpanded} expanded={expanded} />
-				<div className="border">
+				<div>
 					<SideBarFooter setExpanded={setExpanded} expanded={expanded} />
 				</div>
 			</div>

@@ -1,0 +1,23 @@
+.challenge-rule {
+	margin: auto 20px;
+	cursor: pointer;
+}
+.rule-img {
+	width: 50px;
+}
+.available-players-box 
+{
+	width: 90%;
+	min-height: 80vh;
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+	border: 1px solid black;
+	border-radius: 15px;
+}
+.game-active {
+	border: 5px solid blue;
+	transform: scale(1.10);
+	transition: all 0.25s linear;
+}
+.rule-active {
+	border-bottom: solid 2px orange;
+}
