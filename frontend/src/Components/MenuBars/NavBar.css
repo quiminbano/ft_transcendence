@@ -25,5 +25,12 @@
 
 .children-area {
 	padding-top: 35px;
+	padding-left: 100px;
 	min-height: 100vh;
+	overflow-x: hidden;
+}
+@media only screen and (max-width: 576px) {
+	.children-area {
+		padding-left: 60px;
+	}
 }

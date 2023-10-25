@@ -7,6 +7,7 @@ import { MainMenu } from "./Components/MainMenu/MainMenu";
 import useUser from "./Hooks/useUser";
 import { PlayGround } from "./Components/PlayGround/PlayGround";
 import { Dashboard } from "./Components/Dashboard/Dashboard";
+import { Challenges } from "./Components/Challenges/Challenges";
 
 const App = () => {
 
@@ -21,7 +22,6 @@ const App = () => {
 						<Route path="/login" element={
 							<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 						} />
-						<Route path="/dashboard" element={<Dashboard />} />
 						<Route
 							path="*"
 							element={<Navigate to="/" replace />}
@@ -41,6 +41,7 @@ const App = () => {
 						<Route path="/" element={<MainMenu />} />
 						<Route path="/playground" element={<PlayGround />} />
 						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/challenges" element={<Challenges />}/>
 						<Route
 							path="*"
 							element={<Navigate to="/" replace />}

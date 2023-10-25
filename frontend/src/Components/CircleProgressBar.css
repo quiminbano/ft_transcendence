@@ -1,7 +1,6 @@
 .svg-wrapper {
 	position: relative;
 }
-
 .svg-pi {
 	transform: rotate(-90deg);
 }
@@ -20,12 +19,10 @@
 	opacity: 0.5;
 	font-size: 0.75em;
 }
-
 .svg-pi-label-progress {
 	font-size: 1.5em;
 	font-weight: bold;
 }
-
 .svg-pi-label-loading,
 .svg-pi-label-progress {
 	display: block;
@@ -36,5 +33,13 @@
 	}
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@media only screen and (max-width: 576px) {
+	.svg-wrapper,
+	.svg-pi {
+		max-width: 100px;
+		max-height: 100px;
 	}
 }

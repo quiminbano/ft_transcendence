@@ -7,7 +7,7 @@ import { Ratio } from "./Ratio";
 export const Dashboard = () : JSX.Element => {
 	return (
 		<MenuBars >
-			<div className="row my-5">
+			<div className="row my-3">
 				<div className="col-12 col-md-4 mt-4">
 					<Profile />
 				</div>

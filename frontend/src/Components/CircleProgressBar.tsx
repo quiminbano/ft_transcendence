@@ -1,4 +1,4 @@
-import "./ProgressBar.css";
+import "./CircleProgressBar.css";
 import { useState, useEffect } from "react";
 
 interface CircleProgressBarProps {

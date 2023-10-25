@@ -1,12 +1,6 @@
-.slider-box {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-	border: 1px solid red;
-}
 .sliderbox {
 	width: 100%;
+	margin-top: 45vh;
 }
 .gallery-container {
 	width: 100%;

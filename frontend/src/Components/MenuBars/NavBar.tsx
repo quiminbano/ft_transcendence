@@ -8,12 +8,12 @@ export const NavBar = () : JSX.Element => {
 			<div className="row">
 				<div className="col-12 nav-bar-top">
 					<div className="row">
-						<div className="offset-8 col-4">
+						<div className="col-7 offset-5">
 							<div className="row">
-								<div className="col-4">
+								<div className="col-4 phone-hide">
 									<p className="nav-bar-description">{name || "Unknown"}</p>
 								</div>
-								<div className="col-8">
+								<div className="col-8 offset-sm-0 offset-4">
 									<ExperienceBar />
 								</div>
 							</div>
