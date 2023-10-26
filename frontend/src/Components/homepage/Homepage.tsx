@@ -17,7 +17,11 @@ export const Homepage = () => {
 				</div>
 				<div className="row">
 					<div className="col">
-						<button onClick={() => goToRegistrationPage()} id="homepage-button">Play now</button>
+						<button
+							onClick={() => goToRegistrationPage()}
+							id="homepage-button"
+							className="btn btn-outline-success"
+						>Play now</button>
 					</div>
 				</div>
 			</div>

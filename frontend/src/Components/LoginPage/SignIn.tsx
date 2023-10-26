@@ -1,26 +1,39 @@
 import "./SignIn.css";
-import { AuthenticationMethod, InfoToSignProps } from "./Login";
-import { FieldErrors, FieldValues, UseFormRegister, useForm } from "react-hook-form";
+import { useState } from "react";
+import { InfoToSignProps, SignInProps } from "../../Props/Registration/LoginProps";
+import { useNavigate } from "react-router-dom";
+import { FieldValues, useForm } from "react-hook-form";
 import loginAPITest from "../../DataTest/apiTest";
-
-interface SignInProps {
-	register: UseFormRegister<FieldValues>;
-	errors: FieldErrors<FieldValues>;
-}
+import useUser from "../../Hooks/useUser";
 
 export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
+	const [errorMessage, setErrorMessage] = useState("");
 	const { register, handleSubmit, formState: { errors } } = useForm();
-	const getUser = async (username: string) => {
-		const user = await loginAPITest.getUsers(username);
-		console.log(user);
-	};
-	const signIn = (data: FieldValues) => {
-		console.log(data);
-		if (data.username.length > 0 && data.password.length > 0) {
-			props.setIsLoading(true);
-		}
-		getUser(data.username);
+	const setUser = useUser().setUser;
+	const navigate = useNavigate();
+
+	const signIn = async (data: FieldValues) => {
+		const user = await loginAPITest.getUsers(data.username);
+		props.setIsLoading(true);
+		setTimeout(() => {
+			if (user === null) {
+				setErrorMessage("Username or password are incorrect");
+				props.setIsLoading(false);
+			}
+			else {
+				// Do something here!!!!!
+				//const setUser = useUser();
+				setUser(user);
+				props.setIsLoading(false);
+				if (user.twoFactAuth)
+					props.setIsTwoFactAuthRequired(true);
+				else {
+					props.setIsAuth(true);
+					navigate("/");
+				}
+			}
+		}, 1500);
 	};
 
 	return (
@@ -30,16 +43,21 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 					<h2>Sign in to Ft-Transcendence</h2>
 				</div>
 			</div>
-			<div className="row mt-5">
-				<ButtonFor42Register />
-				<div className="col-12 col-md-8 offset-md-2">
-					<form onSubmit={handleSubmit(data => signIn(data))}>
-						<SignInInputs register={register} errors={errors}/>
-						<SignInButton />
-						<ForgotPasssword />
-					</form>
+			<div className="row mt-3 mt-md-5">
+				<div className="col-12">
+					<ButtonFor42Register />
+					<div className="row">
+						<div className="col-12 col-md-8 offset-md-2">
+							<form onSubmit={handleSubmit(data => signIn(data))}>
+								<SignInInputs register={register} errors={errors}
+									errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+								<SignInButton />
+								<ForgotPasssword />
+							</form>
+						</div>
+					</div>
+					<SwitcherPanel />
 				</div>
-				<SwitcherPanel />
 			</div>
 		</div>
 	);
@@ -47,13 +65,11 @@ export const SignIn = (props: InfoToSignProps) : JSX.Element => {
 
 export const ButtonFor42Register = () : JSX.Element => {
 	return (
-		<div className="col-12">
-			<div className="row">
-				<div className="col-12 col-md-8 offset-md-2">
-					<button className="btn btn-outline-secondary w-100">
-						<img alt="42 school logo" id="logo-42-school" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/800px-42_Logo.svg.png"></img>
-					</button>
-				</div>
+		<div className="row">
+			<div className="col-12 col-md-8 offset-md-2">
+				<button className="btn btn-outline-secondary w-100">
+					<img alt="42 school logo" id="logo-42-school" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/800px-42_Logo.svg.png"></img>
+				</button>
 			</div>
 		</div>
 	);
@@ -62,9 +78,10 @@ export const ButtonFor42Register = () : JSX.Element => {
 const SignInInputs = (props: SignInProps) : JSX.Element => {
 
 	return (
-		<div className="row mt-5">
+		<div className="row mt-2 mt-md-5">
 			<div className="col-12">
 				<p>or use your email account</p>
+				<p className="form-error-text">{props.errorMessage}</p>
 				<div className="input-group mb-3">
 					<input type="text" className="form-control" placeholder="Username"
 						{...props.register("username", {
@@ -104,7 +121,7 @@ const SignInButton = () : JSX.Element => {
 
 const ForgotPasssword = () : JSX.Element => {
 	return (
-		<div className="row mt-3">
+		<div className="row mt-1 mt-md-3">
 			<div className="col-12">
 				<button className="btn btn-link">Forgot your password?</button>
 			</div>
@@ -115,10 +132,10 @@ const ForgotPasssword = () : JSX.Element => {
 const SwitcherPanel = () : JSX.Element => {
 	return (
 		<div className="row only-phone mt-4">
-			<div className="col-8 offset-2">
+			<div className="col-12 col-md-8 offset-md-2">
 				<button
 					type="submit"
-					className="btn btn-secondary w-100">Not registered? Sign up here
+					className="btn btn-secondary w-100">Not registered?<br/>Sign up here
 				</button>
 			</div>
 		</div>

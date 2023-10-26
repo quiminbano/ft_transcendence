@@ -1,0 +1,49 @@
+.challenge-game-img {
+	width: 140px;
+	height: 250px;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+	border-radius: 15px;
+	margin: auto 20px;
+	transition: all 0.25s linear;
+	cursor: pointer;
+}
+
+.pick-game {
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.pick-0 {
+	background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXSNW2OE5vCD1HXHLd5jdgx1vcUVD9n9P1GA&usqp=CAU");
+}
+.pick-1 {
+	background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZYnG__WxtelViPqbxxsvzRkV6HjYRZhvpXQ&usqp=CAU");
+}
+.pick-2 {
+	background-image: url("https://i.pinimg.com/1200x/a0/37/00/a037000daeae56905fd5c3685687b361.jpg");
+}
+
+@media screen and (orientation: landscape) {
+	.pick-game {
+		background-position: center;
+	}
+}
+@media screen and (orientation: portrait) {
+	.pick-game {
+		background-position: bottom;
+	}
+}
+@media only screen and (max-width: 576px) {
+	.challenge-game-img {
+		width: 300px;
+		height: calc(300 * 9 / 16);
+		margin: 10px auto;
+	}
+}
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+	.challenge-game-img {
+		width: 400px;
+		height: calc(400 * 9 / 16);
+		margin: 10px auto;
+	}
+}

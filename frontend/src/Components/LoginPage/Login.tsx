@@ -1,39 +1,24 @@
 import { useState } from "react";
 import "./Login.css";
-
-import { PhoneAuthentication } from "./PhoneAuthentication";
 import { SignUp } from "./SignUp";
 import { InfoToSign } from "./Info";
 import { SignIn } from "./SignIn";
 import { Loading } from "../Loading";
 import { TwoFactorAuth } from "./TwoFactorAuth";
+import { PhoneAuthentication } from "./PhoneAuthentication";
+import { GoogleAuthenticaion } from "./GoogleAuth";
+import { LoginProps, TwoFactEnum } from "../../Props/Registration/LoginProps";
 
-export interface InfoToSignProps {
-	isLogin: boolean;
-	setIsLogin: (value: boolean) => void;
-	isLoading: boolean;
-	setIsLoading: (value: boolean) => void;
-	setAuthMethod: (value: AuthenticationMethod) => void;
-}
-export enum LoginState {
-	Unidentified,
-	Identified,
-	SignedUp
-}
-export enum AuthenticationMethod {
-	NULL,
-	Phone,
-	Google
-}
-export const Login = () : JSX.Element | undefined => {
-	const [authenticationMethod, setAuthenticationMethod] = useState(AuthenticationMethod.NULL);
+export const Login = (props: LoginProps) : JSX.Element => {
+	const [isTwoFactAuthRequired, setIsTwoFactAuthRequired] = useState(false);
+	const [twoFactType, setTwoFactType] = useState<TwoFactEnum>(TwoFactEnum.NULL);
 	const [isLogin, setIsLogin] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
 
-	if (authenticationMethod === AuthenticationMethod.NULL) {
+	if (!isTwoFactAuthRequired) {
 		return (
 			<div className="container-fluid signIn-signUp-pages d-flex align-items-center justify-content-center">
-				<div className="row">
+				<div className="row d-flex align-items-center justify-content-center">
 					<div className="col-10 sign-box">
 						<div className="row full-height align-items-center">
 							<div className={`info-bg ${isLogin ? "border-right" : "border-left"} phone-hide`}></div>
@@ -41,11 +26,13 @@ export const Login = () : JSX.Element | undefined => {
 								<div className="row">
 									<div className="col-12">
 										{isLogin && <SignIn isLogin={isLogin} setIsLogin={setIsLogin}
-											setAuthMethod={setAuthenticationMethod} isLoading={isLoading}
-											setIsLoading={setIsLoading}/>}
+											isLoading={isLoading} setIsLoading={setIsLoading}
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
+											setIsAuth={props.setIsAuthenticated} setTwoFactType={setTwoFactType}/>}
 										{!isLogin && <SignUp isLogin={isLogin} setIsLogin={setIsLogin}
-											setAuthMethod={setAuthenticationMethod} isLoading={isLoading} 
-											setIsLoading={setIsLoading}/>}
+											isLoading={isLoading} setIsLoading={setIsLoading}
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
+											setIsAuth={props.setIsAuthenticated} setTwoFactType={setTwoFactType}/>}
 									</div>
 								</div>
 							</div>
@@ -54,7 +41,8 @@ export const Login = () : JSX.Element | undefined => {
 									<div className="col-12">
 										<InfoToSign isLogin={isLogin} setIsLogin={setIsLogin}
 											isLoading={isLoading} setIsLoading={setIsLoading}
-											setAuthMethod={setAuthenticationMethod}/>
+											setIsTwoFactAuthRequired={setIsTwoFactAuthRequired}
+											setIsAuth={props.setIsAuthenticated} setTwoFactType={setTwoFactType}/>
 									</div>
 								</div>
 							</div>
@@ -65,8 +53,17 @@ export const Login = () : JSX.Element | undefined => {
 			</div>
 		);
 	}
-	else if (authenticationMethod === AuthenticationMethod.Phone) {
-		return <PhoneAuthentication />;
+	if (isTwoFactAuthRequired) {
+		switch (twoFactType) {
+		case TwoFactEnum.NULL:
+			return <TwoFactorAuth setIsLoading={setIsLoading}
+				setIsAuthReq={setIsTwoFactAuthRequired} setTwoFactType={setTwoFactType}/>;
+		case TwoFactEnum.Phone:
+			return <PhoneAuthentication setAuthType={setTwoFactType} setIsAuth={props.setIsAuthenticated}/>;
+		case TwoFactEnum.Google:
+			return <GoogleAuthenticaion setAuthType={setTwoFactType} setIsAuth={props.setIsAuthenticated}/>;
+		}
 	}
-
+	return <Loading type="border" variant="primary" message="" />;
 };
+export { TwoFactEnum };

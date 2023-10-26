@@ -1,0 +1,27 @@
+.dashboard-profile-pic {
+	border-radius: 50%;
+	width: 100%;
+}
+.coalition-logo {
+	width: 65%;
+}
+
+.circleRatio {
+	animation: animateCircle;
+	animation-duration: 1s;
+}
+@keyframes animateCircle {
+	from{
+		stroke-dasharray: 0;
+	}
+}
+
+@media only screen and (max-width: 776px) {
+	.dashboard-profile-pic {
+		border-radius: 50%;
+		width: 50%;
+	}
+	.coalition-logo {
+		width: 25%;
+	}
+}
