@@ -1,0 +1,28 @@
+.player-to-play-item {
+	min-height: 80px;
+	width: 90%;
+	margin: 3px auto;
+	border-radius: 15px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	background-color: #00DBDE;
+	background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+	border: 1px solid rgba(49, 45, 45, 0.747);
+	transition: all 0.25s linear;
+}
+.player-to-play-item:hover {
+	transform: scale(1.01);
+}
+.player-to-play-photo {
+	width: 30%;
+}
+.player-to-play-name {
+	width: 50%;
+	font-size: 1.5rem;
+}
+.player-to-play-level {
+	width: 20%;
+	font-size: 1.2rem;
+}
+.player-to-play-active {
+	border: 3px solid orange;
+}

@@ -8,11 +8,12 @@ import { useState } from "react";
 export const Challenges = () : JSX.Element => {
 	const [gameType, setGameType] = useState(0);
 	const [ruleType, setRuleType] = useState(0);
+	const [opponent, setOpponent] = useState(0);
 	return (
 		<MenuBars>
 			<div className="row">
 				<div className="col-md-4 mt-5">
-					<AvailablePlayers />
+					<AvailablePlayers opponent={opponent} setOpponent={setOpponent}/>
 				</div>
 				<div className="col-md-8">
 					<div className="row">
