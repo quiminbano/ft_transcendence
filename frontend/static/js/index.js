@@ -1,6 +1,6 @@
-console.log("js is running");
+import Homepage from "./views/Homepage.js";
 
-const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:w+/g), "(.+)" + "$");
+const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
 const getParams = match => {
     const values = match.result.slice(1);
@@ -18,13 +18,13 @@ const navigate = (url) => {
 
 const router = async () => {
     const routes = [
-        {path: "/", view: () => console.log("Homepage View")}
+        {path: "/", view: Homepage}
     ]
 
     const potentialMatches = routes.map(route => {
         return {
             route: route,
-            result: location.pathname.match(pathToRegex(route.path))
+            result: location.pathname.match(pathToRegex(route.path)),
         };
     });
 
@@ -36,9 +36,9 @@ const router = async () => {
         };
     };
 
-    const view = match.route.view(getParams(match));
+    const view = new match.route.view(getParams(match));
 
-    document.querySelector("#app").innerHTML = awayt view.getHtml();
+    document.querySelector("#app").innerHTML = await view.getHtml();
 }
 
 window.addEventListener("popstate", router);
