@@ -27,6 +27,7 @@ Require all granted\n\
 </Directory>' \
 >> /etc/apache2/apache2.conf
 
+COPY entrypoint.sh .
+
 EXPOSE 8000
-CMD ["python", "manage.py", "runmodwsgi", \
-    "--user", "www-data", "--group", "www-data", "--log-to-terminal"]
+CMD ["./entrypoint.sh"]
