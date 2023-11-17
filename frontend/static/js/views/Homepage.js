@@ -6,8 +6,16 @@ export default class extends AbstractClass {
         this.setTitle("Homepage");
     }
     async getHtml() {
-        return `
-            <h1>This is the HomePage</h1>
-        `
+        return new Promise((resolve, reject) => {
+            fetch("static/html/Homepage.html").
+                then(response => response.text()).
+                then(htmlContent => {
+                    resolve(htmlContent);
+                }).
+                catch(error => {
+                    console.log(error);
+                    reject(error);
+                })
+            })
     }
 }
