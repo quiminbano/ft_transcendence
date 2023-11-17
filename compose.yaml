@@ -1,8 +1,10 @@
 services:
   backend:
     build: ./backend
+    restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - 8000:8000
     volumes:
@@ -10,17 +12,22 @@ services:
 
   db:
     image: postgres:16.0-bookworm
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     environment:  
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}
       POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER}
+      interval: 1s
+      timeout: 5s
+      retries: 10
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
+    restart: always
     ports:
      - 3000:3000
     volumes:
