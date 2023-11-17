@@ -1,8 +1,8 @@
 import AbstractClass from "./AbstractClass.js";
 
 export default class extends AbstractClass {
-    constructor() {
-        super();
+    constructor(params) {
+        super(params);
         this.setTitle("Homepage");
     }
     async getHtml() {
