@@ -9,7 +9,14 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div id="root"></div>
-    <script src="{% static 'app.js' %}"></script>
+    <div id="root">
+        <div id="navbar">
+            <a href="/admin" onclick="route()">Admin</a>
+            <a href="/" onclick="route()">Home</a>
+            <a href="/login" onclick="route()">Login</a>
+        </div>
+        <div id="page-content"></div>
+    </div>
+    <script src="{% static 'router.js' %}"></script>
 </body>
 </html>
