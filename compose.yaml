@@ -9,6 +9,10 @@ services:
       - 8000:8000
     volumes:
       - ./transcendence/src:/app/src
+    environment:  
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_DB: ${POSTGRES_DB}
 
   db:
     image: postgres:16.0-bookworm
