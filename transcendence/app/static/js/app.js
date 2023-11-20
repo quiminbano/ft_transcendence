@@ -52,3 +52,5 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     router();
 })
+
+module.exports = pathToRegex;
