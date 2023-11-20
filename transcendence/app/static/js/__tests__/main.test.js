@@ -1,7 +1,8 @@
-const pathToRegex = require("../app");
+
 
 test("regex test", () => {
-    const url = "http://localhost:3000/3";
+	const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
+    const url = "http://localhost:8000/3";
     const expected = 3;
     expect(pathToRegex(url)).toBe(expected);
 })

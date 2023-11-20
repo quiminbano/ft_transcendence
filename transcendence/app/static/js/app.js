@@ -1,5 +1,7 @@
 import Homepage from "./views/Homepage.js";
 
+console.log("JS is running");
+
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
 const getParams = match => {
@@ -52,5 +54,3 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     router();
 })
-
-module.exports = pathToRegex;

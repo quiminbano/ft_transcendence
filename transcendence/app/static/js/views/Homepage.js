@@ -7,9 +7,10 @@ export default class extends AbstractClass {
     }
     async getHtml() {
         return new Promise((resolve, reject) => {
-            fetch("static/html/Homepage.html").
+            fetch("static/html/homepage.html").
                 then(response => response.text()).
                 then(htmlContent => {
+					console.log(htmlContent);
                     resolve(htmlContent);
                 }).
                 catch(error => {
@@ -17,5 +18,8 @@ export default class extends AbstractClass {
                     reject(error);
                 })
         })
+		/*return `
+			<h1>This is the homepage made from a html template string</h1>
+		`*/
     }
 }
