@@ -1,4 +1,4 @@
-import AbstractClass from "./AbstractClass.js";
+﻿import AbstractClass from "./AbstractClass.js";
 
 export default class extends AbstractClass {
     constructor(params) {
@@ -16,6 +16,6 @@ export default class extends AbstractClass {
                     console.log(error);
                     reject(error);
                 })
-            })
+        })
     }
 }

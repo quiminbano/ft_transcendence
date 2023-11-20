@@ -18,7 +18,7 @@ const navigate = (url) => {
 
 const router = async () => {
     const routes = [
-        {path: "/", view: Homepage}
+        { path: "/", view: Homepage }
     ]
 
     const potentialMatches = routes.map(route => {
@@ -38,7 +38,7 @@ const router = async () => {
 
     const view = new match.route.view(getParams(match));
 
-    document.querySelector("#app").innerHTML = await view.getHtml();
+    document.querySelector("#root").innerHTML = await view.getHtml();
 }
 
 window.addEventListener("popstate", router);

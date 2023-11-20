@@ -30,13 +30,5 @@ services:
       timeout: 5s
       retries: 10
 
-  frontend:
-    build: ./frontend
-    restart: always
-    ports: 
-      - 3000:80
-    volumes:
-      - ./frontend:/usr/share/nginx/html
-
 volumes:
   pgdata:
