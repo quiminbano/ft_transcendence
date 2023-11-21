@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
 	margin: 0;
 	padding: 0;
@@ -60,4 +61,9 @@
 }
 .homepageButton:active {
 	border-color: aquamarine;
+=======
+body {
+    background: black url("images/42.png") no-repeat;
+    color: white;
+>>>>>>> e3927fdde6b36f80ffc298d5c95857378feaa9ee
 }
