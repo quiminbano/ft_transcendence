@@ -4,12 +4,15 @@ async function testAPI() {
     console.log(res_json);
 }
 
-const button = document.getElementById("button");
-console.log(button);
-button.addEventListener("click", () => {
-	console.log("button clicked")
-	location.href = "/scores"
-})
+// const button = document.getElementById("normalLoginButton");
+// function test() {
+// 	console.log("called");
+// }
+// button.addEventListener("key", test);
+function login() {
+	console.log("login called. going to change the localtion href");
+	window.location.href = "/login";
+}
 
 console.log("We be java scripting");
 testAPI();
