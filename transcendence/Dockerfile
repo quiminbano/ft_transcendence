@@ -28,6 +28,7 @@ Require all granted\n\
 >> /etc/apache2/apache2.conf
 
 COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
 RUN chmod +x entrypoint.sh
 
