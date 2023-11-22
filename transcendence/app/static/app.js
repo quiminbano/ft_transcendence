@@ -9,5 +9,8 @@ const submitLogin = e => {
     console.log("Submiting login");
 }
 
+const button = document.getElementById("whatever");
+button.addEventListener("click", testAPI);
+
 //console.log("We be java scripting");
 //testAPI();
