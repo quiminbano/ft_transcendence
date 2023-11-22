@@ -4,15 +4,10 @@ async function testAPI() {
     console.log(res_json);
 }
 
-// const button = document.getElementById("normalLoginButton");
-// function test() {
-// 	console.log("called");
-// }
-// button.addEventListener("key", test);
-function login() {
-	console.log("login called. going to change the localtion href");
-	window.location.href = "/login";
+const submitLogin = e => {
+    e.preventDefault();
+    console.log("Submiting login");
 }
 
-console.log("We be java scripting");
-testAPI();
+//console.log("We be java scripting");
+//testAPI();

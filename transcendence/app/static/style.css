@@ -57,6 +57,9 @@
 	width: 100%;
 	margin-top: 10px;
 	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	color: black;
 }
 .homepageButton:hover {
 	background-color: black;
