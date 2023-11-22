@@ -1,19 +1,21 @@
 <div id="loginContainer">
     <h1>Login</h1>
-    <form onsubmit="return false">
-        <input 
+    <form onsubmit="submitLogin(e)" method="post" action="/">
+		{% csrf_token %}
+        <input
             type="text"
             placeholder="Username"
             autocomplete="on"
             autofocus
         />
-        <input 
+        <input
             type="password"
             placeholder="Password"
             autocomplete="on"
         />
-        <button
-            type="submit"        
-        >Login</button>
+        <input
+            type="submit"
+			value="Login"
+        />
     </form>
 </div>

@@ -1,5 +1,4 @@
 window.route = (event) => {
-	console.log("route called");
     event = event || window.event;
     event.preventDefault();
     window.history.pushState({}, "", event.target.href);
