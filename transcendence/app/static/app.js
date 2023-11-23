@@ -5,9 +5,20 @@ async function testAPI() {
 	console.log(res_json);
 }
 
-function submitLogin() {
-	console.log("Submiting login");
-	history.pushState(null, null, "/");
-	handleLocation();
+function submitLogin(event) {
+    event.preventDefault();  // Prevent the form from being submitted normally
+    const url = event.target.action;  // Get the form action
+    const formData = new FormData(event.target);  // Create a FormData object from the form
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response data here
+		console.log(data)
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
-

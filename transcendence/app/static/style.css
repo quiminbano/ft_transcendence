@@ -75,7 +75,7 @@
 }
 
 /*Login Page*/
-#loginContainer {
+.registerContainer {
 	height: 100vh;
 	width: 100vw;
 
@@ -83,7 +83,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-#titleLogin {
+.registerTitle {
 	font-family: PressStart;
 	font-size: 2.3rem;
 	text-align: center;
@@ -94,4 +94,18 @@
 .loginLabel {
 	font-family: PressStart;
 	color: whitesmoke;
+}
+
+.registerLink {
+	color: whitesmoke;
+	font-family: PressStart;
+	text-align: center;
+	text-decoration: none;
+	margin-top: 70px;
+}
+.registerLink:hover {
+	color: orange;
+}
+.helptext {
+	display: none;
 }
