@@ -1,21 +1,11 @@
 <div id="loginContainer">
-    <h1>Login</h1>
-    <form onsubmit="submitLogin(e)" method="post" action="/">
+    <h1 id="titleLogin">Login</h1>
+    <form onsubmit="event.preventDefault(); submitLogin()" method="post" action="/">
 		{% csrf_token %}
-        <input
-            type="text"
-            placeholder="Username"
-            autocomplete="on"
-            autofocus
-        />
-        <input
-            type="password"
-            placeholder="Password"
-            autocomplete="on"
-        />
-        <input
-            type="submit"
-			value="Login"
-        />
+		{{form.as_p}}
+		<button
+			type="submit"
+		>Login</button>
     </form>
+	<a href="/admin" onclick="route()">Go to admin</a>
 </div>
