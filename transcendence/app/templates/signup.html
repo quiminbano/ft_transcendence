@@ -10,54 +10,29 @@
 				<form onsubmit="event.preventDefault(); submitSignup()" method="post" action="/">
 					{% csrf_token %}
 					<div class="form-group">
-						<label for="{{ form.username.id_for_label}}" class="loginLabel" >Username:</label>
+						<label for="{{ form.username.id_for_label}}" class="loginLabel">Username:</label>
 						{{form.username}}
 					</div>
 					<div class="form-group">
-						<label for="{{ form.email.id_for_label}}" class="loginLabel" >Email:</label>
+						<label for="{{ form.email.id_for_label}}" class="loginLabel">Email:</label>
 						{{form.email}}
 					</div>
 					<div class="form-group">
-						<label for="{{ form.password1.id_for_label}}" class="loginLabel" >Password:</label>
+						<label for="{{ form.password1.id_for_label}}" class="loginLabel">Password:</label>
 						{{form.password1}}
 					</div>
 					<div class="form-group">
-						<label for="{{ form.password2.id_for_label}}" class="loginLabel" >Confirm password:</label>
+						<label for="{{ form.password2.id_for_label}}" class="loginLabel">Confirm password:</label>
 						{{form.password2}}
-					</div>
-					<!-- <table>
-						{{ form.as_table }}
-						 <tr>
-							<td></td>
-							<td><button
-								type="submit"
-								class="btn btn-success w-100 mt-5"
-							>Login</button></td>
-						</tr>
-					 </table> -->
-
-
-
-					<!-- <div class="form-group">
-						<label for="{{ form.username.id_for_label}}" class="loginLabel" >Username:</label>
-						{{ form.username }}
-					</div>
-					<div class="form-group" id="loginPasswordGroup">
-						<label for="{{ form.password.id_for_label}}" class="loginLabel" >Password:</label>
-						{{ form.password }}
-					</div>
-					<div class="form-group" id="loginPasswordGroup">
-						<label for="{{ form.password.id_for_label}}" class="loginLabel" >Confirm password:</label>
-						{{ form.password }}
 					</div>
 					<button
 						type="submit"
 						class="btn btn-success w-100 mt-5"
-					>Login</button> -->
+					>Login</button>
 				</form>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row mt-2">
 			<div class="col-12 col-md-6 offset-md-3">
 				<a
 					href="login"

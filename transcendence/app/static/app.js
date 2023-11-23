@@ -6,17 +6,22 @@ async function testAPI() {
 }
 
 function submitLogin(event) {
-    event.preventDefault();  // Prevent the form from being submitted normally
-    const url = event.target.action;  // Get the form action
-    const formData = new FormData(event.target);  // Create a FormData object from the form
+    event.preventDefault();
+    const url = event.target.action;
+    const formData = new FormData(event.target);
+    const errorMessageParagraph = document.getElementById("loginErrorMessage");
+    errorMessageParagraph.style.display = "none";
     fetch(url, {
         method: 'POST',
         body: formData,
     })
     .then(response => response.json())
     .then(data => {
-        // Handle the response data here
-		console.log(data)
+        const success = data.success === "success";
+        if (success === false) {
+            errorMessageParagraph.innerHTML = data.message;
+            errorMessageParagraph.style.display = "block";
+        }
     })
     .catch(error => {
         console.error('Error:', error);

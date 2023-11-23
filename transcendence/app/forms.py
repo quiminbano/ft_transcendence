@@ -11,10 +11,22 @@ class LoginForm(forms.Form):
 
 
 class SignupForm(UserCreationForm):
-    username = forms.CharField(label='username', min_length=5, max_length=150)
-    email = forms.EmailField(label="email", widget=forms.EmailInput)
-    password1 = forms.CharField(label='password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
+    username = forms.CharField(label='Username',
+        min_length=5,
+        max_length=150,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        label="email", 
+        widget=forms.EmailInput(attrs={"class": "form-control"}))
+    password1 = forms.CharField(
+        label='password',
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+    password2 = forms.CharField(
+        label='Confirm password',
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
 
     def username_clean(self):
         username = self.cleaned_data['username'].lower()
