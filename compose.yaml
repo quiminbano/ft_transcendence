@@ -9,7 +9,7 @@ services:
       - 8000:8000
     volumes:
       - ./transcendence/app:/app/app
-    environment:  
+    environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/10-init.sql
       - pgdata:/var/lib/postgresql/data
-    environment:  
+    environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}
       POSTGRES_DB: ${POSTGRES_DB}

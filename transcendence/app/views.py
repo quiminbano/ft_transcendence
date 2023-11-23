@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import LoginForm
 
 def status_404(request):
     context = {}
@@ -13,5 +14,17 @@ def main(request):
     return render(request, "main.html", context)
 
 def login(request):
-    context = {}
-    return render(request, "login.html", context)
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            print(username, password)
+            #user = authenticate(request, username=username, password=password)
+            #if user:
+             #   login(request, user)
+             #   return redirect('home')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
+
