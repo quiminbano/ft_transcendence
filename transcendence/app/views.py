@@ -25,6 +25,7 @@ def loginUser(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user:
+               print("Entering the function")
                login(request, user)
                return JsonResponse({"success": "true", "message": "Login completed successfuly", "status": "200"})
             else:
