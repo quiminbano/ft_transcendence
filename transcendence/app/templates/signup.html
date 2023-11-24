@@ -1,7 +1,7 @@
 <div class="registerContainer">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12 col-md-6 offset-md-3 ">
+			<div class="col-12 col-md-6 offset-md-3">
 				<div id="sign-up-box">
 					<div class="row">
 						<div class="col-12">
@@ -10,7 +10,7 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<form onsubmit="submitSignup(event)" method="post" action="{% url 'signup' %}">
+							<form onsubmit="submitSignup(event)" method="POST" action="{% url 'signup' %}">
 								{% csrf_token %}
 								<div class="form-group">
 									<label for="{{ form.username.id_for_label}}" class="loginLabel">Username:</label>
@@ -42,6 +42,10 @@
 								onclick="route()"
 								class="registerLink"
 							>Already have account? Login here</a>
+							<button
+								class="btn btn-danger"
+								onclick="navigateTo('/')"
+							>Cancel</button>
 						</div>
 					</div>
 				</div>

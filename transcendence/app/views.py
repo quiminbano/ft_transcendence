@@ -38,10 +38,13 @@ def loginUser(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        data = json.loads(request.body)
+        print(data)
+        form = SignupForm(data)
         if form.is_valid():
+            print("FORM IS VALID")
             form.save()
-            return redirect('login')
+            return JsonResponse({"success": "true", "message": "user created successfuly", "status": "200"})
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
