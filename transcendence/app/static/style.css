@@ -9,9 +9,17 @@
 	src: url(Fonts/PressStart.ttf);
 }
 
+#loginPasswordGroup {
+	margin-top: 25px;
+}
+
 #navbar {
 	position: fixed;
 	top: 0;
+}
+
+.homepageNavbarElement {
+	
 }
 
 #homepageContainer {
@@ -68,4 +76,59 @@
 }
 .homepageButton:active {
 	border-color: aquamarine;
+}
+
+/*Login Page*/
+.registerContainer {
+	height: 100vh;
+	width: 100vw;
+
+	background: url(https://png.pngtree.com/thumb_back/fh260/background/20230519/pngtree-two-ping-pong-rubber-ball-on-a-blue-surface-image_2619147.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.registerTitle {
+	font-family: PressStart;
+	font-size: 2.3rem;
+	text-align: center;
+	padding-top: 10vh;
+	margin: 10vh auto;
+	color: whitesmoke;
+}
+.loginLabel {
+	font-family: PressStart;
+	color: whitesmoke;
+}
+
+.registerLink {
+	color: whitesmoke;
+	font-family: PressStart;
+	text-align: center;
+	text-decoration: none;
+	margin-top: 100px;
+}
+.registerLink:hover {
+	color: orange;
+}
+.helptext {
+	display: none;
+}
+
+#loginErrorMessage {
+	background-color: red;
+	font-family: PressStart;
+	text-align: center;
+}
+
+/* Signup page */
+
+#sign-up-box {
+	background-color: rgba(86, 80, 73, 0.69);
+	border: 3px solid black;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	padding: 50px 20px;
+}
+
+#signupTitle {
+	padding-top: 0;
 }
