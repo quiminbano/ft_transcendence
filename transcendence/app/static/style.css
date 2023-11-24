@@ -115,3 +115,16 @@
 	font-family: PressStart;
 	text-align: center;
 }
+
+/* Signup page */
+
+#sign-up-box {
+	background-color: rgba(86, 80, 73, 0.69);
+	border: 3px solid black;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	padding: 50px 20px;
+}
+
+#signupTitle {
+	padding-top: 0;
+}

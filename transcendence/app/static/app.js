@@ -5,7 +5,7 @@ async function testAPI() {
 	console.log(res_json);
 }
 
-function submitLogin(event) {
+const submitLogin = event => {
     event.preventDefault();
     const url = event.target.action;
     const formData = new FormData(event.target);
@@ -26,4 +26,9 @@ function submitLogin(event) {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+const submitSignup = e => {
+	e.preventDefault();
+	console.log("New user should be created here");
 }
