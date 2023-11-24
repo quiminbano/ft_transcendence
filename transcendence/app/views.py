@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignupForm, LoginForm
 from django.http import JsonResponse
+import json
 
 def status_404(request):
     context = {}
@@ -17,7 +18,9 @@ def main(request):
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        data = json.loads(request.body)
+        print(data)
+        form = LoginForm(data)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -28,6 +31,9 @@ def login(request):
                return redirect('home')
             else:
                return JsonResponse({"success": "false", "message": "Invalid credentials", "status": "400"})
+        else:
+            print(form.errors)
+            return JsonResponse({"success": "false", "message": "the form is invalid", "status": "400"})
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
