@@ -19,7 +19,6 @@ def main(request):
 def loginUser(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         form = LoginForm(data)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -31,7 +30,6 @@ def loginUser(request):
             else:
                return JsonResponse({"success": "false", "message": "Invalid credentials", "status": "400"})
         else:
-            print(form.errors)
             return JsonResponse({"success": "false", "message": "the form is invalid", "status": "400"})
     else:
         form = LoginForm()
