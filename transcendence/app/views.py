@@ -16,10 +16,9 @@ def main(request):
     context = {}
     return render(request, "main.html", context)
 
-def login(request):
+def loginUser(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         form = LoginForm(data)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -27,12 +26,10 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user:
                login(request, user)
-               JsonResponse({"success": "true", "message": "Login completed successfuly", "status": "200"})
-               return redirect('home')
+               return JsonResponse({"success": "true", "message": "Login completed successfuly", "status": "200"})
             else:
                return JsonResponse({"success": "false", "message": "Invalid credentials", "status": "400"})
         else:
-            print(form.errors)
             return JsonResponse({"success": "false", "message": "the form is invalid", "status": "400"})
     else:
         form = LoginForm()
