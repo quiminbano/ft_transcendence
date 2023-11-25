@@ -4,6 +4,17 @@ from .forms import SignupForm, LoginForm
 from django.http import JsonResponse
 import json
 
+
+def get_template(request, route):
+    template_path = route + ".html"
+    print(template_path)
+    if route == "login":
+        return loginUser(request)
+    elif route == "signup":
+        return signup(request)
+    else:
+        return render(request, template_path)
+
 def status_404(request):
     context = {}
     return render(request, "404.html", context)
@@ -19,6 +30,7 @@ def main(request):
 def loginUser(request):
     if request.method == 'POST':
         data = json.loads(request.body)
+        print(data)
         form = LoginForm(data)
         if form.is_valid():
             username = form.cleaned_data['username']

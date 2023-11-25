@@ -17,11 +17,13 @@ const handleLocation = async () => {
     const path = window.location.pathname;
     const route = routes[path] || routes[404];
     try {
-        const response = await fetch(route);
+        const response = await fetch(`/get-template/${route}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch route. Status: ${response.status}`);
         }
+        console.log(response);
         const html = await response.text();
+        console.log(html);
         document.getElementById("page-content").innerHTML = html;
     } catch (error) {
         console.log(error);
