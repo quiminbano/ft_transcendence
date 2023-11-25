@@ -16,8 +16,17 @@ const routes = {
 const handleLocation = async () => {
     const path = window.location.pathname;
     const route = routes[path] || routes[404];
-    const html = await fetch(route).then((data) => data.text());
-    document.getElementById("page-content").innerHTML = html;
+    try {
+        const response = await fetch(route);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch route. Status: ${response.status}`);
+        }
+        const html = await response.text();
+        document.getElementById("page-content").innerHTML = html;
+    } catch (error) {
+        console.log(error);
+        //Maybe we should send something to front end here!!!
+    }
 };
 
 window.onpopstate = handleLocation;
