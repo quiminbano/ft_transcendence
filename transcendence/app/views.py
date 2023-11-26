@@ -30,14 +30,12 @@ def main(request):
 def loginUser(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         form = LoginForm(data)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user:
-               print("Entering the function")
                login(request, user)
                return JsonResponse({"success": "true", "message": "Login completed successfuly", "status": "200"})
             else:
@@ -51,12 +49,13 @@ def loginUser(request):
 def signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         form = SignupForm(data)
         if form.is_valid():
-            print("FORM IS VALID")
             form.save()
             return JsonResponse({"success": "true", "message": "user created successfuly", "status": "200"})
+        else:
+            errors = {field: form.errors[field][0] for field in form.errors}
+            return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors, "status": "400"})
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})

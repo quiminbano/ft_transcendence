@@ -10,46 +10,53 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<form onsubmit="submitSignup(event)" method="POST" action="{% url 'signup' %}">
+							<form onsubmit="submitSignup(event)" method="POST" action="{% url 'postSignup' %}">
 								{% csrf_token %}
 								<div class="form-group">
 									<label for="{{ form.username.id_for_label}}" class="loginLabel">Username:</label>
 									{{form.username}}
+									<p class="signupErrorMessage" id="signupUsernameError"></p>
 								</div>
 								<div class="form-group">
 									<label for="{{ form.email.id_for_label}}" class="loginLabel">Email:</label>
 									{{form.email}}
+									<p class="signupErrorMessage" id="signupEmailError"></p>
 								</div>
 								<div class="form-group">
 									<label for="{{ form.password1.id_for_label}}" class="loginLabel">Password:</label>
 									{{form.password1}}
+									<p class="signupErrorMessage" id="signupPassword1Error"></p>
 								</div>
 								<div class="form-group">
 									<label for="{{ form.password2.id_for_label}}" class="loginLabel">Confirm password:</label>
 									{{form.password2}}
+									<p class="signupErrorMessage" id="signupPassword2Error"></p>
 								</div>
-								<button
-									type="submit"
-									class="btn btn-success w-100 mt-5"
-								>Register</button>
+								<button type="submit"
+										class="btn btn-success w-100 mt-5">
+									Register
+								</button>
 							</form>
 						</div>
 					</div>
 					<div class="row mt-2">
 						<div class="col-12">
-							<a
-								href="login"
-								onclick="route()"
-								class="registerLink"
-							>Already have account? Login here</a>
-							<button
-								class="btn btn-danger"
-								onclick="navigateTo('/')"
-							>Cancel</button>
+							<a href="login"
+							   onclick="route()"
+							   class="registerLink">Already have account? Login here</a>
+							<button class="btn btn-danger"
+									onclick="navigateTo('/')">
+								Cancel
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div id="loadingSpinnerContainer">
+		<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
+			<span class="sr-only">Loading...</span>
 		</div>
 	</div>
 </div>

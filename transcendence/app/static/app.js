@@ -34,32 +34,38 @@ const postRequest = async (url, data) => {
 	}
 }
 
+const showLoadingSpinner = () => {
+	const loadingSpinner = document.getElementById("loadingSpinnerContainer");
+	loadingSpinner.style.display = "flex";
+}
+
+const hideLoadingSpinner = () => {
+	const loadingSpinner = document.getElementById("loadingSpinnerContainer");
+	loadingSpinner.style.display = "none";
+}
+
 const submitLogin = async event => {
     event.preventDefault();
     const url = event.target.action;
     const formData = new FormData(event.target);
     const errorMessageParagraph = document.getElementById("loginErrorMessage");
-    errorMessageParagraph.style.display = "none";
-	const loadingSpinner = document.getElementById("loadingSpinnerContainer");
-	loadingSpinner.style.display = "flex";
+	errorMessageParagraph.style.display = "none";
+	showLoadingSpinner();
 
 	const username = formData.get('username');
 	const password = formData.get("password");
 	const data = { username, password }
 
 	const result = await postRequest(url, data)
-	console.log(result)
 	const success = result.success === "true";
-	console.log(success);
 	if (success === false) {
 		errorMessageParagraph.innerHTML = result.message;
 		errorMessageParagraph.style.display = "block";
 	} else {
-		console.log("Login success")
 		history.pushState(null, null, "/");
 		window.handleLocation();
 	}
-	loadingSpinner.style.display = "none";
+	hideLoadingSpinner();
 }
 
 
@@ -69,6 +75,28 @@ const navigateTo = (url) => {
 }
 
 // Registration!!!
+
+const handleError = (element, error) => {
+	if (error) {
+		element.innerHTML = error;
+		element.style.display = "block";
+	} else {
+		element.value = "";
+		element.style.display = "none"
+	}
+}
+
+const handleErrors = (errors) => {
+	const username = document.getElementById("signupUsernameError");
+	const email = document.getElementById("signupEmailError");
+	const password1 = document.getElementById("signupPassword1Error");
+	const password2 = document.getElementById("signupPassword2Error");
+
+	handleError(username, errors["username"]);
+	handleError(email, errors["email"]);
+	handleError(password1, errors["password1"]);
+	handleError(password2, errors["password2"]);
+}
 
 const submitSignup = async event => {
 	event.preventDefault();
@@ -86,10 +114,18 @@ const submitSignup = async event => {
 		password1: password,
 		password2: confirmPassword
 	}
-	console.log(data);
+	showLoadingSpinner();
 
-	console.log("New user should be created here");
 	const result = await postRequest(url, data);
-	console.log(result);
-
+	const success = result.success === "true";
+	if (success) {
+		console.log("User created successfully");
+		//Handle user navigation after registration complete!!!!
+	}
+	else {
+		console.log("Failed to create user");
+		if (result.errors)
+			handleErrors(result.errors);
+	}
+	hideLoadingSpinner();
 }
