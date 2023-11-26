@@ -37,11 +37,11 @@ def loginUser(request):
             user = authenticate(request, username=username, password=password)
             if user:
                login(request, user)
-               return JsonResponse({"success": "true", "message": "Login completed successfuly", "status": "200"})
+               return JsonResponse({"success": "true", "message": "Login completed successfuly"}, status=200)
             else:
-               return JsonResponse({"success": "false", "message": "Invalid credentials", "status": "400"})
+               return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
         else:
-            return JsonResponse({"success": "false", "message": "the form is invalid", "status": "400"})
+            return JsonResponse({"success": "false", "message": "the form is invalid"}, status=400)
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -52,10 +52,10 @@ def signup(request):
         form = SignupForm(data)
         if form.is_valid():
             form.save()
-            return JsonResponse({"success": "true", "message": "user created successfuly", "status": "200"})
+            return JsonResponse({"success": "true", "message": "user created successfuly"}, status=200)
         else:
             errors = {field: form.errors[field][0] for field in form.errors}
-            return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors, "status": "400"})
+            return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
