@@ -20,7 +20,7 @@ const postRequest = async (url, data) => {
 		method: "POST",
 		headers: {
 			'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
+			'X-CSRFToken': csrftoken
 		},
 		body: JSON.stringify(data)
 	}
@@ -62,15 +62,14 @@ const submitLogin = async event => {
 		errorMessageParagraph.innerHTML = result.message;
 		errorMessageParagraph.style.display = "block";
 	} else {
-		history.pushState(null, null, "/");
-		window.handleLocation();
+		navigateTo("/dashboard");
 	}
 	hideLoadingSpinner();
 }
 
 
 const navigateTo = (url) => {
-	history.back();
+	history.pushState(null, null, url);
 	window.handleLocation();
 }
 
@@ -128,4 +127,18 @@ const submitSignup = async event => {
 			handleErrors(result.errors);
 	}
 	hideLoadingSpinner();
+}
+
+const logoutUser = async() => {
+	try {
+		const response = await fetch("/logout");
+		if (response.ok) {
+			console.log("Logout succeeded");
+			navigateTo("/");
+		} else {
+			console.log("Failed to logout")
+		}
+	} catch (error) {
+		console.log(error);
+	}
 }

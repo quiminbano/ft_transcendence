@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .forms import SignupForm, LoginForm
 from django.http import JsonResponse
 import json
@@ -46,6 +47,11 @@ def loginUser(request):
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
+def logoutUser(request):
+    print("Logout function called")
+    logout(request)
+    return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
+
 def signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -59,5 +65,14 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required(login_url="/login")
+def dashboard(request):
+    if request.user.is_authenticated:
+        print("USer is authenticated!")
+    else:
+        print("User is not authenticated!!")
+    context = {}
+    return render(request, "dashboard.html", context)
 
 

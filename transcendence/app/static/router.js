@@ -11,13 +11,14 @@ const routes = {
     "/": "main",
     "/login": "login",
 	"/signup": "signup",
+	"/dashboard": "dashboard"
 };
 
 const handleLocation = async () => {
     const path = window.location.pathname;
     const route = routes[path] || routes[404];
     try {
-        const response = await fetch(`/get-template/${route}`);
+        const response = await fetch(`/_${route}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch route. Status: ${response.status}`);
         }

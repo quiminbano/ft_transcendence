@@ -32,7 +32,7 @@ body {
 }
 
 #homepageContainer {
-	height: 100vh;
+	min-height: 100vh;
 	width: 100vw;
 
 	background: url(https://png.pngtree.com/thumb_back/fh260/background/20230519/pngtree-two-ping-pong-rubber-ball-on-a-blue-surface-image_2619147.jpg);
@@ -164,4 +164,81 @@ body {
 	justify-content: center;
 	align-items: center;
 	background-color: rgba(141, 125, 125, 0.553);
+}
+
+/* Protected pages */
+
+.protectedNavbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 75px;
+	background-color: rgb(79, 79, 219);
+}
+
+/* Side Menu */
+#sideMenuContainer {
+	width: 100px;
+	height: 400px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	background-color: rgb(79, 79, 219);
+	position: fixed;
+	left: 0;
+	top: calc(50vh - 200px);
+	padding: 10px 20px;
+	margin: auto 15px;
+	border-radius: 20px;
+}
+.mainItems,
+.logoutArea {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.mainItems {
+	height: 300px;
+}
+.sideMenuItemIcon {
+	width: 50px;
+	height: 50px;
+	margin: 10px auto;
+	cursor: pointer;
+	transition: all 0.25s linear;
+}
+.sideMenuItemIcon:hover {
+	transform: scale(1.05);
+}
+
+#sideMenuGamesIcon {
+	content: url(./images/gamesIcon.png);
+}
+#sideMenuDashboardIcon {
+	content: url(./images/dashboardIcon.png);
+}
+#sideMenuSettingsIcon {
+	content: url(./images/settingsIcon.png);
+}
+#sideMenuLogoutIcon {
+	content: url(./images/logoutIcon.png);
+}
+
+/* Dashboard page */
+
+#dashboardContainer {
+	min-height: 100vh;
+	width: 100vw;
+
+	background: url(https://b2316719.smushcdn.com/2316719/wp-content/uploads/2022/03/bg_01.jpg?lossy=1&strip=1&webp=1);
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
