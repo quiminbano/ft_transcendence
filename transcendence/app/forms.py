@@ -28,7 +28,7 @@ class SignupForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
 
-    def username_clean(self):
+    def clean_username(self):
         username = self.cleaned_data['username'].lower()
         new = User.objects.filter(username = username)
         if new.count():

@@ -4,6 +4,17 @@ from .forms import SignupForm, LoginForm
 from django.http import JsonResponse
 import json
 
+
+def get_template(request, route):
+    template_path = route + ".html"
+    print(template_path)
+    if route == "login":
+        return loginUser(request)
+    elif route == "signup":
+        return signup(request)
+    else:
+        return render(request, template_path)
+
 def status_404(request):
     context = {}
     return render(request, "404.html", context)
@@ -25,13 +36,12 @@ def loginUser(request):
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user:
-               print("Entering the function")
                login(request, user)
-               return JsonResponse({"success": "true", "message": "Login completed successfuly", "status": "200"})
+               return JsonResponse({"success": "true", "message": "Login completed successfuly"}, status=200)
             else:
-               return JsonResponse({"success": "false", "message": "Invalid credentials", "status": "400"})
+               return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
         else:
-            return JsonResponse({"success": "false", "message": "the form is invalid", "status": "400"})
+            return JsonResponse({"success": "false", "message": "the form is invalid"}, status=400)
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
@@ -39,12 +49,13 @@ def loginUser(request):
 def signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         form = SignupForm(data)
         if form.is_valid():
-            print("FORM IS VALID")
             form.save()
-            return JsonResponse({"success": "true", "message": "user created successfuly", "status": "200"})
+            return JsonResponse({"success": "true", "message": "user created successfuly"}, status=200)
+        else:
+            errors = {field: form.errors[field][0] for field in form.errors}
+            return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
