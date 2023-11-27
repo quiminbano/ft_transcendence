@@ -20,7 +20,9 @@ const handleLocation = async () => {
     try {
         const response = await fetch(`/_${route}`);
         if (!response.ok) {
-            throw new Error(`Failed to fetch route. Status: ${response.status}`);
+			window.history.pushState(null, null, "/");
+			handleLocation();
+            //throw new Error(`Failed to fetch route. Status: ${response.status}`);
         }
         const html = await response.text();
         document.getElementById("page-content").innerHTML = html;

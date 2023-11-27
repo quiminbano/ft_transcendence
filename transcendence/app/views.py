@@ -66,12 +66,13 @@ def signup(request):
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
 
-@login_required(login_url="/login")
+#@login_required(login_url="/login")
 def dashboard(request):
     if request.user.is_authenticated:
         print("USer is authenticated!")
     else:
         print("User is not authenticated!!")
+        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
     context = {}
     return render(request, "dashboard.html", context)
 
