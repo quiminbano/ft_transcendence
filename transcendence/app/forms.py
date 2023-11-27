@@ -17,7 +17,7 @@ class SignupForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     email = forms.EmailField(
-        label="email", 
+        label="email",
         widget=forms.EmailInput(attrs={"class": "form-control"}))
     password1 = forms.CharField(
         label='password',
@@ -57,3 +57,22 @@ class SignupForm(UserCreationForm):
             self.cleaned_data['password1']
         )
         return user
+
+
+class ChangeProfile(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    firstName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    lastName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+    password2 = forms.CharField(
+        label="Confirm password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+    email = forms.EmailField(
+        label="Email",
+        widget=forms.EmailInput(attrs={"class": "form-control"}))
+
+

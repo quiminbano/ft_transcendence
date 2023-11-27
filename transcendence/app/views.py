@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, ChangeProfile
 from django.http import JsonResponse
 import json
 
@@ -76,4 +76,21 @@ def dashboard(request):
     context = {}
     return render(request, "dashboard.html", context)
 
-
+#@login_required(login_url="/login")
+def settings(request):
+    if request.user.is_authenticated:
+        print("USer is authenticated!")
+    else:
+        print("User is not authenticated!!")
+        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        form = ChangeProfile(data)
+        if form.is_valid():
+            #properly handle the form validation!!!!
+            return JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
+        else:
+            return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
+    else:
+        form = ChangeProfile()
+    return render(request, 'settings.html', {'form': form})

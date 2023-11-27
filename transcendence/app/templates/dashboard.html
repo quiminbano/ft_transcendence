@@ -2,7 +2,9 @@
 	<div class="row">
 		<div class="col-12">
 			<div class="protectedNavbar">
-
+				{% if user.is_authenticated %}
+					<p id="navbarUsername">{{user.get_username}}</p>
+				{% endif %}
 			</div>
 			<div id="sideMenuContainer">
 				<div class="mainItems">
@@ -19,6 +21,7 @@
 				</div>
 				<div class="logoutArea">
 					<img
+						onclick="navigateTo('/settings')"
 						id="sideMenuSettingsIcon"
 						class="sideMenuItemIcon"
 						alt="Settings"

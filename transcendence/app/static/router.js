@@ -11,7 +11,8 @@ const routes = {
     "/": "main",
     "/login": "login",
 	"/signup": "signup",
-	"/dashboard": "dashboard"
+	"/dashboard": "dashboard",
+	"/settings": "settings"
 };
 
 const handleLocation = async () => {

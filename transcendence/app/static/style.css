@@ -3,7 +3,7 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-body {
+body *{
 	overflow-x: hidden;
 }
 @font-face {
@@ -29,6 +29,16 @@ body {
 	font-family: PressStart;
 	color: whitesmoke;
 	text-decoration: none;
+}
+
+.pageContainer {
+	min-height: 100vh;
+	width: 100vw;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 #homepageContainer {
@@ -176,6 +186,15 @@ body {
 	height: 75px;
 	background-color: rgb(79, 79, 219);
 }
+.protectedNavbar * {
+	font-family: PressStart;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#navbarUsername {
+	font-size: 20px;
+}
 
 /* Side Menu */
 #sideMenuContainer {
@@ -241,4 +260,32 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+}
+
+/* Settings page */
+.settingsContainer {
+	background: url(https://b2316719.smushcdn.com/2316719/wp-content/uploads/2022/03/bg_01.jpg?lossy=1&strip=1&webp=1);
+	background-repeat: no-repeat;
+	background-size: cover;
+	min-height: 100vh;
+	width: 100vw;
+}
+.settingsBox {
+	margin-top: 50px;
+	border-radius: 15px;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	background-color: rgba(219, 213, 213, 0.635);
+	padding: 15px 10px;
+}
+.settingsBox * {
+	font-family: PressStart;
+}
+.settingsBox h2 {
+	text-align: center;
+}
+.settingsBox form input {
+	border: 3px solid black;
+}
+.changeProfileButton {
+	margin: 5px auto;
 }
