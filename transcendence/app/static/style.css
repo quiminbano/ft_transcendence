@@ -174,6 +174,7 @@ body *{
 	justify-content: center;
 	align-items: center;
 	background-color: rgba(141, 125, 125, 0.553);
+	z-index: 99;
 }
 
 /* Protected pages */
@@ -213,8 +214,11 @@ body *{
 }
 
 /* Side Menu */
+.menu {
+	z-index: 2;
+}
+
 #sideMenuContainer {
-	width: 100px;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -222,15 +226,32 @@ body *{
 	align-items: center;
 	background-color: rgb(79, 79, 219);
 	position: fixed;
-	left: 0;
 	top: 0;
-	padding: 10px 20px;
+}
+#sideMenuExpandBg {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(215, 214, 214, 0.25);
+	z-index: 2;
+	display: none;
+}
+.sideMenuNotExpanded {
+	transition: all 0.25s linear;
+	width: 0px;
 }
 
-.menuHamburger {
+.sideMenuExpanded {
+	padding: 10px 20px;
+	transition: all 0.25s linear;
+	width: 175px;
+}
+
+#menuHamburger {
 	position: absolute;
 	top: 25px;
-	left: 25px;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
@@ -239,6 +260,15 @@ body *{
 	width: 60px;
 	height: 60px;
 	cursor: pointer;
+	z-index: 3;
+}
+.hamburgerExpanded {
+	transition: all 0.25s linear;
+	left: 150px;
+}
+.hamburgerNotExpanded {
+	transition: all 0.25s linear;
+	left: 25px;
 }
 
 .hamburgerSpan {
@@ -250,31 +280,39 @@ body *{
 	transition: all 0.25s linear;
 }
 
-.menuHamburger:hover :nth-child(1) {
+#menuHamburger:hover :nth-child(1) {
 	transform-origin: center;
 	transform: rotate(45deg) translateY(4px);
 }
-.menuHamburger:hover :nth-child(2) {
+#menuHamburger:hover :nth-child(2) {
 	display: none;
 }
-.menuHamburger:hover :nth-child(3) {
+#menuHamburger:hover :nth-child(3) {
 	transform-origin: center;
 	transform: rotate(-45deg) translateY(-4px);
 }
 
 .mainItems,
-.logoutArea {
+.logoutArea,
+.sideMenuHeader {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
+#sideMenuProfilePic {
+	width: 80%;
+}
+#sideMenuProfileName {
+	font-family: PressStart;
+}
 .mainItems {
 	height: 300px;
 }
 .sideMenuItemIcon {
-	width: 50px;
-	height: 50px;
+	max-width: 50px;
+	max-height: 50px;
+	width: 100%;
 	margin: 10px auto;
 	cursor: pointer;
 	transition: all 0.25s linear;
@@ -296,33 +334,12 @@ body *{
 	content: url(./images/logoutIcon.png);
 }
 
-@media only screen and (max-width: 776px)
-{
-	#sideMenuContainer {
-		width: calc(100vw - 100px);
-		height: 60px;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		background-color: rgb(79, 79, 219);
-		position: fixed;
-		top: calc(100vh - 60px);
-		padding: 10px 20px;
-		margin: 0 50px;
-		border-radius: 20px;
-		overflow: hidden;
-		border: 1px solid red;
+@media only screen and (max-width: 776px) {
+	.sideMenuExpanded {
+		width: 80vw;
 	}
-	.mainItems,
-	.logoutArea {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-	}
-	.sideMenuItemIcon {
-		margin: auto 10px;
+	.hamburgerExpanded {
+		left: calc(80vw - 70px);
 	}
 }
 

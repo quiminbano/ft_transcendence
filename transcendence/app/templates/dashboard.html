@@ -1,44 +1,55 @@
+<div class="protectedNavbar menu">
+	{% if user.is_authenticated %}
+		<p id="navbarUsername">{{user.get_username}}</p>
+	{% endif %}
+</div>
+<div id="menuHamburger" class="hamburgerNotExpanded"
+		onclick="toggleMenu()"
+>
+	<div class="hamburgerSpan"></div>
+	<div class="hamburgerSpan"></div>
+	<div class="hamburgerSpan"></div>
+</div>
+<div onclick="toggleMenu()" id="sideMenuExpandBg"></div>
+<div id="sideMenuContainer" class="menu sideMenuNotExpanded">
+	<div class="sideMenuHeader">
+		<img alt="profile picture"
+			 src="../static/images/profileIcon.png"
+			 id="sideMenuProfilePic" />
+		{% if user.is_authenticated %}
+		<p id="sideMenuProfileName">{{user.get_username}}</p>
+		{% endif %}
+	</div>
+	<div class="mainItems">
+		<img
+			class="sideMenuItemIcon"
+			alt="Games"
+			id="sideMenuGamesIcon"
+		/>
+		<img
+			id="sideMenuDashboardIcon"
+			class="sideMenuItemIcon"
+			alt="Dashboard"
+		/>
+	</div>
+	<div class="logoutArea">
+		<img
+			onclick="navigateTo('/settings')"
+			id="sideMenuSettingsIcon"
+			class="sideMenuItemIcon"
+			alt="Settings"
+		/>
+		<img
+			id="sideMenuLogoutIcon"
+			class="sideMenuItemIcon"
+			alt="Logout"
+			onclick="logoutUser()"
+		/>
+	</div>
+</div>
 <div class="container-fluid" id="dashboardContainer">
 	<div class="row" style="height: 100vh;">
-		<div class="col-12" style="position: relative;">
-			<div class="protectedNavbar">
-				{% if user.is_authenticated %}
-					<p id="navbarUsername">{{user.get_username}}</p>
-				{% endif %}
-			</div>
-			<div id="sideMenuContainer">
-				<div class="menuHamburger" onclick="expandSideMenu()">
-					<div class="hamburgerSpan"></div>
-					<div class="hamburgerSpan"></div>
-					<div class="hamburgerSpan"></div>
-				</div>
-				<div class="mainItems">
-					<img
-						class="sideMenuItemIcon"
-						alt="Games"
-						id="sideMenuGamesIcon"
-					/>
-					<img
-						id="sideMenuDashboardIcon"
-						class="sideMenuItemIcon"
-						alt="Dashboard"
-					/>
-				</div>
-				<div class="logoutArea">
-					<img
-						onclick="navigateTo('/settings')"
-						id="sideMenuSettingsIcon"
-						class="sideMenuItemIcon"
-						alt="Settings"
-					/>
-					<img
-						id="sideMenuLogoutIcon"
-						class="sideMenuItemIcon"
-						alt="Logout"
-						onclick="logoutUser()"
-					/>
-				</div>
-			</div>
+		<div class="col-12">
 			<div class="row protectedPageContent">
 				{% if user.is_authenticated %}
 				<div class="col-10 offset-1">

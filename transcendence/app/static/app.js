@@ -145,11 +145,24 @@ const logoutUser = async() => {
 
 //Menu Logic
 let isExpanded = false;
-const expandSideMenu = () => {
-	console.log("Expand menu function called");
+const toggleMenu = () => {
+	console.log("toggleMenu function called");
+	console.log(`isExpanded: ${isExpanded}`);
+	isExpanded = !isExpanded;
 	const sideMenu = document.getElementById("sideMenuContainer");
-	if (sideMenu.classList.contains("sideMenuNotExpanded"))
+	const hamburger = document.getElementById("menuHamburger");
+	const sideMenuBg = document.getElementById("sideMenuExpandBg");
+	if (isExpanded) {
+		sideMenu.classList.remove("sideMenuNotExpanded");
+		sideMenu.classList.add("sideMenuExpanded");
+		hamburger.classList.remove("hamburgerNotExpanded");
+		hamburger.classList.add("hamburgerExpanded");
+		sideMenuBg.style.display = "block";
+	} else {
 		sideMenu.classList.remove("sideMenuExpanded");
-	sideMenu.classList.add("sideMenuExpanded");
+		sideMenu.classList.add("sideMenuNotExpanded");
+		hamburger.classList.remove("hamburgerExpanded");
+		hamburger.classList.add("hamburgerNotExpanded");
+		sideMenuBg.style.display = "none";
+	}
 }
-
