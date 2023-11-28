@@ -1,12 +1,17 @@
 <div class="container-fluid" id="dashboardContainer">
-	<div class="row">
-		<div class="col-12">
+	<div class="row" style="height: 100vh;">
+		<div class="col-12" style="position: relative;">
 			<div class="protectedNavbar">
 				{% if user.is_authenticated %}
 					<p id="navbarUsername">{{user.get_username}}</p>
 				{% endif %}
 			</div>
 			<div id="sideMenuContainer">
+				<div class="menuHamburger" onclick="expandSideMenu()">
+					<div class="hamburgerSpan"></div>
+					<div class="hamburgerSpan"></div>
+					<div class="hamburgerSpan"></div>
+				</div>
 				<div class="mainItems">
 					<img
 						class="sideMenuItemIcon"
@@ -34,8 +39,46 @@
 					/>
 				</div>
 			</div>
-			<div class="row">
-				<div></div>
+			<div class="row protectedPageContent">
+				{% if user.is_authenticated %}
+				<div class="col-10 offset-1">
+					<div class="row" style="color: whitesmoke;">
+						<div class="col-12 col-md-6">
+							<div class="row">
+								<div class="col-8">
+									<div class="d-flex flex-column align-items-center justify-content-center w-100">
+										<img
+											alt="user profile picture"
+											id="dashboardUserProfilePic"
+											src="../static/images/profileIcon.png"
+										/>
+										<h3 id="dashboardUserProfileName">{{user.get_username}}</h3>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="coalitionArea">
+										<img
+											alt="user coalition logo"
+											src="../static/images/profileIcon.png"
+											id="dashboardUserCoalitionPic"
+										/>
+										<h5 id="dashboardUserProfileName">Builders</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-md-6">
+							Last games
+						</div>
+						<div class="col-12 col-md-6">
+							Stats
+						</div>
+						<div class="col-12 col-md-6">
+							Achievements
+						</div>
+					</div>
+				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

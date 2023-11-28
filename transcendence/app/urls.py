@@ -1,9 +1,10 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
 urlpatterns = [
     path("404", views.status_404, name="404"),
+    path("_404", views.status_404, name="404"),
     path("", views.index, name="index"),
 	path("main", views.index, name="main"),
     path("_main", views.main, name="main"),
@@ -19,4 +20,5 @@ urlpatterns = [
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
     path("get-template/<path:route>", views.get_template, name="get-template"),
+    re_path(r'^.*$', views.index, name='catch_all'),
 ]

@@ -186,6 +186,12 @@ body *{
 	height: 75px;
 	background-color: rgb(79, 79, 219);
 }
+
+.protectedPageContent {
+	margin-top: 75px;
+	min-height: calc(100vh - 75px);
+	padding: 20px;
+}
 .protectedNavbar * {
 	font-family: PressStart;
 	display: flex;
@@ -196,10 +202,20 @@ body *{
 	font-size: 20px;
 }
 
+@media only screen and (max-width: 776px)
+{
+	.protectedPageContent {
+		margin-top: 75px;
+		min-height: calc(100vh - 75px);
+		padding: 20px;
+		padding-bottom: 60px;
+	}
+}
+
 /* Side Menu */
 #sideMenuContainer {
 	width: 100px;
-	height: 400px;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -207,11 +223,45 @@ body *{
 	background-color: rgb(79, 79, 219);
 	position: fixed;
 	left: 0;
-	top: calc(50vh - 200px);
+	top: 0;
 	padding: 10px 20px;
-	margin: auto 15px;
-	border-radius: 20px;
 }
+
+.menuHamburger {
+	position: absolute;
+	top: 25px;
+	left: 25px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	cursor: pointer;
+}
+
+.hamburgerSpan {
+	display: inline-block;
+	width: 40px;
+	height: 4px;
+	background-color: white;
+	margin: 2px auto;
+	transition: all 0.25s linear;
+}
+
+.menuHamburger:hover :nth-child(1) {
+	transform-origin: center;
+	transform: rotate(45deg) translateY(4px);
+}
+.menuHamburger:hover :nth-child(2) {
+	display: none;
+}
+.menuHamburger:hover :nth-child(3) {
+	transform-origin: center;
+	transform: rotate(-45deg) translateY(-4px);
+}
+
 .mainItems,
 .logoutArea {
 	display: flex;
@@ -246,20 +296,68 @@ body *{
 	content: url(./images/logoutIcon.png);
 }
 
+@media only screen and (max-width: 776px)
+{
+	#sideMenuContainer {
+		width: calc(100vw - 100px);
+		height: 60px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		background-color: rgb(79, 79, 219);
+		position: fixed;
+		top: calc(100vh - 60px);
+		padding: 10px 20px;
+		margin: 0 50px;
+		border-radius: 20px;
+		overflow: hidden;
+		border: 1px solid red;
+	}
+	.mainItems,
+	.logoutArea {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.sideMenuItemIcon {
+		margin: auto 10px;
+	}
+}
+
 /* Dashboard page */
 
 #dashboardContainer {
 	min-height: 100vh;
 	width: 100vw;
 
-	background: url(https://b2316719.smushcdn.com/2316719/wp-content/uploads/2022/03/bg_01.jpg?lossy=1&strip=1&webp=1);
+	background: url(https://pub-static.fotor.com/assets/bg/bf9a415f-b758-4c0d-a820-334370772ec3.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
+}
 
+#dashboardUserProfilePic {
+	width: 80%;
+	border-radius: 50%;
+	margin: auto;
+}
+#dashboardUserCoalitionPic {
+	width: 60%;
+	margin: 5px auto;
+}
+
+#dashboardUserProfileName,
+#dashboardUserCoalitionName {
+	font-style: PressStart;
+	text-align: center;
+}
+.coalitionArea {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 /* Settings page */

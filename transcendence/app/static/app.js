@@ -142,3 +142,14 @@ const logoutUser = async() => {
 		console.log(error);
 	}
 }
+
+//Menu Logic
+let isExpanded = false;
+const expandSideMenu = () => {
+	console.log("Expand menu function called");
+	const sideMenu = document.getElementById("sideMenuContainer");
+	if (sideMenu.classList.contains("sideMenuNotExpanded"))
+		sideMenu.classList.remove("sideMenuExpanded");
+	sideMenu.classList.add("sideMenuExpanded");
+}
+
