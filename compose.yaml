@@ -1,9 +1,12 @@
+version: '3.8'
+
 services:
   transcendence:
     build: ./transcendence
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - 8000:8000
     volumes:
@@ -12,7 +15,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_HOST: ${POSTGRES_HOST}
 
   db:
     image: postgres:16.0-bookworm
@@ -24,6 +26,11 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}
       POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER}
+      interval: 1s
+      timeout: 5s
+      retries: 10
 
 volumes:
   pgdata:
