@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.core.serializers import serialize
-from api.models import models
+# from api.models import models
 import json
 import os
 
