@@ -278,6 +278,7 @@ body *{
 	background-color: white;
 	margin: 2px auto;
 	transition: all 0.25s linear;
+	border-radius: 5px;
 }
 
 .mainItems,

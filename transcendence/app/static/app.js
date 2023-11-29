@@ -1,4 +1,3 @@
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -146,8 +145,6 @@ const logoutUser = async() => {
 //Menu Logic
 let isExpanded = false;
 const toggleMenu = () => {
-	console.log("toggleMenu function called");
-	console.log(`isExpanded: ${isExpanded}`);
 	isExpanded = !isExpanded;
 	const sideMenu = document.getElementById("sideMenuContainer");
 	const hamburger = document.getElementById("menuHamburger");
@@ -164,7 +161,18 @@ const toggleMenu = () => {
 		hamburger.classList.remove("hamburgerExpanded");
 		hamburger.classList.add("hamburgerNotExpanded");
 		sideMenuBg.style.display = "none";
+		resetHamburgerState();
 	}
+}
+
+const resetHamburgerState = () => {
+	const hamburgerChilds = document.getElementById("menuHamburger").children;
+	const barOne = hamburgerChilds.item(0);
+	const barTwo = hamburgerChilds.item(1);
+	const barThree = hamburgerChilds.item(2);
+	barOne.style.transform = "rotate(0deg) translateY(0px)";
+	barTwo.style.visibility = "visible";
+	barThree.style.transform = "rotate(0deg) translateY(0px)";
 }
 
 const menuOnHover = () => {
@@ -173,9 +181,9 @@ const menuOnHover = () => {
 	const barTwo = hamburgerChilds.item(1);
 	const barThree = hamburgerChilds.item(2);
 	if (isExpanded) {
-		barOne.style.transform = "rotate(-27g)";
+		barOne.style.transform = "rotate(-27deg) translate(-5px, -3px)";
 		barTwo.style.visibility = "hidden";
-		barThree.style.transform = "rotate(27deg)";
+		barThree.style.transform = "rotate(27deg) translate(-5px, 2px)";
 	} else {
 		barOne.style.transform = "rotate(27deg) translate(-5px, 2px)";
 		barTwo.style.visibility = "hidden";
@@ -192,12 +200,10 @@ const menuOnMouseLeave = () => {
 	barTwo.style.transformOrigin = "center";
 	barThree.style.transformOrigin = "center";
 	if (isExpanded) {
-		barOne.style.transform = "rotate(45deg) translateY(4px)";
+		barOne.style.transform = "rotate(45deg) translateY(10px)";
 		barTwo.style.visibility = "hidden";
-		barThree.style.transform = "rotate(-45deg) translateY(-4px)";
+		barThree.style.transform = "rotate(-45deg) translateY(-10px)";
 	} else {
-		barOne.style.transform = "rotate(0deg) translateY(0px)";
-		barTwo.style.visibility = "visible";
-		barThree.style.transform = "rotate(0deg) translateY(0px)";
+		resetHamburgerState();
 	}
 }
