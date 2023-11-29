@@ -244,7 +244,7 @@ body *{
 }
 
 .sideMenuExpanded {
-	padding: 10px 20px;
+	padding: 10px 0px;
 	transition: all 0.25s linear;
 	width: 175px;
 }
@@ -280,18 +280,6 @@ body *{
 	transition: all 0.25s linear;
 }
 
-#menuHamburger:hover :nth-child(1) {
-	transform-origin: center;
-	transform: rotate(45deg) translateY(4px);
-}
-#menuHamburger:hover :nth-child(2) {
-	display: none;
-}
-#menuHamburger:hover :nth-child(3) {
-	transform-origin: center;
-	transform: rotate(-45deg) translateY(-4px);
-}
-
 .mainItems,
 .logoutArea,
 .sideMenuHeader {
@@ -308,6 +296,20 @@ body *{
 }
 .mainItems {
 	height: 300px;
+	width: 100%;
+}
+.sideMenuItem {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.sideMenuItem:hover {
+	background-color: orangered;
+}
+.sideMenuItem p {
+	font-family: PressStart;
 }
 .sideMenuItemIcon {
 	max-width: 50px;

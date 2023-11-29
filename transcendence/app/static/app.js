@@ -166,3 +166,38 @@ const toggleMenu = () => {
 		sideMenuBg.style.display = "none";
 	}
 }
+
+const menuOnHover = () => {
+	const hamburgerChilds = document.getElementById("menuHamburger").children;
+	const barOne = hamburgerChilds.item(0);
+	const barTwo = hamburgerChilds.item(1);
+	const barThree = hamburgerChilds.item(2);
+	if (isExpanded) {
+		barOne.style.transform = "rotate(-27g)";
+		barTwo.style.visibility = "hidden";
+		barThree.style.transform = "rotate(27deg)";
+	} else {
+		barOne.style.transform = "rotate(27deg) translate(-5px, 2px)";
+		barTwo.style.visibility = "hidden";
+		barThree.style.transform = "rotate(-27deg) translate(-5px, -3px)";
+	}
+}
+
+const menuOnMouseLeave = () => {
+	const hamburgerChilds = document.getElementById("menuHamburger").children;
+	const barOne = hamburgerChilds.item(0);
+	const barTwo = hamburgerChilds.item(1);
+	const barThree = hamburgerChilds.item(2);
+	barOne.style.transformOrigin = "center";
+	barTwo.style.transformOrigin = "center";
+	barThree.style.transformOrigin = "center";
+	if (isExpanded) {
+		barOne.style.transform = "rotate(45deg) translateY(4px)";
+		barTwo.style.visibility = "hidden";
+		barThree.style.transform = "rotate(-45deg) translateY(-4px)";
+	} else {
+		barOne.style.transform = "rotate(0deg) translateY(0px)";
+		barTwo.style.visibility = "visible";
+		barThree.style.transform = "rotate(0deg) translateY(0px)";
+	}
+}

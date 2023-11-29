@@ -4,7 +4,9 @@
 	{% endif %}
 </div>
 <div id="menuHamburger" class="hamburgerNotExpanded"
-		onclick="toggleMenu()"
+	onclick="toggleMenu()"
+	onmouseover="menuOnHover()"
+	onmouseout="menuOnMouseLeave()"
 >
 	<div class="hamburgerSpan"></div>
 	<div class="hamburgerSpan"></div>
@@ -21,16 +23,22 @@
 		{% endif %}
 	</div>
 	<div class="mainItems">
-		<img
-			class="sideMenuItemIcon"
-			alt="Games"
-			id="sideMenuGamesIcon"
-		/>
-		<img
-			id="sideMenuDashboardIcon"
-			class="sideMenuItemIcon"
-			alt="Dashboard"
-		/>
+		<div class="sideMenuItem">
+			<img
+				class="sideMenuItemIcon"
+				alt="Games"
+				id="sideMenuGamesIcon"
+			/>
+			<p>Games</p>
+		</div>
+		<div class="sideMenuItem">
+			<img
+				id="sideMenuDashboardIcon"
+				class="sideMenuItemIcon"
+				alt="Dashboard"
+			/>
+			<p>Dashboard</p>
+		</div>
 	</div>
 	<div class="logoutArea">
 		<img
