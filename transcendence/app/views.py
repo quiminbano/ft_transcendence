@@ -94,3 +94,11 @@ def settings(request):
     else:
         form = ChangeProfile()
     return render(request, 'settings.html', {'form': form})
+
+
+def pong(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+    else:
+        context = {}
+        return render(request, "pong.html", context)

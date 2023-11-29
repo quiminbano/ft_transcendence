@@ -17,8 +17,10 @@ urlpatterns = [
     path("_dashboard", views.dashboard, name="dashboard"),
     path("settings", views.index, name="settings"),
     path("_settings", views.settings, name="settings"),
+    path("pong", views.index, name="pong"),
+    path("_pong", views.pong, name="pong"),
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
-    path("get-template/<path:route>", views.get_template, name="get-template"),
+
     re_path(r'^.*$', views.index, name='catch_all'),
 ]
