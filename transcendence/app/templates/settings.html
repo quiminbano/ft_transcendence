@@ -1,0 +1,19 @@
+<div class="container-fluid settingsContainer">
+	<div class="row">
+		<div class="col-10 offset-1 col-md-8 offset-md-2 settingsBox">
+			<h2>Edit profile</h2>
+			<form onsubmit="handleChangeProfile(event)" method="POST" action="/_settings">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button
+					class="btn btn-success w-100 changeProfileButton"
+					type="submit"
+				>Confirm</button>
+				<button
+					class="btn btn-danger w-100 changeProfileButton"
+					onclick="navigateTo('/dashboard')"
+				>Cancel</button>
+			</form>
+		</div>
+	</div>
+</div>
