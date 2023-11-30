@@ -18,7 +18,9 @@
 <body>
 	<div id="root">
 		<div id="page-content">
-
+			{% block content %}
+				{% include content %}
+			{% endblock %}
 		</div>
 	</div>
 	<script src="{% static 'router.js' %}"></script>

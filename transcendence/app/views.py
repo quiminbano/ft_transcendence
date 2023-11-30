@@ -10,16 +10,14 @@ def status_404(request):
     return render(request, "404.html", context)
 
 def index(request):
-    context = {}
-    return render(request, "index.html", context)
-
-def main(request):
-    context = {}
     if request.user.is_authenticated:
         return dashboard(request);
     else:
-        return render(request, "main.html", context)
-
+        context = {
+            "content": "main.html"
+        }
+        return render(request, "index.html", context)
+        
 def loginUser(request):
     if request.user.is_authenticated:
         return dashboard(request)
@@ -39,7 +37,11 @@ def loginUser(request):
             return JsonResponse({"success": "false", "message": "the form is invalid"}, status=400)
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    context = {
+        "form": form,
+        "content": "login.html"
+    }
+    return render(request, 'index.html', context)
 
 def logoutUser(request):
     logout(request)
@@ -59,14 +61,18 @@ def signup(request):
             return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
     else:
         form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+    context = {
+        "form": form,
+        "content": "signup.html"
+    }
+    return render(request, 'index.html', context)
 
 #@login_required(login_url="/login")
 def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
-    context = {}
-    return render(request, "dashboard.html", context)
+    context = { "content": "dashboard.html"}
+    return render(request, "index.html", context)
 
 #@login_required(login_url="/login")
 def settings(request):
@@ -82,12 +88,16 @@ def settings(request):
             return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
     else:
         form = ChangeProfile()
-    return render(request, 'settings.html', {'form': form})
+    context = {
+        "form": form,
+        "content": "settings.html"
+    }
+    return render(request, 'index.html', context)
 
 
 def pong(request):
     if not request.user.is_authenticated:
         return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
     else:
-        context = {}
-        return render(request, "pong.html", context)
+        context = {"content": "login.html"}
+        return render(request, "index.html", context)
