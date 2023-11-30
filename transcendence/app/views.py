@@ -97,7 +97,7 @@ def settings(request):
 
 def pong(request):
     if not request.user.is_authenticated:
-        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+        return dashboard(request);
     else:
-        context = {"content": "login.html"}
+        context = {"content": "pong.html"}
         return render(request, "index.html", context)
