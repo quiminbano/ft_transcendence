@@ -17,6 +17,9 @@ reset: down
 
 reboot: down all
 
+dev: down
+	docker compose up -d
+
 re: reset all
 
 prune:

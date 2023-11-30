@@ -5,17 +5,6 @@ from .forms import SignupForm, LoginForm, ChangeProfile
 from django.http import JsonResponse
 import json
 
-
-def get_template(request, route):
-    template_path = route + ".html"
-    print(template_path)
-    if route == "login":
-        return loginUser(request)
-    elif route == "signup":
-        return signup(request)
-    else:
-        return render(request, template_path)
-
 def status_404(request):
     context = {}
     return render(request, "404.html", context)
@@ -26,9 +15,14 @@ def index(request):
 
 def main(request):
     context = {}
-    return render(request, "main.html", context)
+    if request.user.is_authenticated:
+        return dashboard(request);
+    else:
+        return render(request, "main.html", context)
 
 def loginUser(request):
+    if request.user.is_authenticated:
+        return dashboard(request)
     if request.method == 'POST':
         data = json.loads(request.body)
         form = LoginForm(data)
@@ -48,11 +42,12 @@ def loginUser(request):
     return render(request, 'login.html', {'form': form})
 
 def logoutUser(request):
-    print("Logout function called")
     logout(request)
     return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
 
 def signup(request):
+    if request.user.is_authenticated:
+        return dashboard(request)
     if request.method == 'POST':
         data = json.loads(request.body)
         form = SignupForm(data)
@@ -68,21 +63,15 @@ def signup(request):
 
 #@login_required(login_url="/login")
 def dashboard(request):
-    if request.user.is_authenticated:
-        print("USer is authenticated!")
-    else:
-        print("User is not authenticated!!")
-        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+    if not request.user.is_authenticated:
+        return loginUser(request)
     context = {}
     return render(request, "dashboard.html", context)
 
 #@login_required(login_url="/login")
 def settings(request):
-    if request.user.is_authenticated:
-        print("USer is authenticated!")
-    else:
-        print("User is not authenticated!!")
-        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+    if not request.user.is_authenticated:
+       return loginUser(request) 
     if request.method == 'POST':
         data = json.loads(request.body)
         form = ChangeProfile(data)

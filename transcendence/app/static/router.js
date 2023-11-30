@@ -11,7 +11,6 @@ const routes = {
     "/": "main",
     "/login": "login",
 	"/signup": "signup",
-	"/dashboard": "dashboard",
 	"/settings": "settings",
 	"/pong": "pong"
 };
