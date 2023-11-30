@@ -3,10 +3,10 @@ NAME_C = ft_transcendence_transcendence_1 ft_transcendence_db_1
 VOL = ft_transcendence_pgdata
 
 all:
-	docker-compose up -d
+	docker compose up --build
 
 down:
-	docker-compose down
+	docker compose down
 
 fclean: down
 	docker rmi $(NAME_I)

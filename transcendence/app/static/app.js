@@ -1,4 +1,3 @@
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -20,7 +19,7 @@ const postRequest = async (url, data) => {
 		method: "POST",
 		headers: {
 			'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
+			'X-CSRFToken': csrftoken
 		},
 		body: JSON.stringify(data)
 	}
@@ -62,15 +61,14 @@ const submitLogin = async event => {
 		errorMessageParagraph.innerHTML = result.message;
 		errorMessageParagraph.style.display = "block";
 	} else {
-		history.pushState(null, null, "/");
-		window.handleLocation();
+		navigateTo("/dashboard");
 	}
 	hideLoadingSpinner();
 }
 
 
 const navigateTo = (url) => {
-	history.back();
+	history.pushState(null, null, url);
 	window.handleLocation();
 }
 
@@ -128,4 +126,84 @@ const submitSignup = async event => {
 			handleErrors(result.errors);
 	}
 	hideLoadingSpinner();
+}
+
+const logoutUser = async() => {
+	try {
+		const response = await fetch("/logout");
+		if (response.ok) {
+			console.log("Logout succeeded");
+			navigateTo("/");
+		} else {
+			console.log("Failed to logout")
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+//Menu Logic
+let isExpanded = false;
+const toggleMenu = () => {
+	isExpanded = !isExpanded;
+	const sideMenu = document.getElementById("sideMenuContainer");
+	const hamburger = document.getElementById("menuHamburger");
+	const sideMenuBg = document.getElementById("sideMenuExpandBg");
+	if (isExpanded) {
+		sideMenu.classList.remove("sideMenuNotExpanded");
+		sideMenu.classList.add("sideMenuExpanded");
+		hamburger.classList.remove("hamburgerNotExpanded");
+		hamburger.classList.add("hamburgerExpanded");
+		sideMenuBg.style.display = "block";
+	} else {
+		sideMenu.classList.remove("sideMenuExpanded");
+		sideMenu.classList.add("sideMenuNotExpanded");
+		hamburger.classList.remove("hamburgerExpanded");
+		hamburger.classList.add("hamburgerNotExpanded");
+		sideMenuBg.style.display = "none";
+		resetHamburgerState();
+	}
+}
+
+const resetHamburgerState = () => {
+	const hamburgerChilds = document.getElementById("menuHamburger").children;
+	const barOne = hamburgerChilds.item(0);
+	const barTwo = hamburgerChilds.item(1);
+	const barThree = hamburgerChilds.item(2);
+	barOne.style.transform = "rotate(0deg) translateY(0px)";
+	barTwo.style.visibility = "visible";
+	barThree.style.transform = "rotate(0deg) translateY(0px)";
+}
+
+const menuOnHover = () => {
+	const hamburgerChilds = document.getElementById("menuHamburger").children;
+	const barOne = hamburgerChilds.item(0);
+	const barTwo = hamburgerChilds.item(1);
+	const barThree = hamburgerChilds.item(2);
+	if (isExpanded) {
+		barOne.style.transform = "rotate(-27deg) translate(-5px, -3px)";
+		barTwo.style.visibility = "hidden";
+		barThree.style.transform = "rotate(27deg) translate(-5px, 2px)";
+	} else {
+		barOne.style.transform = "rotate(27deg) translate(-5px, 2px)";
+		barTwo.style.visibility = "hidden";
+		barThree.style.transform = "rotate(-27deg) translate(-5px, -3px)";
+	}
+}
+
+const menuOnMouseLeave = () => {
+	const hamburgerChilds = document.getElementById("menuHamburger").children;
+	const barOne = hamburgerChilds.item(0);
+	const barTwo = hamburgerChilds.item(1);
+	const barThree = hamburgerChilds.item(2);
+	barOne.style.transformOrigin = "center";
+	barTwo.style.transformOrigin = "center";
+	barThree.style.transformOrigin = "center";
+	if (isExpanded) {
+		barOne.style.transform = "rotate(45deg) translateY(10px)";
+		barTwo.style.visibility = "hidden";
+		barThree.style.transform = "rotate(-45deg) translateY(-10px)";
+	} else {
+		resetHamburgerState();
+	}
 }
