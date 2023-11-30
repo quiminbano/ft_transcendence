@@ -1,7 +1,35 @@
-<div class="cotainer-fluid">
-	<div class="row">
-		<div class="col-12">
-			THIS IS THE PONG PAGE!!!!!!!
+{% include "menus.html" %}
+<div class="container-fluid" id="pongPageContainer">
+	<div id="pongPageOverlay"></div>
+	<div class="row protectedPageContent">
+		<div class="col-12 col-md-6">
+			<div class="row">
+				<div class="col-12 pongDescriptionArea">
+					<h2>Pong</h2>
+					<p>Pong is a two-dimensional sports game that simulates table tennis. 
+					The player controls an in-game paddle by moving it vertically across the 
+					left or right side of the screen. They can compete against another player 
+					controlling a second paddle on the opposing side. Players use the paddles to hit
+					a ball back and forth. The goal is for each player to reach eleven points before 
+					the opponent; points are earned when one fails to return the ball to the other.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-md-6 pongDescriptionArea">
+			<div class="row">
+				<div class="col-12">
+					<h4>Top Players</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="d-flex align-items-center justify-content-center flex-row">
+						<button class="pongPageButton">Play</button>
+						<button class="pongPageButton">Tournament</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
