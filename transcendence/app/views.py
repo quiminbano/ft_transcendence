@@ -5,30 +5,22 @@ from .forms import SignupForm, LoginForm, ChangeProfile
 from django.http import JsonResponse
 import json
 
-
-def get_template(request, route):
-    template_path = route + ".html"
-    print(template_path)
-    if route == "login":
-        return loginUser(request)
-    elif route == "signup":
-        return signup(request)
-    else:
-        return render(request, template_path)
-
 def status_404(request):
     context = {}
     return render(request, "404.html", context)
 
 def index(request):
-    context = {}
-    return render(request, "index.html", context)
-
-def main(request):
-    context = {}
-    return render(request, "main.html", context)
-
+    if request.user.is_authenticated:
+        return dashboard(request);
+    else:
+        context = {
+            "content": "main.html"
+        }
+        return render(request, "index.html", context)
+        
 def loginUser(request):
+    if request.user.is_authenticated:
+        return dashboard(request)
     if request.method == 'POST':
         data = json.loads(request.body)
         form = LoginForm(data)
@@ -45,14 +37,19 @@ def loginUser(request):
             return JsonResponse({"success": "false", "message": "the form is invalid"}, status=400)
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    context = {
+        "form": form,
+        "content": "login.html"
+    }
+    return render(request, 'index.html', context)
 
 def logoutUser(request):
-    print("Logout function called")
     logout(request)
     return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
 
 def signup(request):
+    if request.user.is_authenticated:
+        return dashboard(request)
     if request.method == 'POST':
         data = json.loads(request.body)
         form = SignupForm(data)
@@ -64,25 +61,23 @@ def signup(request):
             return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
     else:
         form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+    context = {
+        "form": form,
+        "content": "signup.html"
+    }
+    return render(request, 'index.html', context)
 
 #@login_required(login_url="/login")
 def dashboard(request):
-    if request.user.is_authenticated:
-        print("USer is authenticated!")
-    else:
-        print("User is not authenticated!!")
-        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
-    context = {}
-    return render(request, "dashboard.html", context)
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    context = { "content": "dashboard.html"}
+    return render(request, "index.html", context)
 
 #@login_required(login_url="/login")
 def settings(request):
-    if request.user.is_authenticated:
-        print("USer is authenticated!")
-    else:
-        print("User is not authenticated!!")
-        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+    if not request.user.is_authenticated:
+       return loginUser(request) 
     if request.method == 'POST':
         data = json.loads(request.body)
         form = ChangeProfile(data)
@@ -93,12 +88,23 @@ def settings(request):
             return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
     else:
         form = ChangeProfile()
-    return render(request, 'settings.html', {'form': form})
+    context = {
+        "form": form,
+        "content": "settings.html"
+    }
+    return render(request, 'index.html', context)
 
 
 def pong(request):
     if not request.user.is_authenticated:
-        return JsonResponse({"success": "false", "message": "Not authorized"}, status=400)
+        return dashboard(request);
     else:
-        context = {}
-        return render(request, "pong.html", context)
+        context = {"content": "pong.html"}
+        return render(request, "index.html", context)
+
+def pongTournament(request):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {"content": "pongTournament.html"}
+        return render(request, "index.html", context)

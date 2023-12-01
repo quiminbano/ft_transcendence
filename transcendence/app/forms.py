@@ -7,7 +7,7 @@ from django.forms.forms import Form
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
 
 
 class SignupForm(UserCreationForm):
@@ -21,11 +21,11 @@ class SignupForm(UserCreationForm):
         widget=forms.EmailInput(attrs={"class": "form-control"}))
     password1 = forms.CharField(
         label='password',
-        widget=forms.PasswordInput(attrs={"class": "form-control"})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
     password2 = forms.CharField(
         label='Confirm password',
-        widget=forms.PasswordInput(attrs={"class": "form-control"})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
 
     def clean_username(self):
