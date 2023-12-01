@@ -305,6 +305,10 @@ body *{
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
+}
+.sideMenuItem * {
+	overflow: hidden;
 }
 .sideMenuItem:hover {
 	background-color: orangered;
@@ -324,8 +328,11 @@ body *{
 	transform: scale(1.05);
 }
 
-#sideMenuGamesIcon {
-	content: url(./images/gamesIcon.png);
+#sideMenuPongIcon {
+	content: url(./images/icons8-ping-pong-100.png);
+}
+#sideMenuSnakeIcon {
+	content: url(./images/icons8-snake-50.png);
 }
 #sideMenuDashboardIcon {
 	content: url(./images/dashboardIcon.png);
@@ -359,11 +366,15 @@ body *{
 
 #dashboardUserProfilePic {
 	width: 80%;
+	max-width: 150px;
+	max-height: 150px;
 	border-radius: 50%;
 	margin: auto;
 }
 #dashboardUserCoalitionPic {
 	width: 60%;
+	max-width: 80px;
+	max-height: 80px;
 	margin: 5px auto;
 }
 
