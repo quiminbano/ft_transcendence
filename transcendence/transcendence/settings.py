@@ -132,4 +132,4 @@ STATIC_ROOT = "/var/www/transcendence/static/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # apply our custom user model onto the django database
-AUTH_USER_MODEL = 'app.CustomUser'
+AUTH_USER_MODEL = 'app.CustomUserData'
