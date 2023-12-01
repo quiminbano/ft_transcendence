@@ -48,3 +48,8 @@ const navigateTo = (url) => {
 	window.handleLocation();
 }
 
+const goBack = () => {
+	history.back();
+	handleLocation();
+}
+

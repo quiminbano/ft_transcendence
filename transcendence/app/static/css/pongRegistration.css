@@ -4,11 +4,13 @@
     background-size: cover;
     background-repeat: no-repeat;
     display: none;
+	padding: 30px 20px;
 }
-#pongRegistrationContainer * {
+#tournamentTitle,
+#tournamentLobbyTitle,
+#registeredPlayersTitle {
     color: whitesmoke;
     font-family: PressStart;
-    position: relative;
 }
 
 .blackOverlay {
@@ -19,6 +21,10 @@
     right: 0;
     background-color: rgba(0,0,0,0.5);
 }
+#tournamentTitle {
+	text-align: center;
+	margin-bottom: 50px;
+}
 
 #registeredPlayersTitle,
 #tournamentLobbyTitle {
@@ -26,7 +32,6 @@
 }
 #tournamentLobbyTitle {
     margin-bottom: 50px;
-    font-size: 2rem;
 }
 
 #registeredPlayerBox {
@@ -37,8 +42,8 @@
     background-color: beige;
     border-radius: 5px;
     border: 4px solid black;
+	padding: 20px 10px;
 }
-
 
 /* Pong Creation page */
 #tournamentCreationContainer {
@@ -50,10 +55,98 @@
 
 #tournamentCreationContainer * {
     font-family: PressStart;
-    color: whitesmoke;
+    color: black;
+}
+#tournamentRegistrationTitle {
+	text-align: center;
+}
+
+#tournmentCreationBox {
+	border: 4px solid black;
+	border-radius: 5px;
+	background-color: rgba(225, 225, 221, 0.798);
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	padding: 35px 20px;
+	margin: auto;
+	position: relative;
 }
 #tournamentCreationForm input,
 #tournamentCreationForm option,
 #tournamentCreationForm select {
     color: black;
+	border: 2px solid black;
+}
+.tournamentCreationButton {
+	color: whitesmoke !important;
+	margin: 10px auto;
+}
+#tournmentCreationBox h3 {
+	margin: 20px auto;
+}
+
+.registeredPlayerItem {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+	transition: all 0.25s linear;
+}
+.registeredPlayerItem:hover {
+	background-color: rgba(63, 117, 224, 0.845);
+	transform: scale(1.05);
+	border: 2px solid black;
+	border-radius: 5px;
+}
+.registeredPlayerItem p {
+	font-family: PressStart;
+	color: black;
+}
+.unregisterUserButton {
+	height: 25px;
+	width: 25px;
+	cursor: pointer;
+}
+
+#registerNewPlayerButton {
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	width: 100px;
+	height: 100px;
+	transition: all 0.25s linear;
+	cursor: pointer;
+	z-index: 5;
+}
+#registerNewPlayerButton:hover {
+	transform: scale(1.1);
+}
+
+#addNewPlayerModal {
+	display: none;
+	overflow-x: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: auto;
+}
+
+#modalBox {
+	padding: 20px 30px;
+	border: 3px solid black;
+	border-radius: 5px;
+	background-color: rgba(198, 198, 198, 0.906);
+}
+.modalBg {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalbg,
+#addNewPlayerModal {
+	z-index: 5;
 }

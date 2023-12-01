@@ -1,29 +1,33 @@
-﻿{% include 'tournamentCreation.html' %}
+{% include 'tournamentCreation.html' %}
 <div class="container-fluid" id="pongRegistrationContainer">
     <div class="blackOverlay"></div>
     <div class="row">
         <div class="col-12">
+			<h2 id="tournamentTitle"></h2>
+			<h5 id="tournamentLobbyTitle">Lobby</h5>
             <div class="row">
-                <div class="col-12">
-                    <h4 id="tournamentLobbyTitle">Lobby</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
                     <div class="row">
                         <div class="col-12">
                             <h5 id="registeredPlayersTitle">Registered Players</h5>
                         </div>
                         <div class="col-12">
                             <div id="registeredPlayerBox">
-
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-12 col-md-6">
-
-                </div>
-            </div>
-        </div>
-    </div>
+								{% include "registeredPlayers.html" %}
+								{% include "registeredPlayers.html" %}
+								{% include "registeredPlayers.html" %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<img
+		alt="add player button"
+		src="/static/images/add.png"
+		id="registerNewPlayerButton"
+		onclick="openRegisterPlayerModal()"
+	/>
+	{% include "addNewplayer.html" %}
 </div>

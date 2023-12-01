@@ -18,7 +18,9 @@
 	<div id="root">
 		<div id="page-content">
 			{% block content %}
-				{% include content %}
+				{% if content %}
+					{% include content %}
+				{% endif %}
 			{% endblock %}
 		</div>
 	</div>
