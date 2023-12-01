@@ -11,6 +11,7 @@ urlpatterns = [
     path("logout", views.logoutUser, name="logout"),
     path("settings", views.settings, name="settings"),
     path("pong", views.pong, name="pong"),
+    path("pong/tournament", views.pongTournament, name="pongTournament"),
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
 

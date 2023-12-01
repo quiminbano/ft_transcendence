@@ -1,0 +1,47 @@
+﻿<div class="container-fluid" id="tournamentCreationContainer">
+    <div class="blackOverlay"></div>
+    <div class="row">
+        <div class="col-10 offset-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Create a new tournament</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form onsubmit="createTournament(event)" id="tournamentCreationForm">
+                        <div class="form-group">
+                            <label for="tournamentName">What is the name of your tournament?</label>
+                            <input type="text"
+                                    name="tournamentName"
+                                    placeholder="Tournament name"
+                                    class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="totalPlayers">Choose number of players:</label>
+                            <select id="totalPlayers" class="form-control" name="totalPlayers">
+                                <option value="4">4</option>
+                                <option value="8">8</option>
+                                <option value="16">16</option>
+                            </select>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <label for="chooseHostName">What is your name?</label>
+                            <input type="text"
+                                    placeholder="Your name"
+                                    id="chooseHostName"
+                                    class="form-control" 
+                                    name="hostName"
+                                />
+                        </div>
+                        <button type="submit"
+                                class="btn btn-success">
+                            Create
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,7 +12,8 @@ const routes = {
     "/login": "login",
 	"/signup": "signup",
 	"/settings": "settings",
-	"/pong": "pong"
+    "/pong": "pong",
+    "/pongTournament": "pongTournament"
 };
 
 const parser = new DOMParser();
