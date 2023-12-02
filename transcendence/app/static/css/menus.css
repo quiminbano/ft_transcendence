@@ -1,0 +1,200 @@
+﻿#navbar {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 25px 60px;
+}
+
+.homepageNavbarElement {
+    font-family: PressStart;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+
+.protectedNavbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 75px;
+    background-color: rgb(79, 79, 219);
+    padding: 2px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.protectedNavbar * {
+    font-family: PressStart;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#navbarUsername {
+    font-size: 20px;
+}
+
+
+/* Side Menu */
+.menu {
+    z-index: 2;
+}
+
+#sideMenuContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(79, 79, 219);
+    position: fixed;
+    top: 0;
+}
+
+#sideMenuExpandBg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(215, 214, 214, 0.25);
+    z-index: 2;
+    display: none;
+}
+
+.sideMenuNotExpanded {
+    transition: all 0.25s linear;
+    width: 0px;
+}
+
+.sideMenuExpanded {
+    padding: 10px 0px;
+    transition: all 0.25s linear;
+    width: 175px;
+}
+
+#menuHamburger {
+    position: absolute;
+    top: 25px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.hamburgerExpanded {
+    transition: all 0.25s linear;
+    left: 150px;
+}
+
+.hamburgerNotExpanded {
+    transition: all 0.25s linear;
+    left: 25px;
+}
+
+.hamburgerSpan {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    background-color: white;
+    margin: 2px auto;
+    transition: all 0.25s linear;
+    border-radius: 5px;
+}
+
+.mainItems,
+.logoutArea,
+.sideMenuHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#sideMenuProfilePic {
+    width: 80%;
+}
+
+#sideMenuProfileName {
+    font-family: PressStart;
+}
+
+.mainItems {
+    height: 300px;
+    width: 100%;
+}
+
+.sideMenuItem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+    .sideMenuItem * {
+        overflow: hidden;
+    }
+
+    .sideMenuItem:hover {
+        background-color: orangered;
+    }
+
+    .sideMenuItem p {
+        font-family: PressStart;
+    }
+
+.sideMenuItemIcon {
+    max-width: 50px;
+    max-height: 50px;
+    width: 100%;
+    margin: 10px auto;
+    cursor: pointer;
+    transition: all 0.25s linear;
+}
+
+    .sideMenuItemIcon:hover {
+        transform: scale(1.05);
+    }
+
+#sideMenuPongIcon {
+    content: url(../images/icons8-ping-pong-100.png);
+}
+
+#sideMenuSnakeIcon {
+    content: url(../images/icons8-snake-50.png);
+}
+
+#sideMenuDashboardIcon {
+    content: url(../images/dashboardIcon.png);
+}
+
+#sideMenuSettingsIcon {
+    content: url(../images/settingsIcon.png);
+}
+
+#sideMenuLogoutIcon {
+    content: url(../images/logoutIcon.png);
+}
+
+@media only screen and (max-width: 776px) {
+    .sideMenuExpanded {
+        width: 80vw;
+    }
+
+    .hamburgerExpanded {
+        left: calc(80vw - 70px);
+    }
+}

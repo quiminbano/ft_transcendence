@@ -8,9 +8,10 @@
 }
 #tournamentTitle,
 #tournamentLobbyTitle,
-#registeredPlayersTitle {
-    color: whitesmoke;
-    font-family: PressStart;
+#registeredPlayersTitle,
+#currentNumberPlayers {
+	color: whitesmoke;
+	font-family: PressStart;
 }
 
 .blackOverlay {
@@ -27,8 +28,9 @@
 }
 
 #registeredPlayersTitle,
-#tournamentLobbyTitle {
-    text-align: center;
+#tournamentLobbyTitle,
+#currentNumberPlayers {
+	text-align: center;
 }
 #tournamentLobbyTitle {
     margin-bottom: 50px;
@@ -43,6 +45,23 @@
     border-radius: 5px;
     border: 4px solid black;
 	padding: 20px 10px;
+}
+.registerNewPlayerButtonIcon {
+	width: 45px;
+	height: 45px;
+	float: right;
+	margin-right: 5px;
+}
+
+#addNewPlayerBtn {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 80%;
+	font-family: PressStart;
+	border: 5px solid black;
+	padding: 5px 10px;
+	margin: 5px 10%
 }
 
 /* Pong Creation page */
@@ -83,7 +102,6 @@
 #tournmentCreationBox h3 {
 	margin: 20px auto;
 }
-
 .registeredPlayerItem {
 	display: flex;
 	flex-direction: row;
@@ -107,30 +125,20 @@
 	cursor: pointer;
 }
 
-#registerNewPlayerButton {
-	position: fixed;
-	bottom: 50px;
-	right: 50px;
-	width: 100px;
-	height: 100px;
-	transition: all 0.25s linear;
-	cursor: pointer;
-	z-index: 5;
-}
-#registerNewPlayerButton:hover {
-	transform: scale(1.1);
-}
-
 #addNewPlayerModal {
-	display: none;
 	overflow-x: hidden;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
-	margin: auto;
+	height: 100vh;
+	width: 100vw;
+	display: none;
+	justify-content: center;
+	align-items: center;
 }
 
 #modalBox {
+	width: 100%;
 	padding: 20px 30px;
 	border: 3px solid black;
 	border-radius: 5px;
@@ -146,6 +154,19 @@
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
+#modalBox h3,
+#modalBox input,
+#modalBox label {
+	font-family: PressStart;
+	color: black;
+}
+#modalBox button {
+	font-family: PressStart;
+}
+#modalBox h3 {
+	text-align: center;
+	margin: 15px auto;
+}
 .modalbg,
 #addNewPlayerModal {
 	z-index: 5;

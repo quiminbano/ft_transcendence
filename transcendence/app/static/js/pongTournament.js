@@ -1,3 +1,5 @@
+let tournament;
+
 const createTournament = (event) => {
     event.preventDefault();
     const creationContainer = document.getElementById("tournamentCreationContainer");
@@ -10,9 +12,18 @@ const createTournament = (event) => {
 	const totalPlayers = formData.get("totalPlayers");
 	const hostName = formData.get("hostName");
 	console.log(name, totalPlayers, hostName);
+	tournament = new LocalTournament(name, totalPlayers);
+	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
+	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
+	try {
+		tournament.addPlayer(hostName);
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 const removePlayer = (id) => {
+	tournament.removePlayer(id);
 	console.log(`Remove player ${id} from game`);
 }
 
@@ -31,5 +42,11 @@ const closeRegisterPlayerModal = () => {
 
 const addPlayer = (event) => {
 	event.preventDefault();
-	console.log("register new player")
+	const formData = new FormData(event.target);
+	try {
+		tournament.addPlayer(formData.get("name"));
+		closeRegisterPlayerModal();
+	} catch (error) {
+		console.log(error);
+	}
 }
