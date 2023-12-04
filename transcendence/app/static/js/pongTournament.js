@@ -29,15 +29,32 @@ const removePlayer = (id) => {
 	console.log(`Remove player ${id} from game`);
 }
 
-const openRegisterPlayerModal = () => {
+let modalInfo = {
+	isNew: true,
+	id: -1
+}
+const openRegisterPlayerModal = (data) => {
+	modalInfo = data;
+	console.log(modalInfo)
 	const modalElement = document.getElementById("addNewPlayerModal");
 	const bg = document.getElementById("registerNewPlayerModalBg");
 	modalElement.style.display = "flex";
 	bg.style.display = "flex";
+	const title = document.getElementById("modalTitle");
+	const submitButton = document.getElementById("modalSumbitButton");
+	if (modalInfo.isNew) {
+		title.innerHTML = "Add new player";
+		submitButton.innerHTML = "Add";
+	} else {
+		title.innerHTML = "Edit player";
+		submitButton.innerHTML = "Confirm";
+	}
 }
 const closeRegisterPlayerModal = () => {
 	const modalElement = document.getElementById("addNewPlayerModal");
 	const bg = document.getElementById("registerNewPlayerModalBg");
+	const inputField = document.getElementById("newPlayerInputName");
+	inputField.value = "";
 	modalElement.style.display = "none";
 	bg.style.display = "none";
 }
@@ -46,13 +63,15 @@ const addPlayer = (event) => {
 	event.preventDefault();
 	const formData = new FormData(event.target);
 	try {
-		tournament.addPlayer(formData.get("name"));
+		const username = formData.get("name");
+		if (modalInfo.isNew) {
+			tournament.addPlayer(username);
+		} else {
+			tournament.editPlayer(modalInfo.id, username)
+		}
 		closeRegisterPlayerModal();
 	} catch (error) {
 		console.log(error);
 	}
 }
 
-const editPlayerName = (id) => {
-	console.log("editing player name");
-}

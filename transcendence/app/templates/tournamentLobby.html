@@ -14,7 +14,7 @@
                             {% include "registeredPlayers.html" %}
                         </div>
                         <button class="btn btn-success addNewPlayerBtn"
-                                onclick="openRegisterPlayerModal()"
+                                onclick="openRegisterPlayerModal({isNew: true, id: -1})"
                                 id="addNewPlayerButton">
                             Add new player
                             <img alt="add player button"

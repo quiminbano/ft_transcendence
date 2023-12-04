@@ -11,6 +11,7 @@ class LocalTournament {
         this.startButton = document.getElementById("startTournamentBtn");
         this.startButton.style.display = "none";
         this.addNewPlayerButton = document.getElementById("addNewPlayerButton");
+		this.inputField = document.getElementById("newPlayerInputName");
     }
     #updateCurrentPlayersText() {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
@@ -32,6 +33,7 @@ class LocalTournament {
         this.#updateCurrentPlayersText();
         console.log(this.players);
         this.errorElement.innerHTML = "";
+		this.inputField.value = "";
         if (this.players.length >= this.totalPlayers) {
             this.startButton.style.display = "flex";
             this.addNewPlayerButton.style.display = "none";
@@ -44,6 +46,11 @@ class LocalTournament {
         this.players = this.players.map(p => p.id !== id);
         this.#updateCurrentPlayersText();
     }
+	editPlayer(id, name) {
+		const playerToEdit = this.players.find(p => p.id === id);
+		if (playerToEdit)
+			playerToEdit.name = name;
+	}
 
     getPlayers() { return this.players; }
     getCurrentAmountOfPlayers() { return this.players.length; }
