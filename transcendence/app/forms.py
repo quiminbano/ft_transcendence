@@ -6,7 +6,7 @@ from django.forms.fields import EmailField
 from django.core.exceptions import ValidationError
 from django.forms.forms import Form
 
-from .models import CustomUserData
+from api.models import CustomUserData
 
 class CustomUserCreationForm(UserCreationForm):
 
