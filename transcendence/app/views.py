@@ -17,7 +17,7 @@ def index(request):
             "content": "main.html"
         }
         return render(request, "index.html", context)
-        
+
 def loginUser(request):
     if request.user.is_authenticated:
         return dashboard(request)
@@ -77,7 +77,7 @@ def dashboard(request):
 #@login_required(login_url="/login")
 def settings(request):
     if not request.user.is_authenticated:
-       return loginUser(request) 
+       return loginUser(request)
     if request.method == 'POST':
         data = json.loads(request.body)
         form = ChangeProfile(data)
@@ -103,6 +103,13 @@ def pong(request):
         return render(request, "index.html", context)
 
 def pongTournament(request):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {"content": "tournamentCreation.html"}
+        return render(request, "index.html", context)
+
+def pongTournamentLobby(request, id):
     if not request.user.is_authenticated:
         return dashboard(request)
     else:

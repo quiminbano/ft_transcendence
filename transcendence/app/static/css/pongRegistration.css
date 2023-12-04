@@ -3,7 +3,6 @@
     background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
     background-size: cover;
     background-repeat: no-repeat;
-    display: none;
 	padding: 30px 20px;
 }
 #tournamentTitle,
@@ -53,7 +52,7 @@
 	margin-right: 5px;
 }
 
-#addNewPlayerBtn {
+.addNewPlayerBtn {
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -106,7 +105,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	transition: all 0.25s linear;
 }
 .registeredPlayerItem:hover {
@@ -118,11 +117,18 @@
 .registeredPlayerItem p {
 	font-family: PressStart;
 	color: black;
+	margin: auto 5px;
+}
+.registeredPlayerButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .unregisterUserButton {
 	height: 25px;
 	width: 25px;
 	cursor: pointer;
+	margin: auto 5px;
 }
 
 #addNewPlayerModal {

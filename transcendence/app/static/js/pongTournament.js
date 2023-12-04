@@ -1,22 +1,24 @@
 let tournament;
 
-const createTournament = (event) => {
-    event.preventDefault();
-    const creationContainer = document.getElementById("tournamentCreationContainer");
-    const registrationContainer = document.getElementById("pongRegistrationContainer");
+const createTournament = async (event) => {
+	event.preventDefault();
 
-    creationContainer.style.display = "none";
-    registrationContainer.style.display = "block";
-    const formData = new FormData(event.target);
+	const formData = new FormData(event.target);
 	const name = formData.get("tournamentName");
 	const totalPlayers = formData.get("totalPlayers");
 	const hostName = formData.get("hostName");
 	console.log(name, totalPlayers, hostName);
-	tournament = new LocalTournament(name, totalPlayers);
-	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
-	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
 	try {
+		//Make a post request to create a tounament in database
+
+		//if succeded to create tournament
+		const id = 1 // get Proper id from db
+		await navigateTo(`tournament/${id}`);
+		tournament = new LocalTournament(name, totalPlayers);
+		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
+		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
 		tournament.addPlayer(hostName);
+		/**********************************/
 	} catch (error) {
 		console.log(error);
 	}
@@ -49,4 +51,8 @@ const addPlayer = (event) => {
 	} catch (error) {
 		console.log(error);
 	}
+}
+
+const editPlayerName = (id) => {
+	console.log("editing player name");
 }

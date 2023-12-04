@@ -6,12 +6,22 @@
 </div> -->
 
 <div class="registeredPlayerItem" data-id="1">
-	<p>1</p>
-	<p>Andre</p>
-	<img
-		alt="Remove user button"
-		src="/static/images/delete.png"
-		class="unregisterUserButton"
-		onclick="removePlayer(1)"
-	/>
+	<div class="d-flex justify-content-center align-items-center">
+		<p>1</p>
+		<p>Andre</p>
+	</div>
+	<div class="registeredPlayerButtons">
+		<img
+			alt="Remove user button"
+			src="/static/images/delete.png"
+			class="unregisterUserButton"
+			onclick="removePlayer(1)"
+		/>
+		<img
+			alt="Edit user button"
+			src="/static/images/editIcon.png"
+			class="unregisterUserButton"
+			onclick="editPlayerName()"
+		/>
+	</div>
 </div>
