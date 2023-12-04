@@ -3,10 +3,10 @@ NAME_C = ft_transcendence_transcendence_1 ft_transcendence_db_1
 VOL = ft_transcendence_pgdata
 
 all:
-	docker compose up --build
+	docker-compose up --build -d
 
 down:
-	docker compose down
+	docker-compose down
 
 fclean: down
 	docker rmi $(NAME_I)
@@ -17,8 +17,8 @@ reset: down
 
 reboot: down all
 
-dev: down
-	docker compose up -d
+dev:
+	docker-compose exec transcendence python manage.py collectstatic --noinput
 
 re: reset all
 
