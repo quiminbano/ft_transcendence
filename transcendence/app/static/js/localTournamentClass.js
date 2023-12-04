@@ -1,13 +1,16 @@
 class LocalTournament {
     constructor(name, totalPlayers) {
-        #this.name = name;
-        #this.totalPlayers = totalPlayers;
-        #this.players = [];
-        #this.nextId = 0;
-        #this.errorElement = "";
-        #this.playersDisplay = ""
+        this.name = name;
+        this.totalPlayers = totalPlayers;
+        this.players = [];
+        this.nextId = 0;
+        this.errorElement = "";
+        this.playersDisplay = ""
         document.getElementById("tournamentTitle").innerHTML = name;
-        #this.currentPlayersText = document.getElementById("currentNumberPlayers");
+        this.currentPlayersText = document.getElementById("currentNumberPlayers");
+        this.startButton = document.getElementById("startTournamentBtn");
+        this.startButton.style.display = "none";
+        this.addNewPlayerButton = document.getElementById("addNewPlayerButton");
     }
     #updateCurrentPlayersText() {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
@@ -29,6 +32,10 @@ class LocalTournament {
         this.#updateCurrentPlayersText();
         console.log(this.players);
         this.errorElement.innerHTML = "";
+        if (this.players.length >= this.totalPlayers) {
+            this.startButton.style.display = "flex";
+            this.addNewPlayerButton.style.display = "none";
+        }
     }
 
     removePlayer(id) {

@@ -198,6 +198,11 @@ body *{
 	background-size: cover;
 }
 
+.dashboardSection {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 #dashboardUserProfilePic {
 	width: 150px;
 	height: 150px;

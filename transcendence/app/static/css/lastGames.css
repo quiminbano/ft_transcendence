@@ -1,0 +1,19 @@
+﻿#lastGamesContainer * {
+    font-family: PressStart;
+}
+
+.lastGameItemOpponentPicture,
+.lastGameItemGameIcon,
+.lastGameItemScoreIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.lastGameItemBox {
+    border: 4px solid black;
+    border-radius: 5px;
+    padding: 3px 4px;
+}
+.lastGameItemBox p {
+    font-size: 12px;
+}

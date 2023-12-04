@@ -7,16 +7,16 @@
 				{% if user.is_authenticated %}
 				<div class="col-10 offset-1">
 					<div class="row" style="color: whitesmoke;">
-						<div class="col-12">
+						<div class="col-12 dashboardSection">
 							{% include "dashboardProfile.html" %}
 						</div>
-						<div class="col-12 col-md-4">
-							Last games
+						<div class="col-12 col-md-4 dashboardSection">
+							{% include "lastGames.html" %}
 						</div>
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-md-4 dashboardSection">
 							Stats
 						</div>
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-md-4 dashboardSection">
 							Achievements
 						</div>
 					</div>
