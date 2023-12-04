@@ -1,19 +1,15 @@
 import uuid
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext as _
-
-
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils.translation import gettext as _
 
 
 
 
 class CustomUserManager(BaseUserManager):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    onlineStatus = models.BooleanField(default=False)
+    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # onlineStatus = models.BooleanField(default=False)
     """
     Custom user model manager where email is the unique identifier
     for authentication instead of usernames.
@@ -30,7 +26,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, username, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -39,7 +35,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(username, email, password, **extra_fields)
 
 
 
@@ -49,6 +45,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUserData(AbstractUser):
     # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
+    friends = models.ManyToManyField('self', blank=True)
     # email = models.EmailField(_('email address'), unique=True)
 
     # USERNAME_FIELD = 'email'
