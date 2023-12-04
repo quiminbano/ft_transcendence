@@ -11,7 +11,7 @@ def status_404(request):
 
 def index(request):
     if request.user.is_authenticated:
-        return dashboard(request);
+        return dashboard(request)
     else:
         context = {
             "content": "main.html"
