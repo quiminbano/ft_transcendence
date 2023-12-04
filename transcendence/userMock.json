@@ -1,0 +1,18 @@
+{
+	"uuid": "123e4567-e89b-12d3-a456-426614174000",
+	"onlineStatus": true,
+	"loginName": "user123",
+	"loginPassword": "password123",
+	"email": "user123@example.com",
+	"friends": [
+	  {
+		"uuid": "123e4567-e89b-12d3-a456-426614174001",
+		"addedDate": "2023-11-27T00:00:00Z"
+	  },
+	  {
+		"uuid": "123e4567-e89b-12d3-a456-426614174002",
+		"addedDate": "2023-11-27T00:00:00Z"
+	  }
+	]
+}
+   
