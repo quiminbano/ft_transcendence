@@ -43,7 +43,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUserData(AbstractUser):
-    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     # email = models.EmailField(_('email address'), unique=True)
@@ -57,10 +57,17 @@ class CustomUserData(AbstractUser):
         return self.username
 
 
+class Players(models.Model):
+    name = models.CharField(max_length=255)
 
-class User(models.Model):
-    username = models.CharField(max_length=20)
-    password = models.CharField(max_length=64)
+class Tournament(models.Model):
+    name = models.CharField(max_length=255)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    players = models.ManyToManyField(Players, related_name='tournaments')
 
-    def __str__(self):
-        return self.username
+# class User(models.Model):
+#     username = models.CharField(max_length=20)
+#     password = models.CharField(max_length=64)
+
+#     def __str__(self):
+#         return self.username
