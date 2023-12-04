@@ -97,7 +97,7 @@ def settings(request):
 
 def pong(request):
     if not request.user.is_authenticated:
-        return dashboard(request);
+        return dashboard(request)
     else:
         context = {"content": "pong.html"}
         return render(request, "index.html", context)

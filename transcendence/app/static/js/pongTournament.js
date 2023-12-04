@@ -1,4 +1,5 @@
 let tournament;
+let modal;
 
 const createTournament = async (event) => {
 	event.preventDefault();
@@ -14,6 +15,7 @@ const createTournament = async (event) => {
 		//if succeded to create tournament
 		const id = 1 // get Proper id from db
 		await navigateTo(`tournament/${id}`);
+		modal = new Modal();
 		tournament = new LocalTournament(name, totalPlayers);
 		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
@@ -34,29 +36,12 @@ let modalInfo = {
 	id: -1
 }
 const openRegisterPlayerModal = (data) => {
+	modal.setData(data);
 	modalInfo = data;
-	console.log(modalInfo)
-	const modalElement = document.getElementById("addNewPlayerModal");
-	const bg = document.getElementById("registerNewPlayerModalBg");
-	modalElement.style.display = "flex";
-	bg.style.display = "flex";
-	const title = document.getElementById("modalTitle");
-	const submitButton = document.getElementById("modalSumbitButton");
-	if (modalInfo.isNew) {
-		title.innerHTML = "Add new player";
-		submitButton.innerHTML = "Add";
-	} else {
-		title.innerHTML = "Edit player";
-		submitButton.innerHTML = "Confirm";
-	}
+	modal.open();
 }
 const closeRegisterPlayerModal = () => {
-	const modalElement = document.getElementById("addNewPlayerModal");
-	const bg = document.getElementById("registerNewPlayerModalBg");
-	const inputField = document.getElementById("newPlayerInputName");
-	inputField.value = "";
-	modalElement.style.display = "none";
-	bg.style.display = "none";
+	modal.close();
 }
 
 const addPlayer = (event) => {
@@ -64,14 +49,13 @@ const addPlayer = (event) => {
 	const formData = new FormData(event.target);
 	try {
 		const username = formData.get("name");
-		if (modalInfo.isNew) {
+		if (modal.isNew) {
 			tournament.addPlayer(username);
 		} else {
-			tournament.editPlayer(modalInfo.id, username)
+			tournament.editPlayer(modal.getPlayerId(), username)
 		}
 		closeRegisterPlayerModal();
 	} catch (error) {
 		console.log(error);
 	}
 }
-
