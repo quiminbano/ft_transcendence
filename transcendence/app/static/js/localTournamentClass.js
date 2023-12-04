@@ -34,6 +34,7 @@ class LocalTournament {
         console.log(this.players);
         this.errorElement.innerHTML = "";
 		this.inputField.value = "";
+		this.#updateDisplay(name);
         if (this.players.length >= this.totalPlayers) {
             this.startButton.style.display = "flex";
             this.addNewPlayerButton.style.display = "none";
@@ -57,4 +58,26 @@ class LocalTournament {
     getCurrentAmountOfPlayers() { return this.players.length; }
     setErrorElement(elem) { this.errorElement = elem; }
     setPlayersDisplay(elem) { this.playersDisplay = elem }
+
+	async #updateDisplay(name) {
+		const parser = new DOMParser();
+		const url = "/getDoc/registerPlayer";
+		try {
+			const response = await fetch(url);
+			const html = await response.text();
+			const doc = parser.parseFromString(html, 'text/html');
+			const content = doc.body.innerHTML;
+			const indexText = doc.getElementById("index");
+			indexText.innerHTML = this.nextId;
+			const nameText = doc.getElementById("playerName");
+			nameText.innerHTML = name;
+			const element = document.createElement("div");
+			element.innerHTML = content;
+			const div = document.getElementById("registeredPlayerBox");
+			div.appendChild(element);
+			this.nextId++;
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }

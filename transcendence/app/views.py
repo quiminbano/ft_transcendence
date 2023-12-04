@@ -115,3 +115,6 @@ def pongTournamentLobby(request, id):
     else:
         context = {"content": "pongTournament.html"}
         return render(request, "index.html", context)
+
+def getRegisterPlayersTemplate(request):
+        return render(request, "registeredPlayers.html", {})
