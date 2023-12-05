@@ -1,5 +1,6 @@
 let tournament;
 let modal;
+let bracket;
 
 const createTournament = async (event) => {
 	event.preventDefault();
@@ -26,40 +27,53 @@ const createTournament = async (event) => {
 	}
 }
 
-const removePlayer = (id) => {
+const removePlayer = async (id) => {
+	showLoadingSpinner();
+	//properly make a delete request to remove player from DB!!!
 	tournament.removePlayer(id);
 	console.log(`Remove player ${id} from game`);
+	hideLoadingSpinner();
 }
 
-let modalInfo = {
-	isNew: true,
-	id: -1
-}
 const openRegisterPlayerModal = (data) => {
 	modal.setData(data);
-	modalInfo = data;
 	modal.open();
 }
 const closeRegisterPlayerModal = () => {
 	modal.close();
 }
 
-const addPlayer = (event) => {
+const addPlayer = async (event) => {
 	event.preventDefault();
+	showLoadingSpinner();
+	console.log("adding player")
 	const formData = new FormData(event.target);
 	try {
 		const username = formData.get("name");
 		if (modal.isNew) {
+			//properly make a post request to add user to DB!!!
 			tournament.addPlayer(username);
 		} else {
+			//properly make a put request to update player from db!!!
 			tournament.editPlayer(modal.getPlayerId(), username)
 		}
 		closeRegisterPlayerModal();
 	} catch (error) {
 		console.log(error);
 	}
+	hideLoadingSpinner();
 }
 
 const startTournament = async () => {
 	await navigateTo(`${tournament.id}/start`);
+	bracket = new Bracket(document.getElementById("bracketModal"));
+}
+
+const openTournamentBracketModal = () => {
+	bracket.open();
+}
+
+const closeTournamentBracketModal = () => {
+	console.log("Closing the modal");
+	bracket.close();
 }

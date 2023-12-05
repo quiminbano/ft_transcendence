@@ -16,18 +16,6 @@ body {
     font-family: helvetica, arial, sans-serif;
 }
 
-.bracket {
-    display: flex;
-}
-
-.round {
-    flex: 1;
-    display: flex;
-    margin-right: 30px;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
 .match {
     margin: 15px 0;
     overflow: hidden;
@@ -56,4 +44,44 @@ body {
 .teamName,
 .points {
     font-family: PressStart;
+}
+
+#bracketModal {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.bracketBox {
+	background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+	padding: 30px 20px;
+	border: 5px solid black;
+}
+
+.bracketBg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 576px) {
+	.round {
+		margin-right: 10px;
+	}
+	.team {
+		flex-direction: column;
+	}
+	.teamName,
+	.points {
+		font-size: 12px;
+	}
 }
