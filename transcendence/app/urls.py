@@ -13,6 +13,7 @@ urlpatterns = [
     path("pong", views.pong, name="pong"),
     path("pong/tournament", views.pongTournament, name="pongTournament"),
     path("pong/tournament/<int:id>", views.pongTournamentLobby, name="pongTournamentLobby"),
+    path("pong/tournament/<int:id>/start", views.pongTournamentStart, name="pongTournamentStart"),
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
 

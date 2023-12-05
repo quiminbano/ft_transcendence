@@ -110,11 +110,21 @@ def pongTournament(request):
         return render(request, "index.html", context)
 
 def pongTournamentLobby(request, id):
+    #Make a check to see if there is a open tournament with the same id!!!
     if not request.user.is_authenticated:
         return dashboard(request)
     else:
         context = {"content": "pongTournament.html"}
         return render(request, "index.html", context)
 
+def pongTournamentStart(request, id):
+    #Make a check to see if there is a open tournament with the same id!!!
+    if not request.user.is_authenticated:
+        return dashboard(request);
+    else:
+        context = {"content": "tournamentStart.html"}
+        return render(request, "index.html", context);
+
 def getRegisterPlayersTemplate(request):
         return render(request, "registeredPlayers.html", {})
+

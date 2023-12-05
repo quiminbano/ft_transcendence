@@ -16,7 +16,7 @@ const createTournament = async (event) => {
 		const id = 1 // get Proper id from db
 		await navigateTo(`tournament/${id}`);
 		modal = new Modal();
-		tournament = new LocalTournament(name, totalPlayers);
+		tournament = new LocalTournament(name, totalPlayers, id);
 		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
 		tournament.addPlayer(hostName);
@@ -58,4 +58,8 @@ const addPlayer = (event) => {
 	} catch (error) {
 		console.log(error);
 	}
+}
+
+const startTournament = async () => {
+	await navigateTo(`${tournament.id}/start`);
 }

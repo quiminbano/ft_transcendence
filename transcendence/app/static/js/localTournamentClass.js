@@ -1,6 +1,7 @@
 class LocalTournament {
-    constructor(name, totalPlayers) {
+    constructor(name, totalPlayers, id) {
         this.name = name;
+        this.id = id;
         this.totalPlayers = totalPlayers;
         this.players = [];
         this.nextId = 0;
