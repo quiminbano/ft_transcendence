@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-12 col-md-6 offset-md-3">
 				<p id="loginErrorMessage"></p>
-				<form onsubmit="submitLogin(event)" method="POST" action="{% url 'postLogin' %}">
+				<form onsubmit="submitLogin(event)" method="post" action="{% url 'postLogin' %}">
 					{% csrf_token %}
 					<div class="form-group">
 						<label for="{{ form.username.id_for_label}}" class="loginLabel" >Username:</label>
