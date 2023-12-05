@@ -121,8 +121,7 @@ const handleChangeProfile = async (event) => {
 
 const openSettings = async () => {
 	await navigateTo("/settings");
-	if (!settingsModal)
-		settingsModal = new Modal(document.getElementById("settingsModalContainer"));
+	settingsModal = new Modal(document.getElementById("settingsModalContainer"));
 }
 const openSettingsModal = () => {
 	settingsModal.open();

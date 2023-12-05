@@ -48,8 +48,8 @@ const navigateTo = async (url) => {
 	await window.handleLocation();
 }
 
-const goBack = () => {
+const goBack = async () => {
 	history.back();
-	handleLocation();
+	await window.handleLocation();
 }
 
