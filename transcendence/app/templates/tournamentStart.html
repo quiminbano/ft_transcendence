@@ -1,0 +1,33 @@
+<div class="container-fluid" id="pongTournamentStart">
+    <div class="blackOverlay"></div>
+    <div class="row">
+		<div class="col-12">
+			<h3>Title</h3>
+		</div>
+		<div class="col-12 col-md-6 offset-md-3 nextGameDiv">
+			<div class="row">
+				<div class="col-12 nextGameBox">
+					<h5>Next Game</h5>
+					<div id="nextGameOpponentsDiv">
+						<p><span id="nextHomePlayerName">Home</span> vs <span id="nextAwayPlayerName">Away</span></p>
+						<p>Round 1</p>
+					</div>
+					<button
+						class="btn btn-info nextGameButton"
+						onclick="openTournamentBracketModal()";
+					>Check ranks</button>
+					<button
+						class="btn btn-success w-100"
+						id="playNextGameButton"
+					>Play</button>
+				</div>
+			</div>
+		</div>
+    </div>
+	<div id="loadingSpinnerContainer">
+		<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+</div>
+{% include "tournamentBracket.html" %}

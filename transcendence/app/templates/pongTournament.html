@@ -1,29 +1,5 @@
-﻿{% include 'tournamentCreation.html' %}
 <div class="container-fluid" id="pongRegistrationContainer">
     <div class="blackOverlay"></div>
-    <div class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-12">
-                    <h4 id="tournamentLobbyTitle">Lobby</h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="row">
-                        <div class="col-12">
-                            <h5 id="registeredPlayersTitle">Registered Players</h5>
-                        </div>
-                        <div class="col-12">
-                            <div id="registeredPlayerBox">
-
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-12 col-md-6">
-
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "tournamentLobby.html" %}
+	{% include "addNewplayer.html" %}
 </div>

@@ -1,3 +1,5 @@
+let settingsModal;
+
 const submitLogin = async event => {
 	event.preventDefault();
 	const url = event.target.action;
@@ -100,7 +102,7 @@ const handleChangeProfile = async (event) => {
 
 	const username = formData.get('username');
 	const firstname = formData.get('firstName');
-	const lastname = formData.get('lastName');	
+	const lastname = formData.get('lastName');
 	const password = formData.get("password1");
 	const confirmPassword = formData.get("password2");
 	const email = formData.get("email");
@@ -114,23 +116,16 @@ const handleChangeProfile = async (event) => {
 		email
 	}
 	showLoadingSpinner();
+}
 
-	try {
-		console.log(url);
-		const result = await postRequest(url, data);
-		const success = result.success === "true";
-		if (success) {
-			console.log("User successfully updated");
-			navigateTo('/')
-			//Handle user navigation after registration complete!!!!
-		}
-		else {
-			console.log("Failed to update user");
-			if (result.errors)
-				console.log("result.error is true");
-		}		
-	} catch (error) {
-		console.log("Exception thrown from request");
-	}
-	hideLoadingSpinner();
+const openSettings = async () => {
+	await navigateTo("/settings");
+	if (!settingsModal)
+		settingsModal = new Modal(document.getElementById("settingsModalContainer"));
+}
+const openSettingsModal = () => {
+	settingsModal.open();
+}
+const closeSettingsModal = () => {
+	settingsModal.close();
 }

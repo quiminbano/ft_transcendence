@@ -43,8 +43,13 @@ const hideLoadingSpinner = () => {
 	loadingSpinner.style.display = "none";
 }
 
-const navigateTo = (url) => {
+const navigateTo = async (url) => {
 	history.pushState(null, null, url);
-	window.handleLocation();
+	await window.handleLocation();
+}
+
+const goBack = () => {
+	history.back();
+	handleLocation();
 }
 

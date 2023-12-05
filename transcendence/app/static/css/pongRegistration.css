@@ -3,12 +3,14 @@
     background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
     background-size: cover;
     background-repeat: no-repeat;
-    display: none;
+	padding: 30px 20px;
 }
-#pongRegistrationContainer * {
-    color: whitesmoke;
-    font-family: PressStart;
-    position: relative;
+#tournamentTitle,
+#tournamentLobbyTitle,
+#registeredPlayersTitle,
+#currentNumberPlayers {
+	color: whitesmoke;
+	font-family: PressStart;
 }
 
 .blackOverlay {
@@ -19,14 +21,18 @@
     right: 0;
     background-color: rgba(0,0,0,0.5);
 }
+#tournamentTitle {
+	text-align: center;
+	margin-bottom: 50px;
+}
 
 #registeredPlayersTitle,
-#tournamentLobbyTitle {
-    text-align: center;
+#tournamentLobbyTitle,
+#currentNumberPlayers {
+	text-align: center;
 }
 #tournamentLobbyTitle {
     margin-bottom: 50px;
-    font-size: 2rem;
 }
 
 #registeredPlayerBox {
@@ -37,8 +43,25 @@
     background-color: beige;
     border-radius: 5px;
     border: 4px solid black;
+	padding: 20px 10px;
+}
+.registerNewPlayerButtonIcon {
+	width: 45px;
+	height: 45px;
+	float: right;
+	margin-right: 5px;
 }
 
+.addNewPlayerBtn {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 80%;
+	font-family: PressStart;
+	border: 5px solid black;
+	padding: 5px 10px;
+	margin: 5px 10%
+}
 
 /* Pong Creation page */
 #tournamentCreationContainer {
@@ -50,10 +73,114 @@
 
 #tournamentCreationContainer * {
     font-family: PressStart;
-    color: whitesmoke;
+    color: black;
+}
+#tournamentRegistrationTitle {
+	text-align: center;
+}
+
+#tournmentCreationBox {
+	border: 4px solid black;
+	border-radius: 5px;
+	background-color: rgba(225, 225, 221, 0.798);
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	padding: 35px 20px;
+	margin: auto;
+	position: relative;
 }
 #tournamentCreationForm input,
 #tournamentCreationForm option,
 #tournamentCreationForm select {
     color: black;
+	border: 2px solid black;
+}
+.tournamentCreationButton {
+	color: whitesmoke !important;
+	margin: 10px auto;
+}
+#tournmentCreationBox h3 {
+	margin: 20px auto;
+}
+.registeredPlayerItem {
+	height: 40px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	transition: all 0.25s linear;
+}
+.registeredPlayerItem {
+	overflow: hidden;
+}
+.registeredPlayerItem:hover {
+	background-color: rgba(63, 117, 224, 0.845);
+	border: 2px solid black;
+	border-radius: 5px;
+}
+.registeredPlayerItem p {
+	font-family: PressStart;
+	color: black;
+	margin: auto 5px;
+}
+.registeredPlayerButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+.unregisterUserButton {
+	height: 25px;
+	width: 25px;
+	cursor: pointer;
+	margin: auto 5px;
+	transition: all 0.25s linear;
+}
+.unregisterUserButton:hover {
+	transform: scale(1.05);
+}
+#addNewPlayerModal {
+	overflow-x: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+#modalBox {
+	width: 100%;
+	padding: 20px 30px;
+	border: 3px solid black;
+	border-radius: 5px;
+	background-color: rgba(198, 198, 198, 0.906);
+}
+.modalBg {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modalBox h3,
+#modalBox input,
+#modalBox label {
+	font-family: PressStart;
+	color: black;
+}
+#modalBox button {
+	font-family: PressStart;
+}
+#modalBox h3 {
+	text-align: center;
+	margin: 15px auto;
+}
+.modalbg,
+#addNewPlayerModal {
+	z-index: 5;
 }
