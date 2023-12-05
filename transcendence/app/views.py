@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from .forms import SignupForm, LoginForm, ChangeProfile
 from django.http import JsonResponse
 import json
@@ -120,7 +119,7 @@ def pongTournamentLobby(request, id):
 def pongTournamentStart(request, id):
     #Make a check to see if there is a open tournament with the same id!!!
     if not request.user.is_authenticated:
-        return dashboard(request);
+        return dashboard(request)
     else:
         context = {"content": "tournamentStart.html"}
         return render(request, "index.html", context);
