@@ -1,3 +1,5 @@
+let settingsModal;
+
 const submitLogin = async event => {
 	event.preventDefault();
 	const url = event.target.action;
@@ -91,4 +93,16 @@ const logoutUser = async () => {
 	} catch (error) {
 		console.log(error);
 	}
+}
+
+const openSettings = async () => {
+	await navigateTo("/settings");
+	if (!settingsModal)
+		settingsModal = new Modal(document.getElementById("settingsModalContainer"));
+}
+const openSettingsModal = () => {
+	settingsModal.open();
+}
+const closeSettingsModal = () => {
+	settingsModal.close();
 }

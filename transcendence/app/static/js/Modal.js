@@ -1,4 +1,4 @@
-class Bracket {
+class Modal {
 	constructor(element) {
 		this.show = false;
 		this.element = element;

@@ -16,7 +16,7 @@ const createTournament = async (event) => {
 		//if succeded to create tournament
 		const id = 1 // get Proper id from db
 		await navigateTo(`tournament/${id}`);
-		modal = new Modal();
+		modal = new AddPlayerModal();
 		tournament = new LocalTournament(name, totalPlayers, id);
 		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
@@ -66,7 +66,7 @@ const addPlayer = async (event) => {
 
 const startTournament = async () => {
 	await navigateTo(`${tournament.id}/start`);
-	bracket = new Bracket(document.getElementById("bracketModal"));
+	bracket = new Modal(document.getElementById("bracketModal"));
 }
 
 const openTournamentBracketModal = () => {

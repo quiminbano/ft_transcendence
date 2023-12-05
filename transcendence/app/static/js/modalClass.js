@@ -1,4 +1,4 @@
-class Modal {
+class AddPlayerModal {
 	constructor() {
 		this.isNew = true;
 		this.playerId = -1;
