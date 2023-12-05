@@ -69,6 +69,7 @@ const submitSignup = async event => {
 	const success = result.success === "true";
 	if (success) {
 		console.log("User created successfully");
+		navigateTo("login");
 		//Handle user navigation after registration complete!!!!
 	}
 	else {

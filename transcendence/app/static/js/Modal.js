@@ -9,8 +9,7 @@ class Modal {
 		this.element.style.display = "flex";
 	}
 	close() {
-		console.log("closing the modal");
-		console.log(this.element);
-		this.element.style.display = "none"
+		if (this.element)
+			this.element.style.display = "none"
 	}
 }
