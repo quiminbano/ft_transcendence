@@ -12,6 +12,7 @@ services:
       - "8080:8080"
     volumes:
       - ./transcendence/app:/app/app
+      - ./transcendence/api:/app/api
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}

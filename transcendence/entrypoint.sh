@@ -2,7 +2,7 @@
 
 python manage.py collectstatic --noinput
 
-python manage.py makemigrations app
+python manage.py makemigrations api
 python manage.py migrate
 
 cat auth.py | python manage.py shell
