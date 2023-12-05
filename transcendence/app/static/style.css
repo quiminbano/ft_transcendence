@@ -10,11 +10,22 @@ body *{
 	font-family: PressStart;
 	src: url(Fonts/PressStart.ttf);
 }
+
+/* Gererals */
 .inputError {
 	background-color: red;
 	font-family: PressStart;
 	text-align: center;
 }
+
+@media only screen and (max-width: 576px) {.xs-hide {display: none;} }
+@media only screen and (max-width: 768px) {.sm-hide {display: none;} }
+@media only screen and (max-width: 992px) {.md-hide {display: none;} }
+@media only screen and (max-width: 1200px) {.lg-hide {display: none;} }
+@media only screen and (max-width: 1400px) {.xl-hide {display: none;} }
+@media only screen and (min-width: 1401px) {.xxl-hide {display: none;} }
+
+/* ******* */
 
 #loginPasswordGroup {
 	margin-top: 25px;
@@ -204,17 +215,19 @@ body *{
 }
 
 #dashboardUserProfilePic {
-	width: 150px;
-	height: 150px;
+	max-width: 150px;
+	max-height: 150px;
+	width: 80%;
 	border-radius: 50%;
 }
 #dashboardUserCoalitionPic {
-	width: 80px;
-	height: 80px;
+	max-width: 80px;
+	max-height: 80px;
+	width: 60%;
 }
 #dashboardUserProfilePic,
 #dashboardUserCoalitionPic {
-	margin: 5px 3px;
+	margin: auto;
 }
 
 #dashboardUserProfileName,
@@ -229,6 +242,14 @@ body *{
 	align-items: center;
 	height: 100%;
 }
+
+@media only screen and (max-width: 576px) {
+	.coalitionArea p{
+		font-size: 8px;
+	}
+}
+
+
 
 .darkOverlay {
 	position: fixed;

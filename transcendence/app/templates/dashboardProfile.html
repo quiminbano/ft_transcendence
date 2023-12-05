@@ -1,13 +1,15 @@
 <div class="row">
     <div class="col-12 col-md-8 col-xl-6 offset-md-2 offset-xl-3">
         <div class="d-flex align-items-center justify-content-center w-100">
-            <div>
-                <img alt="user profile picture"
-                     id="dashboardUserProfilePic"
-                     src="../static/images/profileIconWhite.png" />
-                <h6 id="dashboardUserProfileName">{{user.get_username}}</h6>
+            <div class="col-8">
+				<div class="d-flex align-items-center justify-content-center flex-column w-100">
+					<img alt="user profile picture"
+						 id="dashboardUserProfilePic"
+						 src="../static/images/profileIconWhite.png" />
+					<h6 id="dashboardUserProfileName">{{user.get_username}}</h6>
+				</div>
             </div>
-            <div class="coalitionArea">
+            <div class="col-4 coalitionArea">
                 <img alt="user coalition logo"
                      src="../static/images/buildersSymbol.svg"
                      id="dashboardUserCoalitionPic" />
