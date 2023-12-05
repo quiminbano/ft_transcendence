@@ -81,12 +81,23 @@ def settings(request):
         data = json.loads(request.body)
         form = ChangeProfile(data)
         if form.is_valid():
-            #properly handle the form validation!!!!
+            user = request.user
+            user.username = form.cleaned_data['username']
+            user.first_name = form.cleaned_data['firstName']
+            user.last_name = form.cleaned_data['lastName']
+            user.email = form.cleaned_data['email']
+            user.save()
             return JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
         else:
             return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
     else:
-        form = ChangeProfile()
+        form = ChangeProfile(initial={
+            'username': request.user.username,
+            'email': request.user.email,
+            'firstName': request.user.first_name,
+            'lastName': request.user.last_name,
+        })
+
     context = {
         "form": form,
         "content": "settings.html"
