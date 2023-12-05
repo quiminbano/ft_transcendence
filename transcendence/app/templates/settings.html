@@ -6,13 +6,15 @@
 				{% csrf_token %}
 				{{ form.as_p }}
 				<button
+					type="button"
 					class="btn btn-success w-100 changeProfileButton"
-					type="submit"
+					onclick="openSettingsModal()"
 				>Confirm</button>
 				<button
 					class="btn btn-danger w-100 changeProfileButton"
 					onclick="navigateTo('/')"
 				>Cancel</button>
+				{% include "settingsModal.html" %}
 			</form>
 		</div>
 	</div>

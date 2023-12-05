@@ -17,7 +17,7 @@ urlpatterns = [
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
 
-	path("getDoc/registerPlayer", views.getRegisterPlayersTemplate, name="postSignup"),
+	path("getDoc/registerPlayer", views.getRegisterPlayersTemplate, name="registerPlayerTemplate"),
 
     re_path(r'^.*$', views.index, name='catch_all'),
 ]
