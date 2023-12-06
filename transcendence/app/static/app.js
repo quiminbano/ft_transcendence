@@ -52,4 +52,3 @@ const goBack = async () => {
 	history.back();
 	await handleLocation();
 }
-

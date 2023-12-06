@@ -6,6 +6,7 @@ window.route = (event) => {
 };
 
 const loaders = [
+	{ path: "/", function: loadDashboard },
 	{ path: "/settings", function: loadSettings },
 ]
 
