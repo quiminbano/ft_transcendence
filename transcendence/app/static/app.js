@@ -50,6 +50,6 @@ const navigateTo = async (url) => {
 
 const goBack = async () => {
 	history.back();
-	await window.handleLocation();
+	await handleLocation();
 }
 
