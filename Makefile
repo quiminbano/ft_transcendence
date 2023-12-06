@@ -20,6 +20,9 @@ reboot: down all
 dev:
 	docker-compose exec transcendence python manage.py collectstatic --noinput
 
+runserver:
+	docker-compose exec transcendence python manage.py runserver 0.0.0.0:8080
+
 re: reset all
 
 prune:

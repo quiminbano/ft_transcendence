@@ -9,6 +9,10 @@
 	<link rel="stylesheet" href="{% static 'style.css' %}">
 	<link rel="stylesheet" href="{% static 'css/pongPage.css' %}">
 	<link rel="stylesheet" href="{% static 'css/pongRegistration.css' %}">
+	<link rel="stylesheet" href="{% static 'css/menus.css' %}">
+	<link rel="stylesheet" href="{% static 'css/lastGames.css' %}">
+	<link rel="stylesheet" href="{% static 'css/tournamentBracket.css' %}">
+	<link rel="stylesheet" href="{% static 'css/tournamentStart.css' %}">
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
 		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -18,15 +22,20 @@
 	<div id="root">
 		<div id="page-content">
 			{% block content %}
-				{% include content %}
+				{% if content %}
+					{% include content %}
+				{% endif %}
 			{% endblock %}
 		</div>
 	</div>
+	<script src="{% static 'js/modalClass.js' %}"></script>
+	<script src="{% static 'js/Modal.js' %}"></script>
 	<script src="{% static 'router.js' %}"></script>
 	<script src="{% static 'app.js' %}"></script>
 	<script src="{% static 'js/sideMenu.js' %}"></script>
 	<script src="{% static 'js/dashboard.js' %}"></script>
 	<script src="{% static 'js/registration.js' %}"></script>
 	<script src="{% static 'js/pongTournament.js' %}"></script>
+	<script src="{% static 'js/localTournamentClass.js' %}"></script>
 </body>
 </html>

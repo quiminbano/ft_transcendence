@@ -11,25 +11,27 @@ body *{
 	src: url(Fonts/PressStart.ttf);
 }
 
+/* Gererals */
+.inputError {
+	background-color: red;
+	font-family: PressStart;
+	text-align: center;
+}
+
+@media only screen and (max-width: 576px) {.xs-hide {display: none;} }
+@media only screen and (max-width: 768px) {.sm-hide {display: none;} }
+@media only screen and (max-width: 992px) {.md-hide {display: none;} }
+@media only screen and (max-width: 1200px) {.lg-hide {display: none;} }
+@media only screen and (max-width: 1400px) {.xl-hide {display: none;} }
+@media only screen and (min-width: 1401px) {.xxl-hide {display: none;} }
+
+/* ******* */
+
 #loginPasswordGroup {
 	margin-top: 25px;
 }
 
-#navbar {
-	position: fixed;
-	top: 0;
-	width: 100vw;
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	padding: 25px 60px;
-}
 
-.homepageNavbarElement {
-	font-family: PressStart;
-	color: whitesmoke;
-	text-decoration: none;
-}
 
 .pageContainer {
 	min-height: 100vh;
@@ -179,29 +181,12 @@ body *{
 
 /* Protected pages */
 
-.protectedNavbar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 75px;
-	background-color: rgb(79, 79, 219);
-}
-
 .protectedPageContent {
 	margin-top: 75px;
 	min-height: calc(100vh - 75px);
 	padding: 20px;
 }
-.protectedNavbar * {
-	font-family: PressStart;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-#navbarUsername {
-	font-size: 20px;
-}
+
 
 @media only screen and (max-width: 776px)
 {
@@ -213,174 +198,41 @@ body *{
 	}
 }
 
-/* Side Menu */
-.menu {
-	z-index: 2;
-}
-
-#sideMenuContainer {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	background-color: rgb(79, 79, 219);
-	position: fixed;
-	top: 0;
-}
-#sideMenuExpandBg {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: rgba(215, 214, 214, 0.25);
-	z-index: 2;
-	display: none;
-}
-.sideMenuNotExpanded {
-	transition: all 0.25s linear;
-	width: 0px;
-}
-
-.sideMenuExpanded {
-	padding: 10px 0px;
-	transition: all 0.25s linear;
-	width: 175px;
-}
-
-#menuHamburger {
-	position: absolute;
-	top: 25px;
-	margin: auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	width: 60px;
-	height: 60px;
-	cursor: pointer;
-	z-index: 3;
-}
-.hamburgerExpanded {
-	transition: all 0.25s linear;
-	left: 150px;
-}
-.hamburgerNotExpanded {
-	transition: all 0.25s linear;
-	left: 25px;
-}
-
-.hamburgerSpan {
-	display: inline-block;
-	width: 40px;
-	height: 4px;
-	background-color: white;
-	margin: 2px auto;
-	transition: all 0.25s linear;
-	border-radius: 5px;
-}
-
-.mainItems,
-.logoutArea,
-.sideMenuHeader {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-#sideMenuProfilePic {
-	width: 80%;
-}
-#sideMenuProfileName {
-	font-family: PressStart;
-}
-.mainItems {
-	height: 300px;
-	width: 100%;
-}
-.sideMenuItem {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-}
-.sideMenuItem * {
-	overflow: hidden;
-}
-.sideMenuItem:hover {
-	background-color: orangered;
-}
-.sideMenuItem p {
-	font-family: PressStart;
-}
-.sideMenuItemIcon {
-	max-width: 50px;
-	max-height: 50px;
-	width: 100%;
-	margin: 10px auto;
-	cursor: pointer;
-	transition: all 0.25s linear;
-}
-.sideMenuItemIcon:hover {
-	transform: scale(1.05);
-}
-
-#sideMenuPongIcon {
-	content: url(./images/icons8-ping-pong-100.png);
-}
-#sideMenuSnakeIcon {
-	content: url(./images/icons8-snake-50.png);
-}
-#sideMenuDashboardIcon {
-	content: url(./images/dashboardIcon.png);
-}
-#sideMenuSettingsIcon {
-	content: url(./images/settingsIcon.png);
-}
-#sideMenuLogoutIcon {
-	content: url(./images/logoutIcon.png);
-}
-
-@media only screen and (max-width: 776px) {
-	.sideMenuExpanded {
-		width: 80vw;
-	}
-	.hamburgerExpanded {
-		left: calc(80vw - 70px);
-	}
-}
 
 /* Dashboard page */
 
 #dashboardContainer {
 	min-height: 100vh;
 	width: 100vw;
-
-	background: url(https://pub-static.fotor.com/assets/bg/bf9a415f-b758-4c0d-a820-334370772ec3.jpg);
+	background: url(https://www.shutterstock.com/shutterstock/videos/1076615849/thumb/1.jpg?ip=x480);
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
+.dashboardSection {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 #dashboardUserProfilePic {
-	width: 80%;
 	max-width: 150px;
 	max-height: 150px;
+	width: 80%;
 	border-radius: 50%;
-	margin: auto;
 }
 #dashboardUserCoalitionPic {
-	width: 60%;
 	max-width: 80px;
 	max-height: 80px;
-	margin: 5px auto;
+	width: 60%;
+}
+#dashboardUserProfilePic,
+#dashboardUserCoalitionPic {
+	margin: auto;
 }
 
 #dashboardUserProfileName,
 #dashboardUserCoalitionName {
-	font-style: PressStart;
+	font-family: PressStart;
 	text-align: center;
 }
 .coalitionArea {
@@ -389,6 +241,23 @@ body *{
 	justify-content: center;
 	align-items: center;
 	height: 100%;
+}
+
+@media only screen and (max-width: 576px) {
+	.coalitionArea p{
+		font-size: 8px;
+	}
+}
+
+
+
+.darkOverlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.75);
 }
 
 /* Settings page */
@@ -418,3 +287,44 @@ body *{
 .changeProfileButton {
 	margin: 5px auto;
 }
+
+#settingsModalContainer {
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+}
+
+#confirmationBox {
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	border: 2px solid black;
+	background-color: rgb(223, 231, 238);
+	padding: 30px 20px;
+	width: 70%;
+}
+
+#confirmationBox * {
+	font-family: PressStart;
+}
+
+#confirmationBox p {
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.confirmChangesDiv {
+	width: 100%;
+	margin: 20px auto;
+}
+.confirmChangesDiv input {
+	border: 2px solid black;
+}
+

@@ -2,18 +2,25 @@
 	<div class="row">
 		<div class="col-10 offset-1 col-md-8 offset-md-2 settingsBox">
 			<h2>Edit profile</h2>
-			<form onsubmit="handleChangeProfile(event)" method="POST" action="/_settings">
+			<form onsubmit="handleChangeProfile(event)" method="post" action="{% url 'settings' %}">
 				{% csrf_token %}
 				{{ form.as_p }}
 				<button
+					type="button"
 					class="btn btn-success w-100 changeProfileButton"
-					type="submit"
+					onclick="openSettingsModal()"
 				>Confirm</button>
 				<button
 					class="btn btn-danger w-100 changeProfileButton"
 					onclick="navigateTo('/')"
 				>Cancel</button>
+				{% include "settingsModal.html" %}
 			</form>
 		</div>
+	</div>
+</div>
+<div id="loadingSpinnerContainer">
+	<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
+		<span class="sr-only">Loading...</span>
 	</div>
 </div>
