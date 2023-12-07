@@ -119,14 +119,13 @@ const handleChangeProfile = async (event) => {
 	showLoadingSpinner();
 }
 
-const openSettings = async () => {
-	await navigateTo("/settings");
-	if (!settingsModal)
-		settingsModal = new Modal(document.getElementById("settingsModalContainer"));
-}
 const openSettingsModal = () => {
 	settingsModal.open();
 }
 const closeSettingsModal = () => {
 	settingsModal.close();
+}
+
+const loadSettings = () => {
+	settingsModal = new Modal(document.getElementById("settingsModalContainer"));
 }

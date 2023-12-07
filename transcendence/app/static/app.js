@@ -25,8 +25,17 @@ const postRequest = async (url, data) => {
 	}
 	try {
 		const response = await fetch(url, config);
-		const data = await response.json();
-		return data;
+		if (!response.ok) {
+			const info = {
+				succeded: false,
+				message: "failed to add new user"
+			}
+			return info;
+		} else {
+			const data = await response.json();
+			data.succeded = true;
+			return data;
+		}
 	} catch (error) {
 		console.log(error);
 		return ({ "success":false, "message": "Something happened. try again", "status":400})
@@ -48,8 +57,7 @@ const navigateTo = async (url) => {
 	await window.handleLocation();
 }
 
-const goBack = () => {
+const goBack = async () => {
 	history.back();
-	handleLocation();
+	await handleLocation();
 }
-

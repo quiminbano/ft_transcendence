@@ -18,6 +18,7 @@ urlpatterns = [
     path("postSignup", views.signup, name="postSignup"),
 
 	path("getDoc/registerPlayer", views.getRegisterPlayersTemplate, name="registerPlayerTemplate"),
+	path("getDoc/circleChart", views.getCircleChartTemplate, name="circleChartTemplate"),
 
     re_path(r'^.*$', views.index, name='catch_all'),
 ]

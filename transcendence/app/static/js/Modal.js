@@ -6,7 +6,8 @@ class Modal {
 	}
 	setElement(elem) { this.element = elem; }
 	open() {
-		this.element.style.display = "flex";
+		if (this.element)
+			this.element.style.display = "flex";
 	}
 	close() {
 		if (this.element)

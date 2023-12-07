@@ -12,16 +12,20 @@ const createTournament = async (event) => {
 	console.log(name, totalPlayers, hostName);
 	try {
 		//Make a post request to create a tounament in database
-
-		//if succeded to create tournament
-		const id = 1 // get Proper id from db
-		await navigateTo(`tournament/${id}`);
+		const url = "/api/tournament"
+		const data = {
+			name,
+			number: totalPlayers,
+			player: hostName
+		}
+		const response = await postRequest(url, data);
+		const info = response.tournament;
+		await navigateTo(`tournament/${info.id}`);
 		modal = new AddPlayerModal();
-		tournament = new LocalTournament(name, totalPlayers, id);
+		tournament = new LocalTournament(info.name, info.amount, info.id);
 		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
 		tournament.addPlayer(hostName);
-		/**********************************/
 	} catch (error) {
 		console.log(error);
 	}
@@ -52,12 +56,27 @@ const addPlayer = async (event) => {
 		const username = formData.get("name");
 		if (modal.isNew) {
 			//properly make a post request to add user to DB!!!
-			tournament.addPlayer(username);
+			const data = {
+				player: username,
+				id: tournament.id
+			}
+			const url  = "/api/tournament/player"
+			try {
+				const response = await postRequest(url, data);
+				if (response.succeded) {
+					tournament.addPlayer(response.player.name);
+					closeRegisterPlayerModal();
+				} else {
+					console.log("Response not ok")
+				}
+			} catch(error) {
+				console.log(error);
+			}
 		} else {
 			//properly make a put request to update player from db!!!
 			tournament.editPlayer(modal.getPlayerId(), username)
+			closeRegisterPlayerModal();
 		}
-		closeRegisterPlayerModal();
 	} catch (error) {
 		console.log(error);
 	}

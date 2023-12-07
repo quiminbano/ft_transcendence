@@ -35,7 +35,6 @@ class LocalTournament {
 		this.inputField.value = "";
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
-        console.log(this.players);
     }
 
     removePlayer(id) {

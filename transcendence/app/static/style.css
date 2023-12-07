@@ -294,6 +294,7 @@ body *{
 	position: fixed;
 	top: 0;
 	left: 0;
+	display: none;
 	justify-content: center;
 	align-items: center;
 }
@@ -306,9 +307,10 @@ body *{
 	justify-content: center;
 
 	border: 2px solid black;
+	border-radius: 10px;
 	background-color: rgb(223, 231, 238);
 	padding: 30px 20px;
-	width: 70%;
+	width: 50%;
 }
 
 #confirmationBox * {

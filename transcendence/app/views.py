@@ -138,3 +138,5 @@ def pongTournamentStart(request, id):
 def getRegisterPlayersTemplate(request):
         return render(request, "registeredPlayers.html", {})
 
+def getCircleChartTemplate(request):
+        return render(request, "circleChart.html", {})
