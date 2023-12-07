@@ -4,7 +4,6 @@ const loadDashboard = () => {
 	const search = document.getElementById("search");
 
 	searchButton.addEventListener("click", () => {
-		console.log("clicked")
 		if (search.classList.contains("search")) {
 			search.classList.remove("search");
 			search.classList.add("searchExpanded");
@@ -16,5 +15,13 @@ const loadDashboard = () => {
 		}
 	})
 	makeChart();
+}
+
+const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
+
+const onSearch = (event) => {
+	const input = event.target.value;
+	const matches = fakeFriends.filter(friend => friend.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
+	console.log(matches)
 }
 

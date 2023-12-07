@@ -7,10 +7,11 @@
 			id="searchButton"
 		/>
 		<input
-			type="text"
+			type="search"
 			class="search"
 			placeholder=""
 			id="search"
+			oninput="onSearch(event)"
 		>
 	</div>
     <p id="navbarUsername">{{user.get_username}}</p>
