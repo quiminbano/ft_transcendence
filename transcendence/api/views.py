@@ -8,14 +8,14 @@ import os
 def tournamentPlayer(request):
     data = json.loads(request.body)
 
-    tournament = Tournament.objects.get(uuid=data['uuid'])
+    tournament = Tournament.objects.get(id=data['id'])
 
     player = Players.objects.create(name=data['player'])
     tournament.players.add(player)
 
     playerdict = model_to_dict(player)
 
-    return JsonResponse({'message': 'Player added successfully', 'player': playerdict})
+    return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
 
 
 def tournament(request):
@@ -29,7 +29,7 @@ def tournament(request):
     response = {
         "message" : "Tournament created successfully",
         "tournament": {
-            "uuid": str(tournament.uuid),
+            "id": str(tournament.id),
             "name": tournament.name,
             "amount": tournament.amount,
             "state": tournament.sate,
@@ -39,7 +39,7 @@ def tournament(request):
     # tournamentdict = model_to_dict(tournament)
     # tournamentdict['players'] = list(tournament.players.values_list('name', flat=True))
 
-    return JsonResponse(response)
+    return JsonResponse(response, status=200)
 
 
 
@@ -55,16 +55,16 @@ def hello(request):
     # with open(file_path, 'r') as file:
        mockData = json.load(file)
     print("2")
-    
+
     fetchedUser = {
-    #    'uuid': mockData['uuid'],
+    #    'id': mockData['id'],
     #    'onlineStatus': mockData['onlineStatus'],
     #    'loginName': mockData['loginName'],
     #    'loginPassword': mockData['loginPassword'],
     #    'email': mockData['email'],
        'friends': [
            {
-               'uuid': friend['uuid'],
+               'id': friend['id'],
                'addedDate': friend['addedDate']
            } for friend in mockData['friends']
        ]
