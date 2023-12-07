@@ -8,12 +8,6 @@ from django.db import models
 
 
 class CustomUserManager(BaseUserManager):
-    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    # onlineStatus = models.BooleanField(default=False)
-    """
-    Custom user model manager where email is the unique identifier
-    for authentication instead of usernames.
-    """
 
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -43,13 +37,9 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUserData(AbstractUser):
-    # uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
-    # email = models.EmailField(_('email address'), unique=True)
-
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ('username',)
 
     objects = CustomUserManager()
 
@@ -57,10 +47,18 @@ class CustomUserData(AbstractUser):
         return self.username
 
 
+class Players(models.Model):
+    name = models.CharField(max_length=255)
 
-class User(models.Model):
-    username = models.CharField(max_length=20)
-    password = models.CharField(max_length=64)
+class Tournament(models.Model):
+    STATE_CHOICES = [
+        ('P', 'Pending'),
+        ('A', 'Active'),
+        ('F', 'Finished'),
+    ]
 
-    def __str__(self):
-        return self.username
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    amount = models.IntegerField()
+    sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
+    players = models.ManyToManyField(Players, related_name='tournaments')
