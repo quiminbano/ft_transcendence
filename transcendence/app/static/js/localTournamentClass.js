@@ -23,7 +23,7 @@ class LocalTournament {
         if (this.players.find(p => p.name === name)) {
             const errorMessage = "That name already exists";
             this.errorElement.innerHTML = errorMessage;
-            throw new Error(errorMessage);
+            return;
         }
         const newPlayer = {
             id: this.nextId,

@@ -42,6 +42,33 @@ const postRequest = async (url, data) => {
 	}
 }
 
+const putRequest = async (url, data) => {
+	const csrftoken = getCookie('csrftoken');
+	const config = {
+		method: "PUT",
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csrftoken
+		},
+		body: JSON.stringify(data)
+	}
+	try {
+		const response = await fetch(url, config);
+		if (!response.ok) {
+			const info = {
+				succeded: false,
+				message: "failed to add new user"
+			}
+			return info;
+		} else {
+			const data = await response.json();
+			return data;
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 const showLoadingSpinner = () => {
 	const loadingSpinner = document.getElementById("loadingSpinnerContainer");
 	loadingSpinner.style.display = "flex";

@@ -9,7 +9,6 @@ const createTournament = async (event) => {
 	const name = formData.get("tournamentName");
 	const totalPlayers = formData.get("totalPlayers");
 	const hostName = formData.get("hostName");
-	console.log(name, totalPlayers, hostName);
 	try {
 		//Make a post request to create a tounament in database
 		const url = "/api/tournament"
@@ -47,38 +46,44 @@ const closeRegisterPlayerModal = () => {
 	modal.close();
 }
 
-const addPlayer = async (event) => {
+const addPlayerToDatabase = async (username) => {
+	const data = {
+		player: username,
+		id: tournament.id
+	}
+	const url  = "/api/tournament/player"
+	try {
+		const response = await postRequest(url, data);
+		if (response.succeded) {
+			tournament.addPlayer(response.player.name);
+			closeRegisterPlayerModal();
+		} else {
+			console.log("Response not ok")
+		}
+	} catch(error) {
+		console.log(error);
+	}
+}
+
+const editPlayer = async (username, tournamentId) => {
+	const url  = "/api/tournament/player"
+	const data = { username, id: tournamentId };
+	const response = await putRequest(url, data);
+	if (response.succeded) {
+		tournament.editPlayer(modal.getPlayerId(), username)
+		closeRegisterPlayerModal();
+	}
+}
+
+const addPlayer = (event) => {
 	event.preventDefault();
 	showLoadingSpinner();
-	console.log("adding player")
 	const formData = new FormData(event.target);
-	try {
-		const username = formData.get("name");
-		if (modal.isNew) {
-			//properly make a post request to add user to DB!!!
-			const data = {
-				player: username,
-				id: tournament.id
-			}
-			const url  = "/api/tournament/player"
-			try {
-				const response = await postRequest(url, data);
-				if (response.succeded) {
-					tournament.addPlayer(response.player.name);
-					closeRegisterPlayerModal();
-				} else {
-					console.log("Response not ok")
-				}
-			} catch(error) {
-				console.log(error);
-			}
-		} else {
-			//properly make a put request to update player from db!!!
-			tournament.editPlayer(modal.getPlayerId(), username)
-			closeRegisterPlayerModal();
-		}
-	} catch (error) {
-		console.log(error);
+	const username = formData.get("name");
+	if (modal.isNew) {
+		addPlayerToDatabase(username);
+	} else {
+		editPlayer(username, tournament.id);
 	}
 	hideLoadingSpinner();
 }
