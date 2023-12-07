@@ -9,14 +9,9 @@
     flex-direction: column;
     justify-content: space-around;
 }
-body {
-    color: #fff;
-    margin: 2em;
-    background-color: #636e72;
-    font-family: helvetica, arial, sans-serif;
-}
 
-.match {
+.match,
+.finalMatch {
     margin: 15px 0;
     overflow: hidden;
     border-radius: 5px;
@@ -29,18 +24,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+	flex-wrap: wrap;
 }
 
 .team:nth-child(odd) {
     border-bottom: 1px solid #8fc7ff;
 }
 
-.teamName {
-    width: 85%;
-}
-.points {
-    width: 15%;
-}
 .teamName,
 .points {
     font-family: PressStart;
@@ -62,6 +52,7 @@ body {
     background-repeat: no-repeat;
 	padding: 30px 20px;
 	border: 5px solid black;
+	overflow-x: scroll !important;
 }
 
 .bracketBg {
@@ -74,14 +65,54 @@ body {
 }
 
 @media only screen and (max-width: 576px) {
+	#bracket16 {
+		overflow-x: scroll !important;
+		width: 200vw;
+	}
 	.round {
 		margin-right: 10px;
+	}
+	.match {
+		margin: 10px 0;
+		border-radius: 5px;
+		width: 45px;
+	}
+	.finalMatch {
+		margin: 10px 0;
+		border-radius: 5px;
+		width: 45px;
 	}
 	.team {
 		flex-direction: column;
 	}
 	.teamName,
 	.points {
-		font-size: 12px;
+		font-size: 5px;
 	}
 }
+@media only screen and (min-width: 576px) and (max-width: 992px) {
+	#bracket16 {
+		overflow-x: scroll !important;
+	}
+	.round {
+		margin-right: 10px;
+	}
+	.match {
+		margin: 10px 0;
+		border-radius: 5px;
+		width: 60px;
+	}
+	.finalMatch {
+		margin: 10px 0;
+		border-radius: 5px;
+		width: 60px;
+	}
+	.team {
+		flex-direction: column;
+	}
+	.teamName,
+	.points {
+		font-size: 10px;
+	}
+}
+

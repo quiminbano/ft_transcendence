@@ -1,5 +1,18 @@
 <div class="protectedNavbar menu">
     {% if user.is_authenticated %}
+	<div id="search-container">
+		<img
+			alt="search button"
+			src="/static/images/search.png"
+			id="searchButton"
+		/>
+		<input
+			type="text"
+			class="search"
+			placeholder=""
+			id="search"
+		>
+	</div>
     <p id="navbarUsername">{{user.get_username}}</p>
     {% endif %}
 </div>
