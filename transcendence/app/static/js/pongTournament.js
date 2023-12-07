@@ -12,7 +12,14 @@ const createTournament = async (event) => {
 	console.log(name, totalPlayers, hostName);
 	try {
 		//Make a post request to create a tounament in database
-
+		const url = "/api/tournament"
+		const data = {
+			name,
+			number: totalPlayers,
+			player: hostName
+		}
+		const response = await postRequest(url, data);
+		console.log(response);
 		//if succeded to create tournament
 		const id = 1 // get Proper id from db
 		await navigateTo(`tournament/${id}`);
@@ -52,7 +59,20 @@ const addPlayer = async (event) => {
 		const username = formData.get("name");
 		if (modal.isNew) {
 			//properly make a post request to add user to DB!!!
-			tournament.addPlayer(username);
+			const data = {
+				player: username
+			}
+			const url  = "/api/tournament/player"
+			try {
+				const response = await postRequest(url, data);
+				if (!response.ok) {
+
+				} else {
+					tournament.addPlayer(username);
+				}
+			} catch(error) {
+				console.log(error);
+			}
 		} else {
 			//properly make a put request to update player from db!!!
 			tournament.editPlayer(modal.getPlayerId(), username)
