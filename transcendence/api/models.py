@@ -58,6 +58,7 @@ class Tournament(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
+    uuid = models.UUIDField()
     name = models.CharField(max_length=255)
     amount = models.IntegerField()
     sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
