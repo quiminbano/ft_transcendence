@@ -24,4 +24,5 @@ const onSearch = (event) => {
 	const matches = fakeFriends.filter(friend => friend.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
 	console.log(matches)
 }
+const onInput = debounce(onSearch);
 
