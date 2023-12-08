@@ -109,14 +109,14 @@ def pong(request):
     if not request.user.is_authenticated:
         return dashboard(request)
     else:
-        context = {"content": "pong.html"}
+        context = {"content": "PongTournamentPages/pong.html"}
         return render(request, "index.html", context)
 
 def pongTournament(request):
     if not request.user.is_authenticated:
         return dashboard(request)
     else:
-        context = {"content": "tournamentCreation.html"}
+        context = {"content": "PongTournamentPages/tournamentCreation.html"}
         return render(request, "index.html", context)
 
 def pongTournamentLobby(request, id):
@@ -124,7 +124,7 @@ def pongTournamentLobby(request, id):
     if not request.user.is_authenticated:
         return dashboard(request)
     else:
-        context = {"content": "pongTournament.html"}
+        context = {"content": "PongTournamentPages/pongTournament.html"}
         return render(request, "index.html", context)
 
 def pongTournamentStart(request, id):
@@ -132,8 +132,8 @@ def pongTournamentStart(request, id):
     if not request.user.is_authenticated:
         return dashboard(request)
     else:
-        context = {"content": "tournamentStart.html"}
-        return render(request, "index.html", context);
+        context = {"content": "PongTournamentPages/tournamentStart.html"}
+        return render(request, "index.html", context)
 
 def getRegisterPlayersTemplate(request):
         return render(request, "registeredPlayers.html", {})
