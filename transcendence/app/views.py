@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password
 from .forms import SignupForm, LoginForm, ChangeProfile
 from django.http import JsonResponse
 import json
@@ -81,12 +82,20 @@ def settings(request):
         data = json.loads(request.body)
         form = ChangeProfile(data)
         if form.is_valid():
+            if form.cleaned_data['password1'] != form.cleaned_data['password2']:
+                print("password1 and password2 does not match")
+                return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
+            if check_password(form.cleaned_data['password3'], request.user.password) == False:
+                print("Password provided does not match with the original one")
+                return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
             user = request.user
             user.username = form.cleaned_data['username']
             user.first_name = form.cleaned_data['firstName']
             user.last_name = form.cleaned_data['lastName']
+            user.password = form.cleaned_data['password1']
             user.email = form.cleaned_data['email']
             user.save()
+            print("Update successful")
             return JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
         else:
             return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
@@ -133,7 +142,7 @@ def pongTournamentStart(request, id):
         return dashboard(request)
     else:
         context = {"content": "tournamentStart.html"}
-        return render(request, "index.html", context);
+        return render(request, "index.html", context)
 
 def getRegisterPlayersTemplate(request):
         return render(request, "registeredPlayers.html", {})

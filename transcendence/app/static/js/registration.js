@@ -97,6 +97,7 @@ const logoutUser = async () => {
 }
 
 const handleChangeProfile = async (event) => {
+	console.log("Coming here!!")
 	event.preventDefault();
 	const url = event.target.action;
 	const formData = new FormData(event.target);
@@ -107,6 +108,7 @@ const handleChangeProfile = async (event) => {
 	const password = formData.get("password1");
 	const confirmPassword = formData.get("password2");
 	const email = formData.get("email");
+	const password3 = formData.get("password3");
 
 	data = {
 		username,
@@ -114,9 +116,14 @@ const handleChangeProfile = async (event) => {
 		lastName: lastname,
 		password1: password,
 		password2: confirmPassword,
+		password3,
 		email
 	}
 	showLoadingSpinner();
+	const response = await postRequest(url, data);
+	//const json = await JSON.parse(response);
+	//console.log(json);
+	hideLoadingSpinner();
 }
 
 const openSettingsModal = () => {

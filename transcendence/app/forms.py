@@ -89,6 +89,10 @@ class ChangeProfile(forms.Form):
     )
     email = forms.EmailField(
         label="Email",
-        widget=forms.EmailInput(attrs={"class": "form-control"}))
-
+        widget=forms.EmailInput(attrs={"class": "form-control"})
+    )
+    password3 = forms.CharField(
+        label="Confirm your password to apply the changes",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
 

@@ -425,4 +425,4 @@ yarn-debug.log*
 yarn-error.log*
 
 auth.py
-transcendence/api/migrations
+**/migrations/

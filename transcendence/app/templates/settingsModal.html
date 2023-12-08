@@ -2,10 +2,8 @@
 	<div class="bracketBg" onclick="closeSettingsModal()"></div>
 	<div id="confirmationBox">
 		<p>Are you sure you want to save the new changes?</p>
-		<div class="form-group confirmChangesDiv">
-			<label for="confirmYourPassword">Confirm Password</label>
-			<input type="password" placeholder="Confirm password" id="confirmYourPassword" class="form-control">
-		</div>
+		<label for="{{ form.username.id_for_label}}" class="loginLabel">{{form.password3.label}}</label>
+		{{form.password3}}
 		<button
 			class="btn btn-success w-100 mt-2"
 			type="submit"
