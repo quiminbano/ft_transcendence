@@ -4,7 +4,6 @@ class LocalTournament {
         this.id = id;
         this.totalPlayers = totalPlayers;
         this.players = [];
-        this.nextId = 0;
         this.errorElement = "";
         this.playersDisplay = ""
         document.getElementById("tournamentTitle").innerHTML = name;
@@ -17,24 +16,21 @@ class LocalTournament {
     #updateCurrentPlayersText() {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
     }
-    addPlayer(name) {
+    addPlayer(player) {
+		console.log(player);
         if (this.players.length >= this.totalPlayers)
             throw new Error("Lobby is full");
-        if (this.players.find(p => p.name === name)) {
+        if (this.players.find(p => p.name === player.name)) {
             const errorMessage = "That name already exists";
             this.errorElement.innerHTML = errorMessage;
             return;
         }
-        const newPlayer = {
-            id: this.nextId,
-            name: name
-        };
-        this.nextId++;
-        this.players.push(newPlayer);
+        this.players.push(player);
         this.errorElement.innerHTML = "";
 		this.inputField.value = "";
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
+		console.log(this.players)
     }
 
     removePlayer(id) {

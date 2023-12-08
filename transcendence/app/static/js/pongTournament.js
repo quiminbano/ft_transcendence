@@ -50,7 +50,7 @@ const createTournament = async (event) => {
 		tournament = new LocalTournament(info.name, info.amount, info.id);
 		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
-		tournament.addPlayer(hostName);
+		addPlayerToDatabase(hostName);
 	} catch (error) {
 		console.log(error);
 	}
@@ -81,7 +81,8 @@ const addPlayerToDatabase = async (username) => {
 	try {
 		const response = await postRequest(url, data);
 		if (response.succeded) {
-			tournament.addPlayer(response.player.name);
+			console.log(response)
+			tournament.addPlayer({name: response.player.name, id: response.player.id});
 			closeRegisterPlayerModal();
 		} else {
 			console.log("Response not ok")
@@ -91,7 +92,7 @@ const addPlayerToDatabase = async (username) => {
 	}
 }
 
-const editPlayer = async (username, tournamentId) => {
+const editPlayer = async (id, username, tournamentId) => {
 	const url  = "/api/tournament/player"
 	const data = { username, id: tournamentId };
 	const response = await putRequest(url, data);
