@@ -17,6 +17,16 @@ const loadDashboard = () => {
 	makeChart();
 }
 
+const debounce = (func, delay = 300) => {
+	let timer;
+	return (...args) => {
+		clearTimeout(timer);
+		setTimeout(() => {
+			func.apply(this, args)
+		}, delay);
+	}
+}
+
 const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
 
 const onSearch = (event) => {

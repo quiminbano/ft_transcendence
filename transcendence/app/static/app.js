@@ -88,13 +88,3 @@ const goBack = async () => {
 	history.back();
 	await handleLocation();
 }
-
-const debounce = (func, delay = 300) => {
-	let timer;
-	return (...args) => {
-		clearTimeout(timer);
-		setTimeout(() => {
-			func.apply(this, args)
-		}, delay);
-	}
-}

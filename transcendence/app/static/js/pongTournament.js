@@ -2,6 +2,32 @@ let tournament;
 let modal;
 let bracket;
 
+const loadTournamentCreation = () => {
+	showLoadingSpinner();
+	//GetRequest to check if user has tournament open!!!!!
+	const hasTournament = true; //PROPER SET THIS ACCORDING DATA RECEIVED BY REQUEST!!!!!!
+	const hasTournamentPage = document.getElementById("tournamentExistsPage");
+	const newTournamentPage = document.getElementById("newTournamentPage");
+	const newTournamentButton = document.getElementById("newTournamentButton");
+	newTournamentButton?.addEventListener("click", () => {
+		hasTournamentPage.style.display = "none";
+		newTournamentPage.style.display = "block";
+	})
+	const continueOldTournamentButton = document.getElementById("continueOldTournamentButton");
+	continueOldTournamentButton?.addEventListener("click", () => {
+		hasTournamentPage.style.display = "none";
+		newTournamentPage.style.display = "none";
+
+		//SHOULD NAVIGATE TO TOURNAMENT PAGE!! ALSO CREATE AND UPDATE A LOCALTOURNAMENT INSTANCE!!!!!!!
+	})
+	if (hasTournament) {
+		newTournamentPage.style.display = "none";
+	} else {
+		hasTournamentPage.style.display = "none";
+	}
+	hideLoadingSpinner();
+}
+
 const createTournament = async (event) => {
 	event.preventDefault();
 
