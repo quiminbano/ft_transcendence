@@ -145,3 +145,16 @@ const cancelAndDeleteTournament = async () => {
 	console.log(response);
 	navigateTo('/pong');
 }
+const continuePreviousTournament = async () => {
+	const url = `/api/tournament/${tournament.id}`;
+	const response = await fetch(url);
+	const data = JSON.parse(response);
+	console.log(data);
+
+	await navigateTo(`tournament/${info.id}`);
+	modal = new AddPlayerModal();
+	tournament = new LocalTournament(info.name, info.amount, info.id); // GIVE PROPER VALUES FOR INITIALIZATION!!!!
+	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
+	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
+	//TODO: POPULATE THE PAYERS AND MATCHES FROM THE TOURNAMENT!!!!
+}

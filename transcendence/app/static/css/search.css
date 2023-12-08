@@ -59,3 +59,15 @@
 	padding-left: 66px;
 	cursor: text;
 }
+
+#dropdownMenu {
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 100%;
+	border: 2px solid black;
+	border-radius: 5px;
+	width: 80%;
+	min-height: 25px;
+	background-color: rgba(18, 115, 241, 0.929);
+}
