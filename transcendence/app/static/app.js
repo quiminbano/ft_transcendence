@@ -69,6 +69,25 @@ const putRequest = async (url, data) => {
 	}
 }
 
+const deleteRequest = async (url) => {
+	const csrftoken = getCookie('csrftoken');
+	const config = {
+		method: "DELETE",
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': csrftoken
+		},
+	}
+	try {
+		const response = await fetch(url, config);
+		const json = await response.json();
+		console.log(json);
+		return json;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 const showLoadingSpinner = () => {
 	const loadingSpinner = document.getElementById("loadingSpinnerContainer");
 	loadingSpinner.style.display = "flex";

@@ -2,10 +2,21 @@ let tournament;
 let modal;
 let bracket;
 
-const loadTournamentCreation = () => {
+const loadTournamentCreation = async () => {
+	console.log("Loading tournament")
 	showLoadingSpinner();
-	//GetRequest to check if user has tournament open!!!!!
-	const hasTournament = true; //PROPER SET THIS ACCORDING DATA RECEIVED BY REQUEST!!!!!!
+	const url = "/api/tournament"
+	let hasTournament;
+	try {
+		const response = await fetch(url);
+		if (response.ok)
+			hasTournament = true;
+		else
+			hasTournament = false;
+
+	} catch (error) {
+		console.log(error);
+	}
 	const hasTournamentPage = document.getElementById("tournamentExistsPage");
 	const newTournamentPage = document.getElementById("newTournamentPage");
 	const newTournamentButton = document.getElementById("newTournamentButton");
@@ -36,7 +47,6 @@ const createTournament = async (event) => {
 	const totalPlayers = formData.get("totalPlayers");
 	const hostName = formData.get("hostName");
 	try {
-		//Make a post request to create a tounament in database
 		const url = "/api/tournament"
 		const data = {
 			name,
@@ -92,9 +102,9 @@ const addPlayerToDatabase = async (username) => {
 	}
 }
 
-const editPlayer = async (id, username, tournamentId) => {
+const editPlayer = async (username) => {
 	const url  = "/api/tournament/player"
-	const data = { username, id: tournamentId };
+	const data = {id: modal.getPlayerId(), username };
 	const response = await putRequest(url, data);
 	if (response.succeded) {
 		tournament.editPlayer(modal.getPlayerId(), username)
@@ -110,7 +120,7 @@ const addPlayer = (event) => {
 	if (modal.isNew) {
 		addPlayerToDatabase(username);
 	} else {
-		editPlayer(username, tournament.id);
+		editPlayer(username);
 	}
 	hideLoadingSpinner();
 }
@@ -127,4 +137,11 @@ const openTournamentBracketModal = () => {
 const closeTournamentBracketModal = () => {
 	console.log("Closing the modal");
 	bracket.close();
+}
+
+const cancelAndDeleteTournament = async () => {
+	const url = `/api/tournament/${tournament.id}`;
+	const response = await deleteRequest(url);
+	console.log(response);
+	navigateTo('/pong');
 }
