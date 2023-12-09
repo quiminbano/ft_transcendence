@@ -140,3 +140,6 @@ def getRegisterPlayersTemplate(request):
 
 def getCircleChartTemplate(request):
         return render(request, "circleChart.html", {})
+
+def getSearchItem(request):
+        return render(request, "SearchElements/searchItem.html", {})

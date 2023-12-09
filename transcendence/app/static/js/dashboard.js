@@ -32,7 +32,6 @@ const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
 const onSearch = (event) => {
 	const input = event.target.value;
 	const matches = fakeFriends.filter(friend => friend.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
-	console.log(matches)
 	const menu = document.getElementById("dropdownMenu");
 	if (input.length > 0) {
 		showDropdown(menu);
@@ -46,22 +45,50 @@ const onInput = debounce(onSearch);
 const hideDropdown = (element) => {
 	if (!element)
 		return;
-	element.style.opacity = 0;
-	element.style.pointerEvents = "none";
+	const inputField = document.getElementById("search");
+	inputField.style.borderBottomLeftRadius = "30px";
+	inputField.style.borderBottomRightRadius = "30px";
+	element.classList.remove("dropdownExpanded");
+	element.classList.add("dropdownCollapsed");
 }
 const showDropdown = (element) => {
 	if (!element)
 		return;
-	element.style.opacity = 1;
-	element.style.pointerEvents = "all";
+	element.classList.remove("dropdownCollapsed");
+	element.classList.add("dropdownExpanded");
+	const inputField = document.getElementById("search");
+	inputField.style.borderBottomLeftRadius = "0px";
+	inputField.style.borderBottomRightRadius = "0px";
 }
 
-const displayMatches = (matches) => {
-	const nomatches = document.getElementById("searchNoMatches");
+const displayMatches = (matches = []) => {
+	const parentDiv = document.getElementById("dropdownMenu");
+	while (parentDiv.firstChild) {
+	  parentDiv.removeChild(parentDiv.firstChild);
+	}
 	if (matches.length === 0) {
-		nomatches.style.display = "black";
+		const noMatches = document.createElement("div");
+		noMatches.textContent = "No Matches";
+		noMatches.setAttribute("class", "searchItemName");
+		parentDiv.appendChild(noMatches);
 	} else {
-		nomatches.style.display = "none";
+		matches.forEach(match => searchMatchItem("/static/images/profileIcon.png", match));
 	}
 }
 
+const searchMatchItem = async (src, name) => {
+	const generator = new FragmentGenerator("/getDoc/searchItem");
+	const fragment = await generator.generateFragment();
+	const picture = fragment.querySelector("#searchItemPicture");
+	if (picture) {
+		picture.setAttribute("src", src);
+		picture.removeAttribute("id");
+	}
+	const itemName = fragment.querySelector("#searchItemName");
+	if (itemName) {
+		itemName.textContent = name;
+		itemName.removeAttribute("id");
+	}
+	const parentDiv = document.getElementById("dropdownMenu");
+	generator.appendFragment(fragment, parentDiv);
+}
