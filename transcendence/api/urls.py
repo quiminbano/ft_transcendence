@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("tournament", views.tournament, name="tournament"),
+	path("tournament/<int:id>", views.tournamentWithID, name="tournament"),
     path("tournament/player", views.tournamentPlayer, name="tournament/player"),
 
 ]
