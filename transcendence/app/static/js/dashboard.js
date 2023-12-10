@@ -1,5 +1,6 @@
+const generator = new FragmentGenerator("/getDoc/searchItem");
+
 const loadDashboard = () => {
-	console.log("Loading dashboard");
 	const searchButton = document.getElementById("searchButton");
 	const search = document.getElementById("search");
 
@@ -31,11 +32,14 @@ const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
 
 const onSearch = (event) => {
 	const input = event.target.value;
+
+	//PROPERLY MAKE A GET REQUEST TO GET THE MATCH USERS!!!!
 	const matches = fakeFriends.filter(friend => friend.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
 	const menu = document.getElementById("dropdownMenu");
 	if (input.length > 0) {
 		showDropdown(menu);
-		displayMatches(matches);
+		const parentDiv = document.getElementById("dropdownMenu");
+		displayDropdownElements(matches, parentDiv);
 	}
 	else
 		hideDropdown(menu);
@@ -61,8 +65,7 @@ const showDropdown = (element) => {
 	inputField.style.borderBottomRightRadius = "0px";
 }
 
-const displayMatches = (matches = []) => {
-	const parentDiv = document.getElementById("dropdownMenu");
+const displayDropdownElements = (matches = [], parentDiv) => {
 	while (parentDiv.firstChild) {
 	  parentDiv.removeChild(parentDiv.firstChild);
 	}
@@ -72,12 +75,11 @@ const displayMatches = (matches = []) => {
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
-		matches.forEach(match => searchMatchItem("/static/images/profileIcon.png", match));
+		matches.forEach(match => searchMatchItem("/static/images/profileIcon.png", match, parentDiv));
 	}
 }
 
-const searchMatchItem = async (src, name) => {
-	const generator = new FragmentGenerator("/getDoc/searchItem");
+const searchMatchItem = async (src, name, parentDiv) => {
 	const fragment = await generator.generateFragment();
 	const picture = fragment.querySelector("#searchItemPicture");
 	if (picture) {
@@ -89,6 +91,20 @@ const searchMatchItem = async (src, name) => {
 		itemName.textContent = name;
 		itemName.removeAttribute("id");
 	}
-	const parentDiv = document.getElementById("dropdownMenu");
 	generator.appendFragment(fragment, parentDiv);
+}
+
+const onClickFriendsButton = () => {
+	//GET THE REAL FRIENDS!!!!
+	const friends = fakeFriends; //CHANGE THIS TO REAL FRIENDS!!!!!
+	const friendsDropdown = document.getElementById("friendsDropdown");
+	if (friendsDropdown.classList.contains("friendsDropdownCollapsed")) {
+		friendsDropdown.classList.remove("friendsDropdownCollapsed");
+		friendsDropdown.classList.add("friendsDropdownExpanded");
+		const parentDiv = document.getElementById("friendsDropdown");
+		displayDropdownElements(friends, parentDiv);
+	} else if (friendsDropdown.classList.contains("friendsDropdownExpanded")) {
+		friendsDropdown.classList.remove("friendsDropdownExpanded");
+		friendsDropdown.classList.add("friendsDropdownCollapsed");
+	}
 }
