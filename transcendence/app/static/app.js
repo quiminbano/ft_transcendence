@@ -57,6 +57,7 @@ const putRequest = async (url, data) => {
 			throw new Error("failed to add new user")
 		} else {
 			const data = await response.json();
+			data.succeded = true;
 			return data;
 		}
 	} catch (error) {

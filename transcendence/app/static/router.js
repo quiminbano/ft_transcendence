@@ -16,8 +16,6 @@ const load = (path) => {
 	const match = loaders.find(l => {
 		if (l.path.includes("*")) {
 			const basePath = l.path.replace("*", "");
-			console.log(path.split("/"));
-			console.log(basePath.split("/"));
 			return (
 				path.startsWith(basePath) &&
 				path.split("/").length === basePath.split("/").length

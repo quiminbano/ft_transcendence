@@ -39,7 +39,6 @@ class LocalTournament {
         this.#updateDisplay();
     }
 	editPlayer(id, name) {
-		console.log(id, name)
 		const playerToEdit = this.players.find(p => p.id === id);
         if (playerToEdit) {
             playerToEdit.name = name;
