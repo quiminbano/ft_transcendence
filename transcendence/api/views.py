@@ -13,7 +13,10 @@ import json
 def tournamentPlayer(request):
     data = json.loads(request.body)
 
+    print ("paler")
+
     if(request.method == "POST"):
+        print ("method POST")
         if "player" not in data or "id" not in data:
           return JsonResponse({'error': 'missing fields in request body'}, status=400)
         tournament = Tournament.objects.filter(id=data['id'])
@@ -26,17 +29,20 @@ def tournamentPlayer(request):
         return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
 
     elif(request.method == "PUT"):
-        if "playerID" not in data or "name" not in  data:
+        print ("method PUT")
+        print (data)
+        if "id" not in data or "username" not in  data:
           return JsonResponse({'error': 'missing fields in request body'}, status=400)
-        player = Players.objects.filter(id=data['playerID'])
+        player = Players.objects.filter(id=data['id'])
         if player.exists():
-            player.first().name =  data["name"]
+            player.first().name =  data["username"]
         else:
           return JsonResponse({'error': 'player does not exist'}, status=400)
-        playerdict = model_to_dict(player)
+        playerdict = model_to_dict(player.first())
         return JsonResponse({'message': 'Player name change succefull', 'player': playerdict}, status=200)
 
     elif(request.method == "DELETE"):
+        print ("method DELETE")
         if "playerID" not in data or "id" not in  data:
           return JsonResponse({'error': 'missing fields in request body'}, status=400)
         tournament = Tournament.objects.filter(id=data['id'])
@@ -64,13 +70,12 @@ def createTournamentResponse(tournament, message):
                 "name": tournament.name,
                 "amount": tournament.amount,
                 "state": tournament.sate,
-                "players": [player.name for player in tournament.players.all()],
+                "players": [{"name" : player.name, "id" : player.id} for player in tournament.players.all()],
             }
         }
     return (response)
 
 def tournament(request):
-    print("============\nWIthou ID\n============")
     #Validate request
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
@@ -118,10 +123,7 @@ def tournament(request):
 #      Tournament Management With ID
 #==========================================
 def tournamentWithID(request, id):
-    print("============\nWITH ID\n============")
-    print (id)
     existing_tournament = Tournament.objects.filter(id=id)
-    print ("got tour")
 
     if(request.method == "GET"):
         if existing_tournament.exists():
@@ -129,12 +131,9 @@ def tournamentWithID(request, id):
         else:
             return JsonResponse({'error': 'This tournament ID does not exist'}, status=400)
     elif(request.method == "DELETE"):
-        print ("del")
         if existing_tournament.exists():
-            print ("for players")
             for player in existing_tournament.first().players.all():
                 player.delete()
-            print ("deleting tour")
             existing_tournament.first().delete()
             return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
         else:

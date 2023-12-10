@@ -46,7 +46,6 @@ class CustomUserData(AbstractUser):
     def __str__(self):
         return self.username
 
-
 class Players(models.Model):
     name = models.CharField(max_length=255)
 
