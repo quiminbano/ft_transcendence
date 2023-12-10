@@ -1,0 +1,58 @@
+﻿#friendsMenuArea {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+#friendsMenuButton {
+    border-radius: 50%;
+    border: 2px solid black;
+    padding: 5px;
+    background-color: rgb(0, 110, 255);
+    width: 50px;
+    height: 50px;
+    transition: all 0.15s linear;
+}
+#friendsMenuButton:hover {
+    border: 2px solid blue;
+    transform: scale(1.03);
+    transform: rotate(360deg);
+}
+#friendsMenuButton:active,
+#friendsMenuButton:focus {
+    outline: none;
+}
+#friendsIconButton {
+    width: 100%;
+}
+#friendsDropdown {
+    position: absolute;
+    bottom: 100%;
+    min-height: 50px;
+    max-height: 80vh;
+    width: 200px;
+    background-color: rgb(0, 110, 255);
+    border-radius: 10px;
+    padding: 20px 0;
+}
+
+.friendsDropdownExpanded {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0px);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.friendsDropdownCollapsed {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+.friendsDropdownExpanded,
+.friendsDropdownCollapsed {
+    transition: all 0.25s ease-in;
+}
