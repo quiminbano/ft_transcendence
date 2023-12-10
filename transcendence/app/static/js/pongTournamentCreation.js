@@ -10,6 +10,7 @@ const loadTournamentCreation = async () => {
 	if (tournamentInfo.hasTournament) {
 		currentTournamentId = tournamentInfo.tournament.id;
 	}
+	loadTournamentLobbyInfo = tournamentInfo;
 	hideLoadingSpinner();
 }
 
@@ -60,9 +61,16 @@ const createTournament = async (event) => {
 		}
 		const response = await postRequest(url, data);
 		const info = response.tournament;
+		loadTournamentLobbyInfo = {
+			message: "Must create new tournament",
+			tournament: {
+				name: info.name,
+				amount: info.amount,
+				id: info.id,
+				addPlayer: hostName
+			}
+		}
 		await navigateTo(`tournament/${info.id}`);
-		tournament = createTournamentInstance(info.name, info.amount, info.id);
-		addPlayerToDatabase(hostName);
 	} catch (error) {
 		console.log(error);
 	}
@@ -95,7 +103,7 @@ const closeRegisterPlayerModal = () => {
 const addPlayerToDatabase = async (username) => {
 	const data = {
 		player: username,
-		id: tournament.id
+		id: t.id
 	}
 	const url  = "/api/tournament/player"
 	try {
@@ -165,8 +173,5 @@ const continuePreviousTournament = async () => {
 		console.log(response.error);
 		return;
 	}
-	const data = response.tournament;
-	await navigateTo(`/pong/tournament/${data.id}`);
-	tournament = createTournamentInstance(data.name, data.amount, data.id);
-	data.players.forEach(player => tournament.addPlayer({name: player, id: player.id | 0})) //Make sure backend returns an ID!!!!
+	await navigateTo(`/pong/tournament/${response.tournament.id}`);
 }

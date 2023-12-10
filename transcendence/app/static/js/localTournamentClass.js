@@ -17,7 +17,6 @@ class LocalTournament {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
     }
     addPlayer(player) {
-		console.log(player);
         if (this.players.length >= this.totalPlayers)
             throw new Error("Lobby is full");
         if (this.players.find(p => p.name === player.name)) {
@@ -30,7 +29,6 @@ class LocalTournament {
 		this.inputField.value = "";
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
-		console.log(this.players)
     }
 
     removePlayer(id) {

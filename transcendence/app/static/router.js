@@ -9,14 +9,19 @@ const loaders = [
 	{ path: "/", function: loadDashboard },
 	{ path: "/settings", function: loadSettings },
 	{ path: "/pong/tournament", function: loadTournamentCreation },
-	{ path: "/pong/tournament/*", function: () => console.log("Called the wildercald funciton") },
+	{ path: "/pong/tournament/*", function: loadTournamentLobby },
 ]
 
 const load = (path) => {
 	const match = loaders.find(l => {
 		if (l.path.includes("*")) {
 			const basePath = l.path.replace("*", "");
-			return path.startsWith(basePath);
+			console.log(path.split("/"));
+			console.log(basePath.split("/"));
+			return (
+				path.startsWith(basePath) &&
+				path.split("/").length === basePath.split("/").length
+			)
 		} else {
 			return l.path === path;
 		}
@@ -26,7 +31,7 @@ const load = (path) => {
 }
 
 const parser = new DOMParser();
-const handleLocation = async () => {
+const handleLocation = async (event) => {
 	const path = window.location.pathname;
 	try {
 		const response = await fetch(path);
