@@ -5,20 +5,11 @@ from .models import Tournament, Players, CustomUserData
 import json
 
 
-def createTournamentResponse(tournament, uuid, message):
-    response = {
-            "message" : message,
-            "tournament": {
-                "id": str(tournament.id),
-                "uuid": uuid,
-                "name": tournament.name,
-                "amount": tournament.amount,
-                "state": tournament.sate,
-                "players": [player.name for player in tournament.players.all()],
-            }
-        }
-    return (response)
 
+
+#==========================================
+#       Tournament Player Management
+#==========================================
 def tournamentPlayer(request):
     data = json.loads(request.body)
 
@@ -60,8 +51,26 @@ def tournamentPlayer(request):
         return JsonResponse({'error': 'We dont handle this request here'}, status=400)
 
 
+#==========================================
+#           Tournament Management
+#==========================================
+
+def createTournamentResponse(tournament, message):
+    response = {
+            "message" : message,
+            "tournament": {
+                "id": str(tournament.id),
+                "uuid": tournament.uuid,
+                "name": tournament.name,
+                "amount": tournament.amount,
+                "state": tournament.sate,
+                "players": [player.name for player in tournament.players.all()],
+            }
+        }
+    return (response)
+
 def tournament(request):
-    print("Tournament")
+    print("============\nWIthou ID\n============")
     #Validate request
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
@@ -71,7 +80,7 @@ def tournament(request):
     if(request.method == "GET"):
         #if user already has i tournemnt on going return it.
         if existing_tournament.exists():
-            return JsonResponse(createTournamentResponse(existing_tournament.first(), request.user.uuid, "Tournament already exist"), status=200)
+            return JsonResponse(createTournamentResponse(existing_tournament.first(), "Tournament already exist"), status=200)
         else:
             return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
 
@@ -90,7 +99,7 @@ def tournament(request):
         tournament = Tournament.objects.create(name=data['name'], amount=data['number'], uuid=request.user.uuid)
         playerName = Players.objects.create(name=data['player'])
         tournament.players.add(playerName)
-        return JsonResponse(createTournamentResponse(tournament, request.user.uuid, "Tournament created successfully"), status=200)
+        return JsonResponse(createTournamentResponse(tournament, "Tournament created successfully"), status=200)
 
     elif(request.method == "DELETE"):
 
@@ -103,3 +112,35 @@ def tournament(request):
     else:
 
         return JsonResponse({'error': 'We dont handle this request here'}, status=400)
+    
+
+#==========================================
+#      Tournament Management With ID
+#==========================================
+def tournamentWithID(request, id):
+    print("============\nWITH ID\n============")
+    print (id)
+    existing_tournament = Tournament.objects.filter(id=id)
+    print ("got tour")
+
+    if(request.method == "GET"):
+        if existing_tournament.exists():
+            return JsonResponse(createTournamentResponse(existing_tournament.first(), "Tournament already exist"), status=200)
+        else:
+            return JsonResponse({'error': 'This tournament ID does not exist'}, status=400)
+    elif(request.method == "DELETE"):
+        print ("del")
+        if existing_tournament.exists():
+            print ("for players")
+            for player in existing_tournament.first().players.all():
+                player.delete()
+            print ("deleting tour")
+            existing_tournament.first().delete()
+            return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
+        else:
+            return JsonResponse({'error': 'This tournament ID does not exist'}, status=400)
+    else:
+        return JsonResponse({'error': 'We dont handle this request here'}, status=400)
+        
+
+
