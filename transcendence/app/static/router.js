@@ -8,11 +8,19 @@ window.route = (event) => {
 const loaders = [
 	{ path: "/", function: loadDashboard },
 	{ path: "/settings", function: loadSettings },
-	{ path: "/pong/tournament", function: loadTournamentCreation}
+	{ path: "/pong/tournament", function: loadTournamentCreation },
+	{ path: "/pong/tournament/*", function: () => console.log("Called the wildercald funciton") },
 ]
 
 const load = (path) => {
-	const match = loaders.find(l => l.path === path);
+	const match = loaders.find(l => {
+		if (l.path.includes("*")) {
+			const basePath = l.path.replace("*", "");
+			return path.startsWith(basePath);
+		} else {
+			return l.path === path;
+		}
+	});
 	if (match)
 		match.function();
 }

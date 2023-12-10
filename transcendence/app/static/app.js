@@ -26,19 +26,18 @@ const postRequest = async (url, data) => {
 	try {
 		const response = await fetch(url, config);
 		if (!response.ok) {
-			const info = {
-				succeded: false,
-				message: "failed to add new user"
-			}
-			return info;
+			throw new Error("failed to add new user");
 		} else {
 			const data = await response.json();
 			data.succeded = true;
 			return data;
 		}
 	} catch (error) {
-		console.log(error);
-		return ({ "success":false, "message": "Something happened. try again", "status":400})
+		const info = {
+			succeded: false,
+			message: error.message
+		}
+		return info;
 	}
 }
 
@@ -55,17 +54,17 @@ const putRequest = async (url, data) => {
 	try {
 		const response = await fetch(url, config);
 		if (!response.ok) {
-			const info = {
-				succeded: false,
-				message: "failed to add new user"
-			}
-			return info;
+			throw new Error("failed to add new user")
 		} else {
 			const data = await response.json();
 			return data;
 		}
 	} catch (error) {
-		console.log(error);
+		const info = {
+			succeded: false,
+			message: error.message
+		}
+		return info;
 	}
 }
 
@@ -80,11 +79,32 @@ const deleteRequest = async (url) => {
 	}
 	try {
 		const response = await fetch(url, config);
-		const json = await response.json();
-		console.log(json);
-		return json;
+		if (!response.ok) {
+			throw new Error("Failed to delete tournament");
+		}
+		const data = await response.json();
+		data.succeded = true;
+		return data;
 	} catch (error) {
 		console.log(error);
+		return ({succeded: false, error: error.message})
+	}
+}
+
+const getRequest = async (url) => {
+	try {
+		const response = await fetch(url);
+		if (!response.ok)
+			throw new Error("Failed to fetch data");
+		const data = await response.json();
+		data.succeded = true;
+		return data;
+	} catch (error) {
+		const data = {
+			succeded: false,
+			error: error.message
+		}
+		return data;
 	}
 }
 

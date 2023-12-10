@@ -1,22 +1,29 @@
 let tournament;
 let modal;
 let bracket;
+let currentTournamentId;
 
 const loadTournamentCreation = async () => {
-	console.log("Loading tournament")
 	showLoadingSpinner();
-	const url = "/api/tournament"
-	let hasTournament;
-	try {
-		const response = await fetch(url);
-		if (response.ok)
-			hasTournament = true;
-		else
-			hasTournament = false;
-
-	} catch (error) {
-		console.log(error);
+	const tournamentInfo = await checkIfThereIsTournamentAlready();
+	toggleTournamentCreationPages(tournamentInfo.hasTournament);
+	if (tournamentInfo.hasTournament) {
+		currentTournamentId = tournamentInfo.tournament.id;
 	}
+	hideLoadingSpinner();
+}
+
+const checkIfThereIsTournamentAlready = async () => {
+	const url = "/api/tournament";
+	const response = await getRequest(url)
+	if (!response.succeded)
+		response.hasTournament = false;
+	else
+		response.hasTournament = true;
+	return response;
+}
+
+const toggleTournamentCreationPages = (hasTournament) => {
 	const hasTournamentPage = document.getElementById("tournamentExistsPage");
 	const newTournamentPage = document.getElementById("newTournamentPage");
 	const newTournamentButton = document.getElementById("newTournamentButton");
@@ -28,15 +35,13 @@ const loadTournamentCreation = async () => {
 	continueOldTournamentButton?.addEventListener("click", () => {
 		hasTournamentPage.style.display = "none";
 		newTournamentPage.style.display = "none";
-
-		//SHOULD NAVIGATE TO TOURNAMENT PAGE!! ALSO CREATE AND UPDATE A LOCALTOURNAMENT INSTANCE!!!!!!!
+		continuePreviousTournament();
 	})
 	if (hasTournament) {
 		newTournamentPage.style.display = "none";
 	} else {
 		hasTournamentPage.style.display = "none";
 	}
-	hideLoadingSpinner();
 }
 
 const createTournament = async (event) => {
@@ -56,14 +61,19 @@ const createTournament = async (event) => {
 		const response = await postRequest(url, data);
 		const info = response.tournament;
 		await navigateTo(`tournament/${info.id}`);
-		modal = new AddPlayerModal();
-		tournament = new LocalTournament(info.name, info.amount, info.id);
-		tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
-		tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
+		tournament = createTournamentInstance(info.name, info.amount, info.id);
 		addPlayerToDatabase(hostName);
 	} catch (error) {
 		console.log(error);
 	}
+}
+
+const createTournamentInstance = (name, amount, id) => {
+	modal = new AddPlayerModal();
+	tournament = new LocalTournament(name, amount, id);
+	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
+	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
+	return tournament;
 }
 
 const removePlayer = async (id) => {
@@ -142,19 +152,21 @@ const closeTournamentBracketModal = () => {
 const cancelAndDeleteTournament = async () => {
 	const url = `/api/tournament/${tournament.id}`;
 	const response = await deleteRequest(url);
-	console.log(response);
-	navigateTo('/pong');
+	if (response.succeded) {
+		navigateTo('/pong');
+	} else {
+		console.log("Failed to delete tournament");
+	}
 }
 const continuePreviousTournament = async () => {
-	const url = `/api/tournament/${tournament.id}`;
-	const response = await fetch(url);
-	const data = JSON.parse(response);
-	console.log(data);
-
-	await navigateTo(`tournament/${info.id}`);
-	modal = new AddPlayerModal();
-	tournament = new LocalTournament(info.name, info.amount, info.id); // GIVE PROPER VALUES FOR INITIALIZATION!!!!
-	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
-	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
-	//TODO: POPULATE THE PAYERS AND MATCHES FROM THE TOURNAMENT!!!!
+	const url = `/api/tournament/${currentTournamentId}`;
+	const response = await getRequest(url);
+	if (!response.succeded) {
+		console.log(response.error);
+		return;
+	}
+	const data = response.tournament;
+	await navigateTo(`/pong/tournament/${data.id}`);
+	tournament = createTournamentInstance(data.name, data.amount, data.id);
+	data.players.forEach(player => tournament.addPlayer({name: player, id: player.id | 0})) //Make sure backend returns an ID!!!!
 }
