@@ -97,6 +97,8 @@ const addPlayer = (event) => {
 const startTournament = async () => {
 	await navigateTo(`${t.id}/start`);
 	bracket = new Modal(document.getElementById("bracketModal"));
+	const titleElement = document.getElementById("pongTournamentStartTitle");
+	titleElement.textContent = t.getName();
 }
 
 const openTournamentBracketModal = () => {
