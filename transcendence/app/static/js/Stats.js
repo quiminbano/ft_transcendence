@@ -5,8 +5,3 @@ const makeChart = async () => {
 	chart.appendFragment("chartTest");
 
 }
-
-const loadDashboard = () => {
-	console.log("Loading dashboard");
-	makeChart();
-}

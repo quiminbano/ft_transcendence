@@ -426,3 +426,4 @@ yarn-error.log*
 
 auth.py
 **/migrations/
+__tests__

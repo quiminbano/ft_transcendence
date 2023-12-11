@@ -1,5 +1,20 @@
 <div class="protectedNavbar menu">
     {% if user.is_authenticated %}
+	<div id="search-container">
+		<img
+			alt="search button"
+			src="/static/images/search.png"
+			id="searchButton"
+		/>
+		<input
+			type="search"
+			class="search"
+			placeholder=""
+			id="search"
+			oninput="onInput(event)"
+		>
+		<div id="dropdownMenu" class="dropdownCollapsed"></div>
+	</div>
     <p id="navbarUsername">{{user.get_username}}</p>
     {% endif %}
 </div>
