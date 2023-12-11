@@ -32,6 +32,7 @@ const parser = new DOMParser();
 const handleLocation = async () => {
 	const path = window.location.pathname;
 	try {
+		showLoadingSpinner();
 		const response = await fetch(path);
 		if (!response.ok) {
 			window.history.pushState(null, null, "/");
@@ -45,6 +46,7 @@ const handleLocation = async () => {
 			document.body.innerHTML = bodyContent;
 		}
 		load(path);
+		hideLoadingSpinner();
 	} catch (error) {
 		console.log(error);
 		//Maybe we should send something to front end here!!!

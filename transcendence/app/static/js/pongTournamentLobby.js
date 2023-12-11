@@ -2,14 +2,10 @@ let loadTournamentLobbyInfo;
 let t;
 const loadTournamentLobby = async () => {
 	if (!loadTournamentLobbyInfo) {
-		console.log("Returning cause there is no info");
 		await navigateTo("/pong/tournament");
 		return;
     }
-	console.log("Proceeding")
-	console.log(loadTournamentLobbyInfo);
 	const data = loadTournamentLobbyInfo.tournament;
-	console.log(data);
 	t = createTournamentInstance(data.name, data.amount, data.id);
 	data.players.forEach(player => {
 		try {
@@ -18,7 +14,6 @@ const loadTournamentLobby = async () => {
 			console.log(error.message);
 		}
 	});
-	console.log(t);
 }
 
 const editPlayer = async (username) => {
