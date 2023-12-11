@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 
 from api.models import CustomUserData
@@ -89,6 +90,27 @@ class ChangeProfile(forms.Form):
     )
     email = forms.EmailField(
         label="Email",
-        widget=forms.EmailInput(attrs={"class": "form-control"}))
+        widget=forms.EmailInput(attrs={"class": "form-control"})
+    )
+    password3 = forms.CharField(
+        label="Confirm your password to apply the changes",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
 
+    def isPasswordValid(self, userModel : CustomUserData):
+        if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+            print("password1 and password2 does not match")
+            return False
+        if check_password(self.cleaned_data['password3'], userModel.password) == False:
+            print("Password provided does not match with the original one")
+            return False
+        return True
+
+    def save(self, userModel : CustomUserData):
+        userModel.username = self.cleaned_data['username']
+        userModel.first_name = self.cleaned_data['firstName']
+        userModel.last_name = self.cleaned_data['lastName']
+        userModel.set_password(self.cleaned_data['password1'])
+        userModel.email = self.cleaned_data['email']
+        userModel.save()
 

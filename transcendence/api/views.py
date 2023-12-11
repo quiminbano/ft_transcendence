@@ -147,5 +147,17 @@ def tournamentWithID(request, id):
     else:
         return JsonResponse({'error': 'We dont handle this request here'}, status=400)
 
+    response = {
+        "message" : "Tournament created successfully",
+        "tournament": {
+            "id": str(tournament.id),
+            "name": tournament.name,
+            "amount": tournament.amount,
+            "state": tournament.sate,
+            "players": [player.name for player in tournament.players.all()],
+        }
+    }
+    # tournamentdict = model_to_dict(tournament)
+    # tournamentdict['players'] = list(tournament.players.values_list('name', flat=True))
 
-
+    return JsonResponse(response, status=200)

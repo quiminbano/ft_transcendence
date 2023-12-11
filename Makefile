@@ -1,4 +1,4 @@
-NAME_I = ft_transcendence_transcendence:latest postgres:16.0-bookworm
+NAME_I = ft_transcendence-transcendence:latest postgres:16.0-bookworm
 NAME_C = ft_transcendence_transcendence_1 ft_transcendence_db_1
 VOL = ft_transcendence_pgdata
 

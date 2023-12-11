@@ -5,7 +5,6 @@ from . import views
 urlpatterns = [
     path("404", views.status_404, name="404"),
     path("_404", views.status_404, name="404"),
-    path("/", views.index, name="index"),
     path("login", views.loginUser, name="login"),
     path("signup", views.signup, name="signup"),
     path("logout", views.logoutUser, name="logout"),
@@ -22,4 +21,5 @@ urlpatterns = [
 	path("getDoc/searchItem", views.getSearchItem, name="searchItem"),
 
     re_path(r'^.*$', views.index, name='catch_all'),
+    path("", views.index, name="index"),
 ]

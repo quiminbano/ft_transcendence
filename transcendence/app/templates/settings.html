@@ -4,7 +4,12 @@
 			<h2>Edit profile</h2>
 			<form onsubmit="handleChangeProfile(event)" method="post" action="{% url 'settings' %}">
 				{% csrf_token %}
-				{{ form.as_p }}
+				{% for field in form %}
+					{% if field.name != "password3" %}
+					<label for="{{ form.username.id_for_label}}" class="loginLabel">{{field.label}}</label>
+					{{ field }}
+    				{% endif %}
+				{% endfor %}
 				<button
 					type="button"
 					class="btn btn-success w-100 changeProfileButton"
