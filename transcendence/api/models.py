@@ -2,6 +2,8 @@ import uuid
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import UploadedFile
 from django.db import models
 
 
@@ -42,6 +44,22 @@ class CustomUserData(AbstractUser):
     friends = models.ManyToManyField('self', blank=True)
 
     objects = CustomUserManager()
+
+    @staticmethod
+    def __validationImageSize(self, image : UploadedFile):
+        fileSize = image.size
+        limitedSizeInMb = 1
+        if (fileSize > (limitedSizeInMb * 1024 * 1024)):
+            raise ValidationError("The max size of the file must be 1 MB for the image!")
+    
+    @staticmethod
+    def __validateFileType(self, image : UploadedFile):
+        mimeList = ['image/jpeg', 'image/png']
+        fileType = image.content_type
+        if fileType not in mimeList:
+            raise ValidationError("Unsupported file type for the image!")
+
+    avatarImage = models.FileField(upload_to='madonna/', validators=[__validationImageSize, __validateFileType])
 
     def __str__(self):
         return self.username
