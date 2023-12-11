@@ -30,7 +30,6 @@ class LocalTournament {
 
     removePlayer(id) {
         if (this.players.length <= 0) return;
-        console.log(`id: ${id}`);
         this.players = this.players.filter(p => p.id !== id);
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
@@ -65,7 +64,7 @@ class LocalTournament {
             fragment.getElementById("index").innerHTML = i + 1;
             fragment.getElementById("playerName").innerHTML = this.players[i].name;
             const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
-            deleteIcon.addEventListener("click", () => this.removePlayer(this.players[i].id));
+            deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
             const editIcon = fragment.querySelector('.unregisterUserButton[alt="Edit user button"]')
             editIcon.addEventListener("click", () => openRegisterPlayerModal({ isNew: false, id: this.players[i].id }));
             div.appendChild(fragment);

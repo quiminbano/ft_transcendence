@@ -1,7 +1,9 @@
 let loadTournamentLobbyInfo;
 let t;
 const loadTournamentLobby = async () => {
+	console.log("Loading tournament lobby")
 	if (!loadTournamentLobbyInfo) {
+		console.log("Will return cause there is no info");
 		await navigateTo("/pong/tournament");
 		return;
     }
@@ -19,17 +21,32 @@ const loadTournamentLobby = async () => {
 const editPlayer = async (username) => {
     const url = "/api/tournament/player"
     const data = { id: modal.getPlayerId(), username };
-    const response = await putRequest(url, data);
-    if (response.succeded) {
-        t.editPlayer(modal.getPlayerId(), username)
-        closeRegisterPlayerModal();
-    }
+	const response = await putRequest(url, data);
+	console.log(response);
+	if (response.succeded) {
+		t.editPlayer(modal.getPlayerId(), username)
+		closeRegisterPlayerModal();
+		console.log("Succeded to edit player");
+	} else {
+		console.log(response);
+	}
 }
 
 const removePlayer = async (id) => {
     showLoadingSpinner();
-    //properly make a delete request to remove player from DB!!!
-    t.removePlayer(id);
+	//properly make a delete request to remove player from DB!!!
+	try {
+		const url = `/api/tournament/player/${id}`;
+		const response = await deleteRequest(url);
+		console.log(response);
+		if (!response.succeded) {
+			throw new Error("Failed to delete player");
+		} else {
+			t.removePlayer(id);
+		}
+	} catch (error) {
+		console.log(error.message);
+	}
     hideLoadingSpinner();
 }
 
