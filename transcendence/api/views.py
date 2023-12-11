@@ -35,14 +35,20 @@ def tournamentPlayer(request):
           return JsonResponse({'error': 'missing fields in request body'}, status=400)
         player = Players.objects.filter(id=data['id'])
         if player.exists():
-            player.first().name =  data["username"]
+            print ("AAAAAA")
+            player_instance = player.first()
+            player_instance.name =  data["username"]
+            player_instance.save()
         else:
           return JsonResponse({'error': 'player does not exist'}, status=400)
         playerdict = model_to_dict(player.first())
+        print (playerdict)
         return JsonResponse({'message': 'Player name change succefull', 'player': playerdict}, status=200)
 
     elif(request.method == "DELETE"):
         print ("method DELETE")
+        print (data)
+
         if "playerID" not in data or "id" not in  data:
           return JsonResponse({'error': 'missing fields in request body'}, status=400)
         tournament = Tournament.objects.filter(id=data['id'])
@@ -117,7 +123,7 @@ def tournament(request):
     else:
 
         return JsonResponse({'error': 'We dont handle this request here'}, status=400)
-    
+
 
 #==========================================
 #      Tournament Management With ID
@@ -140,6 +146,6 @@ def tournamentWithID(request, id):
             return JsonResponse({'error': 'This tournament ID does not exist'}, status=400)
     else:
         return JsonResponse({'error': 'We dont handle this request here'}, status=400)
-        
+
 
 
