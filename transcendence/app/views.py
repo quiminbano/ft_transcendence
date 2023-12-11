@@ -81,12 +81,12 @@ def settings(request):
         data = json.loads(request.body)
         form = ChangeProfile(data)
         if form.is_valid():
-            user = request.user
-            user.username = form.cleaned_data['username']
-            user.first_name = form.cleaned_data['firstName']
-            user.last_name = form.cleaned_data['lastName']
-            user.email = form.cleaned_data['email']
-            user.save()
+            if form.isPasswordValid(request.user) == False:
+                return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
+            form.save(request.user)
+            print("Update successful")
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+            login(request, user)
             return JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
         else:
             return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
@@ -133,7 +133,7 @@ def pongTournamentStart(request, id):
         return dashboard(request)
     else:
         context = {"content": "tournamentStart.html"}
-        return render(request, "index.html", context);
+        return render(request, "index.html", context)
 
 def getRegisterPlayersTemplate(request):
         return render(request, "registeredPlayers.html", {})
