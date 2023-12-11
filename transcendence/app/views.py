@@ -111,6 +111,12 @@ def pong(request):
     else:
         context = {"content": "PongTournamentPages/pong.html"}
         return render(request, "index.html", context)
+def pongOnevsOne(request):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {"content": "PongTournamentPages/pongOneVsOne.html"}
+        return render(request, "index.html", context)
 
 def pongTournament(request):
     if not request.user.is_authenticated:

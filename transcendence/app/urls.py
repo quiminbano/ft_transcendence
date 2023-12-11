@@ -10,6 +10,7 @@ urlpatterns = [
     path("logout", views.logoutUser, name="logout"),
     path("settings", views.settings, name="settings"),
     path("pong", views.pong, name="pong"),
+	path("pong/1v1", views.pongOnevsOne, name="pong1v1"),
     path("pong/tournament", views.pongTournament, name="pongTournament"),
     path("pong/tournament/<int:id>", views.pongTournamentLobby, name="pongTournamentLobby"),
     path("pong/tournament/<int:id>/start", views.pongTournamentStart, name="pongTournamentStart"),

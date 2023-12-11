@@ -1,0 +1,65 @@
+.invitationBox{
+	border: 3px solid black;
+	border-radius: 5px;
+	min-height: 35px;
+	max-height: 80vh;
+	padding: 25px 10px;
+	background-color: #deeeef;
+}
+
+.tabButtonsDiv {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	border-bottom: 2px solid rgba(229, 229, 229);
+	font-family: PressStart;
+	font-size: 18px;
+	font-weight: 600;
+	position: relative;
+	overflow-x: visible;
+}
+.tabButtonsDiv .tabButton {
+	font-weight: 600;
+	font-size: 18px;
+	color: #919191;
+	background: none;
+	border: none;
+	padding: 18px;
+	cursor: pointer;
+	outline: none;
+}
+
+.tabButton.activeTab {
+	color: #7360ff;
+}
+.tabContentDiv {
+	padding: 20px;
+}
+.tabContentDiv .tabContent {
+	display: none;
+	animation: moving 0.5s ease;
+	text-align: center;
+}
+@keyframes moving {
+	form{transform: translateX(50px);opacity: 0;}
+	to{transform: translateX(0px);opacity: 1;}
+}
+.tabContentDiv .tabContent.activeTab {
+	display: block;
+}
+.tabContentDiv .tabContent h4 {
+	margin-bottom: 10px;
+}
+.line {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 90px;
+	height: 5px;
+	background-color: #7360ff;
+	border-radius: 10px;
+	transition: all 0.25s ease-in-out;
+}
+
+

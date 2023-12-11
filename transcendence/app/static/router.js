@@ -10,16 +10,19 @@ const loaders = [
 	{ path: "/settings", function: loadSettings },
 	{ path: "/pong/tournament", function: loadTournamentCreation },
 	{ path: "/pong/tournament/*", function: loadTournamentLobby },
+	{ path: "/pong/1v1", function: loadPong1v1 },
 ]
 
 const load = (path) => {
 	const match = loaders.find(l => {
 		if (l.path.includes("*")) {
 			const basePath = l.path.replace("*", "");
-			return (
-				path.startsWith(basePath) &&
-				path.split("/").length === basePath.split("/").length
-			)
+			const pathSplit = path.split("/");
+			const basePathSplit = basePath.split("/");
+			if (path.startsWith(basePath) && pathSplit.length === basePathSplit.length)
+				return true;
+			else
+				return false;
 		} else {
 			return l.path === path;
 		}

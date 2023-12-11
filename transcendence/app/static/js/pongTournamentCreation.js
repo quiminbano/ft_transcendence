@@ -77,3 +77,7 @@ const createTournamentInstance = (name, amount, id) => {
 const continuePreviousTournament = async () => {
 	await navigateTo(`/pong/tournament/${currentTournamentId}`);
 }
+
+const play1v1 = () => {
+	navigateTo("/pong/1v1");
+}
