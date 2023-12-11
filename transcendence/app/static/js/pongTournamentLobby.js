@@ -1,18 +1,24 @@
 let loadTournamentLobbyInfo;
 let t;
 const loadTournamentLobby = async () => {
-    if (!loadTournamentLobbyInfo) {
-        await navigateTo("/pong/tournament");
-        return;
+	if (!loadTournamentLobbyInfo) {
+		console.log("Returning cause there is no info");
+		await navigateTo("/pong/tournament");
+		return;
     }
-    const data = loadTournamentLobbyInfo.tournament;
-    t = createTournamentInstance(data.name, data.amount, data.id);
-    if (loadTournamentLobbyInfo.hasTournament) {
-        data.players.forEach(player => tournament.addPlayer({ name: player.name, id: player.id }));
-    }
-    else if (data.addPlayer) {
-        addPlayerToDatabase(data.addPlayer);
-    }
+	console.log("Proceeding")
+	console.log(loadTournamentLobbyInfo);
+	const data = loadTournamentLobbyInfo.tournament;
+	console.log(data);
+	t = createTournamentInstance(data.name, data.amount, data.id);
+	data.players.forEach(player => {
+		try {
+			t.addPlayer({ name: player.name, id: player.id });
+		} catch (error) {
+			console.log(error.message);
+		}
+	});
+	console.log(t);
 }
 
 const editPlayer = async (username) => {
@@ -41,6 +47,10 @@ const closeRegisterPlayerModal = () => {
 }
 
 const addPlayerToDatabase = async (username) => {
+	if (t.isRepeatedPlayer(username)) {
+		t.setErrorMessage("That name already exists");
+		return;
+	}
 	const data = {
 		player: username,
 		id: t.id
@@ -49,7 +59,7 @@ const addPlayerToDatabase = async (username) => {
 	try {
 		const response = await postRequest(url, data);
 		if (response.succeded) {
-			tournament.addPlayer({ name: response.player.name, id: response.player.id });
+			t.addPlayer({ name: response.player.name, id: response.player.id });
 			closeRegisterPlayerModal();
 		} else {
 			console.log("Response not ok")
@@ -73,7 +83,7 @@ const addPlayer = (event) => {
 }
 
 const startTournament = async () => {
-	await navigateTo(`${tournament.id}/start`);
+	await navigateTo(`${t.id}/start`);
 	bracket = new Modal(document.getElementById("bracketModal"));
 }
 
@@ -87,7 +97,7 @@ const closeTournamentBracketModal = () => {
 }
 
 const cancelAndDeleteTournament = async () => {
-	const url = `/api/tournament/${tournament.id}`;
+	const url = `/api/tournament/${t.id}`;
 	const response = await deleteRequest(url);
 	if (response.succeded) {
 		navigateTo('/pong');

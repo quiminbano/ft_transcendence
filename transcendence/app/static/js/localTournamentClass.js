@@ -19,11 +19,8 @@ class LocalTournament {
     addPlayer(player) {
         if (this.players.length >= this.totalPlayers)
             throw new Error("Lobby is full");
-        if (this.players.find(p => p.name === player.name)) {
-            const errorMessage = "That name already exists";
-            this.errorElement.innerHTML = errorMessage;
+        if (this.isRepeatedPlayer())
             return;
-        }
         this.players.push(player);
         this.errorElement.innerHTML = "";
 		this.inputField.value = "";
@@ -97,5 +94,13 @@ class LocalTournament {
 		} catch (error) {
 			console.log(error);
 		}
-	}
+    }
+    isRepeatedPlayer(name) {
+        if (this.players.find(p => p.name === name))
+            return true;
+        return false;
+    }
+    setErrorMessage(message) {
+        this.errorElement.innerHTML = message;
+    }
 }

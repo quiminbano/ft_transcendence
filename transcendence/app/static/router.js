@@ -29,7 +29,7 @@ const load = (path) => {
 }
 
 const parser = new DOMParser();
-const handleLocation = async (event) => {
+const handleLocation = async () => {
 	const path = window.location.pathname;
 	try {
 		const response = await fetch(path);

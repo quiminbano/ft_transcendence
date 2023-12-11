@@ -1,4 +1,3 @@
-let tournament;
 let modal;
 let bracket;
 let currentTournamentId;
@@ -60,17 +59,8 @@ const createTournament = async (event) => {
 			player: hostName
 		}
 		const response = await postRequest(url, data);
-		const info = response.tournament;
-		loadTournamentLobbyInfo = {
-			message: "Must create new tournament",
-			tournament: {
-				name: info.name,
-				amount: info.amount,
-				id: info.id,
-				addPlayer: hostName
-			}
-		}
-		await navigateTo(`tournament/${info.id}`);
+		loadTournamentLobbyInfo = response;
+		await navigateTo(`tournament/${response.tournament.id}`);
 	} catch (error) {
 		console.log(error);
 	}
@@ -78,18 +68,12 @@ const createTournament = async (event) => {
 
 const createTournamentInstance = (name, amount, id) => {
 	modal = new AddPlayerModal();
-	tournament = new LocalTournament(name, amount, id);
+	const tournament = new LocalTournament(name, amount, id);
 	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
 	return tournament;
 }
 
 const continuePreviousTournament = async () => {
-	const url = `/api/tournament/${currentTournamentId}`;
-	const response = await getRequest(url);
-	if (!response.succeded) {
-		console.log(response.error);
-		return;
-	}
-	await navigateTo(`/pong/tournament/${response.tournament.id}`);
+	await navigateTo(`/pong/tournament/${currentTournamentId}`);
 }
