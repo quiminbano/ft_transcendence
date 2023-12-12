@@ -1,7 +1,5 @@
 #!/bin/bash
 
-mkdir -p /var/www/transcendence/media
-
 python manage.py collectstatic --noinput
 
 python manage.py makemigrations api

@@ -36,6 +36,11 @@ class SignupForm(CustomUserCreationForm):
     email = forms.EmailField(
         label="email",
         widget=forms.EmailInput(attrs={"class": "form-control"}))
+    coallition = forms.ChoiceField(choices=(
+        ('builders', 'The Builders'),
+        ('foragers', 'The Foragers'),
+        ('guards', 'The Guards'),
+    ))
     password1 = forms.CharField(
         label='password',
         widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
@@ -73,6 +78,8 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['email'],
             self.cleaned_data['password1']
         )
+        user.coallition = self.cleaned_data['coallition']
+        user.save()
         return user
 
 

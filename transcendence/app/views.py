@@ -70,7 +70,9 @@ def signup(request):
 def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
-    context = { "content": "dashboard.html"}
+    coallition = request.user.get_coallition()
+    print(request.user.get_coallition())
+    context = { "content": "dashboard.html", "coallition": coallition}
     return render(request, "index.html", context)
 
 #@login_required(login_url="/login")

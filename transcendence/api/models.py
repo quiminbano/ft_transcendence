@@ -42,24 +42,26 @@ class CustomUserData(AbstractUser):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
+    coallition = models.CharField()
 
     objects = CustomUserManager()
 
-    @staticmethod
-    def __validationImageSize(self, image : UploadedFile):
+    def validationImageSize(self, image : UploadedFile):
         fileSize = image.size
         limitedSizeInMb = 1
         if (fileSize > (limitedSizeInMb * 1024 * 1024)):
             raise ValidationError("The max size of the file must be 1 MB for the image!")
     
-    @staticmethod
-    def __validateFileType(self, image : UploadedFile):
+    def validateFileType(self, image : UploadedFile):
         mimeList = ['image/jpeg', 'image/png']
         fileType = image.content_type
         if fileType not in mimeList:
             raise ValidationError("Unsupported file type for the image!")
 
-    avatarImage = models.FileField(upload_to='madonna/', validators=[__validationImageSize, __validateFileType])
+    avatarImage = models.FileField(upload_to='madonna/', validators=[validationImageSize, validateFileType])
+
+    def get_coallition(self):
+        return self.coallition
 
     def __str__(self):
         return self.username
