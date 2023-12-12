@@ -72,13 +72,13 @@ const loadDashboard = () => {
 		const fd = new FormData();
 		pElement.textContent = "Uploading...";
 		fd.append("file", file);
-		const response = await postRequest("/api/media", fd);
+		const response = await putRequest("/api/media", fd);
 		if (response.succeeded) {
 			pElement.textContent = "Completed";
 			console.log("Image uploaded successfully");
 		} else {
 			pElement.textContent = "Upload failed. Please try again";
-			console.log("Filed to upload image");
+			console.log("Failed to upload image");
 		}
 		dragArea.setAttribute("class", "dropArea");
 	}

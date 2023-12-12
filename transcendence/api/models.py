@@ -2,11 +2,8 @@ import uuid
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import UploadedFile
 from django.db import models
-
-
+from .imageValidation import validateFileType, validationImageSize
 
 
 class CustomUserManager(BaseUserManager):
@@ -43,22 +40,9 @@ class CustomUserData(AbstractUser):
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     coallition = models.CharField()
+    avatarImage = models.FileField(validators=[validationImageSize, validateFileType])
 
     objects = CustomUserManager()
-
-    def validationImageSize(self, image : UploadedFile):
-        fileSize = image.size
-        limitedSizeInMb = 1
-        if (fileSize > (limitedSizeInMb * 1024 * 1024)):
-            raise ValidationError("The max size of the file must be 1 MB for the image!")
-    
-    def validateFileType(self, image : UploadedFile):
-        mimeList = ['image/jpeg', 'image/png']
-        fileType = image.content_type
-        if fileType not in mimeList:
-            raise ValidationError("Unsupported file type for the image!")
-
-    avatarImage = models.FileField(upload_to='madonna/', validators=[validationImageSize, validateFileType])
 
     def get_coallition(self):
         return self.coallition

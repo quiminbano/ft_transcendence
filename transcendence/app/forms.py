@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
+from api.imageValidation import validateFileType, validationImageSize
 
 from api.models import CustomUserData
 
@@ -121,3 +122,6 @@ class ChangeProfile(forms.Form):
         userModel.email = self.cleaned_data['email']
         userModel.save()
 
+class ProfilePicture(forms.Form):
+
+    avatarImage = forms.FileField(validators=[validationImageSize, validateFileType])

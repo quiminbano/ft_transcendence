@@ -71,7 +71,6 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
     coallition = request.user.get_coallition()
-    print(request.user.get_coallition())
     context = { "content": "dashboard.html", "coallition": coallition}
     return render(request, "index.html", context)
 
