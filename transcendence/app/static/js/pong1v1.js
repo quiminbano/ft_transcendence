@@ -21,8 +21,8 @@ const loadPong1v1 = () => {
 
 const populateFriends = async () => {
 	const friends = fakeFriends;
-	const url = "/getDoc/searchItem";
-	const divToAppendTo = document.getElementById("friendsToInviteBox");
+	const url = "/getDoc/invitationItemTemplate";
+	const divToAppendTo = document.getElementById("options");
 	const generator = new FragmentGenerator(url);
 	friends.forEach(friend => {
 		editFragment(friend, divToAppendTo, generator);
@@ -31,9 +31,17 @@ const populateFriends = async () => {
 
 const editFragment = async (friend, divToAppendTo, generator) => {
 	const fragment = await generator.generateFragment();
-	const name = fragment.querySelector("#searchItemName");
-	const picture = fragment.querySelector("#searchItemPicture");
+	const name = fragment.querySelector("#opponentName");
+	const picture = fragment.querySelector("#opponentPicture");
+	const checkedIcon = fragment.querySelector("#checkedIcon");
 	name.textContent = friend;
 	picture.setAttribute("src", "/static/images/profileIcon.png");
+	checkedIcon.setAttribute("src", "/static/images/correct.svg");
+	name.removeAttribute("id");
+	picture.removeAttribute("id");
+	checkedIcon.removeAttribute("id");
+	const input = fragment.querySelector("input");
+	input.setAttribute("value", friend);
+	input.setAttribute("data-label", friend);
 	generator.appendFragment(fragment, divToAppendTo);
 }

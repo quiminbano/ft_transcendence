@@ -63,3 +63,50 @@
 }
 
 
+/*Individual Items*/
+
+#options {
+	margin-top: 0.25rem;
+	border-radius: 0.375rem;
+	border: 1px solid #252529;
+	background: #17171A;
+}
+.option {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem;
+	border-bottom: 1px solid #252529;
+	position: relative;
+}
+
+.option img {
+	width: 1rem;
+	height: 1rem;
+}
+.option img:last-child {
+	margin-left: auto;
+	color: #A881E6;
+	display: none;
+}
+.label{
+	color: #FBF9FE;
+}
+.option:has(input:checked),
+.option:hover {
+	border-bottom: 1px solid #252529;
+	background-color: #252529;
+}
+.option:has(input:focus) {
+	outline: 1px solid #A881E6;
+}
+.option:has(input:checked) .checkedOpponent {
+	display: block;
+}
+.option input[type="radio"] {
+	all: unset;
+	position: absolute;
+	inset: 0;
+	cursor: pointer;
+}
+

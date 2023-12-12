@@ -28,13 +28,11 @@ const debounce = (func, delay = 300) => {
 	}
 }
 
-const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
-
 const onSearch = (event) => {
 	const input = event.target.value;
 
 	//PROPERLY MAKE A GET REQUEST TO GET THE MATCH USERS!!!!
-	const matches = fakeFriends.filter(friend => friend.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
+	const matches = fakeUsers.filter(user => user.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
 	const menu = document.getElementById("dropdownMenu");
 	if (input.length > 0) {
 		showDropdown(menu);
@@ -75,7 +73,7 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
-		matches.forEach(match => searchMatchItem("/static/images/profileIcon.png", match, parentDiv));
+		matches.forEach(match => searchMatchItem(match.src, match.name, parentDiv));
 	}
 }
 

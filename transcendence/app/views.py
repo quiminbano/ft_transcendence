@@ -149,3 +149,6 @@ def getCircleChartTemplate(request):
 
 def getSearchItem(request):
         return render(request, "SearchElements/searchItem.html", {})
+
+def invitationItemTemplate(request):
+        return render(request, "PongTournamentPages/invitationItemTemplate.html", {})
