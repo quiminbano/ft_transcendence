@@ -54,12 +54,14 @@ const submitSignup = async event => {
 
 	const username = formData.get('username');
 	const email = formData.get("email");
+	const coallition = formData.get("coallition");
 	const password = formData.get("password1");
 	const confirmPassword = formData.get("password2");
 
 	data = {
 		username,
 		email,
+		coallition,
 		password1: password,
 		password2: confirmPassword
 	}
