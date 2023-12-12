@@ -106,3 +106,13 @@ const onClickFriendsButton = () => {
 		friendsDropdown.classList.add("friendsDropdownCollapsed");
 	}
 }
+
+
+
+/****************** Modal Dashboard **********************/
+const togglePictureModal = () => {
+	console.log("Open modal called");
+	const modalContainer = document.querySelector(".ModalContainer");
+	modalContainer.classList.toggle("show");
+}
+
