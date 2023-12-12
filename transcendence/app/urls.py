@@ -21,6 +21,8 @@ urlpatterns = [
 	path("getDoc/circleChart", views.getCircleChartTemplate, name="circleChartTemplate"),
 	path("getDoc/searchItem", views.getSearchItem, name="searchItem"),
     path("getDoc/invitationItemTemplate", views.invitationItemTemplate, name="invitationItemTemplate"),
+	path("getDoc/invitedItemTemplate", views.invitedItemTemplate, name="invitedItemTemplate"),
+	path("getDoc/youAreInvitedItem", views.youAreInvitedItemTemplate, name="youAreInvitedItemTemplate"),
 
     re_path(r'^.*$', views.index, name='catch_all'),
     path("", views.index, name="index"),

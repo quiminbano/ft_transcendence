@@ -142,13 +142,17 @@ def pongTournamentStart(request, id):
         return render(request, "index.html", context)
 
 def getRegisterPlayersTemplate(request):
-        return render(request, "registeredPlayers.html", {})
+    return render(request, "registeredPlayers.html", {})
 
 def getCircleChartTemplate(request):
-        return render(request, "circleChart.html", {})
+    return render(request, "circleChart.html", {})
 
 def getSearchItem(request):
-        return render(request, "SearchElements/searchItem.html", {})
+    return render(request, "SearchElements/searchItem.html", {})
 
 def invitationItemTemplate(request):
-        return render(request, "PongTournamentPages/invitationItemTemplate.html", {})
+    return render(request, "PongTournamentPages/invitationItemTemplate.html", {})
+def invitedItemTemplate(request):
+    return render(request, "PongTournamentPages/invitedItem.html", {})
+def youAreInvitedItemTemplate(request):
+    return render(request, "PongTournamentPages/youAreInvitedItem.html", {})

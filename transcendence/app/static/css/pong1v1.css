@@ -5,6 +5,7 @@
 	max-height: 80vh;
 	padding: 25px 10px;
 	background-color: #deeeef;
+	overflow: scroll
 }
 
 .tabButtonsDiv {
@@ -38,8 +39,8 @@
 }
 .tabContentDiv .tabContent {
 	display: none;
-	animation: moving 0.5s ease;
 	text-align: center;
+	animation: moving 0.5s ease;
 }
 @keyframes moving {
 	form{transform: translateX(50px);opacity: 0;}
@@ -62,14 +63,34 @@
 	transition: all 0.25s ease-in-out;
 }
 
+.invitesBox,
+#friendsToInviteBox,
+#othersToInviteBox {
+	overflow-y: scroll;
+}
+.invitesBox::-webkit-scrollbar,
+#friendsToInviteBox::-webkit-scrollbar,
+#othersToInviteBox::-webkit-scrollbar,
+.invitationBox::-webkit-scrollbar {
+	display: none;
+}
+
+.invitesBox::-webkit-scrollbar,
+.invitationBox::-webkit-scrollbar,
+#friendsToInviteBox::-webkit-scrollbar,
+#othersToInviteBox::-webkit-scrollbar  {
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+}
+
 
 /*Individual Items*/
 
-#options {
+.options {
 	margin-top: 0.25rem;
 	border-radius: 0.375rem;
 	border: 1px solid #252529;
-	background: #17171A;
+	background: #17171a46;
 }
 .option {
 	display: flex;
@@ -80,13 +101,16 @@
 	position: relative;
 }
 
-.option img {
+.option .checkedOpponent,
+.option .opponentToInvitePicture {
 	width: 1rem;
 	height: 1rem;
 }
 .option img:last-child {
 	margin-left: auto;
 	color: #A881E6;
+}
+.checkedOpponent {
 	display: none;
 }
 .label{
@@ -94,8 +118,8 @@
 }
 .option:has(input:checked),
 .option:hover {
-	border-bottom: 1px solid #252529;
-	background-color: #252529;
+	border-bottom: 1px solid #252529ad;
+	background-color: #2525298d;
 }
 .option:has(input:focus) {
 	outline: 1px solid #A881E6;
@@ -110,3 +134,56 @@
 	cursor: pointer;
 }
 
+
+/* Invited Section */
+.invitedButtons {
+	margin-left: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.invitedButtons button {
+	border: none;
+	background: none;
+	outline: none;
+}
+.invitedButton {
+	width: 2rem;
+	height: 2remrem;
+	display: inline-block;
+	padding: 2px;
+	margin: auto 3px;
+}
+.invitedButton:active,
+.invitedButton:focus {
+	outline: none;
+}
+.invitedButton:hover img {
+	transform: scale(1.05);
+}
+.invitedButton:active img {
+	border-radius: 50%;
+	border: 1px solid black;
+}
+.invitedButton:active img[alt="accept"] {
+	background-color: rgba(51, 229, 51, 0.515);
+}
+.invitedButton:active img[alt="reject"] {
+	background-color: rgba(230, 72, 72, 0.56);
+}
+
+.invitationStatus {
+	margin-left: auto;
+	font-size: 12px;
+}
+
+#cancelInvitationPageButton,
+#inviteButton {
+	margin-top: 20px;
+	border: 3px solid black;
+}
+#cancelInvitationPageButton {
+	width: 50%;
+	margin-right: 25%;
+	margin-left: 25%;
+}
