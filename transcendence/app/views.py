@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignupForm, LoginForm, ChangeProfile
+from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
 import json
 
@@ -71,7 +71,8 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
     coallition = request.user.get_coallition()
-    context = { "content": "dashboard.html", "coallition": coallition}
+    form = ProfilePicture()
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form}
     return render(request, "index.html", context)
 
 #@login_required(login_url="/login")

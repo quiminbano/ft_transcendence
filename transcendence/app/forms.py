@@ -85,17 +85,28 @@ class SignupForm(CustomUserCreationForm):
 
 
 class ChangeProfile(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    firstName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
-    lastName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        min_length=5,
+        max_length=100
+        )
+    firstName = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False,
+        )
+    lastName = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}),
+        required=False
+        )
     password1 = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(
+        attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False
     )
     password2 = forms.CharField(
         label="Confirm password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False
     )
     email = forms.EmailField(
@@ -104,7 +115,7 @@ class ChangeProfile(forms.Form):
     )
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
 
     def isPasswordValid(self, userModel : CustomUserData):
@@ -123,6 +134,7 @@ class ChangeProfile(forms.Form):
         if (len(self.cleaned_data['password1']) > 0):
             userModel.set_password(self.cleaned_data['password1'])
         userModel.email = self.cleaned_data['email']
+        userModel.full_clean()
         userModel.save()
 
 class ProfilePicture(forms.Form):

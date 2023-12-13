@@ -18,6 +18,8 @@ def profilePicture(request):
     if request.method == 'PUT':
         data = json.loads(request.body)
         form = ProfilePicture(data)
+        print("This is the form:", form)
+        print("This is data:", data)
         if form.is_valid():
             request.user.avatarImage = form.cleaned_data['avatarImage']
             request.user.save()

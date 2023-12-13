@@ -40,7 +40,7 @@ class CustomUserData(AbstractUser):
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     coallition = models.CharField()
-    avatarImage = models.FileField(validators=[validationImageSize, validateFileType])
+    avatarImage = models.FileField(validators=[validationImageSize, validateFileType], blank=True)
 
     objects = CustomUserManager()
 

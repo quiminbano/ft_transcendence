@@ -73,8 +73,8 @@ const loadDashboard = () => {
 		console.log(url);
 		const fd = new FormData();
 		pElement.textContent = "Uploading...";
-		fd.append("file", file);
-		const response = await putRequest("/api/media", fd);
+		fd.append("avatarImage", file);
+		const response = await putRequest("/api/user", fd);
 		if (response.succeeded) {
 			pElement.textContent = "Completed";
 			console.log("Image uploaded successfully");
