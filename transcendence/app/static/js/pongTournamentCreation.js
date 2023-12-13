@@ -2,6 +2,10 @@ let modal;
 let bracket;
 let currentTournamentId;
 
+const loadPong = () => {
+	loadMenus();
+}
+
 const loadTournamentCreation = async () => {
 	showLoadingSpinner();
 	const tournamentInfo = await checkIfThereIsTournamentAlready();
