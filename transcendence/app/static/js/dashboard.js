@@ -3,6 +3,8 @@ const generator = new FragmentGenerator("/getDoc/searchItem");
 const loadDashboard = () => {
 	const searchButton = document.getElementById("searchButton");
 	const search = document.getElementById("search");
+	const saveButton = document.querySelector("#saveUploadedPictureButton");
+	saveButton.style.display = "none";
 
 	searchButton.addEventListener("click", () => {
 		if (search.classList.contains("search")) {
@@ -70,19 +72,32 @@ const loadDashboard = () => {
 	}
 	const upload = async (file) => {
 		const url = URL.createObjectURL(file);
-		console.log(url);
+		const img = dragArea.querySelector("#previewUploadedImage");
+		img.style.display = "flex";
+		img.setAttribute("src", url);
+		saveButton.style.display  = "flex";
+		saveButton.addEventListener("click", async () => {
+			showLoadingSpinner();
+			await savePicture(file);
+			hideLoadingSpinner();
+			saveButton.style.display = "none";
+		})
+	}
+
+	const savePicture = async (file) => {
 		const fd = new FormData();
 		pElement.textContent = "Uploading...";
 		fd.append("file", file);
-		const response = await postRequest("/api/media", fd);
+		const response = await putRequest("/api/media", fd);
 		if (response.succeeded) {
 			pElement.textContent = "Completed";
 			console.log("Image uploaded successfully");
+			dragArea.setAttribute("class", "dropArea");
 		} else {
 			pElement.textContent = "Upload failed. Please try again";
+			dragArea.setAttribute("class", "dropArea invalid");
 			console.log("Filed to upload image");
 		}
-		dragArea.setAttribute("class", "dropArea");
 	}
 }
 
