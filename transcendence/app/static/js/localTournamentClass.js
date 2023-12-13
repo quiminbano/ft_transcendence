@@ -102,4 +102,5 @@ class LocalTournament {
     setErrorMessage(message) {
         this.errorElement.innerHTML = message;
     }
+	getName() { return this.name; }
 }

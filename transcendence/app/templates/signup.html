@@ -22,6 +22,13 @@
 									{{form.email}}
 									<p class="signupErrorMessage" id="signupEmailError"></p>
 								</div>
+								<div>
+									<label for="{{ form.coallition.id_for_label }}">Coallition:</label>
+									{% for radio in form.coallition %}
+									
+									{{ radio }}
+									{% endfor %}
+								</div>
 								<div class="form-group">
 									<label for="{{ form.coallition.id_for_label}}" class="loginLabel">Select coallition:</label>
 									{{form.coallition}}

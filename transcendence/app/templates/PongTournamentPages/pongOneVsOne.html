@@ -1,0 +1,75 @@
+<div class="container-fluid" id="pongTournamentStart">
+    <div class="blackOverlay"></div>
+    <div class="row">
+		<div class="col-12 col-md-8 offset-md-2">
+			<div class="invitationBox">
+				<div class="row">
+					<div class="col-12" style="overflow-x: visible;">
+						<div class="tabButtonsDiv">
+							<button class="tabButton">Invite other player</button>
+							<button class="tabButton">Invitations</button>
+							<div class="line"></div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="tabContentDiv">
+							<div class="tabContent">
+								<div class="row">
+									<div class="col-md-6">
+										<h4>Friends</h4>
+										<div id="friendsToInviteBox">
+											<ul id="inviteFriendsOptions" class="options"></ul>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h4>Online players</h4>
+										<div id="othersToInviteBox">
+											<ul id="inviteUsersOptions" class="options"></ul>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+									</div>
+									<div class="col-md-6">
+									</div>
+								</div>
+							</div>
+							<div class="tabContent">
+								<div class="row">
+									<div class="col-md-6">
+										<h4>You were invited</h4>
+										<div class="invitesBox">
+											<ul id="invitesBoxUL" class="options"></ul>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h4>waiting for opponent to accept</h4>
+										<div class="invitesBox">
+											<ul id="invitedBoxUL" class="options"></ul>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-6">
+									</div>
+									<div class="col-6">
+										<div class="invitesBox" class="options">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12">
+				<button class="btn btn-success w-100" id="inviteButton">Invite</button>
+			</div>
+			<div class="col-12">
+				<button class="btn btn-danger" id="cancelInvitationPageButton" onclick="navigateTo('/pong')">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- {% include "Pong1v1pages/invitationsModal.html" %} -->

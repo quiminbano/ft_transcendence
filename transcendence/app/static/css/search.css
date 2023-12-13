@@ -102,6 +102,9 @@
 	justify-content: flex-start;
 	cursor: pointer;
 }
+.searchItem * {
+	overflow-x: hidden;
+}
 .searchItem:hover {
 	background-color: orange;
 	color: black;

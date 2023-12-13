@@ -6,6 +6,16 @@
 					<img alt="user profile picture"
 						 id="dashboardUserProfilePic"
 						 src="../static/images/profileIconWhite.png"/>
+						 <button
+							id="changePictureButton"
+							onclick="togglePictureModal()"
+						>
+							<img
+								alt="update profile picture"
+								id="updateProfilePicture"
+								src="/static/images/addPictureIcon.svg"
+							/>
+						</button>
 					<h6 id="dashboardUserProfileName">{{user.get_username}}</h6>
 				</div>
             </div>
@@ -30,10 +40,11 @@
                     <img alt="user coalition logo"
                     src="/static/images/guardsSymbol.svg"
                     id="dashboardUserCoalitionPic" />
-                    <p id="dashboardUserCoalitionName">The Guards</p>                
+                    <p id="dashboardUserCoalitionName">The Guards</p>
                 {% endif %}
             </div>
             {% endblock %}
         </div>
     </div>
 </div>
+{% include "changePicturemodal.html" %}

@@ -1,9 +1,7 @@
 let loadTournamentLobbyInfo;
 let t;
 const loadTournamentLobby = async () => {
-	console.log("Loading tournament lobby")
 	if (!loadTournamentLobbyInfo) {
-		console.log("Will return cause there is no info");
 		await navigateTo("/pong/tournament");
 		return;
     }
@@ -22,11 +20,9 @@ const editPlayer = async (username) => {
     const url = "/api/tournament/player"
     const data = { id: modal.getPlayerId(), username };
 	const response = await putRequest(url, data);
-	console.log(response);
 	if (response.succeded) {
 		t.editPlayer(modal.getPlayerId(), username)
 		closeRegisterPlayerModal();
-		console.log("Succeded to edit player");
 	} else {
 		console.log(response);
 	}
@@ -97,6 +93,8 @@ const addPlayer = (event) => {
 const startTournament = async () => {
 	await navigateTo(`${t.id}/start`);
 	bracket = new Modal(document.getElementById("bracketModal"));
+	const titleElement = document.getElementById("pongTournamentStartTitle");
+	titleElement.textContent = t.getName();
 }
 
 const openTournamentBracketModal = () => {
@@ -104,7 +102,6 @@ const openTournamentBracketModal = () => {
 }
 
 const closeTournamentBracketModal = () => {
-	console.log("Closing the modal");
 	bracket.close();
 }
 

@@ -113,6 +113,12 @@ def pong(request):
     else:
         context = {"content": "PongTournamentPages/pong.html"}
         return render(request, "index.html", context)
+def pongOnevsOne(request):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {"content": "PongTournamentPages/pongOneVsOne.html"}
+        return render(request, "index.html", context)
 
 def pongTournament(request):
     if not request.user.is_authenticated:
@@ -138,10 +144,17 @@ def pongTournamentStart(request, id):
         return render(request, "index.html", context)
 
 def getRegisterPlayersTemplate(request):
-        return render(request, "registeredPlayers.html", {})
+    return render(request, "registeredPlayers.html", {})
 
 def getCircleChartTemplate(request):
-        return render(request, "circleChart.html", {})
+    return render(request, "circleChart.html", {})
 
 def getSearchItem(request):
-        return render(request, "SearchElements/searchItem.html", {})
+    return render(request, "SearchElements/searchItem.html", {})
+
+def invitationItemTemplate(request):
+    return render(request, "PongTournamentPages/invitationItemTemplate.html", {})
+def invitedItemTemplate(request):
+    return render(request, "PongTournamentPages/invitedItem.html", {})
+def youAreInvitedItemTemplate(request):
+    return render(request, "PongTournamentPages/youAreInvitedItem.html", {})
