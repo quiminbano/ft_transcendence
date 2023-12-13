@@ -86,15 +86,17 @@ class SignupForm(CustomUserCreationForm):
 
 class ChangeProfile(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    firstName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    lastName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    firstName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    lastName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     password1 = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=False
     )
     password2 = forms.CharField(
         label="Confirm password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=False
     )
     email = forms.EmailField(
         label="Email",
@@ -118,7 +120,8 @@ class ChangeProfile(forms.Form):
         userModel.username = self.cleaned_data['username']
         userModel.first_name = self.cleaned_data['firstName']
         userModel.last_name = self.cleaned_data['lastName']
-        userModel.set_password(self.cleaned_data['password1'])
+        if (len(self.cleaned_data['password1']) > 0):
+            userModel.set_password(self.cleaned_data['password1'])
         userModel.email = self.cleaned_data['email']
         userModel.save()
 

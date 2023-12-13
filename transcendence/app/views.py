@@ -78,7 +78,8 @@ def dashboard(request):
 def settings(request):
     if not request.user.is_authenticated:
        return loginUser(request)
-    if request.method == 'POST':
+    if request.method == 'PUT':
+        print("Comimg here")
         data = json.loads(request.body)
         form = ChangeProfile(data)
         if form.is_valid():
@@ -90,7 +91,8 @@ def settings(request):
             login(request, user)
             return JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
         else:
-            return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
+            errors = {field: form.errors[field][0] for field in form.errors}
+            return JsonResponse({"success": "false", "message": "Failed to update profile", "errors": errors}, status=400)
     else:
         form = ChangeProfile(initial={
             'username': request.user.username,
