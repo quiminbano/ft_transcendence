@@ -36,7 +36,6 @@ const loadDashboard = () => {
 		const isFile = 	new Promise((resolve) => {
 			const fr = new FileReader();
 			fr.onprogress = (e) => {
-				console.log(e.loaded);
 				if (e.loaded > 50) {
 					fr.abort();
 					resolve(true);
@@ -87,9 +86,13 @@ const loadDashboard = () => {
 
 /****************** Modal Dashboard **********************/
 const togglePictureModal = () => {
-	console.log("Open modal called");
 	const modalContainer = document.querySelector(".ModalContainer");
 	modalContainer.classList.toggle("show");
+	if (!modalContainer.classList.contains("show")) {
+		const dragArea = document.querySelector(".dropArea");
+		const img = dragArea.querySelector("#previewUploadedImage");
+		img.style.display = "none";
+	}
 }
 
 
