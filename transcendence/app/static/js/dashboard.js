@@ -69,6 +69,8 @@ const loadDashboard = () => {
 		upload(image);
 	}
 	const upload = async (file) => {
+		const url = URL.createObjectURL(file);
+		console.log(url);
 		const fd = new FormData();
 		pElement.textContent = "Uploading...";
 		fd.append("file", file);

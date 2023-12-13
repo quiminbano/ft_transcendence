@@ -7,6 +7,7 @@ window.route = (event) => {
 
 const loaders = [
 	{ path: "/", function: loadDashboard },
+	{ path: "/signup", function: loadSignup },
 	{ path: "/settings", function: loadSettings },
 	{ path: "/pong/tournament", function: loadTournamentCreation },
 	{ path: "/pong/tournament/*", function: loadTournamentLobby },
