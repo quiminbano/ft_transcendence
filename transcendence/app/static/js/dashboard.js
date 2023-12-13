@@ -67,19 +67,38 @@ const loadDashboard = () => {
 	}
 
 	const savePicture = async (file) => {
-		const fd = new FormData();
+		const form = document.querySelector("#updatePictureForm");
+		const fd = new FormData(form);
+		fd.append("id_avatarImage", file);
 		pElement.textContent = "Uploading...";
-		fd.append("file", file);
-		const response = await putRequest("/api/media", fd);
-		if (response.succeeded) {
-			pElement.textContent = "Completed";
-			console.log("Image uploaded successfully");
-			dragArea.setAttribute("class", "dropArea");
-		} else {
-			pElement.textContent = "Upload failed. Please try again";
+		const req = new XMLHttpRequest();
+		req.open("PUT", "/api/user");
+		const csrftoken = getCookie('csrftoken');
+		req.setRequestHeader("X-CSRFToken", csrftoken);
+		req.upload.addEventListener("progress", (e) => {
+			const progress = e.loaded / e.total;
+			pElement.textContent = (progress * 100).toFixed()+"%";
+			if (progress === 1) {
+				pElement.textContent = "Processing...";
+			}
+		})
+		req.addEventListener("load", () => {
+			if (req.status === 200) {
+				pElement.textContent = "Completed";
+				console.log("Image uploaded successfully");
+				dragArea.setAttribute("class", "dropArea");
+			} else {
+				pElement.textContent = "Upload failed. Please try again";
+				dragArea.setAttribute("class", "dropArea invalid");
+				console.log("Filed to upload image");
+			}
+		})
+		req.addEventListener("error", () => {
+			pElement.textContent = "Network error. Please try again";
 			dragArea.setAttribute("class", "dropArea invalid");
 			console.log("Filed to upload image");
-		}
+		})
+		req.send(fd);
 	}
 	loadMenus();
 }
