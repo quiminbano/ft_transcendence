@@ -1,5 +1,8 @@
 let settingsModal;
-
+const loadSignup = () => {
+	console.log("Loading signup");
+	populateCoallitionSrc();
+}
 const submitLogin = async event => {
 	event.preventDefault();
 	const url = event.target.action;
@@ -137,4 +140,14 @@ const closeSettingsModal = () => {
 
 const loadSettings = () => {
 	settingsModal = new Modal(document.getElementById("settingsModalContainer"));
+}
+
+const populateCoallitionSrc = () => {
+	const options = document.querySelectorAll(".coallitionOption");
+	console.log(options);
+	options.forEach(option => {
+		const image = option.querySelector("img");
+		const input = option.querySelector("input");
+		image.setAttribute("src", `/static/images/${input.value}Symbol.svg`);
+	});
 }
