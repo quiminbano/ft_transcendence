@@ -125,7 +125,10 @@ const handleChangeProfile = async (event) => {
 		email
 	}
 	showLoadingSpinner();
-	const response = await postRequest(url, data);
+	const response = await putRequest(url, data);
+	console.log(response);
+	if (response.succeded)
+		navigateTo("/");
 	//const json = await JSON.parse(response);
 	//console.log(json);
 	hideLoadingSpinner();

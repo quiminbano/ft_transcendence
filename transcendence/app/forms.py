@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
+from api.imageValidation import validateFileType, validationImageSize
 
 from api.models import CustomUserData
 
@@ -84,16 +85,29 @@ class SignupForm(CustomUserCreationForm):
 
 
 class ChangeProfile(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    firstName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    lastName = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        min_length=5,
+        max_length=100
+        )
+    firstName = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False,
+        )
+    lastName = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}),
+        required=False
+        )
     password1 = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(
+        attrs={'class': 'form-control', "autocomplete": "on"}),
+        required=False
     )
     password2 = forms.CharField(
         label="Confirm password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
+        required=False
     )
     email = forms.EmailField(
         label="Email",
@@ -101,7 +115,7 @@ class ChangeProfile(forms.Form):
     )
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
 
     def isPasswordValid(self, userModel : CustomUserData):
@@ -117,7 +131,12 @@ class ChangeProfile(forms.Form):
         userModel.username = self.cleaned_data['username']
         userModel.first_name = self.cleaned_data['firstName']
         userModel.last_name = self.cleaned_data['lastName']
-        userModel.set_password(self.cleaned_data['password1'])
+        if (len(self.cleaned_data['password1']) > 0):
+            userModel.set_password(self.cleaned_data['password1'])
         userModel.email = self.cleaned_data['email']
+        userModel.full_clean()
         userModel.save()
 
+class ProfilePicture(forms.Form):
+
+    avatarImage = forms.FileField(validators=[validationImageSize, validateFileType])
