@@ -40,7 +40,7 @@ class SignupForm(CustomUserCreationForm):
         ('builders', 'The Builders'),
         ('foragers', 'The Foragers'),
         ('guards', 'The Guards'),
-    ))
+    ), widget=forms.RadioSelect)
     password1 = forms.CharField(
         label='password',
         widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
