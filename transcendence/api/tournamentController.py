@@ -21,16 +21,52 @@ def JSONTournamentResponse(tournament, message):
         }
     return (response)
 
+def unknownMethod():
+    return JsonResponse({'error': 'Method not supported'}, status=405)
+
 #==========================================
-#         Tournament Functions
+#       Tournament Player Functions                                                                                                                                           
 #==========================================
-def tournamentAddPlayer(data, tournament):
+def tournamentAddPlayer(request, tournament):
+    data = json.loads(request.body)
+    if "player" not in data:
+        return JsonResponse({'error': 'missing fields in request body'}, status=400)
     player = Players.objects.create(name=data['player'])
     tournament.players.add(player)
     playerdict = model_to_dict(player)
     return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
 
+def tournamentUpdatePlayer(request):
+    data = json.loads(request.body)
+    if "id" not in data or "username" not in data:
+        return JsonResponse({'error': 'missing fields in request body'}, status=400)
+    player = Players.objects.filter(id=data['id']).first()
+    if player is not None:
+        player.name =  data["username"]
+        player.save()
+    else:
+        return JsonResponse({'error': 'player does not exist'}, status=400)
+    playerdict = model_to_dict(player)
+    return JsonResponse({'message': 'Player name change succefull', 'player': playerdict}, status=200)
 
+def tournamentDeletePlayer(request):
+    print ("method DELETE")
+    data = json.loads(request.body)
+    print (data)
+    # if "playerID" not in data or "id" not in  data:
+    #     return JsonResponse({'error': 'missing fields in request body'}, status=400)
+    # tournament = Tournament.objects.filter(id=data['id'])
+    # player = Players.objects.filter(id=data['playerID'])
+    # if player.exists() and tournament.exists():
+    #     tournament.first().players.remove(player.first())
+    #     player.first().delete()
+    # else:
+    return JsonResponse({'error': 'player or tournament does not exist'}, status=400)
+
+
+#==========================================
+#         Tournament Functions                                                                                                                                           
+#==========================================
 def createTurnament(request):
     data = json.loads(request.body)
     if "name" not in data or "number" not in data:
@@ -41,38 +77,9 @@ def createTurnament(request):
     tournament.players.add(playerName)
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament created successfully"), status=200)
 
-#==========================================
-#         Tournament Methods
-#==========================================
-def getMethod(request, tournament):
+def getTournament(tournament):
     return JsonResponse(JSONTournamentResponse(tournament.first(), "Tournament already exist"), status=200)
 
-def postMethod(request, tournament):
-    data = json.loads(request.body)
-    if "player" in data and "id" in data:
-        return (tournamentAddPlayer(data, tournament.first()))
-    else:
-        return (createTurnament(request))
-
-def putMethod(request, tournament):
-    return JsonResponse({'error': 'Method not implemented'}, status=501)
-
-def deleteMethod(request, tournament):
+def deleteTournament(tournament):
     tournament.first().delete()
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
-
-
-def unknownMethod(request, tournament):
-    return JsonResponse({'error': 'Method not supported'}, status=405)
-
-#==========================================
-#         Tournament Switch
-#==========================================
-switch = {
-    'GET': getMethod,
-    'POST': postMethod,
-    'PUT': putMethod,
-    'DELETE': deleteMethod,
-}
-
-

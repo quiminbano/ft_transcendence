@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .models import Tournament, Players, CustomUserData
-from .tournamentController import switch, unknownMethod, createTurnament
+from .tournamentController import unknownMethod, createTurnament, deleteTournament, getTournament, tournamentAddPlayer, tournamentUpdatePlayer
 import json
 
 
@@ -10,14 +10,20 @@ import json
 #==========================================
 #         Tournament Management
 #==========================================
-def tournamentManager(request, id=None):
+def tournamentManager(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
     existing_tournament = Tournament.objects.filter(uuid=request.user.uuid)
     if existing_tournament.exists():
         # Call the function from the switch dictionary
         print("EXIST")
-        return switch.get(request.method, unknownMethod)(request, existing_tournament)
+        match request.method:
+            case "GET":
+                return getTournament(existing_tournament)
+            case "DELETE":
+                return deleteTournament(existing_tournament)
+            case _:
+                return unknownMethod()
     else:
         if request.method == "POST":
             print("NO EXIST")
@@ -26,8 +32,43 @@ def tournamentManager(request, id=None):
             return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
         
 
-def Placeholder(request, id=None):
-    return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
+#==========================================
+#         TournamentID Manager
+#==========================================
+def tournamentManagerID(request, id=None):
+    existing_tournament = Tournament.objects.filter(id=id)
+    if existing_tournament.exists():
+        # Call the function from the switch dictionary
+        print("EXIST")
+        match request.method:
+            case "GET":
+                return getTournament(existing_tournament)
+            case "POST":
+                return tournamentAddPlayer(request, existing_tournament)
+            case "DELETE":
+                return deleteTournament(existing_tournament)
+            case _:
+                return unknownMethod()
+    else:
+        return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
+
+#==========================================
+#         Tournament Player Management
+#==========================================
+def tournamentManagerPlayerID(request, id=None):
+    player = Players.objects.filter(id=id).first()
+    if player is not None:
+        print("Player ID EXIST")
+        match request.method:
+            case "PUT":
+                return tournamentUpdatePlayer(request)
+            case "DELETE":
+                return deleteTournament(existing_tournament)
+            case _:
+                return unknownMethod()
+    else:
+        return JsonResponse({'error': 'player does not exist'}, status=400)
+
 
 
 
