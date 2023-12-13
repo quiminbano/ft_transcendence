@@ -4,8 +4,11 @@
 	border: none;
 	position: absolute;
 	top: 70%;
-	right: 30%;
+	right: 5%;
 	transition: all 0.25s linear;
+	background-color: rgba(0, 0, 0, 0.522);
+	border-radius: 50%;
+	padding: 5px;
 }
 #changePictureButton:focus {
 	outline: none;

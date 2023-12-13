@@ -147,6 +147,7 @@ const showDropdown = (element) => {
 }
 
 const displayDropdownElements = (matches = [], parentDiv) => {
+	console.log(matches)
 	while (parentDiv.firstChild) {
 	  parentDiv.removeChild(parentDiv.firstChild);
 	}
@@ -156,7 +157,7 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
-		matches.forEach(match => searchMatchItem(match.src, match.name, parentDiv));
+		matches.forEach(match => searchMatchItem(match.src || "/static/images/profileIcon.png", match.name || match, parentDiv));
 	}
 }
 

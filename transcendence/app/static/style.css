@@ -212,11 +212,20 @@ body *{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+#profilePicturesDiv {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	position: relative;
+	overflow: visible;
+}
 
 #dashboardUserProfilePic {
-	max-width: 150px;
-	max-height: 150px;
-	width: 80%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
 	border-radius: 50%;
 }
 #dashboardUserCoalitionPic {
