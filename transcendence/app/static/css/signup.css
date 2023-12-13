@@ -1,0 +1,25 @@
+#coallitionOptions {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	overflow: visible;
+}
+.coallitionOption {
+	position: relative;
+}
+.coallitionOption input {
+	all: unset;
+	position: absolute;
+	inset: 0;
+	cursor: pointer;
+}
+.coallitionOption img {
+	width: 60px;
+	cursor: pointer;
+}
+.coallitionOption:has(input:checked) {
+	transform: scale(1.05);
+	border-bottom: 5px solid rgba(173, 178, 174, 0.909);
+	border-radius: 2px;
+	padding: 8px 5px;
+}

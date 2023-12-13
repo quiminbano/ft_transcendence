@@ -1,5 +1,8 @@
 let settingsModal;
-
+const loadSignup = () => {
+	console.log("Loading signup");
+	populateCoallitionSrc();
+}
 const submitLogin = async event => {
 	event.preventDefault();
 	const url = event.target.action;
@@ -72,10 +75,10 @@ const submitSignup = async event => {
 	if (success) {
 		console.log("User created successfully");
 		navigateTo("login");
-		//Handle user navigation after registration complete!!!!
 	}
 	else {
 		console.log("Failed to create user");
+		console.log(result);
 		if (result.errors)
 			handleErrors(result.errors);
 	}
@@ -140,4 +143,14 @@ const closeSettingsModal = () => {
 
 const loadSettings = () => {
 	settingsModal = new Modal(document.getElementById("settingsModalContainer"));
+}
+
+const populateCoallitionSrc = () => {
+	const options = document.querySelectorAll(".coallitionOption");
+	console.log(options);
+	options.forEach(option => {
+		const image = option.querySelector("img");
+		const input = option.querySelector("input");
+		image.setAttribute("src", `/static/images/${input.value}Symbol.svg`);
+	});
 }
