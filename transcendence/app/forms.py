@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from api.imageValidation import validateFileType, validationImageSize
+from django.core.files import File
 
 from api.models import CustomUserData
 
@@ -80,6 +81,9 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['password1']
         )
         user.coallition = self.cleaned_data['coallition']
+        f = open("app/static/images/profileIconWhite.png", "rb")
+        djangoFile = File(f)
+        user.avatarImage = djangoFile
         user.save()
         return user
 
