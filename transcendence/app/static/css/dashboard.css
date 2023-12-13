@@ -4,10 +4,14 @@
 	border: none;
 	position: absolute;
 	top: 70%;
-	right: 30%
+	right: 30%;
+	transition: all 0.25s linear;
 }
 #changePictureButton:focus {
 	outline: none;
+}
+#changePictureButton:hover {
+	transform: scale(1.05);
 }
 #updateProfilePicture {
 	width: 25px;
