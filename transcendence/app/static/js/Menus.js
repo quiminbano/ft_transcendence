@@ -92,18 +92,6 @@ const searchMatchItem = async (src, name, parentDiv) => {
 	generator.appendFragment(fragment, parentDiv);
 }
 
-document.addEventListener("click", (e) => {
-	const friendsButton = document.getElementById("friendsMenuButton");
-	const friendsImage = document.getElementById("friendsIconButton");
-	const friendsMenu = document.getElementById("friendsDropdown");
-	if (e.target === friendsButton || e.target === friendsImage) {
-
-	} else {
-		if (!friendsMenu.contains(e.target))
-			collapseFriendsMenu();
-	}
-})
-
 const onClickFriendsButton = () => {
 	//GET THE REAL FRIENDS!!!!
 	const friends = fakeFriends; //CHANGE THIS TO REAL FRIENDS!!!!!
