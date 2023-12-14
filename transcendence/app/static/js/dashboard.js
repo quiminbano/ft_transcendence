@@ -2,14 +2,20 @@ const loadDashboard = () => {
 	const saveButton = document.querySelector("#saveUploadedPictureButton");
 	saveButton.style.display = "none";
 	const dragArea = document.querySelector(".dropArea");
-	const pElement = dragArea.querySelector("p");
-	const fileInput = dragArea.querySelector("input");
+	const fileInput = dragArea.querySelector("input[name='avatarImage']");
+	console.log(fileInput);
 	dragArea.addEventListener("click", () => {
 		fileInput.click();
-		fileInput.onchange = (e) => {
-			upload(e.target.files[0]);
-		}
 	})
+	fileInput.onchange = (e) => {
+		const image = e.target.files[0];
+		if (!isValidImage(image)) {
+			setDragAreaInvalid("Invalid file format");
+			return;
+		} else {
+			return uploadImage(image)
+		}
+	}
 	dragArea.addEventListener("dragover", (e) => {
 		e.preventDefault();
 		dragArea.classList.add("hover")
@@ -20,13 +26,10 @@ const loadDashboard = () => {
 	dragArea.addEventListener("drop", async (e) => {
 		e.preventDefault();
 		const image = e.dataTransfer.files[0];
-		const type = image.type;
-		if (type == "image/png" || type == "images/jpeg")
-			return uploadImage(image)
-		else {
-			pElement.innerHTML = "Invalid file format";
-			dragArea.setAttribute("class", "dropArea invalid");
-			return false;
+		if (!isValidImage(image)) {
+			setDragAreaInvalid("Invalid file format");
+		} else {
+			return uploadImage(image);
 		}
 	})
 	const uploadImage = (image) => {
@@ -46,7 +49,7 @@ const loadDashboard = () => {
 			fr.readAsArrayBuffer(image);
 		})
 		if (!isFile) {
-			pElement.textContent = "Error: something happened";
+			setDragAreaInvalid("Error: something happened");
 			throw new Error("Couldn't read the file");
 		}
 		pElement.innerHTML = "Added " + image.name;
@@ -65,42 +68,34 @@ const loadDashboard = () => {
 			saveButton.style.display = "none";
 		})
 	}
-
-	const savePicture = async (file) => {
-		const form = document.querySelector("#updatePictureForm");
-		const fd = new FormData(form);
-		fd.append("id_avatarImage", file);
-		pElement.textContent = "Uploading...";
-		const req = new XMLHttpRequest();
-		req.open("PUT", "/api/user");
-		const csrftoken = getCookie('csrftoken');
-		req.setRequestHeader("X-CSRFToken", csrftoken);
-		req.upload.addEventListener("progress", (e) => {
-			const progress = e.loaded / e.total;
-			pElement.textContent = (progress * 100).toFixed()+"%";
-			if (progress === 1) {
-				pElement.textContent = "Processing...";
-			}
-		})
-		req.addEventListener("load", () => {
-			if (req.status === 200) {
-				pElement.textContent = "Completed";
-				console.log("Image uploaded successfully");
-				dragArea.setAttribute("class", "dropArea");
-			} else {
-				pElement.textContent = "Upload failed. Please try again";
-				dragArea.setAttribute("class", "dropArea invalid");
-				console.log("Filed to upload image");
-			}
-		})
-		req.addEventListener("error", () => {
-			pElement.textContent = "Network error. Please try again";
-			dragArea.setAttribute("class", "dropArea invalid");
-			console.log("Filed to upload image");
-		})
-		req.send(fd);
-	}
 	loadMenus();
+}
+
+const savePicture = async (file) => {
+	const dragArea = document.querySelector(".dropArea");
+	const pElement = dragArea.querySelector("p");
+	const fd = new FormData();
+	pElement.textContent = "Uploading...";
+	fd.append("avatarImage", file);
+
+	try {
+		const config = {
+			method: "POST",
+			headers: {
+				"X-CSRFToken": getCookie('csrftoken'),
+			},
+			body: fd
+		}
+		const response = await fetch("/api/user", config);
+		if (response.ok) {
+			pElement.textContent = "Completed";
+			dragArea.setAttribute("class", "dropArea");
+		} else {
+			throw new Error("Failed to upload image");
+		}
+	} catch (error) {
+		setDragAreaInvalid("Upload failed. Please try again");
+	}
 }
 
 /****************** Modal Dashboard **********************/
@@ -108,10 +103,36 @@ const togglePictureModal = () => {
 	const modalContainer = document.querySelector(".ModalContainer");
 	modalContainer.classList.toggle("show");
 	if (!modalContainer.classList.contains("show")) {
-		const dragArea = document.querySelector(".dropArea");
-		const img = dragArea.querySelector("#previewUploadedImage");
-		img.style.display = "none";
+		resetDragArea();
 	}
 }
 
+const resetDragArea = () => {
+	const dragArea = document.querySelector(".dropArea");
+	const img = dragArea.querySelector("#previewUploadedImage");
+	const pElement = dragArea.querySelector("p");
+	const saveButton = document.querySelector("#saveUploadedPictureButton");
+	dragArea.setAttribute("class", "dropArea");
+	saveButton.style.display = "none";
+	img.style.display = "none";
+	pElement.textContent = "Drop the image here or click to upload it";
+}
+
+const setDragAreaInvalid = (message) => {
+	const dragArea = document.querySelector(".dropArea");
+	const pElement = dragArea.querySelector("p");
+	pElement.innerHTML = message;
+	dragArea.setAttribute("class", "dropArea invalid");
+}
+
+const isValidImage = (file) => {
+	const image = file;
+	if (!image) {
+		return false;
+	}
+	const type = image.type;
+	if (type == "image/png" || type == "images/jpeg")
+		return true;
+	return false;
+}
 

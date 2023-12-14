@@ -76,6 +76,8 @@
 	flex-direction: column;
 	margin-top: 3em;
 	z-index: 99;
+	padding: 5px;
+	position: relative;
 }
 .hover {
 	color: white;
@@ -88,10 +90,6 @@
 .invalid {
 	color: white;
 	border: 3px dashed red;
-}
-.dropArea {
-	padding: 5px;
-	position: relative;
 }
 
 .dropArea input {
@@ -121,4 +119,10 @@
 
 #hidden-file-input {
 	display: none;
+}
+.dropArea form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }

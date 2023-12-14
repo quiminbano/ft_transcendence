@@ -4,6 +4,7 @@
 		<h4>Change Picture</h4>
 		<div class="dropArea">
 			<form enctype="multipart/form-data" id="updatePictureForm">
+				{% csrf_token %}
 				<p>Drop the image here or click to upload it</p>
 				<img
 					id="previewUploadedImage"
