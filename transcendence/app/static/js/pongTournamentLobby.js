@@ -92,9 +92,14 @@ const addPlayer = (event) => {
 
 const startTournament = async () => {
 	await navigateTo(`${t.id}/start`);
-	bracket = new Modal(document.getElementById("bracketModal"));
+	bracket = new Modal(document.getElementById("bracketContent"));
 	const titleElement = document.getElementById("pongTournamentStartTitle");
 	titleElement.textContent = t.getName();
+	const templateName = `/getDoc/bracket${t.totalPlayers}`;
+	const fragment = new FragmentGenerator(templateName);
+	const html = await fragment.generateFragment();
+	const bracketDiv = document.getElementById("bracketContent");
+	fragment.appendFragment(html, bracketDiv);
 }
 
 const openTournamentBracketModal = () => {

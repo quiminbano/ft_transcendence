@@ -160,3 +160,9 @@ def invitedItemTemplate(request):
     return render(request, "PongTournamentPages/invitedItem.html", {})
 def youAreInvitedItemTemplate(request):
     return render(request, "PongTournamentPages/youAreInvitedItem.html", {})
+def bracketFourTemplate(request):
+    return render(request, "TournamentBrackets/tournamentBracket4.html", {})
+def bracketEightTemplate(request):
+    return render(request, "TournamentBrackets/tournamentBracket8.html", {})
+def bracketSixteenTemplate(request):
+    return render(request, "TournamentBrackets/tournamentBracket16.html", {})
