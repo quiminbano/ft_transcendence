@@ -20,7 +20,8 @@ def profilePicture(request):
         if form.is_valid():
             request.user.avatarImage = form.cleaned_data['avatarImage']
             request.user.save()
-            return JsonResponse({"success": "true", "message": "Avatar image updated sucessfully"}, status=200)
+            url = request.user.avatarImage.url if request.user.avatarImage else None
+            return JsonResponse({"avatar_url": url, "message": "Avatar image updated sucessfully"}, status=200)
         else:
             print("Invalid form");
             print(form.errors)

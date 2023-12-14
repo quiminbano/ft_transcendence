@@ -11,8 +11,11 @@ const loadMenus = () => {
 			search.focus();
 			search.setAttribute("placeholder", "Search for friends");
 		} else if (search.classList.contains("searchExpanded")) {
-			search.classList.remove("searchExpanded");
-			search.classList.add("search");
+			hideDropdown(document.getElementById("dropdownMenu"));
+			setTimeout(() => {
+				search.classList.remove("searchExpanded");
+				search.classList.add("search");
+			}, 250);
 		}
 	})
 	makeChart();
@@ -50,6 +53,7 @@ const hideDropdown = (element) => {
 	const inputField = document.getElementById("search");
 	inputField.style.borderBottomLeftRadius = "30px";
 	inputField.style.borderBottomRightRadius = "30px";
+	inputField.value = "";
 	element.classList.remove("dropdownExpanded");
 	element.classList.add("dropdownCollapsed");
 }

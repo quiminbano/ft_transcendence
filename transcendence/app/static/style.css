@@ -255,6 +255,10 @@ body *{
 	.coalitionArea p{
 		font-size: 8px;
 	}
+	#profilePicturesDiv {
+		width: 100px;
+		height: 100px;
+	}
 }
 
 
