@@ -64,6 +64,7 @@
 #changePictureBox *{
 	color: black;
 	font-family: PressStart;
+	text-align: center;
 }
 .dropArea {
 	height: 250px;
@@ -125,4 +126,28 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+}
+
+@media only screen and (max-width: 300px) {
+	#changePictureBox {
+		width: 95%;
+	}
+	.dropArea {
+		height: 200px;
+		width: 200px;
+	}
+}
+
+
+@media only screen and (min-width: 992px) {
+	#changePictureBox {
+		width: 50%;
+	}
+	#changePictureBox p {
+		font-size: 8px;
+	}
+	#previewUploadedImage {
+		display: none;
+		width: 75px;
+	}
 }
