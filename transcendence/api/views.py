@@ -62,8 +62,8 @@ def tournamentManagerPlayerID(request, id=None):
         match request.method:
             case "PUT":
                 return tournamentUpdatePlayer(request)
-            case "DELETE":
-                return deleteTournament(existing_tournament)
+            # case "DELETE":
+            #     return deleteTournament(existing_tournament)
             case _:
                 return unknownMethod()
     else:
