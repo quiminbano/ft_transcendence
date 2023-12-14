@@ -3,7 +3,6 @@ const loadDashboard = () => {
 	saveButton.style.display = "none";
 	const dragArea = document.querySelector(".dropArea");
 	const fileInput = dragArea.querySelector("input[name='avatarImage']");
-	console.log(fileInput);
 	dragArea.addEventListener("click", () => {
 		fileInput.click();
 	})

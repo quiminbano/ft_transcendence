@@ -93,14 +93,9 @@ const searchMatchItem = async (src, name, parentDiv) => {
 }
 
 const onClickFriendsButton = () => {
-	//GET THE REAL FRIENDS!!!!
-	const friends = fakeFriends; //CHANGE THIS TO REAL FRIENDS!!!!!
 	const friendsDropdown = document.getElementById("friendsDropdown");
 	if (friendsDropdown.classList.contains("friendsDropdownCollapsed")) {
-		friendsDropdown.classList.remove("friendsDropdownCollapsed");
-		friendsDropdown.classList.add("friendsDropdownExpanded");
-		const parentDiv = document.getElementById("friendsDropdown");
-		displayDropdownElements(friends, parentDiv);
+		showFriendsMenu();
 	} else if (friendsDropdown.classList.contains("friendsDropdownExpanded")) {
 		collapseFriendsMenu();
 	}
@@ -110,4 +105,28 @@ const collapseFriendsMenu = () => {
 	const friendsDropdown = document.getElementById("friendsDropdown");
 	friendsDropdown.classList.remove("friendsDropdownExpanded");
 	friendsDropdown.classList.add("friendsDropdownCollapsed");
+	document.removeEventListener("click", closeFriendsMenuEventHandler);
+}
+
+
+
+const showFriendsMenu = () => {
+	//GET THE REAL FRIENDS!!!!
+	const friends = fakeFriends; //CHANGE THIS TO REAL FRIENDS!!!!!
+	document.addEventListener("click", closeFriendsMenuEventHandler);
+	const friendsDropdown = document.getElementById("friendsDropdown");
+	friendsDropdown.classList.remove("friendsDropdownCollapsed");
+	friendsDropdown.classList.add("friendsDropdownExpanded");
+	const parentDiv = document.getElementById("friendsDropdown");
+	displayDropdownElements(friends, parentDiv);
+}
+
+const closeFriendsMenuEventHandler = (e) => {
+	const friendsMenuArea = document.getElementById("friendsDropdown");
+	if (friendsMenuArea.contains(e.target)) return;
+	const friendsButton = document.getElementById("friendsMenuButton");
+	const friendsImage = document.getElementById("friendsIconButton");
+	if (!(e.target === friendsButton || e.target === friendsImage)) {
+		collapseFriendsMenu();
+	}
 }
