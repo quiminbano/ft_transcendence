@@ -1,0 +1,54 @@
+#friendsPageContainer {
+	min-height: 100vh;
+	width: 100vw;
+	background-image: url(https://icbstexas.com/wp-content/uploads/split-color-background.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.friendsBox {
+	width: 100%;
+	border: 3px solid black;
+	border-radius: 10px;
+	background-color: whitesmoke;
+	padding: 20px 10px;
+}
+.friendsBox * {
+	font-family: PressStart;
+}
+
+.personalDiv {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	overflow-x: visible;
+}
+.personalDiv {
+	flex-direction: column;
+}
+#personalDivPicDiv,
+#friendAvatar {
+	width: 150px;
+	height: 150px;
+}
+#personalDivPicDiv {
+	position: relative;
+	overflow: visible;
+}
+#friendAvatar {
+	position: absolute;
+}
+.personalDiv p {
+	font-size: 14px;
+}
+#friendCoallitionLogo {
+	position: absolute;
+	top: 10%;
+	left: 100%;
+	margin-left: 10px;
+	width: 30px;
+}
+
+.friendButton {
+	margin: 5px auto;
+	font-size: 12px !important;
+}

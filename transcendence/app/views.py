@@ -145,6 +145,17 @@ def pongTournamentStart(request, id):
         context = {"content": "PongTournamentPages/tournamentStart.html"}
         return render(request, "index.html", context)
 
+def friendsPage(request, id):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {
+			"content": "friendsPage.html"
+		}
+        return render(request, "index.html", context)
+
+
+
 def getRegisterPlayersTemplate(request):
     return render(request, "registeredPlayers.html", {})
 
