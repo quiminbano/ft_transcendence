@@ -84,13 +84,13 @@ def settings(request):
         data = json.loads(request.body)
         form = ChangeProfile(data)
         if form.is_valid():
-            if form.isPasswordValid(request.user) == False:
-                return JsonResponse({"message": "Failed to update profile", "errors": {"password3": "Invalid password"}}, status=400)
-            form.save(request.user)
-            print("Update successful")
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-            login(request, user)
-            return JsonResponse({"message": "profile updated successfuly"}, status=200)
+            passwordValidation, response = form.isPasswordValid(request.user)
+            if passwordValidation == True:
+                form.save(request.user)
+                print("Update successful")
+                user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+                login(request, user)
+            return response
         else:
             errors = {field: form.errors[field][0] for field in form.errors}
             return JsonResponse({"message": "Failed to update profile", "errors": errors}, status=400)

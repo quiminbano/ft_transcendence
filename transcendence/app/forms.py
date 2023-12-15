@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from api.imageValidation import validateFileType, validationImageSize
+from django.core.files import File
+from django.http import JsonResponse
 
 from api.models import CustomUserData
 
@@ -62,7 +64,7 @@ class SignupForm(CustomUserCreationForm):
         email = self.cleaned_data['email'].lower()
         new = CustomUserData.objects.filter(email=email)
         if new.count():
-            raise ValidationError(" Email Already Exist")
+            raise ValidationError("Email Already Exist")
         return email
 
     def clean_password2(self):
@@ -80,6 +82,10 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['password1']
         )
         user.coallition = self.cleaned_data['coallition']
+        f = open("app/static/images/profileIconWhite.png", "rb")
+        djangoFile = File(f)
+        user.avatarImage = djangoFile
+        user.full_clean()
         user.save()
         return user
 
@@ -121,11 +127,11 @@ class ChangeProfile(forms.Form):
     def isPasswordValid(self, userModel : CustomUserData):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             print("password1 and password2 does not match")
-            return False
+            return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password2": "Passwords doesn't match"}}, status=400)
         if check_password(self.cleaned_data['password3'], userModel.password) == False:
             print("Password provided does not match with the original one")
-            return False
-        return True
+            return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password3": "Invalid password"}}, status=400)
+        return True, JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
 
     def save(self, userModel : CustomUserData):
         userModel.username = self.cleaned_data['username']
