@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-10 offset-1 col-md-8 offset-md-2 settingsBox">
 			<h2>Edit profile</h2>
-			<form onsubmit="handleChangeProfile(event)" method="post" action="{% url 'settings' %}">
+			<form onsubmit="handleChangeProfile(event)" method="put" action="{% url 'settings' %}">
 				{% csrf_token %}
 				{% for field in form %}
 					{% if field.name != "password3" %}

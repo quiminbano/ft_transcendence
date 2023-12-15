@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignupForm, LoginForm, ChangeProfile
+from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
 import json
 
@@ -71,27 +71,29 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
     coallition = request.user.get_coallition()
-    print(request.user.get_coallition())
-    context = { "content": "dashboard.html", "coallition": coallition}
+    form = ProfilePicture()
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form}
     return render(request, "index.html", context)
 
 #@login_required(login_url="/login")
 def settings(request):
     if not request.user.is_authenticated:
        return loginUser(request)
-    if request.method == 'POST':
+    if request.method == 'PUT':
+        print("Comimg here")
         data = json.loads(request.body)
         form = ChangeProfile(data)
         if form.is_valid():
-            if form.isPasswordValid(request.user) == False:
-                return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
-            form.save(request.user)
-            print("Update successful")
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-            login(request, user)
-            return JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
+            passwordValidation, response = form.isPasswordValid(request.user)
+            if passwordValidation == True:
+                form.save(request.user)
+                print("Update successful")
+                user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+                login(request, user)
+            return response
         else:
-            return JsonResponse({"success": "false", "message": "Failed to update profile"}, status=400)
+            errors = {field: form.errors[field][0] for field in form.errors}
+            return JsonResponse({"success": "false", "message": "Failed to update profile", "errors": errors}, status=400)
     else:
         form = ChangeProfile(initial={
             'username': request.user.username,

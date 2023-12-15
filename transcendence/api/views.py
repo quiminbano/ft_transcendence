@@ -2,10 +2,42 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .models import Tournament, Players, CustomUserData
+from app.forms import ProfilePicture
+from app.views import loginUser
+from django.shortcuts import render
 import json
 
 
+#==========================================
+#          Profile Picture
+#==========================================
 
+def profilePicture(request):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    if request.method == 'PUT':
+        data = json.loads(request.body)
+        form = ProfilePicture(data)
+        print("This is the form:", form)
+        print("This is data:", data)
+        if form.is_valid():
+            request.user.avatarImage = form.cleaned_data['avatarImage']
+            request.user.save()
+            return JsonResponse({"success": "true", "message": "Avatar image updated sucessfully"}, status=200)
+        else:
+            return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
+    else:
+        if request.user.avatarImage == None:
+            form = ProfilePicture()
+        else:
+            form = ProfilePicture(initial={
+                'avatarImage' : request.user.avatarImage,
+            })
+    context = {
+        "form": form,
+        "content": "dashboard.html"
+    }
+    return render(request, 'index.html', context)
 
 #==========================================
 #       Tournament Player Management
