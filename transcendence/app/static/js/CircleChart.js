@@ -92,4 +92,8 @@ class CircleChart {
     }
     setSpeed(speed) { this.speed = speed; }
     setDelay(delay) { this.speed = delay; }
+    setTextColor(color) {
+        const text = this.fragment.querySelector("text");
+        text.style.fill = color;
+    }
 }
