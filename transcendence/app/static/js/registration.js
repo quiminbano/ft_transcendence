@@ -77,8 +77,6 @@ const submitSignup = async event => {
 		navigateTo("login");
 	}
 	else {
-		console.log("Failed to create user");
-		console.log(result);
 		if (result.errors)
 			handleErrors(result.errors);
 	}
@@ -126,11 +124,13 @@ const handleChangeProfile = async (event) => {
 	}
 	showLoadingSpinner();
 	const response = await putRequest(url, data);
-	console.log(response);
 	if (response.succeded)
 		navigateTo("/");
-	//const json = await JSON.parse(response);
-	//console.log(json);
+	else {
+		console.log(response);
+		const errorField = document.getElementById("invalidPassword3");
+		handleError(errorField, response.errors.password3);
+	}
 	hideLoadingSpinner();
 }
 
@@ -147,7 +147,6 @@ const loadSettings = () => {
 
 const populateCoallitionSrc = () => {
 	const options = document.querySelectorAll(".coallitionOption");
-	console.log(options);
 	options.forEach(option => {
 		const image = option.querySelector("img");
 		const input = option.querySelector("input");
