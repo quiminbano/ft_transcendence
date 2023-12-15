@@ -128,10 +128,18 @@ const handleChangeProfile = async (event) => {
 	if (response.succeded)
 		navigateTo("/");
 	else {
-		const errorField = document.getElementById("invalidPassword3");
-		handleError(errorField, response.errors.password3);
+		handleUpdateErrors(response.errors);
 	}
 	hideLoadingSpinner();
+}
+
+const handleUpdateErrors = (errors) => {
+	if (!errors) return;
+	const errorPassword3Field = document.getElementById("invalidPassword3");
+	if (errors["password2"])
+		handleError(errorPassword3Field, errors["password2"]);
+	else if (errors["password3"])
+		handleError(errorPassword3Field, errors["password3"]);
 }
 
 const openSettingsModal = () => {
