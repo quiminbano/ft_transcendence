@@ -73,7 +73,6 @@ const submitSignup = async event => {
 	const result = await postRequest(url, data);
 	const success = result.success === "true";
 	if (success) {
-		console.log("User created successfully");
 		navigateTo("login");
 	}
 	else {
@@ -100,7 +99,6 @@ const logoutUser = async () => {
 }
 
 const handleChangeProfile = async (event) => {
-	console.log("Coming here!!")
 	event.preventDefault();
 	const url = event.target.action;
 	const formData = new FormData(event.target);
@@ -124,7 +122,6 @@ const handleChangeProfile = async (event) => {
 	}
 	showLoadingSpinner();
 	const response = await putRequest(url, data);
-	console.log(response.errors);
 	if (response.succeded)
 		navigateTo("/");
 	else {
