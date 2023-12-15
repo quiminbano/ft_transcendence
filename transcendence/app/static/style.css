@@ -158,10 +158,12 @@ body *{
 }
 
 .signupErrorMessage {
+	display: none;
 	background-color: red;
 	font-family: PressStart;
 	text-align: center;
 	font-size:0.75rem;
+	padding: 5px 8px;
 }
 
 /* Spinner */
