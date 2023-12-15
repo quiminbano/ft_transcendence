@@ -16,7 +16,7 @@ urlpatterns = [
     path("pong/tournament/<int:id>/start", views.pongTournamentStart, name="pongTournamentStart"),
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
-	path("friends/<int:id>", views.friendsPage, name="friendsPage"),
+	path("friends/<str:name>", views.friendsPage, name="friendsPage"),
 
 	path("getDoc/registerPlayer", views.getRegisterPlayersTemplate, name="registerPlayerTemplate"),
 	path("getDoc/circleChart", views.getCircleChartTemplate, name="circleChartTemplate"),

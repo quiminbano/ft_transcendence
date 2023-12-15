@@ -77,16 +77,16 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
-		matches.forEach((match, i) => searchMatchItem(match.src || "/static/images/profileIcon.png", i, match.name || match, parentDiv));
+		matches.forEach(match => searchMatchItem(match.src || "/static/images/profileIcon.png", match.name || match, parentDiv));
 		// CHANGE THIS TO TAKE A USER ID!! NEED TO GET IT FROM MATCHES!!!!!
 	}
 }
 
-const searchMatchItem = async (src, id, name, parentDiv) => {
+const searchMatchItem = async (src, name, parentDiv) => {
 	const fragment = await generator.generateFragment();
 	const itemDiv = fragment.querySelector(".searchItem");
 	itemDiv.setAttribute("data-id", id);
-	itemDiv.addEventListener("click", () => navigateTo('/friends/' + id));
+	itemDiv.addEventListener("click", () => navigateTo('/friends/' + name));
 	const picture = fragment.querySelector("#searchItemPicture");
 	if (picture) {
 		picture.setAttribute("src", src);
