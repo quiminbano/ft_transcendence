@@ -105,10 +105,15 @@ const savePicture = async (file) => {
 /****************** Modal Dashboard **********************/
 const togglePictureModal = () => {
 	const modalContainer = document.querySelector(".ModalContainer");
-	modalContainer.classList.toggle("show");
+	toggleModal();
 	if (!modalContainer.classList.contains("show")) {
 		resetDragArea();
 	}
+}
+
+const toggleModal = () => {
+	const modalContainer = document.querySelector(".ModalContainer");
+	modalContainer.classList.toggle("show");
 }
 
 const resetDragArea = () => {
