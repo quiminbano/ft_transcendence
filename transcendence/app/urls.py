@@ -23,7 +23,9 @@ urlpatterns = [
     path("getDoc/invitationItemTemplate", views.invitationItemTemplate, name="invitationItemTemplate"),
 	path("getDoc/invitedItemTemplate", views.invitedItemTemplate, name="invitedItemTemplate"),
 	path("getDoc/youAreInvitedItem", views.youAreInvitedItemTemplate, name="youAreInvitedItemTemplate"),
-
+    path("getDoc/bracket4", views.bracketFourTemplate, name="bracket4Template"),
+    path("getDoc/bracket8", views.bracketEightTemplate, name="bracket8Template"),
+    path("getDoc/bracket16", views.bracketSixteenTemplate, name="bracket16Template"),
     re_path(r'^.*$', views.index, name='catch_all'),
     path("", views.index, name="index"),
 ]

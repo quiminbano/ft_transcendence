@@ -81,7 +81,7 @@
 }
 
 #menuHamburger {
-    position: absolute;
+    position: fixed;
     top: 25px;
     margin: auto;
     display: flex;

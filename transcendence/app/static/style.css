@@ -212,11 +212,20 @@ body *{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+#profilePicturesDiv {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	position: relative;
+	overflow: visible;
+}
 
 #dashboardUserProfilePic {
-	max-width: 150px;
-	max-height: 150px;
-	width: 80%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
 	border-radius: 50%;
 }
 #dashboardUserCoalitionPic {
@@ -245,6 +254,10 @@ body *{
 @media only screen and (max-width: 576px) {
 	.coalitionArea p{
 		font-size: 8px;
+	}
+	#profilePicturesDiv {
+		width: 100px;
+		height: 100px;
 	}
 }
 
@@ -298,13 +311,17 @@ body *{
 	align-items: center;
 }
 
+#settingsModalContainer * {
+	font-family: PressStart;
+	color: black;
+}
+
 #confirmationBox {
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
 	border: 2px solid black;
 	border-radius: 10px;
 	background-color: rgb(223, 231, 238);

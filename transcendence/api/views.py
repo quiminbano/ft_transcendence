@@ -15,16 +15,16 @@ import json
 def profilePicture(request):
     if not request.user.is_authenticated:
         return loginUser(request)
-    if request.method == 'PUT':
-        data = json.loads(request.body)
-        form = ProfilePicture(data)
-        print("This is the form:", form)
-        print("This is data:", data)
+    if request.method == 'POST':
+        form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():
             request.user.avatarImage = form.cleaned_data['avatarImage']
             request.user.save()
-            return JsonResponse({"success": "true", "message": "Avatar image updated sucessfully"}, status=200)
+            url = request.user.avatarImage.url if request.user.avatarImage else None
+            return JsonResponse({"avatar_url": url, "message": "Avatar image updated sucessfully"}, status=200)
         else:
+            print("Invalid form");
+            print(form.errors)
             return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
     else:
         if request.user.avatarImage == None:
