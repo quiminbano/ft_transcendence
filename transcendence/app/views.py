@@ -72,7 +72,8 @@ def dashboard(request):
         return loginUser(request)
     coallition = request.user.get_coallition()
     form = ProfilePicture()
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form}
+    path = "/app/api" + request.user.avatarImage.url
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "path" : path}
     return render(request, "index.html", context)
 
 #@login_required(login_url="/login")
