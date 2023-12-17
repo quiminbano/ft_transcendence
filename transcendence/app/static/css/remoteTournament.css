@@ -5,3 +5,19 @@
     background-color: white;
     padding: 50px 40px;
 }
+
+#serverListTitle {
+    margin-bottom: 30px;
+}
+
+.joinServerTitles {
+    color: gray;
+    font-size: 10px;
+}
+.openGamesList > * {
+    margin: 10px auto;
+}
+.openGamesList button,
+.openGamesList * {
+    font-size: 12px;
+}
