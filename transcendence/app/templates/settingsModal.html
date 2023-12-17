@@ -3,6 +3,7 @@
 	<div id="confirmationBox">
 		<p>Are you sure you want to save the new changes?</p>
 		<label for="{{ form.username.id_for_label}}" class="loginLabel">{{form.password3.label}}</label>
+		<p class="signupErrorMessage" id="invalidPassword3"></p>
 		{{form.password3}}
 		<button
 			class="btn btn-success w-100 mt-2"

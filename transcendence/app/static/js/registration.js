@@ -73,12 +73,9 @@ const submitSignup = async event => {
 	const result = await postRequest(url, data);
 	const success = result.success === "true";
 	if (success) {
-		console.log("User created successfully");
 		navigateTo("login");
 	}
 	else {
-		console.log("Failed to create user");
-		console.log(result);
 		if (result.errors)
 			handleErrors(result.errors);
 	}
@@ -102,7 +99,6 @@ const logoutUser = async () => {
 }
 
 const handleChangeProfile = async (event) => {
-	console.log("Coming here!!")
 	event.preventDefault();
 	const url = event.target.action;
 	const formData = new FormData(event.target);
@@ -126,16 +122,48 @@ const handleChangeProfile = async (event) => {
 	}
 	showLoadingSpinner();
 	const response = await putRequest(url, data);
-	console.log(response);
 	if (response.succeded)
 		navigateTo("/");
-	//const json = await JSON.parse(response);
-	//console.log(json);
+	else {
+		handleUpdateErrors(response.errors);
+	}
 	hideLoadingSpinner();
 }
 
+const handleUpdateErrors = (errors) => {
+	if (!errors) return;
+	const errorPassword3Field = document.getElementById("invalidPassword3");
+	if (errors["password2"])
+		handleError(errorPassword3Field, errors["password2"]);
+	else if (errors["password3"])
+		handleError(errorPassword3Field, errors["password3"]);
+}
+
 const openSettingsModal = () => {
-	settingsModal.open();
+	const usernameField = document.getElementById("id_username");
+
+	try {
+		isUsernameValid(usernameField.value);
+		const password3 = document.getElementById("id_password3");
+		password3.focus();
+		password3.value = "";
+		const errorFields = document.querySelectorAll(".signupErrorMessage");
+		errorFields.forEach(field => field.style.display = "none");
+		settingsModal.open();
+
+	} catch (error) {
+		const usernameErrorField = document.getElementById("invalidUpdateUsername");
+		handleError(usernameErrorField, error.message);
+		return;
+	}
+}
+const isUsernameValid = (username) => {
+	if (username.length <= 0) {
+		throw new Error("Username field is required");
+	}
+	const MIN_USERNAME_LENGTH = 5;
+	if (username.length < MIN_USERNAME_LENGTH)
+		throw new Error("Username must be at least 5 characters");
 }
 const closeSettingsModal = () => {
 	settingsModal.close();
@@ -147,7 +175,6 @@ const loadSettings = () => {
 
 const populateCoallitionSrc = () => {
 	const options = document.querySelectorAll(".coallitionOption");
-	console.log(options);
 	options.forEach(option => {
 		const image = option.querySelector("img");
 		const input = option.querySelector("input");

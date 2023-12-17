@@ -93,7 +93,7 @@ def settings(request):
             return response
         else:
             errors = {field: form.errors[field][0] for field in form.errors}
-            return JsonResponse({"success": "false", "message": "Failed to update profile", "errors": errors}, status=400)
+            return JsonResponse({"message": "Failed to update profile", "errors": errors}, status=400)
     else:
         form = ChangeProfile(initial={
             'username': request.user.username,
