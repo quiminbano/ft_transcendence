@@ -154,6 +154,15 @@ def usersPage(request, name):
 		}
         return render(request, "index.html", context)
 
+def remoteTournament(request):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {
+			"content": "PongTournamentPages/remoteStart.html"
+		}
+        return render(request, "index.html", context)
+
 
 
 def getRegisterPlayersTemplate(request):

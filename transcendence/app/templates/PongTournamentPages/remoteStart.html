@@ -1,0 +1,41 @@
+<div class="container-fluid" id="pongTournamentStart">
+    <div class="blackOverlay"></div>
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="invitationBox">
+                <div class="row">
+                    <div class="col-12" style="overflow-x: visible;">
+                        <div class="tabButtonsDiv">
+                            <button class="tabButton">Create</button>
+                            <button class="tabButton">Join</button>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="tabContentDiv">
+                            <div class="tabContent">
+                                <div class="row">
+                                    <div class="col-12 mt-4">
+                                        <h4>Create new tournament</h4>
+                                        {% include "PongTournamentPages/remoteTournamentForm.html" %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tabContent">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>Join existing tournament</h4>
+                                        Show opened tournament
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-danger" id="cancelInvitationPageButton" onclick="navigateTo('/pong')">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
