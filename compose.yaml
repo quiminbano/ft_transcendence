@@ -13,6 +13,7 @@ services:
     volumes:
       - ./transcendence/app:/app/app
       - ./transcendence/api:/app/api
+      - ./transcendence/api/static/user:/var/www/transcendence/static/user
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}

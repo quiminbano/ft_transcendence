@@ -134,5 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # apply our custom user model onto the django database
 AUTH_USER_MODEL = 'api.CustomUserData'
 
-MEDIA_ROOT = '/app/api/media'
-MEDIA_URL = 'media/'
+MEDIA_ROOT = '/var/www/transcendence/static/user'
+MEDIA_URL = 'user/'
