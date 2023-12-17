@@ -73,7 +73,6 @@ const submitSignup = async event => {
 	const result = await postRequest(url, data);
 	const success = result.success === "true";
 	if (success) {
-		console.log("User created successfully");
 		navigateTo("login");
 	}
 	else {
@@ -100,7 +99,6 @@ const logoutUser = async () => {
 }
 
 const handleChangeProfile = async (event) => {
-	console.log("Coming here!!")
 	event.preventDefault();
 	const url = event.target.action;
 	const formData = new FormData(event.target);
@@ -124,14 +122,21 @@ const handleChangeProfile = async (event) => {
 	}
 	showLoadingSpinner();
 	const response = await putRequest(url, data);
-	console.log(response.errors);
 	if (response.succeded)
 		navigateTo("/");
 	else {
-		const errorField = document.getElementById("invalidPassword3");
-		handleError(errorField, response.errors.password3);
+		handleUpdateErrors(response.errors);
 	}
 	hideLoadingSpinner();
+}
+
+const handleUpdateErrors = (errors) => {
+	if (!errors) return;
+	const errorPassword3Field = document.getElementById("invalidPassword3");
+	if (errors["password2"])
+		handleError(errorPassword3Field, errors["password2"]);
+	else if (errors["password3"])
+		handleError(errorPassword3Field, errors["password3"]);
 }
 
 const openSettingsModal = () => {
