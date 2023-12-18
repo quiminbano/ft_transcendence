@@ -1,10 +1,11 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, QueryDict
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .models import Tournament, Players, CustomUserData
 from app.forms import ProfilePicture
 from app.views import loginUser
 from django.shortcuts import render
+from app.utils import stringifyImage
 import json
 
 
@@ -18,25 +19,20 @@ def profilePicture(request):
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():
+<<<<<<< HEAD
             print(form.cleaned_data['avatarImage'])
             request.user.avatarImage = form.cleaned_data['avatarImage']
             request.user.save()
             url = request.user.avatarImage.url if request.user.avatarImage else None
             return JsonResponse({"avatar_url": url, "message": "Avatar image updated sucessfully"}, status=200)
+=======
+            form.save(request.user)
+            source = stringifyImage(request.user)
+            return JsonResponse({"source": source, "message": "Avatar image updated sucessfully"}, status=200)
+>>>>>>> 90033b0a1604d5b5535ff49cda11f0979e63a1cc
         else:
             return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
-    else:
-        if request.user.avatarImage == None:
-            form = ProfilePicture()
-        else:
-            form = ProfilePicture(initial={
-                'avatarImage' : request.user.avatarImage,
-            })
-    context = {
-        "form": form,
-        "content": "dashboard.html"
-    }
-    return render(request, 'index.html', context)
+    return JsonResponse({"success": "false", "message": "Accessing to an API route, not allowed"}, status=400)
 
 #==========================================
 #       Tournament Player Management

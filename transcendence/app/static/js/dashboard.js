@@ -144,7 +144,7 @@ const isValidImage = (file) => {
 		return false;
 	}
 	const type = image.type;
-	if (type == "image/png" || type == "images/jpeg")
+	if (type == "image/png" || type == "image/jpeg")
 		return true;
 	return false;
 }

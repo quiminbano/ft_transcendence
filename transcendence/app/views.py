@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
 import json
+from .utils import stringifyImage
 
 def status_404(request):
     context = {}
@@ -72,7 +73,8 @@ def dashboard(request):
         return loginUser(request)
     coallition = request.user.get_coallition()
     form = ProfilePicture()
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form}
+    source = stringifyImage(request.user)
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source}
     return render(request, "index.html", context)
 
 #@login_required(login_url="/login")
