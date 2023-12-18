@@ -76,7 +76,6 @@ const savePicture = async (file) => {
 	const fd = new FormData();
 	pElement.textContent = "Uploading...";
 	fd.append("avatarImage", file);
-	console.log("This is the content of fd: ", fd);
 	try {
 		const config = {
 			method: "POST",
