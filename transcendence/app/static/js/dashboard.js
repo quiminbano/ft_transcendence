@@ -76,7 +76,6 @@ const savePicture = async (file) => {
 	const fd = new FormData();
 	pElement.textContent = "Uploading...";
 	fd.append("avatarImage", file);
-
 	try {
 		const config = {
 			method: "POST",
@@ -140,7 +139,7 @@ const isValidImage = (file) => {
 		return false;
 	}
 	const type = image.type;
-	if (type == "image/png" || type == "images/jpeg")
+	if (type == "image/png" || type == "image/jpeg")
 		return true;
 	return false;
 }

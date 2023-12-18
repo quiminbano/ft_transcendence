@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
+from django.core.files.storage import default_storage
 from api.imageValidation import validateFileType, validationImageSize
 from django.core.files import File
 from django.http import JsonResponse
@@ -105,13 +106,13 @@ class ChangeProfile(forms.Form):
         required=False
         )
     password1 = forms.CharField(
-        label="Password",
+        label="New password",
         widget=forms.PasswordInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False
     )
     password2 = forms.CharField(
-        label="Confirm password",
+        label="Confirm new password",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False
     )
@@ -127,10 +128,10 @@ class ChangeProfile(forms.Form):
     def isPasswordValid(self, userModel : CustomUserData):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             print("password1 and password2 does not match")
-            return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password2": "Passwords doesn't match"}}, status=400)
+            return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password2": "New passwords don't match"}}, status=400)
         if check_password(self.cleaned_data['password3'], userModel.password) == False:
             print("Password provided does not match with the original one")
-            return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password3": "Invalid password"}}, status=400)
+            return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password3": "Your current password is not correct"}}, status=400)
         return True, JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
 
     def save(self, userModel : CustomUserData):
@@ -146,3 +147,12 @@ class ChangeProfile(forms.Form):
 class ProfilePicture(forms.Form):
 
     avatarImage = forms.FileField(validators=[validationImageSize, validateFileType])
+
+    def save(self, userModel : CustomUserData):
+        if userModel.avatarImage:
+            if default_storage.exists(userModel.avatarImage.name):
+                default_storage.delete(userModel.avatarImage.name)
+        userModel.avatarImage = self.cleaned_data['avatarImage']
+        userModel.full_clean()
+        userModel.save()
+

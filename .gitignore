@@ -425,6 +425,6 @@ yarn-debug.log*
 yarn-error.log*
 
 auth.py
-**/migrations/
+migrations/
 __tests__
 *.test.js
