@@ -145,6 +145,26 @@ def pongTournamentStart(request, id):
         context = {"content": "PongTournamentPages/tournamentStart.html"}
         return render(request, "index.html", context)
 
+def usersPage(request, name):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {
+			"content": "usersPage.html"
+		}
+        return render(request, "index.html", context)
+
+def remoteTournament(request):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {
+			"content": "PongTournamentPages/remoteStart.html"
+		}
+        return render(request, "index.html", context)
+
+
+
 def getRegisterPlayersTemplate(request):
     return render(request, "registeredPlayers.html", {})
 

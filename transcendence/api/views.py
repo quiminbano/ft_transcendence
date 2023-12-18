@@ -23,7 +23,7 @@ def profilePicture(request):
             url = request.user.avatarImage.url if request.user.avatarImage else None
             return JsonResponse({"avatar_url": url, "message": "Avatar image updated sucessfully"}, status=200)
         else:
-            print("Invalid form");
+            print("Invalid form")
             print(form.errors)
             return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
     else:

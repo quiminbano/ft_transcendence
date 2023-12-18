@@ -87,6 +87,11 @@ const savePicture = async (file) => {
 		}
 		const response = await fetch("/api/user", config);
 		if (response.ok) {
+			const data = await response.json();
+			const profilePicture = document.getElementById("dashboardUserProfilePic");
+			const url = `/app/api${data.avatar_url}`;
+			console.log(url);
+			profilePicture.setAttribute("src", url);
 			pElement.textContent = "Completed";
 			dragArea.setAttribute("class", "dropArea");
 		} else {
@@ -100,10 +105,15 @@ const savePicture = async (file) => {
 /****************** Modal Dashboard **********************/
 const togglePictureModal = () => {
 	const modalContainer = document.querySelector(".ModalContainer");
-	modalContainer.classList.toggle("show");
+	toggleModal();
 	if (!modalContainer.classList.contains("show")) {
 		resetDragArea();
 	}
+}
+
+const toggleModal = () => {
+	const modalContainer = document.querySelector(".ModalContainer");
+	modalContainer.classList.toggle("show");
 }
 
 const resetDragArea = () => {

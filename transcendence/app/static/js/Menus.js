@@ -78,11 +78,15 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		parentDiv.appendChild(noMatches);
 	} else {
 		matches.forEach(match => searchMatchItem(match.src || "/static/images/profileIcon.png", match.name || match, parentDiv));
+		// CHANGE THIS TO TAKE A USER ID!! NEED TO GET IT FROM MATCHES!!!!!
 	}
 }
 
 const searchMatchItem = async (src, name, parentDiv) => {
 	const fragment = await generator.generateFragment();
+	const itemDiv = fragment.querySelector(".searchItem");
+	itemDiv.setAttribute("data-id", name);
+	itemDiv.addEventListener("click", () => navigateTo('/users/' + name));
 	const picture = fragment.querySelector("#searchItemPicture");
 	if (picture) {
 		picture.setAttribute("src", src);

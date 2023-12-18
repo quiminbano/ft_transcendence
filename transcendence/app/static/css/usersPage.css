@@ -1,0 +1,93 @@
+#friendsPageContainer {
+	min-height: 100vh;
+	width: 100vw;
+	background-image: url(https://icbstexas.com/wp-content/uploads/split-color-background.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.friendsBox {
+	width: 100%;
+	border: 3px solid black;
+	border-radius: 10px;
+	background-color: whitesmoke;
+	padding: 20px 10px;
+}
+.friendInfoBox {
+	padding: 20px 15px;
+}
+.friendsBox * {
+	font-family: PressStart;
+}
+
+.personalDiv {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	overflow-x: visible;
+}
+.personalDiv {
+	flex-direction: column;
+}
+#personalDivPicDiv,
+#friendAvatar {
+	width: 150px;
+	height: 150px;
+}
+#personalDivPicDiv {
+	position: relative;
+	overflow: visible;
+}
+#friendAvatar {
+	position: absolute;
+}
+.personalDiv p {
+	font-size: 14px;
+}
+#friendCoallitionLogo {
+	position: absolute;
+	top: 10%;
+	left: 100%;
+	margin-left: 10px;
+	width: 30px;
+}
+
+.friendButton {
+	margin: 5px auto;
+	font-size: 12px !important;
+}
+
+#userOnlineStatus {
+	font-size: 10px;
+	display: inline-block;
+}
+#userOnlineStatus span {
+	width: 8px;
+	height: 8px;
+	background-color: green;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right: 5px;
+	top: -2px;
+	position: relative;
+}
+
+.friendsIndividualStat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 5px;
+}
+
+.friendsIndividualStatTitle {
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 2px;
+}
+.friendsIndividualStatValue {
+	margin-top: 2px;
+	font-size: 10px;
+	border-radius: 2px;
+	padding: 3px 10px;
+	background-color: lightblue;
+}
