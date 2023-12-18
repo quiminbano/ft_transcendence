@@ -428,4 +428,4 @@ auth.py
 migrations/
 __tests__
 *.test.js
-media/*
+api/user/*

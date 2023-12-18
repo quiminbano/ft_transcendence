@@ -14,6 +14,7 @@ const loadDashboard = () => {
 		fileInput.click();
 	})
 	fileInput.onchange = (e) => {
+		clearFiles();
 		const image = e.target.files[0];
 		files.push(image);
 		if (!isValidImage(files[0])) {
@@ -32,6 +33,7 @@ const loadDashboard = () => {
 	})
 	dragArea.addEventListener("drop", async (e) => {
 		e.preventDefault();
+		clearFiles();
 		const image = e.dataTransfer.files[0];
 		files.push(image);
 		if (!isValidImage(files[0])) {
@@ -78,9 +80,8 @@ const savePicture = async (file) => {
 	const pElement = dragArea.querySelector("p");
 	const fd = new FormData();
 	pElement.textContent = "Uploading...";
-	fd.set("avatarImage", file);
-	while(files.length > 0)
-		files.pop();
+	fd.append("avatarImage", file);
+
 	try {
 		const config = {
 			method: "POST",
@@ -93,11 +94,10 @@ const savePicture = async (file) => {
 		if (response.ok) {
 			const data = await response.json();
 			const profilePicture = document.getElementById("dashboardUserProfilePic");
-			const url = `/app/api${data.source}`;
+			const url = data.source;
 			profilePicture.setAttribute("src", url);
 			pElement.textContent = "Completed";
 			dragArea.setAttribute("class", "dropArea");
-			fd.delete("avatarImage");
 		} else {
 			throw new Error("Failed to upload image");
 		}
@@ -106,6 +106,10 @@ const savePicture = async (file) => {
 	}
 }
 
+const clearFiles = () => {
+	while(files.length > 0)
+		files.pop();
+}
 /****************** Modal Dashboard **********************/
 const togglePictureModal = () => {
 	const modalContainer = document.querySelector(".ModalContainer");
