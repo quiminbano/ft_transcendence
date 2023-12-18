@@ -23,8 +23,6 @@ def profilePicture(request):
             source = stringifyImage(request.user)
             return JsonResponse({"source": source, "message": "Avatar image updated sucessfully"}, status=200)
         else:
-            print("Invalid form")
-            print(form.errors)
             return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
     return JsonResponse({"success": "false", "message": "Accessing to an API route, not allowed"}, status=400)
 

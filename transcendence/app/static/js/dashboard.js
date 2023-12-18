@@ -1,18 +1,27 @@
+const files = [];
 const loadDashboard = () => {
 	const saveButton = document.querySelector("#saveUploadedPictureButton");
 	saveButton.style.display = "none";
+	saveButton.addEventListener("click", async () => {
+		showLoadingSpinner();
+		await savePicture(files[0]);
+		hideLoadingSpinner();
+		saveButton.style.display = "none";
+	})
 	const dragArea = document.querySelector(".dropArea");
 	const fileInput = dragArea.querySelector("input[name='avatarImage']");
 	dragArea.addEventListener("click", () => {
 		fileInput.click();
 	})
 	fileInput.onchange = (e) => {
+		clearFiles();
 		const image = e.target.files[0];
-		if (!isValidImage(image)) {
+		files.push(image);
+		if (!isValidImage(files[0])) {
 			setDragAreaInvalid("Invalid file format");
 			return;
 		} else {
-			return uploadImage(image)
+			return uploadImage(files[0])
 		}
 	}
 	dragArea.addEventListener("dragover", (e) => {
@@ -24,11 +33,13 @@ const loadDashboard = () => {
 	})
 	dragArea.addEventListener("drop", async (e) => {
 		e.preventDefault();
+		clearFiles();
 		const image = e.dataTransfer.files[0];
-		if (!isValidImage(image)) {
+		files.push(image);
+		if (!isValidImage(files[0])) {
 			setDragAreaInvalid("Invalid file format");
 		} else {
-			return uploadImage(image);
+			return uploadImage(files[0]);
 		}
 	})
 	const uploadImage = (image) => {
@@ -60,12 +71,6 @@ const loadDashboard = () => {
 		img.style.display = "flex";
 		img.setAttribute("src", url);
 		saveButton.style.display  = "flex";
-		saveButton.addEventListener("click", async () => {
-			showLoadingSpinner();
-			await savePicture(file);
-			hideLoadingSpinner();
-			saveButton.style.display = "none";
-		})
 	}
 	loadMenus();
 }
@@ -76,6 +81,7 @@ const savePicture = async (file) => {
 	const fd = new FormData();
 	pElement.textContent = "Uploading...";
 	fd.append("avatarImage", file);
+
 	try {
 		const config = {
 			method: "POST",
@@ -88,8 +94,7 @@ const savePicture = async (file) => {
 		if (response.ok) {
 			const data = await response.json();
 			const profilePicture = document.getElementById("dashboardUserProfilePic");
-			const url = `/app/api${data.avatar_url}`;
-			console.log(url);
+			const url = data.source;
 			profilePicture.setAttribute("src", url);
 			pElement.textContent = "Completed";
 			dragArea.setAttribute("class", "dropArea");
@@ -101,6 +106,10 @@ const savePicture = async (file) => {
 	}
 }
 
+const clearFiles = () => {
+	while(files.length > 0)
+		files.pop();
+}
 /****************** Modal Dashboard **********************/
 const togglePictureModal = () => {
 	const modalContainer = document.querySelector(".ModalContainer");

@@ -1,6 +1,5 @@
 let settingsModal;
 const loadSignup = () => {
-	console.log("Loading signup");
 	populateCoallitionSrc();
 }
 const submitLogin = async event => {
@@ -88,10 +87,7 @@ const logoutUser = async () => {
 	try {
 		const response = await fetch("/logout");
 		if (response.ok) {
-			console.log("Logout succeeded");
 			navigateTo("/");
-		} else {
-			console.log("Failed to logout")
 		}
 	} catch (error) {
 		console.log(error);
