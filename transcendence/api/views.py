@@ -18,13 +18,12 @@ def profilePicture(request):
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():
+            print(form.cleaned_data['avatarImage'])
             request.user.avatarImage = form.cleaned_data['avatarImage']
             request.user.save()
             url = request.user.avatarImage.url if request.user.avatarImage else None
             return JsonResponse({"avatar_url": url, "message": "Avatar image updated sucessfully"}, status=200)
         else:
-            print("Invalid form")
-            print(form.errors)
             return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
     else:
         if request.user.avatarImage == None:
