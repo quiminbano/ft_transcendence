@@ -1,3 +1,5 @@
+let inviteModal;
+let invitedUser;
 const loadPong1v1 = () => {
 	const tabs = document.querySelectorAll(".tabButton");
 	const content = document.querySelectorAll(".tabContent");
@@ -22,6 +24,13 @@ const loadPong1v1 = () => {
 	populateOtherUsers();
 	populateInvited();
 	populateYouInvited();
+	inviteModal = new Modal(document.getElementById("invitationsModal"));
+	inviteModal.close();
+
+	const friendsUL = document.getElementById("inviteFriendsOptions");
+	friendsUL.addEventListener("change", (e) => invitedUser = e.target.value);
+	const othersUL = document.getElementById("inviteUsersOptions");
+	othersUL.addEventListener("change", (e) => invitedUser = e.target.value);
 }
 
 const populateFriends = async () => {
@@ -96,6 +105,11 @@ const declineInvitation  = () => {
 const acceptInvitation = () => {
 	console.log("Invitation declined");
 }
+const sendInvitation = () => {
+	console.log("sended invitation");
+	console.log("invitedUser", invitedUser);
+	closeInvitesModal();
+}
 
 const populateYouInvited = () => {
 	const friends = fakeFriends;
@@ -116,4 +130,11 @@ const createYouWereInvitedFragment = async (friend, divToAppendTo, generator) =>
 	name.removeAttribute("id");
 	picture.removeAttribute("id");
 	generator.appendFragment(fragment, divToAppendTo);
+}
+
+const openInvitesModal = () => {
+	inviteModal.open();
+}
+const closeInvitesModal = () => {
+	inviteModal.close();
 }
