@@ -93,7 +93,7 @@ const savePicture = async (file) => {
 		if (response.ok) {
 			const data = await response.json();
 			const profilePicture = document.getElementById("dashboardUserProfilePic");
-			const url = `/app/api${data.avatar_url}`;
+			const url = `/app/api${data.source}`;
 			profilePicture.setAttribute("src", url);
 			pElement.textContent = "Completed";
 			dragArea.setAttribute("class", "dropArea");
