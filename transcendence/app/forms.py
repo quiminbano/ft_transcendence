@@ -155,7 +155,4 @@ class ProfilePicture(forms.Form):
         userModel.avatarImage = self.cleaned_data['avatarImage']
         userModel.full_clean()
         userModel.save()
-        url = userModel.avatarImage.url if userModel.avatarImage else None
-        print(userModel.avatarImage.url)
-        return url
 

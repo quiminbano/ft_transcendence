@@ -5,6 +5,7 @@ from .models import Tournament, Players, CustomUserData
 from app.forms import ProfilePicture
 from app.views import loginUser
 from django.shortcuts import render
+from app.utils import stringifyImage
 import json
 
 
@@ -18,8 +19,9 @@ def profilePicture(request):
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():
-            url = form.save(request.user)
-            return JsonResponse({"avatar_url": url, "message": "Avatar image updated sucessfully"}, status=200)
+            form.save(request.user)
+            source = stringifyImage(request.user)
+            return JsonResponse({"source": source, "message": "Avatar image updated sucessfully"}, status=200)
         else:
             print("Invalid form")
             print(form.errors)
