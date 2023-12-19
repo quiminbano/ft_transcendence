@@ -35,6 +35,8 @@
 .teamName,
 .points {
     font-family: PressStart;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 #bracketModal {

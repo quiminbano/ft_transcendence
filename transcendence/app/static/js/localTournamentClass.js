@@ -11,7 +11,7 @@ class LocalTournament {
         this.startButton = document.getElementById("startTournamentBtn");
         this.startButton.style.display = "none";
         this.addNewPlayerButton = document.getElementById("addNewPlayerButton");
-		this.inputField = document.getElementById("newPlayerInputName");
+        this.inputField = document.getElementById("newPlayerInputName");
     }
     #updateCurrentPlayersText() {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
@@ -79,7 +79,7 @@ class LocalTournament {
             this.addNewPlayerButton.style.display = "flex";
         }
     }
-	async #updateDisplay(name) {
+	async #updateDisplay() {
 		const parser = new DOMParser();
         const url = "/getDoc/registerPlayer";
 		try {
@@ -102,5 +102,6 @@ class LocalTournament {
     setErrorMessage(message) {
         this.errorElement.innerHTML = message;
     }
-	getName() { return this.name; }
+    getName() { return this.name; }
+    setSchedule(schedule) { this.schedule = schedule; }
 }

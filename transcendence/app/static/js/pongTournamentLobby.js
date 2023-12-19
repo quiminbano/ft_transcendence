@@ -100,6 +100,9 @@ const startTournament = async () => {
 	const html = await fragment.generateFragment();
 	const bracketDiv = document.getElementById("bracketContent");
 	fragment.appendFragment(html, bracketDiv);
+	const schedule = new Schedule(t.totalPlayers, t.players);
+	t.setSchedule(schedule);
+	console.log(t);
 }
 
 const openTournamentBracketModal = () => {
