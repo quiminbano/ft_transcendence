@@ -141,6 +141,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	overflow: visible;
 }
 .invitedButtons button {
 	border: none;
