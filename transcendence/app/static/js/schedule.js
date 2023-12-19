@@ -33,7 +33,6 @@ class Schedule {
         players.forEach(player => playersCopy.push(player));
         let sortedPlayers = this.#sortPlayers(playersCopy);
         this.remainingPlayers = sortedPlayers;
-        console.log(this.remainingPlayers);
         this.#populateMatches(this.remainingPlayers);
     }
     #populateMatches(players) {

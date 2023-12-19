@@ -124,11 +124,9 @@ const loadStartTournament = async () => {
 	fragment.appendFragment(html, bracketDiv);
 	const schedule = new Schedule(t.totalPlayers, t.players);
 	t.setSchedule(schedule);
-	console.log(t);
 	const nextHomePlayer = document.getElementById("nextHomePlayerName");
 	const nextAwayPlayer = document.getElementById("nextAwayPlayerName");
 	const nextMatch = t.schedule.getNextMatch();
-	console.log(nextMatch);
 	nextHomePlayer.textContent = nextMatch.player1.name;
 	nextAwayPlayer.textContent = nextMatch.player2.name;
 	const matchRound = document.getElementById("matchRound");

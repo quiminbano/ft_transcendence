@@ -8,27 +8,23 @@ class Match {
         };
         this.completed = false;
         this.element = this.#getMatchElement(this.id);
-        //this.updateField();
     }
-    addPlayer1(player1) { this.player1 = player1; }
-    addPlayer2(player2) { this.player2 = player2; }
+    addPlayer1(player1) { this.player1 = player1; this.#updateHomeTeam(); }
+    addPlayer2(player2) { this.player2 = player2; this.#updateAwayTeam(); }
     #getMatchElement(id) {
         const match = document.querySelector(`.match[data-id="${id}"]`);
         console.log(match);
         return match;
     }
-    updateField() {
-        const teamElement = this.element.querySelectorAll(".team");
-        this.#updateHomeTeam(teamElement[0]);
-        this.#updateAwayTeam(teamElement[1]);
-    }
-    #updateHomeTeam(team) {
+    #updateHomeTeam() {
+        const team = this.element.querySelectorAll(".team")[0];
         const teamName = team.querySelector(".teamName");
         teamName.textContent = this.player1.name;
         const teamScore = team.querySelector(".points");
         teamScore.textContent = this.score.player1Points;
     }
-    #updateAwayTeam(team) {
+    #updateAwayTeam() {
+        const team = this.element.querySelectorAll(".team")[1];
         const teamName = team.querySelector(".teamName");
         teamName.textContent = this.player2.name;
         const teamScore = team.querySelector(".points");
