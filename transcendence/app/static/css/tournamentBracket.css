@@ -47,6 +47,12 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+.teamName {
+	width: 70%;
+}
+.points {
+	width: 30%;
+}
 
 #bracketModal {
 	position: fixed;
@@ -57,6 +63,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	overflow-y: scroll;
 }
 .bracketBox {
 	background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
