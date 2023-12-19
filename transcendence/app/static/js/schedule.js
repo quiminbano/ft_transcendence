@@ -98,9 +98,22 @@ class Schedule {
         else
             return "Final";
     }
-    #updateAfterScore(match) {
+    getMatch(id) {
+        const match = this.matches.find(m => m.id === id);
+        return match;
+    } 
+    updateMatchScore(id, player1Score, player2Score) {
+        const match = this.matches.find(m => m.id === id);
+        if (!match) return;
+        match.addScore(player1Score, player2Score);
         const nextID = this.#findNextGameID(match.id);
-        
+        const element = this.matches.find(m => m.id === nextID);
+        const winnerPlayer = match.score.player1Points > match.score.player2Points ? match.player1 : match.player2;
+        if (match.id % 2 === 0) {
+            element.addPlayer2(winnerPlayer);
+        } else {
+            element.addPlayer1(winnerPlayer);
+        }
     }
     #findNextGameID = (currentId) => {
         const nextId = (currentId - 1) / 2 + this.amount / 2 + 1
