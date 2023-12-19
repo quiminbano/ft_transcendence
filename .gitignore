@@ -429,3 +429,4 @@ migrations/
 __tests__
 *.test.js
 api/user/*
+trans

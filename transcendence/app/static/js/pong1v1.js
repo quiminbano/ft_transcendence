@@ -134,6 +134,8 @@ const createYouWereInvitedFragment = async (friend, divToAppendTo, generator) =>
 
 const openInvitesModal = () => {
 	inviteModal.open();
+	const textDiv = document.getElementById("modalBoxConfirmationText");
+	textDiv.textContent = "You want to invite " + invitedUser + " ?";
 }
 const closeInvitesModal = () => {
 	inviteModal.close();
