@@ -5,7 +5,8 @@ class Schedule {
         this.#allocateMatches();
         this.#generateMatches(players);
         this.nextGame = this.getNextMatch();
-        this.currentStage = this.getCurrentStage(this.amount);
+        this.currentStage = this.getCurrentStage();
+        this.#updateDisplayNextGame();
     }
     #getTotalAmountOfMatches(totalTeams) {
         switch (totalTeams) {
@@ -62,12 +63,12 @@ class Schedule {
         const nextMatch = this.matches.find(match => match.completed === false);
         return nextMatch;
     }
-    getCurrentStage(amount) {
-        switch (amount) {
+    getCurrentStage() {
+        switch (this.amount) {
             case 4:
                 return this.#getCurrentStage4Teams();
                 break;
-            case 12:
+            case 8:
                 return this.#getCurrentStage8Teams();
                 break;
             default:
@@ -114,12 +115,21 @@ class Schedule {
         } else {
             element.addPlayer1(winnerPlayer);
         }
+        this.nextGame = this.getNextMatch();
+        this.#updateDisplayNextGame();
     }
     #findNextGameID = (currentId) => {
         const nextId = (currentId - 1) / 2 + this.amount / 2 + 1
         return Math.floor(nextId);
     }
-    addScore(score) {
-
+    #updateDisplayNextGame() {
+        const nextHomePlayer = document.getElementById("nextHomePlayerName");
+        const nextAwayPlayer = document.getElementById("nextAwayPlayerName");
+        const nextMatch = this.getNextMatch();
+        nextHomePlayer.textContent = nextMatch.player1.name;
+        nextAwayPlayer.textContent = nextMatch.player2.name;
+        const matchRound = document.getElementById("matchRound");
+        this.currentStage = this.getCurrentStage();
+        matchRound.textContent = this.currentStage;
     }
 }
