@@ -92,17 +92,7 @@ const addPlayer = (event) => {
 
 const startTournament = async () => {
 	await navigateTo(`${t.id}/start`);
-	bracket = new Modal(document.getElementById("bracketContent"));
-	const titleElement = document.getElementById("pongTournamentStartTitle");
-	titleElement.textContent = t.getName();
-	const templateName = `/getDoc/bracket${t.totalPlayers}`;
-	const fragment = new FragmentGenerator(templateName);
-	const html = await fragment.generateFragment();
-	const bracketDiv = document.getElementById("bracketContent");
-	fragment.appendFragment(html, bracketDiv);
-	const schedule = new Schedule(t.totalPlayers, t.players);
-	t.setSchedule(schedule);
-	console.log(t);
+	await loadStartTournament();
 }
 
 const openTournamentBracketModal = () => {
@@ -121,4 +111,26 @@ const cancelAndDeleteTournament = async () => {
 	} else {
 		console.log("Failed to delete tournament");
 	}
+}
+
+const loadStartTournament = async () => {
+	bracket = new Modal(document.getElementById("bracketContent"));
+	const titleElement = document.getElementById("pongTournamentStartTitle");
+	titleElement.textContent = t.getName();
+	const templateName = `/getDoc/bracket${t.totalPlayers}`;
+	const fragment = new FragmentGenerator(templateName);
+	const html = await fragment.generateFragment();
+	const bracketDiv = document.getElementById("bracketContent");
+	fragment.appendFragment(html, bracketDiv);
+	const schedule = new Schedule(t.totalPlayers, t.players);
+	t.setSchedule(schedule);
+	console.log(t);
+	const nextHomePlayer = document.getElementById("nextHomePlayerName");
+	const nextAwayPlayer = document.getElementById("nextAwayPlayerName");
+	const nextMatch = t.schedule.getNextMatch();
+	console.log(nextMatch);
+	nextHomePlayer.textContent = nextMatch.player1.name;
+	nextAwayPlayer.textContent = nextMatch.player2.name;
+	const matchRound = document.getElementById("matchRound");
+	matchRound.textContent = t.schedule.currentStage;
 }

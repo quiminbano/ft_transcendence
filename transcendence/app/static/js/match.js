@@ -1,7 +1,5 @@
 class Match {
-    constructor(player1, player2, id) {
-        this.player1 = player1;
-        this.player2 = player2;
+    constructor(id) {
         this.id = id;
         this.score = {
             player1Points: null,
@@ -10,8 +8,10 @@ class Match {
         };
         this.completed = false;
         this.element = this.#getMatchElement(this.id);
-        this.updateField();
+        //this.updateField();
     }
+    addPlayer1(player1) { this.player1 = player1; }
+    addPlayer2(player2) { this.player2 = player2; }
     #getMatchElement(id) {
         const match = document.querySelector(`.match[data-id="${id}"]`);
         console.log(match);
