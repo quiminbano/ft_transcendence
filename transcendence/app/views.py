@@ -121,7 +121,7 @@ def pongOnevsOne(request):
     if not request.user.is_authenticated:
         return dashboard(request)
     else:
-        context = {"content": "PongTournamentPages/pongOneVsOne.html"}
+        context = {"content": "Pong1v1pages/pongOneVsOne.html"}
         return render(request, "index.html", context)
 
 def pongTournament(request):
@@ -152,8 +152,8 @@ def usersPage(request, name):
         return dashboard(request)
     else:
         context = {
-			"content": "usersPage.html"
-		}
+            "content": "usersPage.html"
+        }
         return render(request, "index.html", context)
 
 def remoteTournament(request):
@@ -161,8 +161,17 @@ def remoteTournament(request):
         return dashboard(request)
     else:
         context = {
-			"content": "PongTournamentPages/remoteStart.html"
-		}
+            "content": "PongTournamentPages/remoteStart.html"
+        }
+        return render(request, "index.html", context)
+
+def remoteLobby(request, id):
+    if not request.user.is_authenticated:
+        return dashboard(request)
+    else:
+        context = {
+            "content": "PongTournamentPages/remoteLobby.html"
+    }
         return render(request, "index.html", context)
 
 

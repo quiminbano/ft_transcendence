@@ -14,6 +14,7 @@ urlpatterns = [
     path("pong/tournament/<int:id>", views.pongTournamentLobby, name="pongTournamentLobby"),
     path("pong/tournament/<int:id>/start", views.pongTournamentStart, name="pongTournamentStart"),
     path("pong/remoteTournament", views.remoteTournament, name="remoteTournament"),
+	path("pong/remoteTournament/<int:id>", views.remoteLobby, name="remoteLobby"),
     path("postLogin", views.loginUser, name="postLogin"),
     path("postSignup", views.signup, name="postSignup"),
 	path("users/<str:name>", views.usersPage, name="friendsPage"),
