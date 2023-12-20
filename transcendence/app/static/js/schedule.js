@@ -134,8 +134,12 @@ class Schedule {
         matchRound.textContent = this.currentStage;
     }
     editMatch(id, match) {
-        const matchToEdit = this.matches.find(m => m.id === id);
-        if (!matchToEdit) return;
-        matchToEdit = match;
+        const newMatch = new Match(id);
+        newMatch.addPlayer1(match.player1);
+        newMatch.addPlayer2(match.player2);
+        const matchToEditIndex = this.matches.findIndex(m => m.id === id);
+        if (matchToEditIndex === -1) return;
+        this.matches[matchToEditIndex] = newMatch;
+        this.updateMatchScore(match.id, match.score.player1Points, match.score.player2Points)
     } 
 }

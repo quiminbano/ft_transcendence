@@ -38,4 +38,8 @@ class Match {
         this.updateAwayTeam();
     }
     setCompleted() { this.completed = true; }
+    updateDisplay() {
+        this.updateHomeTeam();
+        this.updateAwayTeam();
+    }
 }
