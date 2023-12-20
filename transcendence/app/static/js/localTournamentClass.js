@@ -2,6 +2,7 @@ class LocalTournament {
     constructor(name, totalPlayers, id) {
         this.name = name;
         this.id = id;
+        this.state = "P";
         this.totalPlayers = totalPlayers;
         this.players = [];
         this.errorElement = "";
@@ -12,6 +13,9 @@ class LocalTournament {
         this.startButton.style.display = "none";
         this.addNewPlayerButton = document.getElementById("addNewPlayerButton");
         this.inputField = document.getElementById("newPlayerInputName");
+    }
+    setState(state) {
+        this.state = state;
     }
     #updateCurrentPlayersText() {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
