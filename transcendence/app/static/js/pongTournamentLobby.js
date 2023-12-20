@@ -8,6 +8,14 @@ const loadTournamentLobby = async () => {
 	const data = loadTournamentLobbyInfo.tournament;
 	tournament = createTournamentInstance(data.name, data.amount, data.id);
 	tournament.setState(data.state);
+
+	/* TEST!!*/
+	/*if (tournament.player.length >= tournament.totalPlayers)
+		tournament.setState("A");
+	const matchA = {
+
+	}*/
+
 	data.players.forEach(player => {
 		try {
 			tournament.addPlayer({ name: player.name, id: player.id });
@@ -15,6 +23,12 @@ const loadTournamentLobby = async () => {
 			console.log(error.message);
 		}
 	});
+	//TODO: UPDATE THE MATCHES AND MOVE TO THE TOURNAMENT BOARD!!!!!
+	if (tournament.state === "A") {
+		generateTournamentSchedule();
+		data.matches.forEach(match => tournament.schedule.editMatch(match.id, match));
+		await navigateTo(`/pong/tournament/${tournament.id}/start`);
+	}
 }
 
 const editPlayer = async (username) => {

@@ -1,6 +1,6 @@
 class Schedule {
     constructor(amount, players) {
-        this.amount = amount;
+        this.amount = typeof amount === "string" ? parseInt(amount) : amount;
         this.matches = [];
         this.#allocateMatches();
         this.#generateMatches(players);
@@ -24,7 +24,8 @@ class Schedule {
         }
     }
     #allocateMatches() {
-        for (let i = 0; i < this.#getTotalAmountOfMatches(this.amount); i++) {
+        const totalMatches = this.#getTotalAmountOfMatches(this.amount);
+        for (let i = 0; i < totalMatches; i++) {
             const match = new Match(i + 1);
             this.matches.push(match);
         }
