@@ -424,7 +424,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-auth.py
 migrations/
 __tests__
 *.test.js
