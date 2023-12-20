@@ -132,4 +132,9 @@ class Schedule {
         this.currentStage = this.getCurrentStage();
         matchRound.textContent = this.currentStage;
     }
+    editMatch(id, match) {
+        const matchToEdit = this.matches.find(m => m.id === id);
+        if (!matchToEdit) return;
+        matchToEdit = match;
+    } 
 }

@@ -1,5 +1,4 @@
 let modal;
-let bracket;
 let currentTournamentId;
 
 const loadPong = () => {
