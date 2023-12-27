@@ -83,12 +83,16 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['password1']
         )
         user.coallition = self.cleaned_data['coallition']
-        f = open("app/static/images/profileIconWhite.png", "rb")
-        djangoFile = File(f)
-        user.avatarImage = djangoFile
-        user.full_clean()
-        user.save()
-        f.close()
+        try:
+            f = open("app/static/images/profileIconWhite.png", "rb")
+            djangoFile = File(f)
+            user.avatarImage = djangoFile
+            user.full_clean()
+            user.save()
+            f.close()
+        except FileNotFoundError:
+            user.avatarImage = None
+            user.save()
         return user
 
 
@@ -142,6 +146,8 @@ class ChangeProfile(forms.Form):
         if (len(self.cleaned_data['password1']) > 0):
             userModel.set_password(self.cleaned_data['password1'])
         userModel.email = self.cleaned_data['email']
+        if not default_storage.exists(str(userModel.avatarImage)):
+            userModel.avatarImage = None
         userModel.full_clean()
         userModel.save()
 
