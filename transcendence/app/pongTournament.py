@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from .userInterface import loginUser
-import socket
 
 def pongInterface(request):
     if not request.user.is_authenticated:
