@@ -15,6 +15,14 @@ def dashboard(request):
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source}
     return render(request, "index.html", context)
 
+def usersPage(request, name):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    context = {
+        "content": "usersPage.html"
+    }
+    return render(request, "index.html", context)
+
 def getLoginUser(request):
     form = LoginForm()
     context = {
@@ -93,7 +101,6 @@ def getSettings(request):
     return render(request, 'index.html', context)
 
 def putSettings(request):
-    print("Comimg here")
     data = json.loads(request.body)
     form = ChangeProfile(data)
     if form.is_valid():

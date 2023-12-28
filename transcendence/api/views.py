@@ -3,7 +3,7 @@ from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .models import Tournament, Players, CustomUserData
 from app.forms import ProfilePicture
-from app.views import loginUser
+from app.userInterface import loginUser
 from django.shortcuts import render
 from app.utils import stringifyImage
 import json
