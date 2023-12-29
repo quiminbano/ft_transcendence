@@ -133,3 +133,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # apply our custom user model onto the django database
 AUTH_USER_MODEL = 'api.CustomUserData'
+
+MEDIA_ROOT = '/app/api/user'
+MEDIA_URL = 'user/'

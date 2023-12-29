@@ -1,5 +1,7 @@
 let settingsModal;
-
+const loadSignup = () => {
+	populateCoallitionSrc();
+}
 const submitLogin = async event => {
 	event.preventDefault();
 	const url = event.target.action;
@@ -54,12 +56,14 @@ const submitSignup = async event => {
 
 	const username = formData.get('username');
 	const email = formData.get("email");
+	const coallition = formData.get("coallition");
 	const password = formData.get("password1");
 	const confirmPassword = formData.get("password2");
 
 	data = {
 		username,
 		email,
+		coallition,
 		password1: password,
 		password2: confirmPassword
 	}
@@ -68,12 +72,9 @@ const submitSignup = async event => {
 	const result = await postRequest(url, data);
 	const success = result.success === "true";
 	if (success) {
-		console.log("User created successfully");
 		navigateTo("login");
-		//Handle user navigation after registration complete!!!!
 	}
 	else {
-		console.log("Failed to create user");
 		if (result.errors)
 			handleErrors(result.errors);
 	}
@@ -86,10 +87,7 @@ const logoutUser = async () => {
 	try {
 		const response = await fetch("/logout");
 		if (response.ok) {
-			console.log("Logout succeeded");
 			navigateTo("/");
-		} else {
-			console.log("Failed to logout")
 		}
 	} catch (error) {
 		console.log(error);
@@ -107,6 +105,7 @@ const handleChangeProfile = async (event) => {
 	const password = formData.get("password1");
 	const confirmPassword = formData.get("password2");
 	const email = formData.get("email");
+	const password3 = formData.get("password3");
 
 	data = {
 		username,
@@ -114,13 +113,53 @@ const handleChangeProfile = async (event) => {
 		lastName: lastname,
 		password1: password,
 		password2: confirmPassword,
+		password3,
 		email
 	}
 	showLoadingSpinner();
+	const response = await putRequest(url, data);
+	if (response.succeded)
+		navigateTo("/");
+	else {
+		handleUpdateErrors(response.errors);
+	}
+	hideLoadingSpinner();
+}
+
+const handleUpdateErrors = (errors) => {
+	if (!errors) return;
+	const errorPassword3Field = document.getElementById("invalidPassword3");
+	if (errors["password2"])
+		handleError(errorPassword3Field, errors["password2"]);
+	else if (errors["password3"])
+		handleError(errorPassword3Field, errors["password3"]);
 }
 
 const openSettingsModal = () => {
-	settingsModal.open();
+	const usernameField = document.getElementById("id_username");
+
+	try {
+		isUsernameValid(usernameField.value);
+		const password3 = document.getElementById("id_password3");
+		password3.focus();
+		password3.value = "";
+		const errorFields = document.querySelectorAll(".signupErrorMessage");
+		errorFields.forEach(field => field.style.display = "none");
+		settingsModal.open();
+
+	} catch (error) {
+		const usernameErrorField = document.getElementById("invalidUpdateUsername");
+		handleError(usernameErrorField, error.message);
+		return;
+	}
+}
+const isUsernameValid = (username) => {
+	if (username.length <= 0) {
+		throw new Error("Username field is required");
+	}
+	const MIN_USERNAME_LENGTH = 5;
+	if (username.length < MIN_USERNAME_LENGTH)
+		throw new Error("Username must be at least 5 characters");
 }
 const closeSettingsModal = () => {
 	settingsModal.close();
@@ -128,4 +167,13 @@ const closeSettingsModal = () => {
 
 const loadSettings = () => {
 	settingsModal = new Modal(document.getElementById("settingsModalContainer"));
+}
+
+const populateCoallitionSrc = () => {
+	const options = document.querySelectorAll(".coallitionOption");
+	options.forEach(option => {
+		const image = option.querySelector("img");
+		const input = option.querySelector("input");
+		image.setAttribute("src", `/static/images/${input.value}Symbol.svg`);
+	});
 }

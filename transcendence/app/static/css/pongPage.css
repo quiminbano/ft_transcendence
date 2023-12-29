@@ -1,5 +1,6 @@
 #pongPageContainer {
     min-height: 100vh;
+    width: 100vw;
     background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -37,6 +38,29 @@
     color: whitesmoke;
 }
 
+
+/*PONG PAGE MODAL*/
+.pongModalBox {
+    padding: 20px 10px;
+    border: 3px solid black;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+.pongModalBox * {
+    font-family: PressStart;
+}
+.typeDescription {
+    padding: 15px;
+}
+.typeDescription h6 {
+    font-size: 14px;
+    margin: 20px auto;
+}
+.typeDescription p {
+    font-size: 12px;
+    text-align: justify;
+}
+/************/
 @media only screen and (max-width: 776px) {
     .pongPageButton {
         width: 80%;

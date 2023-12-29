@@ -3,8 +3,8 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext as _
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-
+from .imageValidation import validateFileType, validationImageSize, defineNameImage
+from django.core.files import File
 
 
 class CustomUserManager(BaseUserManager):
@@ -24,7 +24,13 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-
+        extra_fields.setdefault('coallition', 'foragers')
+        try:
+            file = open("app/static/images/profileIconWhite.png", "rb")
+            djangoFile = File(file)
+            extra_fields.setdefault('avatarImage', djangoFile)
+        except FileNotFoundError:
+            extra_fields.setdefault('avatarImage', None)
         if extra_fields.get('is_staff') is not True:
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
@@ -35,8 +41,13 @@ class CustomUserData(AbstractUser):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
+    coallition = models.CharField()
+    avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
 
     objects = CustomUserManager()
+
+    def get_coallition(self):
+        return self.coallition
 
     def __str__(self):
         return self.username

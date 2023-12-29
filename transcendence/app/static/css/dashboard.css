@@ -1,0 +1,153 @@
+#changePictureButton {
+	outline: none;
+	background: none;
+	border: none;
+	position: absolute;
+	top: 70%;
+	right: 5%;
+	transition: all 0.25s linear;
+	background-color: rgba(0, 0, 0, 0.522);
+	border-radius: 50%;
+	padding: 5px;
+}
+#changePictureButton:focus {
+	outline: none;
+}
+#changePictureButton:hover {
+	transform: scale(1.05);
+}
+#updateProfilePicture {
+	width: 25px;
+	height: 25px;
+}
+
+.ModalContainer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+}
+.ModalContainer * {
+	z-index: 10;
+}
+.ModalContainerBG {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.show {
+	display: flex;
+}
+
+#changePictureBox {
+	min-height: 50px;
+	background-color: #deeeef;
+	border: 4px solid black;
+	border-radius: 10px;
+	width: 80%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 25px 15px;
+}
+#changePictureBox *{
+	color: black;
+	font-family: PressStart;
+	text-align: center;
+}
+.dropArea {
+	height: 250px;
+	width: 250px;
+	border: 1px dashed gray;
+	color: gray;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 3em;
+	z-index: 99;
+	padding: 5px;
+	position: relative;
+}
+.hover {
+	color: white;
+	border: 3px dashed white;
+}
+.valid {
+	color: white;
+	border: 3px dashed green;
+}
+.invalid {
+	color: white;
+	border: 3px dashed red;
+}
+
+.dropArea input {
+	display: none;
+}
+.dropArea p {
+	text-align: center;
+	font-family: PressStart;
+	font-size: 12px;
+}
+.dropArea label {
+	display: none;
+}
+
+#previewUploadedImage {
+	display: none;
+	width: 120px;
+}
+
+#saveUploadedPictureButton {
+	padding: 5px 20px;
+	border: 3px solid black;
+	margin: 5px auto;
+	text-align: center;
+	font-family: PressStart;
+}
+
+#hidden-file-input {
+	display: none;
+}
+.dropArea form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+@media only screen and (max-width: 300px) {
+	#changePictureBox {
+		width: 95%;
+	}
+	.dropArea {
+		height: 200px;
+		width: 200px;
+	}
+}
+
+
+@media only screen and (min-width: 992px) {
+	#changePictureBox {
+		width: 50%;
+	}
+	#changePictureBox p {
+		font-size: 8px;
+	}
+	#previewUploadedImage {
+		display: none;
+		width: 75px;
+	}
+}

@@ -424,6 +424,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-auth.py
-transcendence/api/migrations
+migrations/
 __tests__
+*.test.js
+api/user/*

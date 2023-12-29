@@ -1,110 +1,155 @@
-const generator = new FragmentGenerator("/getDoc/searchItem");
-
+const files = [];
 const loadDashboard = () => {
-	const searchButton = document.getElementById("searchButton");
-	const search = document.getElementById("search");
-
-	searchButton.addEventListener("click", () => {
-		if (search.classList.contains("search")) {
-			search.classList.remove("search");
-			search.classList.add("searchExpanded");
-			search.focus();
-			search.setAttribute("placeholder", "Search for friends");
-		} else if (search.classList.contains("searchExpanded")) {
-			search.classList.remove("searchExpanded");
-			search.classList.add("search");
+	const saveButton = document.querySelector("#saveUploadedPictureButton");
+	saveButton.style.display = "none";
+	saveButton.addEventListener("click", async () => {
+		showLoadingSpinner();
+		await savePicture(files[0]);
+		hideLoadingSpinner();
+		saveButton.style.display = "none";
+	})
+	const dragArea = document.querySelector(".dropArea");
+	const fileInput = dragArea.querySelector("input[name='avatarImage']");
+	dragArea.addEventListener("click", () => {
+		fileInput.click();
+	})
+	fileInput.onchange = (e) => {
+		clearFiles();
+		const image = e.target.files[0];
+		files.push(image);
+		if (!isValidImage(files[0])) {
+			setDragAreaInvalid("Invalid file format");
+			return;
+		} else {
+			return uploadImage(files[0])
+		}
+	}
+	dragArea.addEventListener("dragover", (e) => {
+		e.preventDefault();
+		dragArea.classList.add("hover")
+	})
+	dragArea.addEventListener("dragleave", () => {
+		dragArea.classList.remove("hover");
+	})
+	dragArea.addEventListener("drop", async (e) => {
+		e.preventDefault();
+		clearFiles();
+		const image = e.dataTransfer.files[0];
+		files.push(image);
+		if (!isValidImage(files[0])) {
+			setDragAreaInvalid("Invalid file format");
+		} else {
+			return uploadImage(files[0]);
 		}
 	})
-	makeChart();
+	const uploadImage = (image) => {
+		dragArea.setAttribute("class", "dropArea valid");
+		const pElement = dragArea.querySelector("p");
+
+		const isFile = 	new Promise((resolve) => {
+			const fr = new FileReader();
+			fr.onprogress = (e) => {
+				if (e.loaded > 50) {
+					fr.abort();
+					resolve(true);
+				}
+			}
+			fr.onload = () => {resolve(true);}
+			fr.onerror = () => {resolve(false);}
+			fr.readAsArrayBuffer(image);
+		})
+		if (!isFile) {
+			setDragAreaInvalid("Error: something happened");
+			throw new Error("Couldn't read the file");
+		}
+		pElement.innerHTML = "Added " + image.name;
+		upload(image);
+	}
+	const upload = async (file) => {
+		const url = URL.createObjectURL(file);
+		const img = dragArea.querySelector("#previewUploadedImage");
+		img.style.display = "flex";
+		img.setAttribute("src", url);
+		saveButton.style.display  = "flex";
+	}
+	loadMenus();
 }
 
-const debounce = (func, delay = 300) => {
-	let timer;
-	return (...args) => {
-		clearTimeout(timer);
-		timer = setTimeout(() => {
-			func.apply(this, args)
-		}, delay);
+const savePicture = async (file) => {
+	const dragArea = document.querySelector(".dropArea");
+	const pElement = dragArea.querySelector("p");
+	const fd = new FormData();
+	pElement.textContent = "Uploading...";
+	fd.append("avatarImage", file);
+
+	try {
+		const config = {
+			method: "POST",
+			headers: {
+				"X-CSRFToken": getCookie('csrftoken'),
+			},
+			body: fd
+		}
+		const response = await fetch("/api/user", config);
+		if (response.ok) {
+			const data = await response.json();
+			const profilePicture = document.getElementById("dashboardUserProfilePic");
+			const url = data.source;
+			profilePicture.setAttribute("src", url);
+			pElement.textContent = "Completed";
+			dragArea.setAttribute("class", "dropArea");
+		} else {
+			throw new Error("Failed to upload image");
+		}
+	} catch (error) {
+		setDragAreaInvalid("Upload failed. Please try again");
 	}
 }
 
-const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
-
-const onSearch = (event) => {
-	const input = event.target.value;
-
-	//PROPERLY MAKE A GET REQUEST TO GET THE MATCH USERS!!!!
-	const matches = fakeFriends.filter(friend => friend.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
-	const menu = document.getElementById("dropdownMenu");
-	if (input.length > 0) {
-		showDropdown(menu);
-		const parentDiv = document.getElementById("dropdownMenu");
-		displayDropdownElements(matches, parentDiv);
-	}
-	else
-		hideDropdown(menu);
+const clearFiles = () => {
+	while(files.length > 0)
+		files.pop();
 }
-const onInput = debounce(onSearch);
-
-const hideDropdown = (element) => {
-	if (!element)
-		return;
-	const inputField = document.getElementById("search");
-	inputField.style.borderBottomLeftRadius = "30px";
-	inputField.style.borderBottomRightRadius = "30px";
-	element.classList.remove("dropdownExpanded");
-	element.classList.add("dropdownCollapsed");
-}
-const showDropdown = (element) => {
-	if (!element)
-		return;
-	element.classList.remove("dropdownCollapsed");
-	element.classList.add("dropdownExpanded");
-	const inputField = document.getElementById("search");
-	inputField.style.borderBottomLeftRadius = "0px";
-	inputField.style.borderBottomRightRadius = "0px";
-}
-
-const displayDropdownElements = (matches = [], parentDiv) => {
-	while (parentDiv.firstChild) {
-	  parentDiv.removeChild(parentDiv.firstChild);
-	}
-	if (matches.length === 0) {
-		const noMatches = document.createElement("div");
-		noMatches.textContent = "No Matches";
-		noMatches.setAttribute("class", "searchItemName");
-		parentDiv.appendChild(noMatches);
-	} else {
-		matches.forEach(match => searchMatchItem("/static/images/profileIcon.png", match, parentDiv));
+/****************** Modal Dashboard **********************/
+const togglePictureModal = () => {
+	const modalContainer = document.querySelector(".ModalContainer");
+	toggleModal();
+	if (!modalContainer.classList.contains("show")) {
+		resetDragArea();
 	}
 }
 
-const searchMatchItem = async (src, name, parentDiv) => {
-	const fragment = await generator.generateFragment();
-	const picture = fragment.querySelector("#searchItemPicture");
-	if (picture) {
-		picture.setAttribute("src", src);
-		picture.removeAttribute("id");
-	}
-	const itemName = fragment.querySelector("#searchItemName");
-	if (itemName) {
-		itemName.textContent = name;
-		itemName.removeAttribute("id");
-	}
-	generator.appendFragment(fragment, parentDiv);
+const toggleModal = () => {
+	const modalContainer = document.querySelector(".ModalContainer");
+	modalContainer.classList.toggle("show");
 }
 
-const onClickFriendsButton = () => {
-	//GET THE REAL FRIENDS!!!!
-	const friends = fakeFriends; //CHANGE THIS TO REAL FRIENDS!!!!!
-	const friendsDropdown = document.getElementById("friendsDropdown");
-	if (friendsDropdown.classList.contains("friendsDropdownCollapsed")) {
-		friendsDropdown.classList.remove("friendsDropdownCollapsed");
-		friendsDropdown.classList.add("friendsDropdownExpanded");
-		const parentDiv = document.getElementById("friendsDropdown");
-		displayDropdownElements(friends, parentDiv);
-	} else if (friendsDropdown.classList.contains("friendsDropdownExpanded")) {
-		friendsDropdown.classList.remove("friendsDropdownExpanded");
-		friendsDropdown.classList.add("friendsDropdownCollapsed");
-	}
+const resetDragArea = () => {
+	const dragArea = document.querySelector(".dropArea");
+	const img = dragArea.querySelector("#previewUploadedImage");
+	const pElement = dragArea.querySelector("p");
+	const saveButton = document.querySelector("#saveUploadedPictureButton");
+	dragArea.setAttribute("class", "dropArea");
+	saveButton.style.display = "none";
+	img.style.display = "none";
+	pElement.textContent = "Drop the image here or click to upload it";
 }
+
+const setDragAreaInvalid = (message) => {
+	const dragArea = document.querySelector(".dropArea");
+	const pElement = dragArea.querySelector("p");
+	pElement.innerHTML = message;
+	dragArea.setAttribute("class", "dropArea invalid");
+}
+
+const isValidImage = (file) => {
+	const image = file;
+	if (!image) {
+		return false;
+	}
+	const type = image.type;
+	if (type == "image/png" || type == "image/jpeg")
+		return true;
+	return false;
+}
+

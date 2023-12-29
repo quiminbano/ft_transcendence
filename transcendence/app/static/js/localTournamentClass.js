@@ -17,31 +17,24 @@ class LocalTournament {
         this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
     }
     addPlayer(player) {
-		console.log(player);
         if (this.players.length >= this.totalPlayers)
             throw new Error("Lobby is full");
-        if (this.players.find(p => p.name === player.name)) {
-            const errorMessage = "That name already exists";
-            this.errorElement.innerHTML = errorMessage;
+        if (this.isRepeatedPlayer())
             return;
-        }
         this.players.push(player);
         this.errorElement.innerHTML = "";
 		this.inputField.value = "";
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
-		console.log(this.players)
     }
 
     removePlayer(id) {
         if (this.players.length <= 0) return;
-        console.log(`id: ${id}`);
         this.players = this.players.filter(p => p.id !== id);
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
     }
 	editPlayer(id, name) {
-		console.log(id, name)
 		const playerToEdit = this.players.find(p => p.id === id);
         if (playerToEdit) {
             playerToEdit.name = name;
@@ -71,7 +64,7 @@ class LocalTournament {
             fragment.getElementById("index").innerHTML = i + 1;
             fragment.getElementById("playerName").innerHTML = this.players[i].name;
             const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
-            deleteIcon.addEventListener("click", () => this.removePlayer(this.players[i].id));
+            deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
             const editIcon = fragment.querySelector('.unregisterUserButton[alt="Edit user button"]')
             editIcon.addEventListener("click", () => openRegisterPlayerModal({ isNew: false, id: this.players[i].id }));
             div.appendChild(fragment);
@@ -100,5 +93,14 @@ class LocalTournament {
 		} catch (error) {
 			console.log(error);
 		}
-	}
+    }
+    isRepeatedPlayer(name) {
+        if (this.players.find(p => p.name === name))
+            return true;
+        return false;
+    }
+    setErrorMessage(message) {
+        this.errorElement.innerHTML = message;
+    }
+	getName() { return this.name; }
 }

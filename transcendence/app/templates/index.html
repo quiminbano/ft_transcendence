@@ -15,6 +15,12 @@
 	<link rel="stylesheet" href="{% static 'css/tournamentStart.css' %}">
 	<link rel="stylesheet" href="{% static 'css/search.css' %}">
 	<link rel="stylesheet" href="{% static 'css/friends.css' %}">
+	<link rel="stylesheet" href="{% static 'css/pong1v1.css' %}">
+	<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+	<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+	<link rel="stylesheet" href="{% static 'css/usersPage.css' %}">
+	<link rel="stylesheet" href="{% static 'css/remoteTournament.css' %}">
+	<link rel="stylesheet" href="{% static 'css/remoteLobby.css' %}">
 	<link rel="stylesheet"
 		  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
 		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -24,23 +30,33 @@
 	<div id="root">
 		<div id="page-content">
 			{% block content %}
-				{% if content %}
-					{% include content %}
-				{% endif %}
+			{% if content %}
+			{% include content %}
+			{% endif %}
 			{% endblock %}
+		</div>
+		<div id="loadingSpinnerContainer">
+			<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
 		</div>
 	</div>
 	<script src="{% static 'js/fragmentGenerator.js' %}"></script>
 	<script src="{% static 'js/modalClass.js' %}"></script>
 	<script src="{% static 'js/CircleChart.js' %}"></script>
 	<script src="{% static 'js/Stats.js' %}"></script>
+	<script src="{% static 'js/usersPage.js' %}"></script>
+	<script src="{% static 'js/remoteTournament.js' %}"></script>
 	<script src="{% static 'js/Modal.js' %}"></script>
 	<script src="{% static 'js/sideMenu.js' %}"></script>
+	<script src="{% static 'js/Menus.js' %}"></script>
 	<script src="{% static 'js/dashboard.js' %}"></script>
 	<script src="{% static 'js/registration.js' %}"></script>
-	<script src="{% static 'js/pongTournament.js' %}"></script>
+	<script src="{% static 'js/pongTournamentCreation.js' %}"></script>
 	<script src="{% static 'js/localTournamentClass.js' %}"></script>
-	<script src="{% static 'router.js' %}"></script>
+	<script src="{% static 'js/pongTournamentLobby.js' %}"></script>
+	<script src="{% static 'js/pong1v1.js' %}"></script>
 	<script src="{% static 'app.js' %}"></script>
+	<script src="{% static 'router.js' %}"></script>
 </body>
 </html>

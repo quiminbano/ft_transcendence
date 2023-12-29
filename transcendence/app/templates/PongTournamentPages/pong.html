@@ -22,7 +22,7 @@
 							<div class="w-100 d-flex align-items-center justify-content-center">
 								<button
 									class="pongPageButton"
-										onclick="navigateTo('/pong/tournament')"
+										onclick="togglePictureModal()"
 								>Start Tournament</button>
 							</div>
 						</div>
@@ -33,14 +33,14 @@
 						<div class="col-12">
 							<h4>1v1 mode</h4>
 							<p>
-								Embark on an immersive journey into the digital realm with the Virtual 
-								Pong Showdown: Challenge Edition! This adrenaline-pumping experience invites 
-								you and your friends to a head-to-head 1v1 battle in the iconic game of Pong. 
-								Challenge a friend, showcase your virtual paddle skills, and emerge victorious 
+								Embark on an immersive journey into the digital realm with the Virtual
+								Pong Showdown: Challenge Edition! This adrenaline-pumping experience invites
+								you and your friends to a head-to-head 1v1 battle in the iconic game of Pong.
+								Challenge a friend, showcase your virtual paddle skills, and emerge victorious
 								in this thrilling multiplayer extravaganza
 							</p>
 							<div class="w-100 d-flex align-items-center justify-content-center">
-								<button class="pongPageButton">Play now</button>
+								<button class="pongPageButton" onclick="play1v1()">Play now</button>
 							</div>
 						</div>
 					</div>
@@ -49,3 +49,4 @@
 		</div>
 	</div>
 </div>
+{% include "PongTournamentPages/typeModal.html" %}

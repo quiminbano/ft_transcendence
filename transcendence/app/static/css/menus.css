@@ -72,16 +72,18 @@
 .sideMenuNotExpanded {
     transition: all 0.25s linear;
     width: 0px;
+    left: -200px;
 }
 
 .sideMenuExpanded {
     padding: 10px 0px;
     transition: all 0.25s linear;
     width: 175px;
+    left: 0;
 }
 
 #menuHamburger {
-    position: absolute;
+    position: fixed;
     top: 25px;
     margin: auto;
     display: flex;
@@ -145,17 +147,17 @@
     cursor: pointer;
 }
 
-    .sideMenuItem * {
-        overflow: hidden;
-    }
+.sideMenuItem * {
+    overflow: hidden;
+}
 
-    .sideMenuItem:hover {
-        background-color: orangered;
-    }
+.sideMenuItem:hover {
+    background-color: orangered;
+}
 
-    .sideMenuItem p {
-        font-family: PressStart;
-    }
+.sideMenuItem p {
+    font-family: PressStart;
+}
 
 .sideMenuItemIcon {
     max-width: 50px;
@@ -166,9 +168,9 @@
     transition: all 0.25s linear;
 }
 
-    .sideMenuItemIcon:hover {
-        transform: scale(1.05);
-    }
+.sideMenuItemIcon:hover {
+    transform: scale(1.05);
+}
 
 #sideMenuPongIcon {
     content: url(../images/icons8-ping-pong-100.png);
