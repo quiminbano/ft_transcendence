@@ -1,9 +1,9 @@
 import os
-from api.models import CustomUserData
+from api.models import Database
 import base64
 from django.core.files.storage import default_storage
 
-def	stringifyImage(model : CustomUserData):
+def	stringifyImage(model : Database):
     try:
         extension = os.path.splitext(model.avatarImage.url)[1]
         readFile = model.avatarImage.read()

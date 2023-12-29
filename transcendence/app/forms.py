@@ -8,18 +8,18 @@ from api.imageValidation import validateFileType, validationImageSize
 from django.core.files import File
 from django.http import JsonResponse
 
-from api.models import CustomUserData
+from api.models import Database
 
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
-        model = CustomUserData
+        model = Database
         fields = ('email',)
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = CustomUserData
+        model = Database
         fields = ('email',)
 
 
@@ -56,14 +56,14 @@ class SignupForm(CustomUserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
-        new = CustomUserData.objects.filter(username = username)
+        new = Database.objects.filter(username = username)
         if new.count():
             raise ValidationError("User Already Exist")
         return username
 
     def email_clean(self):
         email = self.cleaned_data['email'].lower()
-        new = CustomUserData.objects.filter(email=email)
+        new = Database.objects.filter(email=email)
         if new.count():
             raise ValidationError("Email Already Exist")
         return email
@@ -77,7 +77,7 @@ class SignupForm(CustomUserCreationForm):
         return password2
 
     def save(self, commit = True):
-        user = CustomUserData.objects.create_user(
+        user = Database.objects.create_user(
             self.cleaned_data['username'],
             self.cleaned_data['email'],
             self.cleaned_data['password1']
@@ -130,7 +130,7 @@ class ChangeProfile(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
 
-    def isPasswordValid(self, userModel : CustomUserData):
+    def isPasswordValid(self, userModel : Database):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             print("password1 and password2 does not match")
             return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password2": "New passwords don't match"}}, status=400)
@@ -139,7 +139,7 @@ class ChangeProfile(forms.Form):
             return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password3": "Your current password is not correct"}}, status=400)
         return True, JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
 
-    def save(self, userModel : CustomUserData):
+    def save(self, userModel : Database):
         userModel.username = self.cleaned_data['username']
         userModel.first_name = self.cleaned_data['firstName']
         userModel.last_name = self.cleaned_data['lastName']
@@ -155,7 +155,7 @@ class ProfilePicture(forms.Form):
 
     avatarImage = forms.FileField(validators=[validationImageSize, validateFileType])
 
-    def save(self, userModel : CustomUserData):
+    def save(self, userModel : Database):
         if userModel.avatarImage:
             if default_storage.exists(userModel.avatarImage.name):
                 default_storage.delete(userModel.avatarImage.name)
