@@ -53,15 +53,15 @@ def tournamentDeletePlayer(request):
     print ("method DELETE")
     data = json.loads(request.body)
     print (data)
-    # if "playerID" not in data or "id" not in  data:
-    #     return JsonResponse({'error': 'missing fields in request body'}, status=400)
-    # tournament = Tournament.objects.filter(id=data['id'])
-    # player = Players.objects.filter(id=data['playerID'])
-    # if player.exists() and tournament.exists():
-    #     tournament.first().players.remove(player.first())
-    #     player.first().delete()
-    # else:
-    return JsonResponse({'error': 'player or tournament does not exist'}, status=400)
+    if "id" not in  data:
+        return JsonResponse({'error': 'missing fields in request body'}, status=400)
+    tournament = Tournament.objects.filter(id=data['id'])
+    player = Players.objects.filter(id=data['playerID'])
+    if tournament.exists():
+        tournament.first().players.remove(player.first())
+        player.first().delete()
+    else:
+        return JsonResponse({'error': 'player or tournament does not exist'}, status=400)
 
 
 #==========================================

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .models import Tournament, Players, CustomUserData
-from .tournamentController import unknownMethod, createTurnament, deleteTournament, getTournament, tournamentAddPlayer, tournamentUpdatePlayer
+from .tournamentController import unknownMethod, createTurnament, deleteTournament, getTournament, tournamentAddPlayer, tournamentUpdatePlayer, tournamentDeletePlayer
 import json
 
 
@@ -62,8 +62,8 @@ def tournamentManagerPlayerID(request, id=None):
         match request.method:
             case "PUT":
                 return tournamentUpdatePlayer(request)
-            # case "DELETE":
-            #     return deleteTournament(existing_tournament)
+            case "DELETE":
+                return tournamentDeletePlayer(request)
             case _:
                 return unknownMethod()
     else:
