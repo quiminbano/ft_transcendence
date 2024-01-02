@@ -25,9 +25,12 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('coallition', 'foragers')
-        file = open("app/static/images/profileIconWhite.png", "rb")
-        djangoFile = File(file)
-        extra_fields.setdefault('avatarImage', djangoFile)
+        try:
+            file = open("app/static/images/profileIconWhite.png", "rb")
+            djangoFile = File(file)
+            extra_fields.setdefault('avatarImage', djangoFile)
+        except FileNotFoundError:
+            extra_fields.setdefault('avatarImage', None)
         if extra_fields.get('is_staff') is not True:
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
