@@ -94,8 +94,10 @@ const savePicture = async (file) => {
 		if (response.ok) {
 			const data = await response.json();
 			const profilePicture = document.getElementById("dashboardUserProfilePic");
+			const sideMenuPic = document.getElementById("sideMenuProfilePic");
 			const url = data.source;
 			profilePicture.setAttribute("src", url);
+			sideMenuPic.setAttribute("src", url);
 			pElement.textContent = "Completed";
 			dragArea.setAttribute("class", "dropArea");
 		} else {
