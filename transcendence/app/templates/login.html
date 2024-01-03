@@ -1,43 +1,43 @@
 <div class="registerContainer">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12">
-				<h1 class="registerTitle">Login</h1>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-12 col-md-6 offset-md-3">
-				<p id="loginErrorMessage"></p>
-				<form onsubmit="submitLogin(event)" method="post" action="{% url 'postLogin' %}">
-					{% csrf_token %}
-					<div class="form-group">
-						<label for="{{ form.username.id_for_label}}" class="loginLabel" >Username:</label>
-						{{ form.username }}
+				<div id="sign-up-box">
+					<div class="row">
+						<div class="col-12">
+							<h1 class="registerTitle">Login</h1>
+						</div>
 					</div>
-					<div class="form-group" id="loginPasswordGroup">
-						<label for="{{ form.password.id_for_label}}" class="loginLabel" >Password:</label>
-						{{ form.password }}
+					<p id="loginErrorMessage"></p>
+					<form onsubmit="submitLogin(event)" method="post" action="{% url 'postLogin' %}">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="{{ form.username.id_for_label}}" class="loginLabel">Username:</label>
+							{{ form.username }}
+						</div>
+						<div class="form-group" id="loginPasswordGroup">
+							<label for="{{ form.password.id_for_label}}" class="loginLabel">Password:</label>
+							{{ form.password }}
+						</div>
+						<button type="submit"
+								class="btn btn-success w-100 mt-5">
+							Login
+						</button>
+					</form>
+					<div class="row mt-2">
+						<div class="col-12 col-md-6 offset-md-3">
+							<a href="signup"
+							   onclick="route()"
+							   class="registerLink">Dont have accout yet? Register here</a>
+						</div>
+						<div class="col-md-4 offset-4">
+							<button class="btn btn-danger w-100"
+									onclick="navigateTo('/')">
+								Cancel
+							</button>
+						</div>
 					</div>
-					<button
-						type="submit"
-						class="btn btn-success w-100 mt-5"
-					>Login</button>
-				</form>
-			</div>
-		</div>
-		<div class="row mt-2">
-			<div class="col-12 col-md-6 offset-md-3">
-				<a
-					href="signup"
-					onclick="route()"
-					class="registerLink"
-				>Dont have accout yet? Register here</a>
-			</div>
-			<div class="col-md-4 offset-4">
-				<button class="btn btn-danger w-100"
-						onclick="navigateTo('/')">
-					Cancel
-				</button>
+				</div>
 			</div>
 		</div>
 	</div>
