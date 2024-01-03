@@ -30,14 +30,43 @@
 						class="btn btn-success w-100"
 						id="playNextGameButton"
 					>Play</button>
+
+					<button
+						onclick="toggleModal()"
+						class="btn btn-danger"
+						id="cancelLocalTournamentButton"
+					>Cancel tournament</button>
 				</div>
 			</div>
 		</div>
     </div>
-	<div id="loadingSpinnerContainer">
-		<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>
+
+	<div class="ModalContainer container-fluid">
+
+		<div class="ModalContainerBG" onclick="toggleModal()"></div>
+		<div class="row">
+			<div class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2">
+				<div class="d-flex align-items-center justify-content-center flex-column w-100 pongModalBox">
+					<div class="row">
+						<div class="col-12" style="padding: 10px 15px">
+							<p style="text-align: center">Are you sure you want to cancel the tournament? You will loose all the data</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<button
+								class="btn btn-success"
+								onclick="cancelLocalTournament()"
+							>Confirm</button>
+							<button
+								class="btn btn-danger"
+								onclick="toggleModal()"
+							>Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
 	</div>
+
 </div>
 <div id="bracketContent"></div>
