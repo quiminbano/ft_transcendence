@@ -30,7 +30,7 @@
 <div id="sideMenuContainer" class="menu sideMenuNotExpanded">
     <div class="sideMenuHeader">
         <img alt="profile picture"
-             src="../static/images/profileIcon.png"
+             src={{source}}
              id="sideMenuProfilePic" />
         {% if user.is_authenticated %}
         <p id="sideMenuProfileName">{{user.get_username}}</p>
