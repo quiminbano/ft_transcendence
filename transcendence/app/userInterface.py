@@ -18,8 +18,10 @@ def dashboard(request):
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return loginUser(request)
+    source = stringifyImage(request.user)
     context = {
-        "content": "usersPage.html"
+        "content": "usersPage.html",
+        "source": source
     }
     return render(request, "index.html", context)
 
