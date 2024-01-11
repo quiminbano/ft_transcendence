@@ -1,13 +1,14 @@
 from django.http import JsonResponse, QueryDict
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
-from .models import Tournament, Players, CustomUserData
+from .models import Tournament, Players, CustomUserData, CustomUserManager
 from .tournamentController import unknownMethod, createTurnament, deleteTournament, getTournament, tournamentAddPlayer, tournamentUpdatePlayer, tournamentDeletePlayer
 from app.forms import ProfilePicture
 from app.userInterface import loginUser
 from django.shortcuts import render
 from app.utils import stringifyImage
 import json
+
 
 
 #==========================================
@@ -33,8 +34,10 @@ def profilePicture(request):
 def tournamentManager(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
-    existing_tournament = Tournament.objects.filter(uuid=request.user.uuid)
-    if existing_tournament.exists():
+    # existing_tournament = Tournament.objects.filter(uuid=request.user.uuid)
+    print("tournamentManager")
+    existing_tournament = request.user.tournament
+    if existing_tournament is not None:
         # Call the function from the switch dictionary
         print("EXIST")
         match request.method:
@@ -48,6 +51,8 @@ def tournamentManager(request):
         if request.method == "POST":
             print("NO EXIST")
             return createTurnament(request)
+        else:
+            return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
         
 
 #==========================================
@@ -55,6 +60,7 @@ def tournamentManager(request):
 #==========================================
 def tournamentManagerID(request, id=None):
     existing_tournament = Tournament.objects.filter(id=id)
+    print("tournamentManagerID")
     if existing_tournament.exists():
         # Call the function from the switch dictionary
         print("EXIST")
@@ -74,6 +80,7 @@ def tournamentManagerID(request, id=None):
 #         Tournament Player Management
 #==========================================
 def tournamentManagerPlayerID(request, id=None):
+    print("tournamentManagerPlayerID")
     player = Players.objects.filter(id=id).first()
     if player is not None:
         print("Player ID EXIST")
@@ -81,7 +88,7 @@ def tournamentManagerPlayerID(request, id=None):
             case "PUT":
                 return tournamentUpdatePlayer(request)
             case "DELETE":
-                return tournamentDeletePlayer(request)
+                return tournamentDeletePlayer(player)
             case _:
                 return unknownMethod()
     else:
