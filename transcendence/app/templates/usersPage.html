@@ -5,68 +5,11 @@
 			<div class="friendsBox">
 				<div class="row">
 					<div class="col-12 col-md-5 friendInfoBox">
-						<div class="row">
-							<div class="col-12">
-								<div class="personalDiv">
-									<div id="personalDivPicDiv">
-										<img
-											alt="friend picture"
-											id="friendAvatar"
-											src="/static/images/profileIcon.png"
-										/>
-										<img
-											alt="friend coallition logo"
-											id="friendCoallitionLogo"
-											src="/static/images/buildersSymbol.svg"
-										/>
-									</div>
-									<p>Andre</p>
-									<p id="userOnlineStatus"><span></span>Online</p>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<button class="btn btn-secondary w-100 friendButton">Challenge for pong</button>
-								<button class="btn btn-dark w-100 friendButton">Challenge for snake</button>
-								<button class="btn btn-danger w-100 friendButton">Remove as friend</button>
-							</div>
-						</div>
+						{% include "UsersPage/infoArea.html" %}
 					</div>
 					<div class="col-12 col-md-7 friendInfoBox">
-						<div class="row">
-							<div class="col-12">
-								<div class="row">
-									<div class="col-12 col-md-6">
-										<div class="d-flex flex-column justify-content-center align-items-center w-100">
-											<h6>Wins Percentage</h6>
-											<div id="userWinsPercentDiv"></div>
-										</div>
-									</div>
-									<div class="col-12 col-md-6">
-										<div class="d-flex flex-column justify-content-start align-items-center w-100">
-											<div class="friendsIndividualStat">
-												<p class="friendsIndividualStatTitle">Total games</p>
-												<p class="friendsIndividualStatValue">100</p>
-											</div>
-											<div class="friendsIndividualStat">
-												<p class="friendsIndividualStatTitle">Total wins</p>
-												<p class="friendsIndividualStatValue">85</p>
-											</div>
-											<div class="friendsIndividualStat">
-												<p class="friendsIndividualStatTitle">Remote tournament wins</p>
-												<p class="friendsIndividualStatValue">1</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								LAST GAMES!!!!!!!
-							</div>
-						</div>
+						{% include "UsersPage/statsArea.html" %}
+						{% include "UsersPage/lastGamesArea.html" %}
 					</div>
 				</div>
 			</div>

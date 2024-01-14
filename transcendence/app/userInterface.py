@@ -19,9 +19,24 @@ def usersPage(request, name):
     if not request.user.is_authenticated:
         return loginUser(request)
     source = stringifyImage(request.user)
+    #TODO: change this data to the real user data!!!!!!!!!
+    lastGames = []
+    info = {
+        "username": name,
+        "online": False,
+        "isFriend": True
+    }
+    stats = {
+        "totalGames": 100,
+        "totalWins": 85,
+        "totalTournamentWins": 1,
+    }
     context = {
         "content": "usersPage.html",
-        "source": source
+        "source": source,
+        "info": info,
+        "lastGames": lastGames,
+        "stats": stats
     }
     return render(request, "index.html", context)
 
