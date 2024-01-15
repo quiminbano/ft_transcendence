@@ -427,4 +427,6 @@ yarn-error.log*
 migrations/
 __tests__
 *.test.js
-api/user/*
+api/user/*.png
+api/user/*.jpg
+api/user/*.jpeg
