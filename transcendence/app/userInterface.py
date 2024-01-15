@@ -38,12 +38,15 @@ def usersPage(request, name):
         "totalWins": 85,
         "totalTournamentWins": 1,
     }
+    client = {
+        "info": info,
+        "stats": stats,
+        "lastGames": lastGames
+    }
     context = {
         "content": "usersPage.html",
         "source": source,
-        "info": info,
-        "lastGames": lastGames,
-        "stats": stats
+        "client": None
     }
     return render(request, "index.html", context)
 

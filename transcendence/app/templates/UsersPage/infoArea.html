@@ -9,8 +9,8 @@
                      id="friendCoallitionLogo"
                      src="/static/images/buildersSymbol.svg" />
             </div>
-            <p id="userName">{{info.username}}</p>
-            {% if info.online %}
+            <p id="userName">{{client.info.username}}</p>
+            {% if client.info.online %}
             <p id="userOnlineStatus"><span style="background-color: green"></span>Online</p>
             {% else %}
             <p id="userOnlineStatus"><span style="background-color: red"></span>Offline</p>
@@ -22,7 +22,7 @@
     <div class="col-12">
         <button class="btn btn-secondary w-100 friendButton">Challenge for pong</button>
         <button class="btn btn-dark w-100 friendButton">Challenge for snake</button>
-        {% if info.isFriend %}
+        {% if client.info.isFriend %}
         <button class="btn btn-danger w-100 friendButton">Remove as friend</button>
         {% else %}
         <button class="btn btn-success w-100 friendButton">Add as friend</button>

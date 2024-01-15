@@ -103,14 +103,15 @@
 /*Last game item*/
 
 .lastGameItem {
-	padding: 5px 10px;
+	padding: 5px 25px;
 	margin: 5px auto;
 	border: 2px solid black;
 	border-radius: 5px;
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
+	width: 100%;
 }
 
 .lastGameItem .lastGameItemPicture,
@@ -118,15 +119,26 @@
 	width: 60px;
 	height: 60px
 }
+.lastGameItem .lastGameItemPicture {
+	margin-right: 10px;
+}
 
 .lastGameItemSubdiv,
 .lastGameItemSubdiv-Info {
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
 	align-items: center;
 }
+.lastGameItemSubdiv-Info {
+	justify-content: flex-start;
+}
+.lastGameItemSubdiv-Info {
+	justify-content: center;
+}
 
-.userInfoArea {
-	border: 1px solid red;
+@media only screen and (max-width: 576px) {
+	.lastGameItem,
+	.lastGameItemSubdiv-Info {
+		flex-direction: column;
+	}
 }

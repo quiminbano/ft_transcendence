@@ -2,6 +2,10 @@
 <div class="container-fluid" id="friendsPageContainer">
 	<div class="row align-items-center" style="height: 100vh;">
 		<div class="col-12 col-xl-8 offset-xl-2 justify-content-center">
+			{% if client is None %}
+			<h3>That user does not exist</h3>
+			<button class="btn btn-secondary" onclick="goBack()">Go back</button>
+			{% else %}
 			<div class="friendsBox">
 				<div class="row">
 					<div class="col-12 col-md-5 friendInfoBox">
@@ -13,6 +17,7 @@
 					</div>
 				</div>
 			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        {% if stats is None %}
+        {% if client.stats is None %}
         <div class="row">
             <div class="col-12 col-md-6">
                 No Info Yet
@@ -18,15 +18,15 @@
                 <div class="d-flex flex-column justify-content-start align-items-center w-100">
                     <div class="friendsIndividualStat">
                         <p class="friendsIndividualStatTitle">Total games</p>
-                        <p class="friendsIndividualStatValue" id="totalGames">{{stats.totalGames}}</p>
+                        <p class="friendsIndividualStatValue" id="totalGames">{{client.stats.totalGames}}</p>
                     </div>
                     <div class="friendsIndividualStat">
                         <p class="friendsIndividualStatTitle">Total wins</p>
-                        <p class="friendsIndividualStatValue" id="totalWins">{{stats.totalWins}}</p>
+                        <p class="friendsIndividualStatValue" id="totalWins">{{client.stats.totalWins}}</p>
                     </div>
                     <div class="friendsIndividualStat">
                         <p class="friendsIndividualStatTitle">Remote tournament wins</p>
-                        <p class="friendsIndividualStatValue" id="totalTournamentWins">{{stats.totalTournamentWins}}</p>
+                        <p class="friendsIndividualStatValue" id="totalTournamentWins">{{client.stats.totalTournamentWins}}</p>
                     </div>
                 </div>
             </div>
