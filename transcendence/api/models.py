@@ -7,6 +7,23 @@ from .imageValidation import validateFileType, validationImageSize, defineNameIm
 from django.core.files import File
 
 
+class Players(models.Model):
+    name = models.CharField(max_length=255)
+
+class Tournament(models.Model):
+    STATE_CHOICES = [
+        ('P', 'Pending'),
+        ('A', 'Active'),
+        ('F', 'Finished'),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    uuid = models.UUIDField()
+    tournamentName = models.CharField(max_length=255)
+    amount = models.IntegerField()
+    sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
+    players = models.ManyToManyField(Players, related_name='tournaments')
+
 class DatabaseManager(BaseUserManager):
 
     def create_user(self, username, email, password=None, **extra_fields):
@@ -38,16 +55,13 @@ class DatabaseManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-
-
-
-
 class Database(AbstractUser):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     coallition = models.CharField()
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
+    tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
 
     objects = DatabaseManager()
 
@@ -57,19 +71,4 @@ class Database(AbstractUser):
     def __str__(self):
         return self.username
 
-class Players(models.Model):
-    name = models.CharField(max_length=255)
 
-class Tournament(models.Model):
-    STATE_CHOICES = [
-        ('P', 'Pending'),
-        ('A', 'Active'),
-        ('F', 'Finished'),
-    ]
-
-    id = models.AutoField(primary_key=True)
-    uuid = models.UUIDField()
-    name = models.CharField(max_length=255)
-    amount = models.IntegerField()
-    sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
-    players = models.ManyToManyField(Players, related_name='tournaments')
