@@ -1,12 +1,17 @@
 from django.shortcuts import render
 from .userInterface import loginUser
+from .utils import stringifyImage
 
 def pongInterface(request):
     if not request.user.is_authenticated:
         return loginUser(request)
     match request.path:
         case "/pong":
-            context = {"content": "PongTournamentPages/pong.html"}
+            source = stringifyImage(request.user)
+            context = {
+                "content": "PongTournamentPages/pong.html",
+                "source": source
+            }
         case "/pong/1v1":
             context = {"content": "Pong1v1pages/pongOneVsOne.html"}
         case "/pong/tournament":

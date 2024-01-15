@@ -9,6 +9,10 @@
 .nextGameDiv{
 	margin-top: 10vh;
 }
+#nextHomePlayerName,
+#nextAwayPlayerName {
+	font-size: 20px;
+}
 
 #pongTournamentStart * {
 	font-family: PressStart;
@@ -34,10 +38,6 @@
 }
 #nextGameOpponentsDiv {
 	margin: 50px auto;
-}
-#nextHomePlayerName,
-#nextAwayPlayerName {
-	font-size: 3rem;
 }
 
 .nextGameButton {
