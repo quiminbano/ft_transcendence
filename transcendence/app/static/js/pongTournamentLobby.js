@@ -19,7 +19,6 @@ const loadTournamentLobby = async () => {
 		}
 	});
 
-	//TODO: UPDATE THE MATCHES AND MOVE TO THE TOURNAMENT BOARD!!!!!
 	if (tournament.state === "A") {
 		await navigateTo(`/pong/tournament/${tournament.id}/start`);
 		await loadStartTournament();
