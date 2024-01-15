@@ -74,16 +74,21 @@ const addPlayerToDatabase = async (username) => {
 	}
 	const url = "/api/tournament/player"
 	try {
+		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
 		const response = await postRequest(url, data);
 		if (response.succeded) {
+			addNewPlayerErrorMessage.innerText = "";
 			tournament.addPlayer({ name: response.player.name, id: response.player.id });
 			closeRegisterPlayerModal();
 		} else {
-			console.log("Response not ok")
+			throw response;
 		}
 	} catch (error) {
+		addNewPlayerErrorMessage.innerText = "Failed to add player";
 		console.log(error);
 	}
+	tournament.addPlayer({ name: username, id: 0 });
+	closeRegisterPlayerModal();
 }
 
 const addPlayer = (event) => {
