@@ -18,3 +18,7 @@ const generateTournamentSchedule = () => {
 	tournament.setSchedule(schedule);
 }
 
+const startLocalGame = () => {
+	navigateTo("pong/tournament/localTournament");
+}
+

@@ -37,3 +37,9 @@ def pongInterfaceWithId(request, id : int):
     else:
         context = {"content": "index.html"}
     return render(request, "index.html", context)
+
+def pongTournamentGame(request):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    context = {}
+    return render(request, "localPong.html", context)
