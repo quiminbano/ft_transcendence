@@ -4,6 +4,9 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding: 30px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .nextGameDiv{

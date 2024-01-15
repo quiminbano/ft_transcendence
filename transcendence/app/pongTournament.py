@@ -13,7 +13,7 @@ def pongInterface(request):
                 "source": source
             }
         case "/pong/1v1":
-            context = {"content": "Pong1v1pages/pongOneVsOne.html"}
+            context = {"content": "Pong1v1pages/oneVoneRemote.html"}
         case "/pong/tournament":
             context = {"content": "PongTournamentPages/tournamentCreation.html"}
         case "/pong/remoteTournament":
