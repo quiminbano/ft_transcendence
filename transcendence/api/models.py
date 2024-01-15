@@ -24,7 +24,7 @@ class Tournament(models.Model):
     sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
     players = models.ManyToManyField(Players, related_name='tournaments')
 
-class CustomUserManager(BaseUserManager):
+class DatabaseManager(BaseUserManager):
 
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -54,7 +54,8 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(username, email, password, **extra_fields)
 
-class CustomUserData(AbstractUser):
+
+class Database(AbstractUser):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
@@ -62,7 +63,7 @@ class CustomUserData(AbstractUser):
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
 
-    objects = CustomUserManager()
+    objects = DatabaseManager()
 
     def get_coallition(self):
         return self.coallition

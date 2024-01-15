@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
-from .models import Tournament, Players, CustomUserData
+from .models import Tournament, Players, Database
 import json
 
 #==========================================
