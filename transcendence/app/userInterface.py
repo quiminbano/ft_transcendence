@@ -20,7 +20,14 @@ def usersPage(request, name):
         return loginUser(request)
     source = stringifyImage(request.user)
     #TODO: change this data to the real user data!!!!!!!!!
-    lastGames = []
+    lastGames = [
+    {
+        "username": "affmde",
+        "picture": source,
+        "type": "pong",
+        "score": "3 - 2"
+    }
+    ]
     info = {
         "username": name,
         "online": False,
