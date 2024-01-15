@@ -31,7 +31,7 @@ def usersPage(request, name):
     info = {
         "username": name,
         "online": False,
-        "isFriend": True
+        "isFriend": False
     }
     stats = {
         "totalGames": 100,
@@ -46,7 +46,7 @@ def usersPage(request, name):
     context = {
         "content": "usersPage.html",
         "source": source,
-        "client": None
+        "client": client
     }
     return render(request, "index.html", context)
 
