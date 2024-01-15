@@ -1,7 +1,7 @@
 from django.http import JsonResponse, QueryDict
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
-from .models import Tournament, Players, CustomUserData
+from .models import Tournament, Players, Database
 from app.forms import ProfilePicture
 from app.userInterface import loginUser
 from django.shortcuts import render

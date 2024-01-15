@@ -7,7 +7,7 @@ from .imageValidation import validateFileType, validationImageSize, defineNameIm
 from django.core.files import File
 
 
-class CustomUserManager(BaseUserManager):
+class DatabaseManager(BaseUserManager):
 
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -42,14 +42,14 @@ class CustomUserManager(BaseUserManager):
 
 
 
-class CustomUserData(AbstractUser):
+class Database(AbstractUser):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     coallition = models.CharField()
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
 
-    objects = CustomUserManager()
+    objects = DatabaseManager()
 
     def get_coallition(self):
         return self.coallition
