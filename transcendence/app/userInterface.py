@@ -12,7 +12,8 @@ def dashboard(request):
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source}
+    is42 = request.user.is42
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is42" : is42,}
     return render(request, "index.html", context)
 
 def usersPage(request, name):
@@ -20,6 +21,7 @@ def usersPage(request, name):
         return loginUser(request)
     source = stringifyImage(request.user)
     #TODO: change this data to the real user data!!!!!!!!!
+    is42 = request.user.is42
     lastGames = [
     {
         "username": "affmde",
@@ -46,7 +48,8 @@ def usersPage(request, name):
     context = {
         "content": "usersPage.html",
         "source": source,
-        "client": client
+        "client": client,
+        "is42" : is42,
     }
     return render(request, "index.html", context)
 
@@ -145,6 +148,8 @@ def putSettings(request):
 def settings(request):
     if not request.user.is_authenticated:
        return loginUser(request)
+    if request.user.is42 == True:
+       return dashboard(request)
     match request.method:
         case "GET":
             return getSettings(request)

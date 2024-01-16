@@ -7,10 +7,12 @@ def pongInterface(request):
         return loginUser(request)
     match request.path:
         case "/pong":
+            is42 = request.user.is42
             source = stringifyImage(request.user)
             context = {
                 "content": "PongTournamentPages/pong.html",
-                "source": source
+                "source": source,
+                "is42" : is42,
             }
         case "/pong/1v1":
             context = {"content": "Pong1v1pages/pongOneVsOne.html"}
