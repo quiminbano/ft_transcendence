@@ -8,6 +8,9 @@ const loadTournamentLobby = async () => {
 	const data = loadTournamentLobbyInfo.tournament;
 	tournament = createTournamentInstance(data.name, data.amount, data.id);
 	tournament.setState(data.state);
+
+	//TODO: MAKE SURE DATABASE RETURNS THE STATE ACTIVE IF TOURNAMENT AS STARTED ALREADY!!!!
+
 	data.players.forEach(player => {
 		try {
 			tournament.addPlayer({ name: player.name, id: player.id });
@@ -19,6 +22,7 @@ const loadTournamentLobby = async () => {
 	if (tournament.state === "A") {
 		await navigateTo(`/pong/tournament/${tournament.id}/start`);
 		await loadStartTournament();
+		//TODO: DATABASE SHOULD RETURN MATCHES AS WELL!!!!
 		data.matches.forEach(match => tournament.schedule.editMatch(match.id, match));
 	}
 }
@@ -70,16 +74,21 @@ const addPlayerToDatabase = async (username) => {
 	}
 	const url = `/api/tournament/${data.id}`
 	try {
+		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
 		const response = await postRequest(url, data);
 		if (response.succeded) {
+			addNewPlayerErrorMessage.innerText = "";
 			tournament.addPlayer({ name: response.player.name, id: response.player.id });
 			closeRegisterPlayerModal();
 		} else {
-			console.log("Response not ok")
+			throw response;
 		}
 	} catch (error) {
+		addNewPlayerErrorMessage.innerText = "Failed to add player";
 		console.log(error);
 	}
+	tournament.addPlayer({ name: username, id: 0 });
+	closeRegisterPlayerModal();
 }
 
 const addPlayer = (event) => {
