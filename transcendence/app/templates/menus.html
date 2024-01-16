@@ -37,11 +37,11 @@
         {% endif %}
     </div>
     <div class="mainItems">
-        <div class="sideMenuItem">
+        <div class="sideMenuItem" onclick="navigateTo('/pong')">
             <img class="sideMenuItemIcon"
                  alt="Pong"
                  id="sideMenuPongIcon"
-                 onclick="navigateTo('/pong')" />
+            />
             <p>Pong</p>
         </div>
         <div class="sideMenuItem">
@@ -50,11 +50,10 @@
                  id="sideMenuSnakeIcon" />
             <p>Snake</p>
         </div>
-        <div class="sideMenuItem">
+        <div class="sideMenuItem" onclick="navigateTo('/')">
             <img id="sideMenuDashboardIcon"
                  class="sideMenuItemIcon"
                  alt="Dashboard"
-                 onclick="navigateTo('/')"
             />
             <p>Dashboard</p>
         </div>

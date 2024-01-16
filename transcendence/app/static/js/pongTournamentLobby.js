@@ -68,7 +68,7 @@ const addPlayerToDatabase = async (username) => {
 		player: username,
 		id: tournament.id
 	}
-	const url = "/api/tournament/player"
+	const url = `/api/tournament/${data.id}`
 	try {
 		const response = await postRequest(url, data);
 		if (response.succeded) {
