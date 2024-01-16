@@ -9,7 +9,42 @@ from django.shortcuts import render
 from app.utils import stringifyImage
 import json
 
+#==========================================
+#         USER GET
+#==========================================
+def getUser(request):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    if request.method == 'GET':
+        user = request.user
+        user_dict = model_to_dict(user)
+        if user_dict.get('avatarImage'):
+            user_dict['avatarImage'] = user.avatarImage.url if user.avatarImage else None
+            user_dict.pop('password', None)
 
+        user_data = Database.objects.filter(username="admin").first()
+    return JsonResponse(user_dict, safe=False)
+
+#==========================================
+#         USER PUT
+#==========================================
+def putUser(request):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    user = request.user
+    user.username = "test"
+    user.save()
+    return JsonResponse({"message":"Success"}, safe=False)
+
+#==========================================
+#         USER DELETE
+#==========================================
+def deleteUser(request):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    user = request.user
+    user.delete()
+    return JsonResponse({"message":"Success"}, safe=False)
 
 #==========================================
 #          Profile Picture
@@ -45,6 +80,10 @@ def tournamentManager(request):
                 return getTournament(existing_tournament)
             case "DELETE":
                 return deleteTournament(existing_tournament)
+            case "POST":
+                print("DEL_POST")
+                deleteTournament(existing_tournament)
+                return createTurnament(request)
             case _:
                 return unknownMethod()
     else:
@@ -79,14 +118,30 @@ def tournamentManagerID(request, id=None):
 #==========================================
 #         Tournament Player Management
 #==========================================
+def tournamentPlayer(request):
+    print("tournamentPlayer")
+    data = json.loads(request.body)
+    print(data)
+    print(request.method)
+    match request.method:
+        case "PUT":
+            return(tournamentUpdatePlayer(request))
+        case _:
+            return unknownMethod()
+    return JsonResponse({'error': 'player does not exist'}, status=400)
+
+
+
+
+#==========================================
+#         Tournament Player ID Management
+#==========================================
 def tournamentManagerPlayerID(request, id=None):
     print("tournamentManagerPlayerID")
     player = Players.objects.filter(id=id).first()
     if player is not None:
         print("Player ID EXIST")
         match request.method:
-            case "PUT":
-                return tournamentUpdatePlayer(request)
             case "DELETE":
                 return tournamentDeletePlayer(player)
             case _:

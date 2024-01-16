@@ -9,7 +9,7 @@ import json
 def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
-    coallition = request.user.get_coallition()
+    coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source}
