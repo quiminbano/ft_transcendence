@@ -24,6 +24,6 @@ const cancelLocalTournament = () => {
 }
 
 const startLocalGame = () => {
-	navigateTo("pong/tournament/localTournament");
+	navigateTo("/pong/tournament/localTournament");
 }
 

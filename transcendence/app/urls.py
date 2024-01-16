@@ -18,7 +18,7 @@ urlpatterns = [
     path("postLogin", views.userInterface.loginUser, name="postLogin"),
     path("postSignup", views.userInterface.signup, name="postSignup"),
 	path("users/<str:name>", views.userInterface.usersPage, name="friendsPage"),
-	path("pong/tournament/localTournament>", views.pongTournament.pongTournamentGame, name="localTournament"),
+	path("pong/localGame", views.pongTournament.pongTournamentGame, name="localTournament"),
 
 	path("getDoc/registerPlayer", views.getRegisterPlayersTemplate, name="registerPlayerTemplate"),
 	path("getDoc/circleChart", views.getCircleChartTemplate, name="circleChartTemplate"),
