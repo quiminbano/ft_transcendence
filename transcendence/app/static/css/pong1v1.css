@@ -1,4 +1,59 @@
 .oneVoneModeArea {
 	background-color: white;
 	font-family: PressStart;
+	padding: 20px 30px;
+	border: 3px solid black;
+	text-align: center;
+}
+.oneVoneModeArea p,
+.oneVoneModeArea h3 {
+	color: black;
+}
+.oneVoneModeArea h3 {
+	margin-bottom: 25px;
+}
+.oneVoneModeArea p {
+	text-align: justify;
+	font-size: 12px;
+	line-height: 2;
+}
+
+#oneVoneMatchmakingModal {
+	background-image: url(https://us.123rf.com/450wm/diy13/diy131810/diy13181000253/109500360-table-tennis-racket-and-ball-on-blue-table-sports-competitions-in-table-tennis-retro-style-photo.jpg?ver=6);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#matchmakingBox,
+#matchmakingBoxActive,
+#matchmakingBoxNonActive {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+#matchmakingBox {
+	padding: 20px 40px;
+}
+
+#searchingPlayersText {
+	color: white;
+	font-size: 20px;
+	text-align: center;
+}
+
+#searchingGif {
+	width: 350px;
+	height: 350px;
+}
+
+.cancelMatchmakingButton {
+	margin-top: 50px;
+	position: relative;
+	align-self: self-end;
+}
+
+#matchmakingBoxNonActive p {
+	color: whitesmoke;
+	font-size: 20px;
 }
