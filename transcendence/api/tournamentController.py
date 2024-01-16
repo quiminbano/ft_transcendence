@@ -32,7 +32,7 @@ def tournamentAddPlayer(request, tournament):
     if "player" not in data:
         return JsonResponse({'error': 'missing fields in request body'}, status=400)
     player = Players.objects.create(name=data['player'])
-    tournament.players.add(player)
+    tournament.first().players.add(player)
     playerdict = model_to_dict(player)
     return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
 
@@ -51,10 +51,11 @@ def tournamentUpdatePlayer(request):
 
 def tournamentDeletePlayer(player):
     print ("method DELETE")
-    tournament = Tournament.objects.filter(id=player.id)
+    tournament = Tournament.objects.filter(players=player)
     if tournament.exists():
         tournament.first().players.remove(player)
         player.delete()
+        print("SUCCESS!")
         return JsonResponse({'succes!': 'player got removed'}, status=200)
     else:
         return JsonResponse({'error': 'player or tournament does not exist'}, status=400)
@@ -80,6 +81,8 @@ def getTournament(tournament):
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament already exist"), status=200)
 
 def deleteTournament(tournament):
+    for TournamentPlayer in tournament.players.all():
+        TournamentPlayer.delete()
     tournament.delete()
     print("REMOVE tour")
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)

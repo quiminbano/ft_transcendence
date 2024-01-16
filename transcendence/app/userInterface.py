@@ -9,7 +9,7 @@ import json
 def dashboard(request):
     if not request.user.is_authenticated:
         return loginUser(request)
-    coallition = request.user.get_coallition()
+    coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source}
@@ -18,8 +18,35 @@ def dashboard(request):
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return loginUser(request)
+    source = stringifyImage(request.user)
+    #TODO: change this data to the real user data!!!!!!!!!
+    lastGames = [
+    {
+        "username": "affmde",
+        "picture": source,
+        "type": "pong",
+        "score": "3 - 2"
+    }
+    ]
+    info = {
+        "username": name,
+        "online": False,
+        "isFriend": False
+    }
+    stats = {
+        "totalGames": 100,
+        "totalWins": 85,
+        "totalTournamentWins": 1,
+    }
+    client = {
+        "info": info,
+        "stats": stats,
+        "lastGames": lastGames
+    }
     context = {
-        "content": "usersPage.html"
+        "content": "usersPage.html",
+        "source": source,
+        "client": client
     }
     return render(request, "index.html", context)
 
