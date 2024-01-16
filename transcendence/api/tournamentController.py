@@ -81,7 +81,7 @@ def getTournament(tournament):
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament already exist"), status=200)
 
 def deleteTournament(tournament):
-    for TournamentPlayer in tournament.first().players.all():
+    for TournamentPlayer in tournament.players.all():
         TournamentPlayer.delete()
     tournament.delete()
     print("REMOVE tour")
