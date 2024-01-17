@@ -1,5 +1,14 @@
 let bracket;
+let contentManager;
+const localTournamentScenes = ["dashboard", "game", "endGame"];
 const loadStartTournament = async () => {
+	const dashboardContent = {
+		name: "dashboard",
+		element: document.getElementById("localTournamentDashboardContent")
+	}
+	contentManager = new ContentDisplayManager(dashboardContent);
+	contentManager.addContent("game", document.getElementById("localTournamentGameContent"));
+	console.log(contentManager.contentList);
 	await createBracket();
 	generateTournamentSchedule();
 }
@@ -24,6 +33,20 @@ const cancelLocalTournament = () => {
 }
 
 const startLocalGame = () => {
-	navigateTo("/pong/tournament/localTournament");
+	contentManager.setActive("game");;
+	countdown(3);
+}
+
+const countdown = (seconds) => {
+	const gameCountdownText = document.getElementById("gameCountdownText");
+	gameCountdownText.innerText = seconds;
+	if (seconds > 0) {
+		setTimeout(() => {
+			countdown(seconds - 1);
+		}, 1000);
+	} else {
+		gameCountdownText.style.display = "none";
+		loadLocalGame();
+	}
 }
 

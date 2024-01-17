@@ -14,3 +14,19 @@ canvas {
 	justify-content: center;
 	align-items: center;
 }
+#gameCountdownText {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	text-align: center;
+	color: whitesmoke;
+	font-size: 75px;
+	font-family: PressStart;
+	animation-name: timerAnim;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+@keyframes timerAnim {
+	from {opacity: 0; transform:scale(0.1)}
+	to {opacity: 1; transform:scale(1)}
+}

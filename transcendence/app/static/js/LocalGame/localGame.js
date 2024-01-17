@@ -1,5 +1,4 @@
 const loadLocalGame = () => {
-	console.log("loaded local game");
 	const canvas = document.getElementById("pongCanvas");
 	const context = canvas.getContext("2d");
 
