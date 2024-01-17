@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
@@ -8,7 +8,7 @@ import json
 #@login_required(login_url="/login")
 def dashboard(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
@@ -18,7 +18,7 @@ def dashboard(request):
 
 def usersPage(request, name):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     source = stringifyImage(request.user)
     #TODO: change this data to the real user data!!!!!!!!!
     is42 = request.user.is42
@@ -78,7 +78,7 @@ def postLoginUser(request):
 
 def loginUser(request):
     if request.user.is_authenticated:
-        return dashboard(request)
+        return redirect('/dashboard')
     match request.method:
         case "GET":
             return getLoginUser(request)
@@ -109,7 +109,7 @@ def postSignup(request):
 
 def signup(request):
     if request.user.is_authenticated:
-        return dashboard(request)
+        return redirect('/dashboard')
     match request.method:
         case "GET":
             return getSignup(request)
@@ -147,9 +147,9 @@ def putSettings(request):
 
 def settings(request):
     if not request.user.is_authenticated:
-       return loginUser(request)
+        return redirect('/login')
     if request.user.is42 == True:
-       return dashboard(request)
+       return redirect('/dashboard')
     match request.method:
         case "GET":
             return getSettings(request)

@@ -1,20 +1,72 @@
-from django.http import JsonResponse, QueryDict
+from django.http import JsonResponse, QueryDict, HttpResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .tournamentController import unknownMethod, createTurnament, deleteTournament, getTournament, tournamentAddPlayer, tournamentUpdatePlayer, tournamentDeletePlayer
 from .models import Tournament, Players, Database
 from app.forms import ProfilePicture
-from app.userInterface import loginUser
-from django.shortcuts import render
+from django.shortcuts import redirect
 from app.utils import stringifyImage
+from os import getenv
+import http.client
+import urllib.parse
 import json
+
+#==========================================
+#         LOGIN 42
+#==========================================
+
+def login42(request):
+    if request.user.is_authenticated:
+        return redirect('/dashboard')
+    uid = getenv('UID')
+    return redirect('https://api.intra.42.fr/oauth/authorize?client_id=' + uid + '&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Foauth2%2Fcallback&response_type=code')
+
+
+#==========================================
+#         GET TOKEN
+#==========================================
+
+def getToken(code):
+    connection = http.client.HTTPSConnection('api.intra.42.fr')
+    uid = getenv('UID')
+    secretKey = getenv('SECRET_KEY')
+    header = {'Content-Type': 'application/x-www-form-urlencoded',}
+    body = urllib.parse.urlencode({'grant_type': 'authorization_code',
+                                'client_id': uid,
+                                'client_secret': secretKey,
+                                'code': code,
+                                'redirect_uri': 'http://localhost:8000/login',})
+    print(body)
+    connection.request("POST", "/oauth/token", body=body, headers=header)
+    response = connection.getresponse()
+    bruteData = response.read()
+    if response.status == 200:
+        token = json.loads(bruteData).get('access_token')
+        print(token)
+    else:
+        print('ERROR')
+        print(response.status)
+        print(response.reason)
+    return redirect('/login')
+
+#==========================================
+#         42 CALLBACK
+#==========================================
+
+def callback42(request):
+    code = request.GET.get('code')
+    if code != None:
+        return getToken(code)
+    else:
+        return redirect('/login')
+
 
 #==========================================
 #         USER GET
 #==========================================
 def getUser(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     if request.method == 'GET':
         user = request.user
         user_dict = model_to_dict(user)
@@ -30,7 +82,7 @@ def getUser(request):
 #==========================================
 def putUser(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     user = request.user
     user.username = "test"
     user.save()
@@ -41,7 +93,7 @@ def putUser(request):
 #==========================================
 def deleteUser(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     user = request.user
     user.delete()
     return JsonResponse({"message":"Success"}, safe=False)
@@ -52,7 +104,7 @@ def deleteUser(request):
 
 def profilePicture(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():
