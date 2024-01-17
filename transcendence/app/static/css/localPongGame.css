@@ -3,3 +3,14 @@ canvas {
 	display: block;
 	margin: 20px auto;
 }
+
+#localGameContainer {
+	min-height: 100vh;
+	background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
