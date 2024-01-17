@@ -5,7 +5,10 @@ from . import views
 urlpatterns = [
     path("user", views.profilePicture, name="user"),
 	
-    path("getUser", views.getUser, name="getUser"),
+    path("friends", views.getFriends, name="getFriends"),
+    path("getUsers/<str:search>", views.getUsers, name="getUsers"),
+    path("users/<str:userName>", views.getUser, name="getUser"),
+	
     path("deleteUser", views.deleteUser, name="deleteUser"),
     path("putUser", views.putUser, name="putUser"),
 	

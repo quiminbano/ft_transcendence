@@ -9,21 +9,49 @@ from django.shortcuts import render
 from app.utils import stringifyImage
 import json
 
+
+#==========================================================================
+#         GET USER FRIENDS (Returns all friends of the logged in user)
+#==========================================================================
+def getFriends(request):
+    user = request.user
+    if not user.is_authenticated:
+        return loginUser(request)
+    user_uuids = []
+    for friend in user.friends.all():
+        user_uuids.append(friend.username)
+        user_uuids.append(stringifyImage(friend) if friend.avatarImage else None)
+        user_uuids.append(friend.onlineStatus)
+    return JsonResponse(user_uuids, safe=False)
+
+
+#==========================================================
+#         USER SEARCH (Return all associated users)
+#==========================================================
+def getUsers(request, search=None):
+    users = Database.objects.filter(username__icontains=search)
+    user_uuids = []
+    for user in users:
+        user_uuids.append(user.username)
+        user_uuids.append(user.uuid)
+        user_uuids.append(stringifyImage(user) if user.avatarImage else None)
+    return JsonResponse(user_uuids, safe=False)
+
 #==========================================
 #         USER GET
 #==========================================
-def getUser(request):
-    if not request.user.is_authenticated:
-        return loginUser(request)
+def getUser(request, userName=None):
+    user = Database.objects.filter(username=userName).first()
+    if user is None:
+        return JsonResponse({"message":"FAILED"}, safe=False, status=400)
     if request.method == 'GET':
-        user = request.user
         user_dict = model_to_dict(user)
-        if user_dict.get('avatarImage'):
-            user_dict['avatarImage'] = user.avatarImage.url if user.avatarImage else None
-            user_dict.pop('password', None)
-
-        user_data = Database.objects.filter(username="admin").first()
-    return JsonResponse(user_dict, safe=False)
+        user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
+        user_dict.pop('password', None)
+        if user_dict.get('friends'):
+            user_dict['friends'] = [friend.uuid for friend in user_dict['friends']]
+        return JsonResponse(user_dict, safe=False)
+    return unknownMethod()
 
 #==========================================
 #         USER PUT
@@ -70,25 +98,21 @@ def tournamentManager(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'User is not authenticated'}, status=401)
     # existing_tournament = Tournament.objects.filter(uuid=request.user.uuid)
-    print("tournamentManager")
     existing_tournament = request.user.tournament
     if existing_tournament is not None:
         # Call the function from the switch dictionary
-        print("EXIST")
         match request.method:
             case "GET":
                 return getTournament(existing_tournament)
             case "DELETE":
                 return deleteTournament(existing_tournament)
             case "POST":
-                print("DEL_POST")
                 deleteTournament(existing_tournament)
                 return createTurnament(request)
             case _:
                 return unknownMethod()
     else:
         if request.method == "POST":
-            print("NO EXIST")
             return createTurnament(request)
         else:
             return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
@@ -98,11 +122,9 @@ def tournamentManager(request):
 #         TournamentID Manager
 #==========================================
 def tournamentManagerID(request, id=None):
-    existing_tournament = Tournament.objects.filter(id=id)
-    print("tournamentManagerID")
-    if existing_tournament.exists():
+    existing_tournament = Tournament.objects.filter(id=id).first()
+    if existing_tournament is not None:
         # Call the function from the switch dictionary
-        print("EXIST")
         match request.method:
             case "GET":
                 return getTournament(existing_tournament)
@@ -119,7 +141,6 @@ def tournamentManagerID(request, id=None):
 #         Tournament Player Management
 #==========================================
 def tournamentPlayer(request):
-    print("tournamentPlayer")
     data = json.loads(request.body)
     print(data)
     print(request.method)
@@ -137,10 +158,8 @@ def tournamentPlayer(request):
 #         Tournament Player ID Management
 #==========================================
 def tournamentManagerPlayerID(request, id=None):
-    print("tournamentManagerPlayerID")
     player = Players.objects.filter(id=id).first()
     if player is not None:
-        print("Player ID EXIST")
         match request.method:
             case "DELETE":
                 return tournamentDeletePlayer(player)
