@@ -10,7 +10,6 @@ const loaders = [
 	{ path: "/signup", function: loadSignup },
 	{ path: "/settings", function: loadSettings },
 	{ path: "/pong", function: loadPong },
-	{ path: "/pong/localGame", function: loadLocalGame },
 	{ path: "/pong/tournament", function: loadTournamentCreation },
 	{ path: "/pong/tournament/*", function: loadTournamentLobby },
 	{ path: "/pong/1v1", function: loadPong1v1 },

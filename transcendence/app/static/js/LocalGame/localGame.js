@@ -1,71 +1,109 @@
-const loadLocalGame = () => {
-	const canvas = document.getElementById("pongCanvas");
-	const context = canvas.getContext("2d");
+class LocalPongGame {
+	constructor() {
+		this.canvas = document.getElementById("pongCanvas");
+		this.context = this.canvas.getContext("2d");
+		this.ball = new pongObject(this.canvas.width / 2, this.canvas.height / 2, 10, 10, this.context, this.canvas);
+		this.pad1 = new pongObject(5, 255, 25, 100, this.context, this.canvas);
+		this.pad2 = new pongObject(this.canvas.width - 30, 255, 25, 100, this.context, this.canvas);
+		this.player1Score = new pongObject(this.canvas.width / 4, this.canvas.height / 10, 25, 50, this.context, this.canvas);
+		this.player2Score = new pongObject(this.canvas.width * 0.75, this.canvas.height / 10, 25, 50, this.context, this.canvas);
+		this.gameLoop = this.gameLoop.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleKeyUp = this.handleKeyUp.bind(this);
+		document.addEventListener("keydown", this.handleKeyDown);
+		document.addEventListener("keyup", this.handleKeyUp);
+	}
 
-	const ball = new pongObject(canvas.width / 2, canvas.height / 2, 10, 10, context, canvas);
-	const pad1 = new pongObject(5, 255, 25, 100, context, canvas);
-	const pad2 = new pongObject(canvas.width - 30, 255, 25, 100, context, canvas);
-	const player1Score = new pongObject(canvas.width / 4, canvas.height / 10, 25, 50, context, canvas);
-	const player2Score = new pongObject(canvas.width * 0.75, canvas.height / 10, 25, 50, context, canvas);
+	drawObjects() {
+		const net = new pongObject(this.canvas.width / 2 - 1, 0, 2, 10, this.context, this.canvas);
 
-	function drawObjects() {
-		const net = new pongObject(canvas.width / 2 - 1, 0, 2, 10, context, canvas);
-
-		pad1.drawPad();
-		pad2.drawPad();
-		ball.drawBall();
+		this.pad1.drawPad();
+		this.pad2.drawPad();
+		this.ball.drawBall();
 		net.drawNet();
-		player1Score.drawText();
-		player2Score.drawText();
+		this.player1Score.drawText();
+		this.player2Score.drawText();
 	}
 
-	function drawCanvas() {
-		context.fillStyle = "black";
-		context.fillRect(0, 0, canvas.width, canvas.height);
+	drawCanvas() {
+		this.context.fillStyle = "black";
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
-	function gameLoop() {
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		drawCanvas();
-		ball.moveBall(pad1, pad2, player1Score, player2Score);
-		pad1.movePad();
-		pad2.movePad();
-		drawObjects();
-		requestAnimationFrame(gameLoop);
+	async gameLoop(onGameOver) {
+		if (this.isOver()) {
+			onGameOver();
+		}
+		else {
+			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.drawCanvas();
+			this.ball.moveBall(this.pad1, this.pad2, this.player1Score, this.player2Score);
+			this.pad1.movePad();
+			this.pad2.movePad();
+			this.drawObjects();
+			requestAnimationFrame(() => this.gameLoop(onGameOver));
+		}
 	}
 
-	function handleKeyDown(event) {
+	handleKeyDown(event) {
 		switch (event.key) {
 			case "w":
-				pad1.padY = -4;
+				this.pad1.padY = -4;
 				break;
 			case "s":
-				pad1.padY = 4;
+				this.pad1.padY = 4;
 				break;
 			case "ArrowUp":
-				pad2.padY = -4;
+				this.pad2.padY = -4;
 				break;
 			case "ArrowDown":
-				pad2.padY = 4;
+				this.pad2.padY = 4;
 				break;
 		}
 	}
 
-	function handleKeyUp(event) {
+	handleKeyUp(event) {
 		switch (event.key) {
 			case "w":
 			case "s":
-				pad1.padY = 0;
+				this.pad1.padY = 0;
 				break;
 			case "ArrowUp":
 			case "ArrowDown":
-				pad2.padY = 0;
+				this.pad2.padY = 0;
 				break;
 		}
 	}
-
-	document.addEventListener("keydown", handleKeyDown);
-	document.addEventListener("keyup", handleKeyUp);
-
-	gameLoop();
+	countdown = (seconds, onCountdownOver) => {
+		const gameCountdownText = document.getElementById("gameCountdownText");
+		gameCountdownText.style.display = "block";
+		gameCountdownText.innerText = seconds;
+		if (seconds > 0) {
+			setTimeout(() => {
+				this.countdown(seconds - 1, onCountdownOver);
+			}, 1000);
+		} else {
+			gameCountdownText.style.display = "none";
+			onCountdownOver();
+		}
+	}
+	async startGame() {
+		return new Promise(resolve => {
+			this.countdown(3, () => this.gameLoop(resolve));
+		})
+	}
+	isOver() {
+		if (this.player1Score.score >= 3 || this.player2Score.score >= 3) {
+			if (Math.abs(this.player1Score.score - this.player2Score.score) >= 2)
+				return true;
+		}
+		return false;
+	}
+	getGameScore() {
+		const score = {
+			player1: this.player1Score.score,
+			player2: this.player2Score.score
+		}
+		return score;
+	}
 }

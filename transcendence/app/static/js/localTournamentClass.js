@@ -107,5 +107,37 @@ class LocalTournament {
         this.errorElement.innerHTML = message;
     }
     getName() { return this.name; }
-    setSchedule(schedule) { this.schedule = schedule; }
+    setSchedule(schedule) {
+        this.schedule = schedule;
+        for (let i = 1; i <= this.schedule.matches.length; i++) {
+            const match = this.schedule.matches.find(m => m.id === i);
+            const id = match.id;
+            const matchHTMLElement = document.querySelector(`.match[data-id="${id}"]`);
+            console.log(match);
+            if (match.player1)
+                bracket.updateHomeTeam(match.player1, matchHTMLElement);
+            if (match.player2)
+                bracket.updateAwayTeam(match.player2, matchHTMLElement);
+        }
+    }
+    updateScore(id, playerOneScore, playerTwoScore) {
+        this.schedule.updateMatchScore(id, playerOneScore, playerTwoScore);
+
+        const match = this.schedule.getMatch(id);
+        const player1 = { name: match.player1.name, points: match.score.player1Points };
+        const player2 = { name: match.player2.name, points: match.score.player2Points };
+        const htmlElement = document.querySelector(`.match[data-id="${match.id}"]`);
+        
+        if (this.schedule.totalMatchesPlayed === this.schedule.totalMatchesToPlay) {
+            if (player1.points > player2.points)
+                this.winner = player1.name;
+            else
+                this.winner = player2.name;
+            this.setState("C");
+        } else {
+            bracket.updateBracketAfterMatch(player1, player2, htmlElement);
+            const winnersNextMatch = this.schedule.getWinnersNextMatch(match);
+            bracket.updateWinerToNextStage(winnersNextMatch);
+        }
+    }
 }

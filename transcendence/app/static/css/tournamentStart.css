@@ -49,6 +49,7 @@
 	margin-top: 75px;
 	border: 4px solid black;
 }
+#endLocalTournamentContinueButton,
 #cancelLocalTournamentButton {
 	border: 4px solid black;
 	border-radius: 10px;
@@ -56,4 +57,10 @@
 	margin-top: 30px;
 	margin-left: 10%;
 	margin-right: 10%;
+}
+#localWinnerUsername {
+	font-size: 18px;
+	font-family: PressStart;
+	color: whitesmoke;
+	text-align: center;
 }
