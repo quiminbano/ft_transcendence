@@ -64,3 +64,33 @@
 	color: whitesmoke;
 	text-align: center;
 }
+
+/*SCORE AFTER GAME PAGE*/
+
+#afterGameScoreBox {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border: 3px solid black;
+	border-radius: 5px;
+	background-color: whitesmoke;
+	padding: 30px 20px;
+	margin-bottom: 40px;
+}
+#afterGameScoreBox *{
+	font-family: PressStart;
+	text-align: center;
+}
+#scoreGameStage {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.scorePlayerDiv {
+	margin: 10px 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-self: center;
+	height: 100%;
+}

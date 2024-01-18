@@ -113,7 +113,6 @@ class LocalTournament {
             const match = this.schedule.matches.find(m => m.id === i);
             const id = match.id;
             const matchHTMLElement = document.querySelector(`.match[data-id="${id}"]`);
-            console.log(match);
             if (match.player1)
                 bracket.updateHomeTeam(match.player1, matchHTMLElement);
             if (match.player2)
@@ -121,9 +120,10 @@ class LocalTournament {
         }
     }
     updateScore(id, playerOneScore, playerTwoScore) {
+        const match = this.schedule.getMatch(id);
+        match.stage = this.schedule.currentStage;
         this.schedule.updateMatchScore(id, playerOneScore, playerTwoScore);
 
-        const match = this.schedule.getMatch(id);
         const player1 = { name: match.player1.name, points: match.score.player1Points };
         const player2 = { name: match.player2.name, points: match.score.player2Points };
         const htmlElement = document.querySelector(`.match[data-id="${match.id}"]`);

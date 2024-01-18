@@ -4,7 +4,8 @@ let contentManager;
 const loadStartTournament = async () => {
 	const displays = [
 		{ name: "game", element: document.getElementById("localTournamentGameContent") },
-		{ name: "endTournament", element: document.getElementById("localTournamentEndTournament") }
+		{ name: "endTournament", element: document.getElementById("localTournamentEndTournament") },
+		{ name: "scorePage", element: document.getElementById("localTournamentScoreAfterMatch") }
 	]
 	const dashboardContent = {
 		name: "dashboard",
@@ -12,7 +13,6 @@ const loadStartTournament = async () => {
 	}
 	contentManager = new ContentDisplayManager(dashboardContent);
 	for (let i = 0; i < displays.length; i++) {
-		console.log(displays[i]);
 		contentManager.addContent(displays[i].name, displays[i].element);
 	}
 	await createBracket();
@@ -39,12 +39,8 @@ const startLocalGame = async () => {
 	await pongGame.startGame();
 	const score = pongGame.getGameScore();
 	tournament.updateScore(match.id, score.player1, score.player2);
-	if (tournament.state === "A")
-		contentManager.setActive("dashboard");
-	else if (tournament.state === "C") {
-		endGamePopulator();
-		contentManager.setActive("endTournament");
-	}
+	scoreAfterGamePageLoader(match);
+	contentManager.setActive("scorePage");
 }
 
 const endGamePopulator = () => {
@@ -52,4 +48,26 @@ const endGamePopulator = () => {
 	titleText.innerText = tournament.name;
 	const winnerUsernameText = document.getElementById("localWinnerUsername");
 	winnerUsernameText.innerText = tournament.winner;
+}
+
+const scoreAfterGamePageLoader = (match) => {
+	const scoreGameStage = document.getElementById("scoreGameStage");
+	scoreGameStage.innerText = match.stage;
+	const scorePlayerOneName = document.getElementById("scorePlayerOneName");
+	scorePlayerOneName.innerText = match.player1.name;
+	const scorePlayerOnePoints = document.getElementById("scorePlayerOnePoints");
+	scorePlayerOnePoints.innerText = match.score.player1Points;
+	const scorePlayerTwoName = document.getElementById("scorePlayerTwoName");
+	scorePlayerTwoName.innerText = match.player2.name;
+	const scorePlayerTwoPoints = document.getElementById("scorePlayerTwoPoints");
+	scorePlayerTwoPoints.innerText = match.score.player2Points;
+}
+
+const continueAfterScorePage = () => {
+	if (tournament.state === "A")
+		contentManager.setActive("dashboard");
+	else if (tournament.state === "C") {
+		endGamePopulator();
+		contentManager.setActive("endTournament");
+	}
 }
