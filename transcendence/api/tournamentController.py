@@ -32,8 +32,11 @@ def tournamentAddPlayer(request, tournament):
     if "player" not in data:
         return JsonResponse({'error': 'missing fields in request body'}, status=400)
     player = Players.objects.create(name=data['player'])
-    tournament.first().players.add(player)
+    tournament.players.add(player)
     playerdict = model_to_dict(player)
+    if tournament.players.count() >= tournament.amount:
+        tournament.sate = 'A'
+        tournament.save()
     return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
 
 def tournamentUpdatePlayer(request):
@@ -50,12 +53,13 @@ def tournamentUpdatePlayer(request):
     return JsonResponse({'message': 'Player name change succefull', 'player': playerdict}, status=200)
 
 def tournamentDeletePlayer(player):
-    print ("method DELETE")
-    tournament = Tournament.objects.filter(players=player)
-    if tournament.exists():
-        tournament.first().players.remove(player)
+    tournament = Tournament.objects.filter(players=player).first()
+    if tournament is not None:
+        tournament.players.remove(player)
         player.delete()
-        print("SUCCESS!")
+        if tournament.players.count() < tournament.amount:
+            tournament.sate = 'P'
+            tournament.save()
         return JsonResponse({'succes!': 'player got removed'}, status=200)
     else:
         return JsonResponse({'error': 'player or tournament does not exist'}, status=400)
@@ -84,5 +88,93 @@ def deleteTournament(tournament):
     for TournamentPlayer in tournament.players.all():
         TournamentPlayer.delete()
     tournament.delete()
-    print("REMOVE tour")
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
+
+
+#====================================================================================
+#====================================================================================
+#====================================================================================
+#                               Tournament Managemer
+#====================================================================================
+#====================================================================================
+#====================================================================================
+
+
+#==========================================
+#         Tournament Management
+#==========================================
+def tournamentManager(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+    # existing_tournament = Tournament.objects.filter(uuid=request.user.uuid)
+    existing_tournament = request.user.tournament
+    if existing_tournament is not None:
+        # Call the function from the switch dictionary
+        match request.method:
+            case "GET":
+                return getTournament(existing_tournament)
+            case "DELETE":
+                return deleteTournament(existing_tournament)
+            case "POST":
+                deleteTournament(existing_tournament)
+                return createTurnament(request)
+            case _:
+                return unknownMethod()
+    else:
+        if request.method == "POST":
+            return createTurnament(request)
+        else:
+            return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
+        
+
+#==========================================
+#         TournamentID Manager
+#==========================================
+def tournamentManagerID(request, id=None):
+    existing_tournament = Tournament.objects.filter(id=id).first()
+    if existing_tournament is not None:
+        # Call the function from the switch dictionary
+        match request.method:
+            case "GET":
+                return getTournament(existing_tournament)
+            case "POST":
+                return tournamentAddPlayer(request, existing_tournament)
+            case "DELETE":
+                return deleteTournament(existing_tournament)
+            case _:
+                return unknownMethod()
+    else:
+        return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
+
+#==========================================
+#         Tournament Player Management
+#==========================================
+def tournamentPlayer(request):
+    data = json.loads(request.body)
+    print(data)
+    print(request.method)
+    match request.method:
+        case "PUT":
+            return(tournamentUpdatePlayer(request))
+        case _:
+            return unknownMethod()
+    return JsonResponse({'error': 'player does not exist'}, status=400)
+
+
+
+
+#==========================================
+#         Tournament Player ID Management
+#==========================================
+def tournamentManagerPlayerID(request, id=None):
+    player = Players.objects.filter(id=id).first()
+    if player is not None:
+        match request.method:
+            case "DELETE":
+                return tournamentDeletePlayer(player)
+            case _:
+                return unknownMethod()
+    else:
+        return JsonResponse({'error': 'player does not exist'}, status=400)
+
+
