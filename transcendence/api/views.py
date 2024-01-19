@@ -23,6 +23,23 @@ def login42(request):
 
 
 #==========================================
+#         GET INFORMATION
+#==========================================
+
+def getInfo(token):
+    connection = http.client.HTTPSConnection('api.intra.42.fr')
+    message = "Bearer " + token
+    header = {'Authorization': message}
+    connection.request("GET", '/v2/me', headers=header)
+    response = connection.getresponse()
+    print('This is the status:', response.status, 'This is the reason:', response.reason)
+    bruteData = response.read()
+    jsonData = json.loads(bruteData)
+    print(jsonData)
+    return redirect('/login')
+
+
+#==========================================
 #         GET TOKEN
 #==========================================
 
@@ -30,24 +47,22 @@ def getToken(code):
     connection = http.client.HTTPSConnection('api.intra.42.fr')
     uid = getenv('UID')
     secretKey = getenv('SECRET_KEY')
+    uri = getenv('REDIRECT_URI')
     header = {'Content-Type': 'application/x-www-form-urlencoded',}
     body = urllib.parse.urlencode({'grant_type': 'authorization_code',
                                 'client_id': uid,
                                 'client_secret': secretKey,
                                 'code': code,
-                                'redirect_uri': 'http://localhost:8000/login',})
-    print(body)
+                                'redirect_uri': uri,})
     connection.request("POST", "/oauth/token", body=body, headers=header)
     response = connection.getresponse()
     bruteData = response.read()
     if response.status == 200:
         token = json.loads(bruteData).get('access_token')
-        print(token)
+        print("This is the token:", token)
     else:
         print('ERROR')
-        print(response.status)
-        print(response.reason)
-    return redirect('/login')
+    return getInfo(token)
 
 #==========================================
 #         42 CALLBACK

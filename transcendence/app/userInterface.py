@@ -78,7 +78,7 @@ def postLoginUser(request):
 
 def loginUser(request):
     if request.user.is_authenticated:
-        return redirect('/dashboard')
+        return dashboard(request)
     match request.method:
         case "GET":
             return getLoginUser(request)
