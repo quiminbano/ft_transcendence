@@ -10,8 +10,8 @@ urlpatterns = [
     path("users", views.userController.Users, name="getUser"),
     path("users/<str:userName>", views.userController.getUser, name="getUser"),
 	
-    path("deleteUser/<str:userName>", views.userController.Users, name="deleteUser"),
-    path("updateUser/<str:userName>", views.userController.Users, name="putUser"),
+    path("deleteUser", views.userController.Users, name="deleteUser"),
+    path("updateUser", views.userController.Users, name="putUser"),
 	
     path("tournament", views.tournamentController.tournamentManager, name="tournament"),
 	path("tournament/<int:id>", views.tournamentController.tournamentManagerID, name="tournamentID"),

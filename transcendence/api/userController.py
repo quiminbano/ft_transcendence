@@ -63,7 +63,15 @@ def Users(request):
                 user_dict['friends'] = [friend.uuid for friend in user_dict['friends']]
             return JsonResponse(user_dict, safe=False, status=200)
         case "PUT":
-            user.username = "test"
+            body = json.load(request.body)
+            if "username" in body:
+                user.username = body['username']
+            if "FName" in body:
+                user.first_name = body['FName']
+            if "LName" in body:
+                user.last_name = body['LName']
+            if "email" in body:
+                user.email = body['email']
             user.save()
             return JsonResponse({"message":"Success"}, safe=False, status=200)
         case "DELETE":
