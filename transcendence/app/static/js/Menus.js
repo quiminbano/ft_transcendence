@@ -89,7 +89,11 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
-		matches.forEach(match => searchMatchItem(match.avatarImage || "/static/images/profileIcon.png", match.username, parentDiv));
+		const username = document.getElementById("navbarUsername").textContent;
+		matches.forEach(match => {
+			if (match.username !== username)
+				searchMatchItem(match.avatarImage || "/static/images/profileIcon.png", match.username, parentDiv)
+		});
 	}
 }
 
@@ -130,8 +134,6 @@ const collapseFriendsMenu = () => {
 
 
 const showFriendsMenu = async () => {
-	//GET THE REAL FRIENDS!!!!
-
 	const url = "/api/friends";
 	try {
 		const response = await getRequest(url);
