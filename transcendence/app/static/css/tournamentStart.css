@@ -4,6 +4,9 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding: 30px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .nextGameDiv{
@@ -17,7 +20,7 @@
 #pongTournamentStart * {
 	font-family: PressStart;
 }
-#pongTournamentStart h3 {
+#pongTournamentStartTitle {
 	color: whitesmoke;
 }
 .nextGameBox {
@@ -58,6 +61,7 @@
 	margin-left: 10%;
 	margin-right: 10%;
 }
+
 #localWinnerUsername {
 	font-size: 18px;
 	font-family: PressStart;
@@ -94,3 +98,4 @@
 	align-self: center;
 	height: 100%;
 }
+
