@@ -83,6 +83,7 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['password1']
         )
         user.coallition = self.cleaned_data['coallition']
+        user.is42 = True #Temporary, just to test the restrictions of 42 users
         try:
             f = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(f)

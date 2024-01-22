@@ -42,6 +42,7 @@ class DatabaseManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('coallition', 'foragers')
+        extra_fields.setdefault('is42', False)
         try:
             file = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(file)
@@ -58,6 +59,7 @@ class DatabaseManager(BaseUserManager):
 class Database(AbstractUser):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
+    is42 = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     coallition = models.CharField()
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)

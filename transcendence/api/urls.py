@@ -3,14 +3,19 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("user", views.profilePicture, name="user"),
+    path("login42", views.api42.login42, name="login42"),
+    path("oauth2/callback", views.api42.callback42, name="callback42"),
+    path("user", views.userController.profilePicture, name="user"),
 	
-    path("getUser", views.getUser, name="getUser"),
-    path("deleteUser", views.deleteUser, name="deleteUser"),
-    path("putUser", views.putUser, name="putUser"),
+    path("friends", views.userController.getFriends, name="getFriends"),
+    path("searchUsers/<str:search>", views.userController.searchUsers, name="getUsers"),
+    path("users", views.userController.Users, name="getUser"),
+    path("users/<str:userName>", views.userController.getUser, name="getUser"),
 	
-    path("tournament", views.tournamentManager, name="tournament"),
-	path("tournament/<int:id>", views.tournamentManagerID, name="tournamentID"),
-    path("tournament/player", views.tournamentPlayer, name="tournament/player"),
-    path("tournament/player/<int:id>", views.tournamentManagerPlayerID, name="tournamentPlayerID"),
+    path("deleteUser", views.userController.Users, name="deleteUser"),
+	
+    path("tournament", views.tournamentController.tournamentManager, name="tournament"),
+	path("tournament/<int:id>", views.tournamentController.tournamentManagerID, name="tournamentID"),
+    path("tournament/player", views.tournamentController.tournamentPlayer, name="tournament/player"),
+    path("tournament/player/<int:id>", views.tournamentController.tournamentManagerPlayerID, name="tournamentPlayerID"),
 ]
