@@ -7,6 +7,8 @@ class Schedule {
         this.nextGame = this.getNextMatch();
         this.currentStage = this.getCurrentStage();
         this.#updateDisplayNextGame();
+        this.totalMatchesToPlay = this.#getTotalAmountOfMatches(this.amount);
+        this.totalMatchesPlayed = 0;
     }
     #getTotalAmountOfMatches(totalTeams) {
         switch (totalTeams) {
@@ -105,23 +107,30 @@ class Schedule {
         return match;
     } 
     updateMatchScore(id, player1Score, player2Score) {
+        this.totalMatchesPlayed++;
         const match = this.matches.find(m => m.id === id);
         if (!match) return;
         match.addScore(player1Score, player2Score);
-        const nextID = this.#findNextGameID(match.id);
-        const element = this.matches.find(m => m.id === nextID);
-        const winnerPlayer = match.score.player1Points > match.score.player2Points ? match.player1 : match.player2;
-        if (match.id % 2 === 0) {
-            element.addPlayer2(winnerPlayer);
-        } else {
-            element.addPlayer1(winnerPlayer);
-        }
+        if (this.areAllGamesPlayed())
+            return;
+        this.#addWinnerToNextStage(match);
         this.nextGame = this.getNextMatch();
         this.#updateDisplayNextGame();
     }
     #findNextGameID = (currentId) => {
         const nextId = (currentId - 1) / 2 + this.amount / 2 + 1
         return Math.floor(nextId);
+    }
+    #addWinnerToNextStage(currentMatch) {
+        const nextMatch = this.getWinnersNextMatch(currentMatch);
+        const winnerPlayer = currentMatch.score.player1Points > currentMatch.score.player2Points ? currentMatch.player1 : currentMatch.player2;
+        if (this.areAllGamesPlayed())
+            return;
+        if (currentMatch.id % 2 === 0) {
+            nextMatch.addPlayer2(winnerPlayer);
+        } else {
+            nextMatch.addPlayer1(winnerPlayer);
+        }
     }
     #updateDisplayNextGame() {
         const nextHomePlayer = document.getElementById("nextHomePlayerName");
@@ -133,6 +142,11 @@ class Schedule {
         this.currentStage = this.getCurrentStage();
         matchRound.textContent = this.currentStage;
     }
+    getWinnersNextMatch(currentMatch) {
+        const nextID = this.#findNextGameID(currentMatch.id);
+        const nextMatch = this.matches.find(m => m.id === nextID);
+        return nextMatch;
+    }
     editMatch(id, match) {
         const newMatch = new Match(id);
         newMatch.addPlayer1(match.player1);
@@ -141,5 +155,10 @@ class Schedule {
         if (matchToEditIndex === -1) return;
         this.matches[matchToEditIndex] = newMatch;
         this.updateMatchScore(match.id, match.score.player1Points, match.score.player2Points)
-    } 
+    }
+    areAllGamesPlayed() {
+        if (this.totalMatchesPlayed >= this.totalMatchesToPlay)
+            return true;
+        return false;
+    }
 }
