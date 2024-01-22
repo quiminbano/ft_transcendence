@@ -177,3 +177,17 @@ const populateCoallitionSrc = () => {
 		image.setAttribute("src", `/static/images/${input.value}Symbol.svg`);
 	});
 }
+
+const loginWith42 = async () => {
+	const url = "/api/login42";
+	try {
+		const response = await getRequest(url);
+		if (response.succeded) {
+			console.log("Successfuly logged with 42")
+		} else {
+			throw response;
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
