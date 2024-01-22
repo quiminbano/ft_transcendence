@@ -16,10 +16,10 @@ import json
 #==========================================
 
 def login42(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated: #If the user is authenticated, it is redirected to the dashboard.
         return redirect('/dashboard')
     uid = getenv('UID')
-    return redirect('https://api.intra.42.fr/oauth/authorize?client_id=' + uid + '&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Foauth2%2Fcallback&response_type=code')
+    return redirect('https://api.intra.42.fr/oauth/authorize?client_id=' + uid + '&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Foauth2%2Fcallback&response_type=code') #Then we redirect to the user to the the 42 login page. If everything is alright, 42 is gonna redirect us to our callback.
 
 
 #==========================================
@@ -32,10 +32,17 @@ def getInfo(token):
     header = {'Authorization': message}
     connection.request("GET", '/v2/me', headers=header)
     response = connection.getresponse()
-    print('This is the status:', response.status, 'This is the reason:', response.reason)
+    if response.status != 200:
+        print('ERROR')
+        return redirect('/')
     bruteData = response.read()
     jsonData = json.loads(bruteData)
-    print(jsonData)
+    login = jsonData['login']
+    firstName = jsonData['first_name']
+    lastName = jsonData['last_name']
+    email = jsonData['email']
+    imagePath = jsonData['image']['versions']['small']
+    print('This is login:', login, 'This is first name:' , firstName, 'This is last name:', lastName, 'This is email:', email, 'This is image path:', imagePath)
     return redirect('/login')
 
 
@@ -69,11 +76,11 @@ def getToken(code):
 #==========================================
 
 def callback42(request):
-    code = request.GET.get('code')
+    code = request.GET.get('code') #if the callback was called successfully, we check if the code was sent to 42 to require the authentication token in the future.
     if code != None:
-        return getToken(code)
+        return getToken(code) #if the code was sent by 42, we call the function getToken to request the access token.
     else:
-        return redirect('/login')
+        return redirect('/') #if there is no token, we redirect the user to the main page. I guess this can be improved.
 
 
 #==========================================
