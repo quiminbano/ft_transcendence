@@ -106,6 +106,7 @@ const addPlayer = (event) => {
 
 const startTournament = async () => {
 	await navigateTo(`${tournament.id}/start`);
+	tournament.setState("A");
 	await loadStartTournament();
 }
 
