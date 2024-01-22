@@ -15,7 +15,7 @@ def pongInterface(request):
                 "is42" : is42,
             }
         case "/pong/1v1":
-            context = {"content": "Pong1v1pages/pongOneVsOne.html"}
+            context = {"content": "Pong1v1pages/oneVoneRemote.html"}
         case "/pong/tournament":
             context = {"content": "PongTournamentPages/tournamentCreation.html"}
         case "/pong/remoteTournament":
@@ -38,4 +38,12 @@ def pongInterfaceWithId(request, id : int):
         context = {"content": "PongTournamentPages/remoteLobby.html"}
     else:
         context = {"content": "index.html"}
+    return render(request, "index.html", context)
+
+def pongTournamentGame(request):
+    if not request.user.is_authenticated:
+        return loginUser(request)
+    context = {
+        "content": "localPong.html"
+    }
     return render(request, "index.html", context)
