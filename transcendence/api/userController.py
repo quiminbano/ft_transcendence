@@ -9,33 +9,37 @@ import json
 #==========================================================================
 #         GET USER FRIENDS (Returns all friends of the logged in user)
 #==========================================================================
-# TO Do categories friends
 def getFriends(request):
     user = request.user
     if not user.is_authenticated:
         return JsonResponse({"message":"you are not signed in"}, safe=False, status=400)
-    user_uuids = []
+    user_friends = []
     for friend in user.friends.all():
-        user_uuids.append(friend.username)
-        user_uuids.append(stringifyImage(friend) if friend.avatarImage else None)
-        user_uuids.append(friend.onlineStatus)
-    return JsonResponse(user_uuids, safe=False)
+        user_friend = {
+            "username" : friend.username,
+            "avatarImage" : stringifyImage(friend) if friend.avatarImage else None,
+            "onlineStatus" : friend.onlineStatus,
+        }
+        user_friends.append(user_friend)
+    return JsonResponse(user_friends, safe=False)
 
 
 #==========================================================
 #         USER SEARCH (Return all associated users)
 #==========================================================
-# TO Do categories each user
 def searchUsers(request, search=None):
     if not request.user.is_authenticated:
         return JsonResponse({"message":"you are not signed in"}, safe=False, status=400)
     users = Database.objects.filter(username__icontains=search)
-    user_uuids = []
+    user_friends = []
     for user in users:
-        user_uuids.append(user.username)
-        user_uuids.append(user.uuid)
-        user_uuids.append(stringifyImage(user) if user.avatarImage else None)
-    return JsonResponse(user_uuids, safe=False)
+        user_friend = {
+            "username" : user.username,
+            "UUID" : user.uuid,
+            "avatarImage" : stringifyImage(user) if user.avatarImage else None,
+        }
+        user_friends.append(user_friend)
+    return JsonResponse(user_friends, safe=False)
 
 
 def getUser(request, userName=None):
