@@ -11,7 +11,6 @@ urlpatterns = [
     path("users/<str:userName>", views.userController.getUser, name="getUser"),
 	
     path("deleteUser", views.userController.Users, name="deleteUser"),
-    path("updateUser", views.userController.Users, name="putUser"),
 	
     path("tournament", views.tournamentController.tournamentManager, name="tournament"),
 	path("tournament/<int:id>", views.tournamentController.tournamentManagerID, name="tournamentID"),

@@ -9,6 +9,7 @@ import json
 #==========================================================================
 #         GET USER FRIENDS (Returns all friends of the logged in user)
 #==========================================================================
+# TO Do categories friends
 def getFriends(request):
     user = request.user
     if not user.is_authenticated:
@@ -24,6 +25,7 @@ def getFriends(request):
 #==========================================================
 #         USER SEARCH (Return all associated users)
 #==========================================================
+# TO Do categories each user
 def searchUsers(request, search=None):
     if not request.user.is_authenticated:
         return JsonResponse({"message":"you are not signed in"}, safe=False, status=400)
@@ -62,18 +64,6 @@ def Users(request):
             if user_dict.get('friends'):
                 user_dict['friends'] = [friend.uuid for friend in user_dict['friends']]
             return JsonResponse(user_dict, safe=False, status=200)
-        case "PUT":
-            body = json.load(request.body)
-            if "username" in body:
-                user.username = body['username']
-            if "FName" in body:
-                user.first_name = body['FName']
-            if "LName" in body:
-                user.last_name = body['LName']
-            if "email" in body:
-                user.email = body['email']
-            user.save()
-            return JsonResponse({"message":"Success"}, safe=False, status=200)
         case "DELETE":
             user.delete()
             return JsonResponse({"message":"Success"}, safe=False, status=200)
