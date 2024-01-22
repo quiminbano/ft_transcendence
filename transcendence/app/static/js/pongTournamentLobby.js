@@ -87,7 +87,6 @@ const addPlayerToDatabase = async (username) => {
 		addNewPlayerErrorMessage.innerText = "Failed to add player";
 		console.log(error);
 	}
-	tournament.addPlayer({ name: username, id: 0 });
 	closeRegisterPlayerModal();
 }
 

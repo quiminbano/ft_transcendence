@@ -99,3 +99,19 @@
 	height: 100%;
 }
 
+#pongTournamentScorePage,
+#pongEndTournamentPage {
+	min-height: 100vh;
+	background-image: url(https://us.123rf.com/450wm/diy13/diy131810/diy13181000253/109500360-table-tennis-racket-and-ball-on-blue-table-sports-competitions-in-table-tennis-retro-style-photo.jpg?ver=6);
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 30px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.congratsBox {
+	text-align: center;
+	color: white;
+}
