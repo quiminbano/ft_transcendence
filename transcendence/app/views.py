@@ -26,3 +26,5 @@ def bracketEightTemplate(request):
     return render(request, "TournamentBrackets/tournamentBracket8.html", {})
 def bracketSixteenTemplate(request):
     return render(request, "TournamentBrackets/tournamentBracket16.html", {})
+def getFriendItem(request):
+		return render(request, "SearchElements/friendItem.html", {})
