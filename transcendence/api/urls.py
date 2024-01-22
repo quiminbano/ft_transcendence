@@ -3,8 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("login42", views.login42, name="login42"),
-    path("oauth2/callback", views.callback42, name="callback42"),
+    path("login42", views.api42.login42, name="login42"),
+    path("oauth2/callback", views.api42.callback42, name="callback42"),
     path("user", views.userController.profilePicture, name="user"),
 	
     path("friends", views.userController.getFriends, name="getFriends"),
