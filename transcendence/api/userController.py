@@ -3,7 +3,7 @@ from django.forms.models import model_to_dict
 from .models import Database
 from app.forms import ProfilePicture
 from app.utils import stringifyImage
-#from app.userInterface import loginUser
+from django.shortcuts import redirect
 import json
 
 #==========================================================================
@@ -12,7 +12,7 @@ import json
 def getFriends(request):
     user = request.user
     if not user.is_authenticated:
-        return JsonResponse({"message":"you are not signed in"}, safe=False, status=400)
+        return redirect('/login')
     user_friends = []
     for friend in user.friends.all():
         user_friend = {
@@ -29,7 +29,7 @@ def getFriends(request):
 #==========================================================
 def searchUsers(request, search=None):
     if not request.user.is_authenticated:
-        return JsonResponse({"message":"you are not signed in"}, safe=False, status=400)
+        return redirect('/login')
     users = Database.objects.filter(username__icontains=search)
     user_friends = []
     for user in users:
@@ -59,7 +59,7 @@ def getUser(request, userName=None):
 
 def Users(request):
     if not request.user.is_authenticated:
-        return JsonResponse({"message":"you are not signed in"}, safe=False, status=401)
+        return redirect('/login')
     user = request.user
     match request.method:
         case "GET":
@@ -82,7 +82,7 @@ def Users(request):
 
 def profilePicture(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():

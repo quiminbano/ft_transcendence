@@ -25,7 +25,7 @@ def getInfo(token):
     email = jsonData['email']
     imagePath = jsonData['image']['versions']['small']
     print('This is login:', login, 'This is first name:' , firstName, 'This is last name:', lastName, 'This is email:', email, 'This is image path:', imagePath)
-    return redirect('/login')
+    return redirect('/')
 
 
 #==========================================
@@ -48,7 +48,6 @@ def getToken(code):
     bruteData = response.read()
     if response.status == 200:
         token = json.loads(bruteData).get('access_token')
-        print("This is the token:", token)
     else:
         print('ERROR')
     return getInfo(token)
