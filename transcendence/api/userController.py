@@ -7,6 +7,29 @@ from django.shortcuts import redirect
 import json
 
 #==========================================================================
+#                   ADD Friend and REMOVE Friend
+#==========================================================================
+def friends(request, friendName=None):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({"message":"you are not signed in"}, safe=False, status=400)
+    friend = Database.objects.filter(username=friendName).first()
+    if friend is None:
+        return JsonResponse({"message":"this user does not exist"}, safe=False, status=400)
+    match request.method:
+        case "POST":
+            user.friends.add(friend)
+            return JsonResponse({"message":"Success added friend"}, safe=False, status=200)
+        case "DELETE":
+            if user.friends.filter(friend) is None:
+                return JsonResponse({"message":"you are not friends"}, safe=False, status=400)
+            return JsonResponse({"message":"Success removed friend"}, safe=False, status=200)
+        case _:
+            return JsonResponse({"message": "Method not implemented"}, status=501)
+
+
+
+#==========================================================================
 #         GET USER FRIENDS (Returns all friends of the logged in user)
 #==========================================================================
 def getFriends(request):
