@@ -5,17 +5,6 @@ import http.client
 import urllib.parse
 
 #==========================================
-#         LOGIN 42
-#==========================================
-
-def login42(request):
-    if request.user.is_authenticated: #If the user is authenticated, it is redirected to the dashboard.
-        return redirect('/dashboard')
-    uid = getenv('UID')
-    return redirect('https://api.intra.42.fr/oauth/authorize?client_id=' + uid + '&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fapi%2Foauth2%2Fcallback&response_type=code') #Then we redirect to the user to the the 42 login page. If everything is alright, 42 is gonna redirect us to our callback.
-
-
-#==========================================
 #         GET INFORMATION
 #==========================================
 
@@ -36,7 +25,7 @@ def getInfo(token):
     email = jsonData['email']
     imagePath = jsonData['image']['versions']['small']
     print('This is login:', login, 'This is first name:' , firstName, 'This is last name:', lastName, 'This is email:', email, 'This is image path:', imagePath)
-    return redirect('/login')
+    return redirect('/')
 
 
 #==========================================
@@ -59,7 +48,6 @@ def getToken(code):
     bruteData = response.read()
     if response.status == 200:
         token = json.loads(bruteData).get('access_token')
-        print("This is the token:", token)
     else:
         print('ERROR')
     return getInfo(token)
