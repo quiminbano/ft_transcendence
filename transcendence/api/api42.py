@@ -5,6 +5,24 @@ import http.client
 import urllib.parse
 
 #==========================================
+#         GET COALITION
+#==========================================
+
+def getCoalition(id, header, connection):
+    connection.request("GET", ('/v2/users/' + str(id) + '/coalitions'), headers=header)
+    response = connection.getresponse()
+    if response.status != 200:
+        print('ERROR')
+        coalition = ""
+        errorFlag = 1
+    else:
+        bruteData = response.read()
+        coalitionData = json.loads(bruteData)
+        coalition = coalitionData[0]['name']
+        errorFlag = 0
+    return (coalition, errorFlag)
+
+#==========================================
 #         GET INFORMATION
 #==========================================
 
@@ -24,7 +42,12 @@ def getInfo(token):
     lastName = jsonData['last_name']
     email = jsonData['email']
     imagePath = jsonData['image']['versions']['small']
+    id = jsonData['id']
     print('This is login:', login, 'This is first name:' , firstName, 'This is last name:', lastName, 'This is email:', email, 'This is image path:', imagePath)
+    coalition, errorFlag = getCoalition(id=id, header=header, connection=connection)
+    if errorFlag == 1:
+        return redirect('/')
+    print('This is coalition:', coalition)
     return redirect('/')
 
 
@@ -48,6 +71,12 @@ def getToken(code):
     bruteData = response.read()
     if response.status == 200:
         token = json.loads(bruteData).get('access_token')
+        expiration_time = json.loads(bruteData).get('expires_in')
+        refresh_token = json.loads(bruteData).get('refresh_token')
+        print('This is access token:', token)
+        print('This is expiration time:', expiration_time)
+        print('This is the type of expiration time:', type(expiration_time))
+        print('This is refresh token:', refresh_token)
     else:
         print('ERROR')
     return getInfo(token)
