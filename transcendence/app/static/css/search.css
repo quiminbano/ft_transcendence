@@ -118,14 +118,31 @@
 }
 .searchItemNameArea {
 	width: 60%;
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
 }
 .searchItemPicture {
 	width: 25px;
 	height: 25px;
 }
+.friendName,
 .searchItemName {
 	font-family: PressStart;
 	color: whitesmoke;
+	margin-left: 8px;
+}
+.friendName {
+	position: relative;
+	top: 8px;
+}
+#seachitemOnlineStatus {
+	width: 8px;
+	height: 8px;
+	margin-right: 8px;
+	border-radius: 50%;
+	display: inline-block;
 }
 
 #dropdownMenu::-webkit-scrollbar {

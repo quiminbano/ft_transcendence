@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
 from .utils import stringifyImage
+from api.userController import getUser
 import json
 
 #@login_required(login_url="/login")
@@ -20,6 +21,13 @@ def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
     source = stringifyImage(request.user)
+
+
+    #FOR TESTING PURPOSES
+    print("ARGUMENT: " + name)
+    expectedUser = getUser(request, name)
+    data = json.loads(expectedUser.content.decode())
+    print(data)
     #TODO: change this data to the real user data!!!!!!!!!
     is42 = request.user.is42
     lastGames = [
