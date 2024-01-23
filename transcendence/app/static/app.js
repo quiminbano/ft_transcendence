@@ -92,8 +92,7 @@ const getRequest = async (url) => {
 		const data = await response.json();
 		if (!response.ok)
 			throw data;
-		data.succeded = true;
-		return data;
+		return {data, succeded: true};
 	} catch (error) {
 		error.succeded = false;
 		return error;

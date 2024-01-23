@@ -1,4 +1,5 @@
 const generator = new FragmentGenerator("/getDoc/searchItem");
+const friendsFragment = new FragmentGenerator("/getDoc/friendItem");
 
 const loadMenus = () => {
 	const searchButton = document.getElementById("searchButton");
@@ -31,19 +32,30 @@ const debounce = (func, delay = 300) => {
 	}
 }
 
-const onSearch = (event) => {
+const onSearch = async (event) => {
 	const input = event.target.value;
 
 	//PROPERLY MAKE A GET REQUEST TO GET THE MATCH USERS!!!!
-	const matches = fakeUsers.filter(user => user.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
-	const menu = document.getElementById("dropdownMenu");
-	if (input.length > 0) {
-		showDropdown(menu);
-		const parentDiv = document.getElementById("dropdownMenu");
-		displayDropdownElements(matches, parentDiv);
+
+	const url = `/api/searchUsers/${input}`;
+	try {
+		const response = await getRequest(url);
+		if (response.succeded) {
+			const menu = document.getElementById("dropdownMenu");
+			if (input.length > 0) {
+				showDropdown(menu);
+				const parentDiv = document.getElementById("dropdownMenu");
+				const matches = response.data;
+				displayDropdownElements(matches, parentDiv);
+			}
+			else
+				hideDropdown(menu);
+		} else {
+			throw response
+		}
+	} catch (error) {
+		console.log(error);
 	}
-	else
-		hideDropdown(menu);
 }
 const onInput = debounce(onSearch);
 
@@ -77,8 +89,11 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
-		matches.forEach(match => searchMatchItem(match.src || "/static/images/profileIcon.png", match.name || match, parentDiv));
-		// CHANGE THIS TO TAKE A USER ID!! NEED TO GET IT FROM MATCHES!!!!!
+		const username = document.getElementById("navbarUsername").textContent;
+		matches.forEach(match => {
+			if (match.username !== username)
+				searchMatchItem(match.avatarImage || "/static/images/profileIcon.png", match.username, parentDiv)
+		});
 	}
 }
 
@@ -118,16 +133,65 @@ const collapseFriendsMenu = () => {
 
 
 
-const showFriendsMenu = () => {
-	//GET THE REAL FRIENDS!!!!
-	const friends = fakeFriends; //CHANGE THIS TO REAL FRIENDS!!!!!
-	document.addEventListener("click", closeFriendsMenuEventHandler);
-	const friendsDropdown = document.getElementById("friendsDropdown");
-	friendsDropdown.classList.remove("friendsDropdownCollapsed");
-	friendsDropdown.classList.add("friendsDropdownExpanded");
-	const parentDiv = document.getElementById("friendsDropdown");
-	displayDropdownElements(friends, parentDiv);
+const showFriendsMenu = async () => {
+	const url = "/api/friends";
+	try {
+		const response = await getRequest(url);
+		if (response.succeded) {
+			const friends = response.data;
+			document.addEventListener("click", closeFriendsMenuEventHandler);
+			const friendsDropdown = document.getElementById("friendsDropdown");
+			friendsDropdown.classList.remove("friendsDropdownCollapsed");
+			friendsDropdown.classList.add("friendsDropdownExpanded");
+			const parentDiv = document.getElementById("friendsDropdown");
+			displayFriendsElements(friends, parentDiv);
+		} else {
+			throw response;
+		}
+	} catch(error) {
+		console.log(error);
+	}
 }
+
+const displayFriendsElements = (friends = [], parentDiv) => {
+	while (parentDiv.firstChild) {
+	  parentDiv.removeChild(parentDiv.firstChild);
+	}
+	if (friends.length === 0) {
+		const noFriends = document.createElement("div");
+		noFriends.textContent = "No Friends";
+		noFriends.setAttribute("class", "searchItemName");
+		parentDiv.appendChild(noFriends);
+	} else {
+		friends.forEach(friend => friendItem(friend,  parentDiv));
+	}
+}
+
+const friendItem = async (friend, parentDiv) => {
+	const fragment = await friendsFragment.generateFragment();
+	const itemDiv = fragment.querySelector(".searchItem");
+	itemDiv.setAttribute("data-id", friend.username);
+	itemDiv.addEventListener("click", () => navigateTo('/users/' + friend.username));
+	const picture = fragment.querySelector("#searchItemPicture");
+	if (picture) {
+		picture.setAttribute("src", friend.avatarImage || "/static/images/profileIcon.png");
+		picture.removeAttribute("id");
+	}
+	const itemName = fragment.querySelector("#searchItemName");
+	if (itemName) {
+		itemName.textContent = friend.username;
+		itemName.removeAttribute("id");
+	}
+	const onlineStatusIcon = fragment.querySelector("#seachitemOnlineStatus");
+	if (onlineStatusIcon) {
+		if (friend.onlineStatus)
+			onlineStatusIcon.style.backgroundColor = "green";
+		else
+			onlineStatusIcon.style.backgroundColor = 'red';
+	}
+	generator.appendFragment(fragment, parentDiv);
+}
+
 
 const closeFriendsMenuEventHandler = (e) => {
 	const friendsMenuArea = document.getElementById("friendsDropdown");

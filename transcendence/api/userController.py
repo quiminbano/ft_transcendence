@@ -3,7 +3,7 @@ from django.forms.models import model_to_dict
 from .models import Database
 from app.forms import ProfilePicture
 from app.utils import stringifyImage
-from app.userInterface import loginUser
+#from app.userInterface import loginUser
 import json
 
 #==========================================================================
@@ -43,6 +43,7 @@ def searchUsers(request, search=None):
 
 
 def getUser(request, userName=None):
+    print(userName)
     user = Database.objects.filter(username=userName).first()
     if user is None:
         return JsonResponse({"message":"User dose not exist"}, safe=False, status=401)
@@ -73,7 +74,7 @@ def Users(request):
             return JsonResponse({"message":"Success"}, safe=False, status=200)
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
-    
+
 
 #==========================================
 #          Profile Picture
