@@ -1,0 +1,54 @@
+#invitationsTitle {
+	margin-bottom: 50px;
+	text-align: center;
+}
+.invitationsBox {
+	background-color: whitesmoke;
+	border: 3px solid black;
+	border-radius: 5px;
+	padding: 25px 20px;
+	margin: 10px auto;
+}
+
+.invitationsBox * {
+	font-family: PressStart;
+}
+
+.invitationItem {
+	width: 100%;
+	border: 3px solid rgb(131, 148, 146);
+	border-radius: 15px;
+	background-color: rgba(68, 158, 223, 0.723);
+	padding: 5px 20px;
+}
+.userInfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+	width: 100%;
+}
+.userInfo img {
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+}
+.userInfo p {
+	position: relative;
+	top: 8px;
+}
+.invitationActions {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
+	width: 100%;
+}
+.invitationActions button {
+	margin-left: 8px;
+}
+.invitationActionbutton {
+	border: 3px solid black !important;
+	font-size: 10px;
+}
+

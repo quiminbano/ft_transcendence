@@ -157,6 +157,7 @@ const displayFriendsElements = (friends = [], parentDiv) => {
 	while (parentDiv.firstChild) {
 	  parentDiv.removeChild(parentDiv.firstChild);
 	}
+	createNotificationElement(1);
 	if (friends.length === 0) {
 		const noFriends = document.createElement("div");
 		noFriends.textContent = "No Friends";
