@@ -6,7 +6,7 @@ import mimetypes
 
 def defineNameImage(model, filename):
     extension = os.path.splitext(filename)[1]
-    return f"user_{model.uuid}{extension}"
+    return f"user_{model.username}{extension}"
 
 def validationImageSize(image):
     if isinstance(image, UploadedFile) or isinstance(image, File):
