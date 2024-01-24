@@ -63,6 +63,7 @@ This is  the user table.
 | ------ | ------ | ------ |
 | STATE_CHOICES | list of tuples | list of possible states. |
 | id | AutoField | Identifier of the tournament. |
+| uuid | UUIDField | Identifier of the Host user. |
 | tournamentName | CharField |  |
 | amount | IntegerField | Max amount of layer allowed. |
 | sate | CharField | The sate of the tournament. |
@@ -87,11 +88,11 @@ This is  the user table.
 | ------ | ------ | ------ | ------ |
 | POST		| /api/userProfilePicture |  |  |
 | GET		| /api/friends | returns all the friends of the logged in user. |  |
-| GET		| /api/searchUsers/:search | return little info about all the users mathces the searched. |  |
+| GET		| /api/searchUsers/:search | return little info about all the users matches the search. |  |
 | GET		| /api/users | returns info about the logged in user. |  |
 | DELETE	| /api/users | deletes the logged in user. |  |
-| GET		| /api/users/:userName | returns all the info about the specfic user. |  |
+| GET		| /api/users/:userName | returns all the info about the specific user. |  |
 | POST		| /api/friendRequest/:friendName | sends friend request to friendName. |  |
-| DELETE	| /api/friendRequest/:friendName | remove friend request to friendName. |  |
+| DELETE	| /api/friendRequest/:friendName | remove friend request from friendName. |  |
 | POST		| /api/friend/:friendName | Accepts friends request if there is one. |  |
 | DELETE	| /api/friend/:friendName | Removes friend from friend list. |  |
