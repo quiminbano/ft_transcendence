@@ -63,7 +63,6 @@ This is  the user table.
 | ------ | ------ | ------ |
 | STATE_CHOICES | list of tuples | list of possible states. |
 | id | AutoField | Identifier of the tournament. |
-| uuid | UUIDField | Identifier of the Host user. |
 | tournamentName | CharField |  |
 | amount | IntegerField | Max amount of layer allowed. |
 | sate | CharField | The sate of the tournament. |

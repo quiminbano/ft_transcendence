@@ -21,7 +21,6 @@ def friendRequest(request, friendName=None):
     
     match request.method:
         case "POST":
-        # case "GET":
             if user.friends.filter(username=potentailFriend.username).exists():
                 return JsonResponse({"message":"already friends"}, safe=False, status=400)
             if potentailFriend.friendRequests.filter(username=user.username).exists():
@@ -33,8 +32,7 @@ def friendRequest(request, friendName=None):
             else:
                 potentailFriend.friendRequests.add(user)
                 return JsonResponse({"message":"Success sent friend request"}, safe=False, status=200)
-        case "GET":
-        # case "DELETE":
+        case "DELETE":
             if potentailFriend.friendRequests.filter(username=user.username).exists():
                 potentailFriend.friendRequests.remove(user)
                 return JsonResponse({"message":"Success removed friend request"}, safe=False, status=200)
@@ -59,14 +57,12 @@ def friends(request, friendName=None):
         return JsonResponse({"message":"this user does not exist"}, safe=False, status=400)
     match request.method:
         case "POST":
-        # case "GET":
             if user.friendRequests.filter(username=friend.username).exists():
                 user.friendRequests.remove(friend)
                 user.friends.add(friend)
                 return JsonResponse({"message":"Success added friend"}, safe=False, status=200)
             return JsonResponse({"message":"No friend request from that user"}, safe=False, status=400)
-        # case "DELETE":
-        case "GET":
+        case "DELETE":
             if user.friends.filter(username=friend.username).exists():
                 user.friends.remove(friend)
                 return JsonResponse({"message":"Success removed friend"}, safe=False, status=200)
