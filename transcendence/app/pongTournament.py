@@ -18,8 +18,6 @@ def pongInterface(request):
             context = {"content": "Pong1v1pages/oneVoneRemote.html"}
         case "/pong/tournament":
             context = {"content": "PongTournamentPages/tournamentCreation.html"}
-        case "/pong/remoteTournament":
-            context = {"content": "PongTournamentPages/remoteStart.html"}
         case _:
             context = {"content": "index.html"}
     return render(request, "index.html", context)
