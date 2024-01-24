@@ -90,7 +90,7 @@ const savePicture = async (file) => {
 			},
 			body: fd
 		}
-		const response = await fetch("/api/user", config);
+		const response = await fetch("/api/userProfilePicture", config);
 		if (response.ok) {
 			const data = await response.json();
 			const profilePicture = document.getElementById("dashboardUserProfilePic");

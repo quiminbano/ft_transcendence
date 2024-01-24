@@ -14,7 +14,6 @@ const loaders = [
 	{ path: "/pong/tournament/*", function: loadTournamentLobby },
 	{ path: "/pong/1v1", function: loadPong1v1 },
 	{ path: "/users/*", function: loadUsersPage },
-	{ path: "/pong/remoteTournament", function: loadRemoteTournamentPage },
 ]
 
 const load = (path) => {
