@@ -41,9 +41,9 @@ class SignupForm(CustomUserCreationForm):
         label="email",
         widget=forms.EmailInput(attrs={"class": "form-control"}))
     coallition = forms.ChoiceField(choices=(
-        ('builders', 'The Builders'),
-        ('foragers', 'The Foragers'),
-        ('guards', 'The Guards'),
+        ('The Builders', 'The Builders'),
+        ('The Foragers', 'The Foragers'),
+        ('The Guards', 'The Guards'),
     ), widget=forms.RadioSelect)
     password1 = forms.CharField(
         label='password',

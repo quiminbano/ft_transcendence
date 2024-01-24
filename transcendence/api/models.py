@@ -40,7 +40,7 @@ class DatabaseManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-        extra_fields.setdefault('coallition', 'foragers')
+        extra_fields.setdefault('coallition', 'The Foragers')
         extra_fields.setdefault('is42', False)
         try:
             file = open("app/static/images/profileIconWhite.png", "rb")
@@ -61,6 +61,9 @@ class Database(AbstractUser):
     friends = models.ManyToManyField('self', blank=True)
     friendRequests = models.ManyToManyField('self', symmetrical=False, blank=True)
     coallition = models.CharField()
+    accessToken = models.CharField(blank=True)
+    refreshToken = models.CharField(blank=True)
+    expirationTime = models.BigIntegerField(default=0)
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
 

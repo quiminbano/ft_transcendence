@@ -4,12 +4,16 @@ from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
 from .utils import stringifyImage
 from api.userController import getUser
+from api.api42 import getTokens
 import json
+import time
 
 #@login_required(login_url="/login")
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if (request.user.is42 == True) and (time.time() > request.user.expirationTime):
+        return getTokens(request.user.refreshToken, 'refresh_token', '/dashboard', request)
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
