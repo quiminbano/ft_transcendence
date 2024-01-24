@@ -18,7 +18,6 @@ class Tournament(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    uuid = models.UUIDField()
     tournamentName = models.CharField(max_length=255)
     amount = models.IntegerField()
     sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
@@ -57,10 +56,10 @@ class DatabaseManager(BaseUserManager):
 
 
 class Database(AbstractUser):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     onlineStatus = models.BooleanField(default=False)
     is42 = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
+    friendRequests = models.ManyToManyField('self', symmetrical=False, blank=True)
     coallition = models.CharField()
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)

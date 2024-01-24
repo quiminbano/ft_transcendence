@@ -1,5 +1,5 @@
+
 # ft_transcendence
-## _The Last Markdown Editor, Ever_
 
 <p align="center">
   <img src="https://auth.42.fr/auth/resources/0nmse/login/students/img/42_logo.svg" width="120" alt="42 Logo" /></a>
@@ -14,12 +14,13 @@
 - [APP](#APP)
 	- [app.js](#app-js)
 	- [router.js](#router-js)
-- [API](#CustomUserData-M)
-    - [Models](#CustomUserData-M)
-        - [CustomUserData Model](#CustomUserData-M) 
+- [API](#Database-M)
+    - [Models](#Database-M)
+        - [Database Model](#Database-M) 
         - [Tournament Model](#Tournament-M) 
     - [Endpoints](#Tournament)
         - [Tournament API](#Tournament)
+        - [Database API](#Database)
 
 
 ## Introduction <a name="introduction"></a>
@@ -40,14 +41,17 @@ in order to run the poject you need
 
 after you have done this you can simply run ***make***.
 
-### CustomUserData Model <a name="CustomUserData-M"></a>
+### Database Model <a name="Database-M"></a> 
+This is  the user table.
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| uuid | UUIDField | The identifier of the user. |
+| username | Django-Builtin | The identifier of the user. |
 | onlineStatus | BooleanField |  |
-| friends | ManyToManyField | Field of self (CustomUserData). |
+| is42 | BooleanField | is it a 42 user. |
+| friends | ManyToManyField | all the friends of the user. |
+| friendRequests | ManyToManyField | all pending friend requests. |
 | coallition | CharField |  |
-| avatarImage | FileField | ? |
+| avatarImage | FileField | the path to the image of the user. |
 | tournament | OneToOneField | Link to user's current hosted tournament. |
 | objects | CustomUserManager() | Django required implementation. |
 | get_coallition(self) | Function | Returns the coallition. |
@@ -76,3 +80,19 @@ after you have done this you can simply run ***make***.
 | DELETE    | /api/tournament/:id       | Deletes the tournament that has the specific ID       |  |
 | PUT       | api/tournament/player/:id | Updates a tournamentUser by ID                        |  |
 | DELETE    | api/tournament/player/:id | Deletes a tournamentUser by ID                        |  |
+
+
+
+### Database API <a name="Database"></a>
+| HTTP Method | Endpoint | Description | Notes |
+| ------ | ------ | ------ | ------ |
+| POST		| /api/userProfilePicture |  |  |
+| GET		| /api/friends | returns all the friends of the logged in user. |  |
+| GET		| /api/searchUsers/:search | return little info about all the users mathces the searched. |  |
+| GET		| /api/users | returns info about the logged in user. |  |
+| DELETE	| /api/users | deletes the logged in user. |  |
+| GET		| /api/users/:userName | returns all the info about the specfic user. |  |
+| POST		| /api/friendRequest/:friendName | sends friend request to friendName. |  |
+| DELETE	| /api/friendRequest/:friendName | remove friend request to friendName. |  |
+| POST		| /api/friend/:friendName | Accepts friends request if there is one. |  |
+| DELETE	| /api/friend/:friendName | Removes friend from friend list. |  |
