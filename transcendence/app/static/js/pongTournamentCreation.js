@@ -6,24 +6,7 @@ const loadPong = () => {
 }
 
 const loadTournamentCreation = async () => {
-	showLoadingSpinner();
-	const tournamentInfo = await checkIfThereIsTournamentAlready();
-	toggleTournamentCreationPages(tournamentInfo.hasTournament);
-	if (tournamentInfo.hasTournament) {
-		currentTournamentId = tournamentInfo.tournament.id;
-	}
-	loadTournamentLobbyInfo = tournamentInfo;
-	hideLoadingSpinner();
-}
-
-const checkIfThereIsTournamentAlready = async () => {
-	const url = "/api/tournament";
-	const response = await getRequest(url)
-	if (!response.succeded)
-		response.hasTournament = false;
-	else
-		response.hasTournament = true;
-	return response;
+	
 }
 
 const toggleTournamentCreationPages = (hasTournament) => {
@@ -34,17 +17,6 @@ const toggleTournamentCreationPages = (hasTournament) => {
 		hasTournamentPage.style.display = "none";
 		newTournamentPage.style.display = "block";
 	})
-	const continueOldTournamentButton = document.getElementById("continueOldTournamentButton");
-	continueOldTournamentButton?.addEventListener("click", () => {
-		hasTournamentPage.style.display = "none";
-		newTournamentPage.style.display = "none";
-		continuePreviousTournament();
-	})
-	if (hasTournament) {
-		newTournamentPage.style.display = "none";
-	} else {
-		hasTournamentPage.style.display = "none";
-	}
 }
 
 const createTournament = async (event) => {
@@ -75,10 +47,6 @@ const createTournamentInstance = (name, amount, id) => {
 	tournament.setErrorElement(document.getElementById("addNewPlayerErrorMessage"));
 	tournament.setPlayersDisplay(document.getElementById("registeredPlayerBox"));
 	return tournament;
-}
-
-const continuePreviousTournament = async () => {
-	await navigateTo(`/pong/tournament/${currentTournamentId}`);
 }
 
 const play1v1 = () => {

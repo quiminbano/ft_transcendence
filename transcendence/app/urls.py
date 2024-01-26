@@ -13,8 +13,6 @@ urlpatterns = [
     path("pong/tournament", views.pongTournament.pongInterface, name="pongTournament"),
     path("pong/tournament/<int:id>", views.pongTournament.pongInterfaceWithId, name="pongTournamentLobby"),
     path("pong/tournament/<int:id>/start", views.pongTournament.pongInterfaceWithId, name="pongTournamentStart"),
-    path("pong/remoteTournament", views.pongTournament.pongInterface, name="remoteTournament"),
-	path("pong/remoteTournament/<int:id>", views.pongTournament.pongInterfaceWithId, name="remoteLobby"),
     path("postLogin", views.userInterface.loginUser, name="postLogin"),
     path("postSignup", views.userInterface.signup, name="postSignup"),
 	path("users/<str:name>", views.userInterface.usersPage, name="friendsPage"),
@@ -29,7 +27,6 @@ urlpatterns = [
 	path("getDoc/youAreInvitedItem", views.youAreInvitedItemTemplate, name="youAreInvitedItemTemplate"),
     path("getDoc/bracket4", views.bracketFourTemplate, name="bracket4Template"),
     path("getDoc/bracket8", views.bracketEightTemplate, name="bracket8Template"),
-    path("getDoc/bracket16", views.bracketSixteenTemplate, name="bracket16Template"),
     re_path(r'^.*$', views.mainPage.index, name='catch_all'),
     path("", views.mainPage.index, name="index"),
 ]
