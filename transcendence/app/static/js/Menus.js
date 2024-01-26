@@ -157,7 +157,7 @@ const displayFriendsElements = (friends = [], parentDiv) => {
 	while (parentDiv.firstChild) {
 	  parentDiv.removeChild(parentDiv.firstChild);
 	}
-	createNotificationElement(1);
+	updateNotification();
 	if (friends.length === 0) {
 		const noFriends = document.createElement("div");
 		noFriends.textContent = "No Friends";
@@ -196,7 +196,8 @@ const friendItem = async (friend, parentDiv) => {
 
 const closeFriendsMenuEventHandler = (e) => {
 	const friendsMenuArea = document.getElementById("friendsDropdown");
-	if (friendsMenuArea.contains(e.target)) return;
+	if (!friendsMenuArea) return;
+	if (friendsMenuArea?.contains(e.target)) return;
 	const friendsButton = document.getElementById("friendsMenuButton");
 	const friendsImage = document.getElementById("friendsIconButton");
 	if (!(e.target === friendsButton || e.target === friendsImage)) {

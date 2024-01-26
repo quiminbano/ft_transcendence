@@ -26,9 +26,9 @@ def usersPage(request, name):
     #FOR TESTING PURPOSES
     print("ARGUMENT: " + name)
     expectedUser = getUser(request, name)
+    if expectedUser == None:
+        return
     data = json.loads(expectedUser.content.decode())
-    print(data)
-    print(data['friendRequests'])
     #TODO: change this data to the real user data!!!!!!!!!
     is42 = request.user.is42
     lastGames = [
@@ -39,8 +39,8 @@ def usersPage(request, name):
         "score": "3 - 2"
     }
     ]
-    print(request.user.username)
     friendState = "F";
+    print(data["friendRequests"]);
     if request.user.username in data["friendRequests"]:
         friendState = "P"
     if request.user.username in data["friends"]:

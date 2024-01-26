@@ -19,6 +19,7 @@ urlpatterns = [
 	path("pong/localGame", views.pongTournament.pongTournamentGame, name="localTournament"),
 
 	path("getDoc/registerPlayer", views.getRegisterPlayersTemplate, name="registerPlayerTemplate"),
+	path("getDoc/invitationItem", views.getInvitationItemTemplate, name="invitationItemTemplate"),
 	path("getDoc/circleChart", views.getCircleChartTemplate, name="circleChartTemplate"),
 	path("getDoc/searchItem", views.getSearchItem, name="searchItem"),
 	path("getDoc/friendItem", views.getFriendItem, name="frienditem"),
