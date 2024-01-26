@@ -46,9 +46,22 @@
 }
 .invitationActions button {
 	margin-left: 8px;
+	font-size: 12px;
 }
 .invitationActionbutton {
 	border: 3px solid black !important;
 	font-size: 10px;
+}
+
+@media only screen and (max-width: 576px) {
+	.userInfo {
+		justify-content: center;
+	}
+	.invitationActions {
+		justify-content: space-evenly;
+	}
+	.invitationActions button {
+		margin: auto;
+	}
 }
 
