@@ -16,7 +16,11 @@ def friendRequest(request, friendName=None):
     if (request.method == "GET" and friendName==None):
         requests = []
         for friendRequest in user.friendRequests.all():
-            requests.append(friendRequest.username)
+            FriendObject = {
+                "username" : friendRequest.username,
+                "avatarImage" : stringifyImage(friendRequest) if friendRequest.avatarImage else None
+            }
+            requests.append(FriendObject)
         return JsonResponse(requests, status=200, safe=False)
     potentailFriend = Database.objects.filter(username=friendName).first()
     if potentailFriend is None:
@@ -129,10 +133,15 @@ def getUser(request, userName=None):
         user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
         user_dict.pop('password', None)
         if user_dict.get('friends'):
-            # user_dict['friends'] = [friend.username and stringifyImage(friend) if friend.avatarImage else None for friend in user_dict['friends']]
-            user_dict['friends'] = [friend.username for friend in user_dict['friends']]
+            user_dict['friends'] = [{
+                'username': friend.username,
+                'avatarImage': stringifyImage(friend) if friend.avatarImage else None
+            } for friend in user_dict['friends']]
         if user_dict.get('friendRequests'):
-            user_dict['friendRequests'] = [friendRequests.username for friendRequests in user_dict['friendRequests']]
+            user_dict['friendRequests'] = [{
+                'username': friendRequests.username,
+                'avatarImage': stringifyImage(friendRequests) if friendRequests.avatarImage else None
+            } for friendRequests in user_dict['friendRequests']]
         return JsonResponse(user_dict, status=200, safe=False)
     return JsonResponse({"message": "Method not implemented"}, status=501)
 
