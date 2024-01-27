@@ -9,6 +9,7 @@ from django.core.files import File
 
 class Players(models.Model):
     name = models.CharField(max_length=255)
+    score = models.IntegerField(default=0)
 
 class Tournament(models.Model):
     STATE_CHOICES = [
@@ -20,7 +21,7 @@ class Tournament(models.Model):
     id = models.AutoField(primary_key=True)
     tournamentName = models.CharField(max_length=255)
     amount = models.IntegerField()
-    sate = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
+    state = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
     players = models.ManyToManyField(Players, related_name='tournaments')
 
 class DatabaseManager(BaseUserManager):
@@ -63,6 +64,7 @@ class Database(AbstractUser):
     coallition = models.CharField()
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
+    completedMatches = models.ManyToManyField(Tournament, blank=True, related_name="completedMatches")
 
     objects = DatabaseManager()
 

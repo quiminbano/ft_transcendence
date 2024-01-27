@@ -13,30 +13,39 @@ def friendRequest(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
+    if (request.method == "GET" and friendName==None):
+        requests = []
+        for friendRequest in user.friendRequests.all():
+            FriendObject = {
+                "username" : friendRequest.username,
+                "avatarImage" : stringifyImage(friendRequest) if friendRequest.avatarImage else None
+            }
+            requests.append(FriendObject)
+        return JsonResponse(requests, status=200, safe=False)
     potentailFriend = Database.objects.filter(username=friendName).first()
     if potentailFriend is None:
-        return JsonResponse({"message":"user does not exist"}, safe=False, status=400)
+        return JsonResponse({"message":"user does not exist"}, status=400)
     if user == potentailFriend:
-        return JsonResponse({"message":"you cant manipulate yourself"}, safe=False, status=400)
+        return JsonResponse({"message":"you cant manipulate yourself"}, status=400)
     
     match request.method:
         case "POST":
             if user.friends.filter(username=potentailFriend.username).exists():
-                return JsonResponse({"message":"already friends"}, safe=False, status=400)
+                return JsonResponse({"message":"already friends"}, status=400)
             if potentailFriend.friendRequests.filter(username=user.username).exists():
-                return JsonResponse({"message":"already sent friend request"}, safe=False, status=400)
+                return JsonResponse({"message":"already sent friend request"}, status=400)
             if user.friendRequests.filter(username=potentailFriend.username).exists():
                 user.friendRequests.remove(potentailFriend)
                 user.friends.add(potentailFriend)
-                return JsonResponse({"message":"Both sent friend request, firendship established!"}, safe=False, status=200)
+                return JsonResponse({"message":"Both sent friend request, firendship established!"}, status=200)
             else:
                 potentailFriend.friendRequests.add(user)
-                return JsonResponse({"message":"Success sent friend request"}, safe=False, status=200)
+                return JsonResponse({"message":"Success sent friend request"}, status=200)
         case "DELETE":
             if potentailFriend.friendRequests.filter(username=user.username).exists():
                 potentailFriend.friendRequests.remove(user)
-                return JsonResponse({"message":"Success removed friend request"}, safe=False, status=200)
-            return JsonResponse({"message":"No friend request sent"}, safe=False, status=200)
+                return JsonResponse({"message":"Success removed friend request"}, status=200)
+            return JsonResponse({"message":"No friend request sent"}, status=200)
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
 
@@ -54,19 +63,19 @@ def friends(request, friendName=None):
         return redirect('/login')
     friend = Database.objects.filter(username=friendName).first()
     if friend is None:
-        return JsonResponse({"message":"this user does not exist"}, safe=False, status=400)
+        return JsonResponse({"message":"this user does not exist"}, status=400)
     match request.method:
         case "POST":
             if user.friendRequests.filter(username=friend.username).exists():
                 user.friendRequests.remove(friend)
                 user.friends.add(friend)
-                return JsonResponse({"message":"Success added friend"}, safe=False, status=200)
-            return JsonResponse({"message":"No friend request from that user"}, safe=False, status=400)
+                return JsonResponse({"message":"Success added friend"}, status=200)
+            return JsonResponse({"message":"No friend request from that user"}, status=400)
         case "DELETE":
             if user.friends.filter(username=friend.username).exists():
                 user.friends.remove(friend)
-                return JsonResponse({"message":"Success removed friend"}, safe=False, status=200)
-            return JsonResponse({"message":"you are not friends"}, safe=False, status=400)
+                return JsonResponse({"message":"Success removed friend"}, status=200)
+            return JsonResponse({"message":"you are not friends"}, status=400)
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
 
@@ -89,7 +98,7 @@ def getFriends(request):
             "onlineStatus" : friend.onlineStatus,
         }
         user_friends.append(user_friend)
-    return JsonResponse(user_friends, safe=False)
+    return JsonResponse(user_friends, status=200, safe=False)
 
 
 #==========================================================
@@ -108,7 +117,7 @@ def searchUsers(request, search=None):
             "avatarImage" : stringifyImage(user) if user.avatarImage else None,
         }
         user_friends.append(user_friend)
-    return JsonResponse(user_friends, safe=False)
+    return JsonResponse(user_friends, status=200, safe=False)
 
 #==========================================================
 #         GET SPECIFIC USER
@@ -124,10 +133,16 @@ def getUser(request, userName=None):
         user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
         user_dict.pop('password', None)
         if user_dict.get('friends'):
-            user_dict['friends'] = [friend.username for friend in user_dict['friends']]
+            user_dict['friends'] = [{
+                'username': friend.username,
+                'avatarImage': stringifyImage(friend) if friend.avatarImage else None
+            } for friend in user_dict['friends']]
         if user_dict.get('friendRequests'):
-            user_dict['friendRequests'] = [friendRequests.username for friendRequests in user_dict['friendRequests']]
-        return JsonResponse(user_dict, safe=False, status=200)
+            user_dict['friendRequests'] = [{
+                'username': friendRequests.username,
+                'avatarImage': stringifyImage(friendRequests) if friendRequests.avatarImage else None
+            } for friendRequests in user_dict['friendRequests']]
+        return JsonResponse(user_dict, status=200, safe=False)
     return JsonResponse({"message": "Method not implemented"}, status=501)
 
 #==========================================================
@@ -144,10 +159,10 @@ def Users(request):
             user_dict.pop('password', None)
             if user_dict.get('friends'):
                 user_dict['friends'] = [friend.username for friend in user_dict['friends']]
-            return JsonResponse(user_dict, safe=False, status=200)
+            return JsonResponse(user_dict, status=200, safe=False)
         case "DELETE":
             user.delete()
-            return JsonResponse({"message":"Success"}, safe=False, status=200)
+            return JsonResponse({"message":"Success"}, status=200, safe=False)
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
 
