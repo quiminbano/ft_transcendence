@@ -17,16 +17,29 @@ def dashboard(request):
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is42" : is42,}
     return render(request, "index.html", context)
 
+def getFriendState(request, friendRequests, friends):
+    friendState = "F"
+    for request_data in friendRequests:
+        if request_data["username"] == request.user.username:
+            friendState = "P"
+            break
+    for request_data in friends:
+        if request_data["username"] == request.user.username:
+            friendState = "T"
+            break;
+    return friendState
+
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
     source = stringifyImage(request.user)
 
 
-    #FOR TESTING PURPOSES
-    print("ARGUMENT: " + name)
     expectedUser = getUser(request, name)
+    if expectedUser == None:
+        return
     data = json.loads(expectedUser.content.decode())
+    print("Data:")
     print(data)
     #TODO: change this data to the real user data!!!!!!!!!
     is42 = request.user.is42
@@ -40,8 +53,8 @@ def usersPage(request, name):
     ]
     info = {
         "username": name,
-        "online": False,
-        "isFriend": False
+        "online": data["onlineStatus"],
+        "isFriend": getFriendState(request, data["friendRequests"], data["friends"]),
     }
     stats = {
         "totalGames": 100,
