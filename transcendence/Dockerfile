@@ -30,8 +30,6 @@ Require all granted\n\
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-RUN chmod +x entrypoint.sh
-
 EXPOSE 8000
 
 CMD ["bash", "entrypoint.sh"]
