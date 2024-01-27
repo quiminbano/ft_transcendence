@@ -17,6 +17,18 @@ def dashboard(request):
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is42" : is42,}
     return render(request, "index.html", context)
 
+def getFriendState(request, friendRequests, friends):
+    friendState = "F"
+    for request_data in friendRequests:
+        if request_data["username"] == request.user.username:
+            friendState = "P"
+            break
+    for request_data in friends:
+        if request_data["username"] == request.user.username:
+            friendState = "T"
+            break;
+    return friendState
+
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -39,19 +51,10 @@ def usersPage(request, name):
         "score": "3 - 2"
     }
     ]
-    friendState = "F"
-    for request_data in data["friendRequests"]:
-        if request_data["username"] == request.user.username:
-            friendState = "P"
-            break
-    for request_data in data["friends"]:
-        if request_data["username"] == request.user.username:
-            friendState = "T"
-            break;
     info = {
         "username": name,
         "online": data["onlineStatus"],
-        "isFriend": friendState,
+        "isFriend": getFriendState(request, data["friendRequests"], data["friends"]),
     }
     stats = {
         "totalGames": 100,
@@ -69,7 +72,6 @@ def usersPage(request, name):
         "client": client,
         "is42" : is42,
     }
-    print(data["onlineStatus"])
     return render(request, "index.html", context)
 
 def getLoginUser(request):
