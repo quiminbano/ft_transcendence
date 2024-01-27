@@ -25,7 +25,6 @@ const inviteToBeFriend = async (username) => {
 		const response = await postRequest(url, "");
 		if (response.succeded) {
 			toggleButtons("waitingFriendBtn");
-			console.log("Successfuly invited to be friend");
 		} else {
 			throw response;
 		}
@@ -44,7 +43,7 @@ const removeFromFriend = async (username) => {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
+		toggleButtons("addFriendBtn");
 	}
 }
 
