@@ -136,6 +136,16 @@
 	justify-content: center;
 }
 
+
+.active {
+	display: block !important;
+}
+
+.nonActive {
+	display: none !important;
+}
+
+
 @media only screen and (max-width: 576px) {
 	.lastGameItem,
 	.lastGameItemSubdiv-Info {

@@ -1,5 +1,6 @@
 const files = [];
 const loadDashboard = () => {
+	createInvitationsModal();
 	const saveButton = document.querySelector("#saveUploadedPictureButton");
 	saveButton.style.display = "none";
 	saveButton.addEventListener("click", async () => {
