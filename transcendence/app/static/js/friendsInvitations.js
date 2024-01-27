@@ -5,7 +5,7 @@ const createInvitationsModal = () => {
 }
 
 const getFriendsInvitations = async () => {
-	const url = "/api/friends";
+	const url = "api/friendRequest?friendName=None";
 	try {
 		const response  = await getRequest(url);
 		if (response.succeded) {
@@ -25,6 +25,7 @@ const inviteToBeFriend = async (username) => {
 		const response = await postRequest(url, "");
 		if (response.succeded) {
 			toggleButtons("waitingFriendBtn");
+			console.log("Successfuly invited to be friend");
 		} else {
 			throw response;
 		}
@@ -47,12 +48,10 @@ const removeFromFriend = async (username) => {
 	}
 }
 
-const updateNotification = () => {
-	//const invitations = await getFriendsInvitations();
-	const invitations = ["filipe", "Andre", "asdf"]; // TODO: REMOVE THIS!!!!
+const updateNotification = async () => {
+	const invitations = await getFriendsInvitations();
 	invitations.forEach(invitation => {
-		if (!currentInvitations.find(i => i === invitation)) {
-			console.log("Adding invitation");
+		if (!currentInvitations.find(i => i.username === invitation.username)) {
 			currentInvitations.push(invitation);
 		}
 	});
@@ -60,6 +59,7 @@ const updateNotification = () => {
 }
 
 const createNotificationElement = (amount) => {
+	if (amount === 0) return;
 	const div = document.createElement("div");
 	div.textContent = `You have ${amount} friend request${amount > 1 ? "s" : ""} pending`;
 	div.setAttribute("class", "friendNotificationBox");
@@ -99,7 +99,6 @@ const toggleButtons = (buttonToActivate) => {
 }
 
 const displayInvitations = async (invitations = []) => {
-	console.log(invitations);
 	const generator = new FragmentGenerator("/getDoc/invitationItem");
 	const parentDiv = document.getElementById("invitationsArea");
 	while (parentDiv.firstChild) {
@@ -114,18 +113,21 @@ const displayInvitations = async (invitations = []) => {
 
 const createInvitationItem = async (fragment, invite) => {
 	const item = fragment.getElementById("invitationItem");
-	item.setAttribute("id", `inviteFrom${invite}`);
+	item.setAttribute("id", `inviteFrom${invite.username}`);
 	const nameText = fragment.getElementById("invitedByUsername");
-	nameText.innerText = invite;
+	nameText.innerText = invite.username;
 	nameText.removeAttribute("id");
+	const avatarPicture = fragment.getElementById("invitationUserPicture");
+	avatarPicture.setAttribute("src", invite.avatarImage);
+	avatarPicture.removeAttribute("id");
 	const acceptButton = fragment.getElementById("acceptInvitation");
 	acceptButton.addEventListener("click", () => {
-		acceptInvite(invite);
+		acceptInvite(invite.username);
 	});
 	acceptButton.removeAttribute("id");
 	const rejectButton = fragment.getElementById("rejectInvitation");
 	rejectButton.addEventListener("click", () => {
-		rejectInvitation(invite);
+		rejectInvitation(invite.username);
 	});
 	rejectButton.removeAttribute("id");
 }
@@ -136,7 +138,6 @@ const acceptInvite = async (username) => {
 	try {
 		const response = await postRequest(url, "");
 		if (response.succeded) {
-			console.log("User added successfuly!");
 			removeItem(username);
 		} else {
 			throw response;

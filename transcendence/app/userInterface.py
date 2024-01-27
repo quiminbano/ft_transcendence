@@ -23,12 +23,12 @@ def usersPage(request, name):
     source = stringifyImage(request.user)
 
 
-    #FOR TESTING PURPOSES
-    print("ARGUMENT: " + name)
     expectedUser = getUser(request, name)
     if expectedUser == None:
         return
     data = json.loads(expectedUser.content.decode())
+    print("Data:")
+    print(data)
     #TODO: change this data to the real user data!!!!!!!!!
     is42 = request.user.is42
     lastGames = [
@@ -39,15 +39,18 @@ def usersPage(request, name):
         "score": "3 - 2"
     }
     ]
-    friendState = "F";
-    print(data["friendRequests"]);
-    if request.user.username in data["friendRequests"]:
-        friendState = "P"
-    if request.user.username in data["friends"]:
-        friendState = "T"
+    friendState = "F"
+    for request_data in data["friendRequests"]:
+        if request_data["username"] == request.user.username:
+            friendState = "P"
+            break
+    for request_data in data["friends"]:
+        if request_data["username"] == request.user.username:
+            friendState = "T"
+            break;
     info = {
         "username": name,
-        "online": False,
+        "online": data["onlineStatus"],
         "isFriend": friendState,
     }
     stats = {
@@ -66,6 +69,7 @@ def usersPage(request, name):
         "client": client,
         "is42" : is42,
     }
+    print(data["onlineStatus"])
     return render(request, "index.html", context)
 
 def getLoginUser(request):

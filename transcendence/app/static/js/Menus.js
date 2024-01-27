@@ -144,7 +144,7 @@ const showFriendsMenu = async () => {
 			friendsDropdown.classList.remove("friendsDropdownCollapsed");
 			friendsDropdown.classList.add("friendsDropdownExpanded");
 			const parentDiv = document.getElementById("friendsDropdown");
-			displayFriendsElements(friends, parentDiv);
+			await displayFriendsElements(friends, parentDiv);
 		} else {
 			throw response;
 		}
@@ -153,11 +153,11 @@ const showFriendsMenu = async () => {
 	}
 }
 
-const displayFriendsElements = (friends = [], parentDiv) => {
+const displayFriendsElements = async (friends = [], parentDiv) => {
 	while (parentDiv.firstChild) {
 	  parentDiv.removeChild(parentDiv.firstChild);
 	}
-	updateNotification();
+	await updateNotification();
 	if (friends.length === 0) {
 		const noFriends = document.createElement("div");
 		noFriends.textContent = "No Friends";
