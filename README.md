@@ -9,8 +9,8 @@
 <p align="center">André - Carlos - Hans - João - Lucas</p>
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [set-up](#set-up)
+- [Introduction](#Introduction)
+- [Setup](#Setup)
 - [APP](#APP)
 	- [app.js](#app-js)
 	- [router.js](#router-js)
@@ -23,76 +23,76 @@
         - [Database API](#Database)
 
 
-## Introduction <a name="introduction"></a>
-This project is craeted by using Vanilla Javascript and Djano as backend using Python
+## Introduction <a name="Introduction"></a>
+This project is created by using vanilla JavaScript for the SPA frontend and Python with Django on Apache/WSGI as backend.
 
-## set-up <a name="set-up"></a>
-in order to run the poject you need
-1. docker
-2. dokceer compose v2
-3. a .env fiile in the root of the project with following variables (fill in whatever value you want):
-    POSTGRES_USER=""
-    POSTGRES_PASS=""
-    POSTGRES_DB=""
-    POSTGRES_HOST=""
-    DJANGO_SUPERUSER_EMAIL=""
-    DJANGO_SUPERUSER_PASS=""
-    DJANGO_SUPERUSER=""
+## Setup <a name="Setup"></a>
+In order to run the poject you need:
+1. Docker
+2. Docker Compose v2.x.x
+3. A .env file in the root of the project with following variables (fill in whatever value you want):
+    - POSTGRES_USER=""
+    - POSTGRES_PASS=""
+    - POSTGRES_DB=""
+    - POSTGRES_HOST=""
+    - DJANGO_SUPERUSER_EMAIL=""
+    - DJANGO_SUPERUSER_PASS=""
+    - DJANGO_SUPERUSER=""
 
-after you have done this you can simply run ***make***.
+After you have done this you can simply run ***make***.
 
 ### Database Model <a name="Database-M"></a> 
-This is  the user table.
+This is the user table.
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| username | Django-Builtin | The identifier of the user. |
-| onlineStatus | BooleanField |  |
-| is42 | BooleanField | is it a 42 user. |
-| friends | ManyToManyField | all the friends of the user. |
-| friendRequests | ManyToManyField | all pending friend requests. |
-| coallition | CharField |  |
-| avatarImage | FileField | the path to the image of the user. |
-| tournament | OneToOneField | Link to user's current hosted tournament. |
-| objects | CustomUserManager() | Django required implementation. |
-| get_coallition(self) | Function | Returns the coallition. |
-| \_\_str\_\_(self) | Function | Returns the username of the user. |
+| username              | Django-Builtin        | The identifier of the user.                       |
+| onlineStatus          | BooleanField          | Is the user currently online                      |
+| is42                  | BooleanField          | Has the user registered through their 42 account  |
+| friends               | ManyToManyField       | All the friends of the user.                      |
+| friendRequests        | ManyToManyField       | All pending friend requests.                      |
+| coallition            | CharField             | The player's 42 coallition                        |
+| avatarImage           | FileField             | The path to the image of the user.                |
+| tournament            | OneToOneField         | Link to user's current hosted tournament.         |
+| objects               | CustomUserManager()   | Django required implementation.                   |
+| get_coallition(self)  | Function              | Returns the user's coallition.                    |
+| \_\_str\_\_(self)     | Function              | Returns the username of the user.                 |
 
 
 ### Tournament Model <a name="Tournament-M"></a>
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| STATE_CHOICES | list of tuples | list of possible states. |
-| id | AutoField | Identifier of the tournament. |
-| uuid | UUIDField | Identifier of the Host user. |
-| tournamentName | CharField |  |
-| amount | IntegerField | Max amount of layer allowed. |
-| sate | CharField | The sate of the tournament. |
-| players | ManyToManyField | the current player aliases. |
+| STATE_CHOICES     | List of tuples    | List of possible states.      |
+| id                | AutoField         | Identifier of the tournament. |
+| uuid              | UUIDField         | Identifier of the host user.  |
+| tournamentName    | CharField         | Name of the tournament        |
+| amount            | IntegerField      | Max amount of layers allowed. |
+| state             | CharField         | The state of the tournament.  |
+| players           | ManyToManyField   | The current player aliases.   |
 
 ### Tournament API <a name="Tournament"></a>
-| HTTP Method | Endpoint | Description | Notes |
-| ------ | ------ | ------ | ------ |
-| GET       | /api/tournament           | Gets the tournament of the authenticated user         | returns the tournnament |
-| POST      | /api/tournament           | Creates a new tournament for the authenticated user   | returns the tournnament |
-| DELETE    | /api/tournament           | Deletes the tournament of the authenticated user      |  |
-| GET       | /api/tournament/:id       | Gets a tournament by ID                               | returns the tournnament |
-| POST      | /api/tournament/:id       | Creates a new player on that tournament ID            |  |
-| DELETE    | /api/tournament/:id       | Deletes the tournament that has the specific ID       |  |
-| PUT       | api/tournament/player/:id | Updates a tournamentUser by ID                        |  |
-| DELETE    | api/tournament/player/:id | Deletes a tournamentUser by ID                        |  |
+| HTTP Method | Endpoint | Description |
+| ------ | ------ | ------ |
+| GET       | /api/tournament           | Gets the tournament of the authenticated user         |
+| POST      | /api/tournament           | Creates a new tournament for the authenticated user   |
+| DELETE    | /api/tournament           | Deletes the tournament of the authenticated user      |
+| GET       | /api/tournament/:id       | Gets a tournament by ID                               |
+| POST      | /api/tournament/:id       | Creates a new player on that tournament ID            |
+| DELETE    | /api/tournament/:id       | Deletes the tournament that has the specific ID       |
+| PUT       | api/tournament/player/:id | Updates a tournamentUser by ID                        |
+| DELETE    | api/tournament/player/:id | Deletes a tournamentUser by ID                        |
 
 
 
 ### Database API <a name="Database"></a>
-| HTTP Method | Endpoint | Description | Notes |
-| ------ | ------ | ------ | ------ |
-| POST		| /api/userProfilePicture |  |  |
-| GET		| /api/friends | returns all the friends of the logged in user. |  |
-| GET		| /api/searchUsers/:search | return little info about all the users matches the search. |  |
-| GET		| /api/users | returns info about the logged in user. |  |
-| DELETE	| /api/users | deletes the logged in user. |  |
-| GET		| /api/users/:userName | returns all the info about the specific user. |  |
-| POST		| /api/friendRequest/:friendName | sends friend request to friendName. |  |
-| DELETE	| /api/friendRequest/:friendName | remove friend request from friendName. |  |
-| POST		| /api/friend/:friendName | Accepts friends request if there is one. |  |
-| DELETE	| /api/friend/:friendName | Removes friend from friend list. |  |
+| HTTP Method | Endpoint | Description |
+| ------ | ------ | ------ |
+| POST		| /api/userProfilePicture           | Uploads the user's profile picture.                                   |
+| GET		| /api/friends                      | Returns all the friends of the logged in user.                        |
+| GET		| /api/searchUsers/:search          | Returns summary info about all the users matching the search query.   |
+| GET		| /api/users                        | Returns info about the logged in user.                                |
+| DELETE	| /api/users                        | Deletes the logged in user.                                           |
+| GET		| /api/users/:userName              | Returns all the info about the specific user.                         |
+| POST		| /api/friendRequest/:friendName    | Sends friend request to friendName.                                   |
+| DELETE	| /api/friendRequest/:friendName    | Remove friend request from friendName.                                |
+| POST		| /api/friend/:friendName           | Accepts friend request if there is one.                               |
+| DELETE	| /api/friend/:friendName           | Removes friend from friend list.                                      |

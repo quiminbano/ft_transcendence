@@ -27,20 +27,24 @@
 		  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
 		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		  crossorigin="anonymous">
+	<script type="text/javascript">
+		// Fix for Firefox autofocus CSS bug
+		// See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
+	</script>	
 </head>
 <body>
 	<div id="root">
+		<div id="loadingSpinnerContainer">
+			<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>
 		<div id="page-content">
 			{% block content %}
 			{% if content %}
 			{% include content %}
 			{% endif %}
 			{% endblock %}
-		</div>
-		<div id="loadingSpinnerContainer">
-			<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
-				<span class="sr-only">Loading...</span>
-			</div>
 		</div>
 	</div>
 	<script src="{% static 'js/friendsInvitations.js' %}"></script>
