@@ -61,7 +61,7 @@ class Database(AbstractUser):
     is42 = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     friendRequests = models.ManyToManyField('self', symmetrical=False, blank=True)
-    coallition = models.CharField()
+    coallition = models.CharField(blank=True)
     accessToken = models.CharField(blank=True)
     refreshToken = models.CharField(blank=True)
     expirationTime = models.BigIntegerField(default=0)

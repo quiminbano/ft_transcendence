@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
 from .utils import stringifyImage
@@ -13,7 +13,7 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     if (request.user.is42 == True) and (time.time() > request.user.expirationTime):
-        return getTokens(request.user.refreshToken, 'refresh_token', '/dashboard', request)
+        return getTokens(request.user.refreshToken, 'refresh_token', 'refresh_token', '/dashboard', request)
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
@@ -30,7 +30,7 @@ def getFriendState(request, friendRequests, friends):
     for request_data in friends:
         if request_data["username"] == request.user.username:
             friendState = "T"
-            break;
+            break
     return friendState
 
 def usersPage(request, name):
@@ -94,6 +94,11 @@ def postLoginUser(request):
         password = form.cleaned_data['password']
         user = authenticate(request, username=username, password=password)
         if user:
+           userModel = get_user_model()
+           userDatabase = userModel.objects.filter(username=username).get()
+           userDatabase.onlineStatus = True
+           userDatabase.full_clean()
+           userDatabase.save()
            login(request, user)
            return JsonResponse({"success": "true", "message": "Login completed successfuly"}, status=200)
         else:
@@ -111,6 +116,9 @@ def loginUser(request):
             return postLoginUser(request)
 
 def logoutUser(request):
+    request.user.onlineStatus = False
+    request.user.full_clean()
+    request.user.save()
     logout(request)
     return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
 
