@@ -3,6 +3,8 @@ const friendsFragment = new FragmentGenerator("/getDoc/friendItem");
 
 const loadMenus = () => {
 	const searchButton = document.getElementById("searchButton");
+	if (!searchButton)
+		return;
 	const search = document.getElementById("search");
 
 	searchButton.addEventListener("click", () => {
