@@ -7,7 +7,6 @@ from .models import Database
 from app.forms import ProfilePicture
 from os import getenv
 import json
-import base64
 import io
 import mimetypes
 import http.client
