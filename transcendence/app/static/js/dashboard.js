@@ -2,76 +2,81 @@ const files = [];
 const loadDashboard = () => {
 	createInvitationsModal();
 	const saveButton = document.querySelector("#saveUploadedPictureButton");
-	saveButton.style.display = "none";
-	saveButton.addEventListener("click", async () => {
-		showLoadingSpinner();
-		await savePicture(files[0]);
-		hideLoadingSpinner();
+	if (saveButton) {
 		saveButton.style.display = "none";
-	})
-	const dragArea = document.querySelector(".dropArea");
-	const fileInput = dragArea.querySelector("input[name='avatarImage']");
-	dragArea.addEventListener("click", () => {
-		fileInput.click();
-	})
-	fileInput.onchange = (e) => {
-		clearFiles();
-		const image = e.target.files[0];
-		files.push(image);
-		if (!isValidImage(files[0])) {
-			setDragAreaInvalid("Invalid file format");
-			return;
-		} else {
-			return uploadImage(files[0])
-		}
-	}
-	dragArea.addEventListener("dragover", (e) => {
-		e.preventDefault();
-		dragArea.classList.add("hover")
-	})
-	dragArea.addEventListener("dragleave", () => {
-		dragArea.classList.remove("hover");
-	})
-	dragArea.addEventListener("drop", async (e) => {
-		e.preventDefault();
-		clearFiles();
-		const image = e.dataTransfer.files[0];
-		files.push(image);
-		if (!isValidImage(files[0])) {
-			setDragAreaInvalid("Invalid file format");
-		} else {
-			return uploadImage(files[0]);
-		}
-	})
-	const uploadImage = (image) => {
-		dragArea.setAttribute("class", "dropArea valid");
-		const pElement = dragArea.querySelector("p");
-
-		const isFile = 	new Promise((resolve) => {
-			const fr = new FileReader();
-			fr.onprogress = (e) => {
-				if (e.loaded > 50) {
-					fr.abort();
-					resolve(true);
-				}
-			}
-			fr.onload = () => {resolve(true);}
-			fr.onerror = () => {resolve(false);}
-			fr.readAsArrayBuffer(image);
+		saveButton.addEventListener("click", async () => {
+			showLoadingSpinner();
+			await savePicture(files[0]);
+			hideLoadingSpinner();
+			saveButton.style.display = "none";
 		})
-		if (!isFile) {
-			setDragAreaInvalid("Error: something happened");
-			throw new Error("Couldn't read the file");
-		}
-		pElement.innerHTML = "Added " + image.name;
-		upload(image);
 	}
-	const upload = async (file) => {
-		const url = URL.createObjectURL(file);
-		const img = dragArea.querySelector("#previewUploadedImage");
-		img.style.display = "flex";
-		img.setAttribute("src", url);
-		saveButton.style.display  = "flex";
+
+	const dragArea = document.querySelector(".dropArea");
+	if (dragArea) {
+		const fileInput = dragArea.querySelector("input[name='avatarImage']");
+		dragArea.addEventListener("click", () => {
+			fileInput.click();
+		})
+		fileInput.onchange = (e) => {
+			clearFiles();
+			const image = e.target.files[0];
+			files.push(image);
+			if (!isValidImage(files[0])) {
+				setDragAreaInvalid("Invalid file format");
+				return;
+			} else {
+				return uploadImage(files[0])
+			}
+		}
+		dragArea.addEventListener("dragover", (e) => {
+			e.preventDefault();
+			dragArea.classList.add("hover")
+		})
+		dragArea.addEventListener("dragleave", () => {
+			dragArea.classList.remove("hover");
+		})
+		dragArea.addEventListener("drop", async (e) => {
+			e.preventDefault();
+			clearFiles();
+			const image = e.dataTransfer.files[0];
+			files.push(image);
+			if (!isValidImage(files[0])) {
+				setDragAreaInvalid("Invalid file format");
+			} else {
+				return uploadImage(files[0]);
+			}
+		})
+		const uploadImage = (image) => {
+			dragArea.setAttribute("class", "dropArea valid");
+			const pElement = dragArea.querySelector("p");
+
+			const isFile = 	new Promise((resolve) => {
+				const fr = new FileReader();
+				fr.onprogress = (e) => {
+					if (e.loaded > 50) {
+						fr.abort();
+						resolve(true);
+					}
+				}
+				fr.onload = () => {resolve(true);}
+				fr.onerror = () => {resolve(false);}
+				fr.readAsArrayBuffer(image);
+			})
+			if (!isFile) {
+				setDragAreaInvalid("Error: something happened");
+				throw new Error("Couldn't read the file");
+			}
+			pElement.innerHTML = "Added " + image.name;
+			upload(image);
+		}
+		const upload = async (file) => {
+			const url = URL.createObjectURL(file);
+			const img = dragArea.querySelector("#previewUploadedImage");
+			img.style.display = "flex";
+			img.setAttribute("src", url);
+			saveButton.style.display  = "flex";
+		}
 	}
 	loadMenus();
 }
