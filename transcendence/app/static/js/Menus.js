@@ -3,6 +3,8 @@ const friendsFragment = new FragmentGenerator("/getDoc/friendItem");
 
 const loadMenus = () => {
 	const searchButton = document.getElementById("searchButton");
+	if (!searchButton)
+		return;
 	const search = document.getElementById("search");
 
 	searchButton.addEventListener("click", () => {
@@ -144,7 +146,7 @@ const showFriendsMenu = async () => {
 			friendsDropdown.classList.remove("friendsDropdownCollapsed");
 			friendsDropdown.classList.add("friendsDropdownExpanded");
 			const parentDiv = document.getElementById("friendsDropdown");
-			displayFriendsElements(friends, parentDiv);
+			await displayFriendsElements(friends, parentDiv);
 		} else {
 			throw response;
 		}
@@ -153,10 +155,11 @@ const showFriendsMenu = async () => {
 	}
 }
 
-const displayFriendsElements = (friends = [], parentDiv) => {
+const displayFriendsElements = async (friends = [], parentDiv) => {
 	while (parentDiv.firstChild) {
 	  parentDiv.removeChild(parentDiv.firstChild);
 	}
+	await updateNotification();
 	if (friends.length === 0) {
 		const noFriends = document.createElement("div");
 		noFriends.textContent = "No Friends";
@@ -195,7 +198,8 @@ const friendItem = async (friend, parentDiv) => {
 
 const closeFriendsMenuEventHandler = (e) => {
 	const friendsMenuArea = document.getElementById("friendsDropdown");
-	if (friendsMenuArea.contains(e.target)) return;
+	if (!friendsMenuArea) return;
+	if (friendsMenuArea?.contains(e.target)) return;
 	const friendsButton = document.getElementById("friendsMenuButton");
 	const friendsImage = document.getElementById("friendsIconButton");
 	if (!(e.target === friendsButton || e.target === friendsImage)) {

@@ -14,7 +14,7 @@ def JSONTournamentResponse(tournament, message):
                 "id": str(tournament.id),
                 "name": tournament.tournamentName,
                 "amount": tournament.amount,
-                "state": tournament.sate,
+                "state": tournament.state,
                 "players": [{"name" : player.name, "id" : player.id} for player in tournament.players.all()],
             }
         }
@@ -34,7 +34,7 @@ def tournamentAddPlayer(request, tournament):
     tournament.players.add(player)
     playerdict = model_to_dict(player)
     if tournament.players.count() >= tournament.amount:
-        tournament.sate = 'A'
+        tournament.state = 'A'
         tournament.save()
     return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
 
@@ -57,7 +57,7 @@ def tournamentDeletePlayer(player):
         tournament.players.remove(player)
         player.delete()
         if tournament.players.count() < tournament.amount:
-            tournament.sate = 'P'
+            tournament.state = 'P'
             tournament.save()
         return JsonResponse({'succes!': 'player got removed'}, status=200)
     else:
@@ -83,22 +83,34 @@ def createTurnament(request):
 def getTournament(tournament):
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament already exist"), status=200)
 
-def deleteTournament(tournament):
-    for TournamentPlayer in tournament.players.all():
-        TournamentPlayer.delete()
-    tournament.delete()
+
+#
+#
+#
+#
+#       TEMPORARY ADD MATCHES TO COMPLETED COLUMN IF THEY ARE ACTIVE CHANGE THIS TO BE BETTER MANAGE!!!!!
+#                                               (READ!!!)
+#
+#
+#
+def deleteTournament(request, tournament):
+    if tournament.state == 'A':
+        print("MOVE")
+        request.user.completedMatches.add(tournament)
+        tournament.delete()
+    else:
+        print("DELE")
+        for TournamentPlayer in tournament.players.all():
+            TournamentPlayer.delete()
+        tournament.delete()
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
 
 
 #====================================================================================
 #====================================================================================
-#====================================================================================
-#                               Tournament Managemer
-#====================================================================================
+#                               Tournament Manager
 #====================================================================================
 #====================================================================================
-
-
 #==========================================
 #         Tournament Management
 #==========================================
@@ -112,9 +124,9 @@ def tournamentManager(request):
             case "GET":
                 return getTournament(existing_tournament)
             case "DELETE":
-                return deleteTournament(existing_tournament)
+                return deleteTournament(request, existing_tournament)
             case "POST":
-                deleteTournament(existing_tournament)
+                deleteTournament(request, existing_tournament)
                 return createTurnament(request)
             case _:
                 return unknownMethod()
@@ -138,7 +150,7 @@ def tournamentManagerID(request, id=None):
             case "POST":
                 return tournamentAddPlayer(request, existing_tournament)
             case "DELETE":
-                return deleteTournament(existing_tournament)
+                return deleteTournament(request, existing_tournament)
             case _:
                 return unknownMethod()
     else:
@@ -156,7 +168,6 @@ def tournamentPlayer(request):
             return(tournamentUpdatePlayer(request))
         case _:
             return unknownMethod()
-    return JsonResponse({'error': 'player does not exist'}, status=400)
 
 
 

@@ -22,10 +22,8 @@
     <div class="col-12">
         <button class="btn btn-secondary w-100 friendButton">Challenge for pong</button>
         <button class="btn btn-dark w-100 friendButton">Challenge for snake</button>
-        {% if client.info.isFriend %}
-        <button class="btn btn-danger w-100 friendButton">Remove as friend</button>
-        {% else %}
-        <button class="btn btn-success w-100 friendButton">Add as friend</button>
-        {% endif %}
+        <button class="btn btn-danger w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'T' %} nonActive {% endif %}" id="removeFriendBtn" onclick="removeFromFriend('{{client.info.username}}')">Remove as friend</button>
+        <button class="btn btn-secondary w-100 friendButton {% if client.info.isFriend == 'P' %} active{% endif %}{% if client.info.isFriend != 'P' %} nonActive {% endif %}" disabled id="waitingFriendBtn">Waiting acceptence</button>
+        <button class="btn btn-success w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'F' %} nonActive {% endif %}" onclick="inviteToBeFriend('{{client.info.username}}')" id="addFriendBtn">Add as friend</button>
     </div>
 </div>
