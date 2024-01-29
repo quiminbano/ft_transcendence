@@ -5,9 +5,19 @@
                 <img alt="friend picture"
                      id="friendAvatar"
                      src="/static/images/profileIcon.png" />
+                {% if client.info.coallition == "The Builders" %}
                 <img alt="friend coallition logo"
                      id="friendCoallitionLogo"
-                     src="/static/images/buildersSymbol.svg" />
+                     src="/static/images/The BuildersSymbol.svg" />
+                {% elif client.info.coallition == "The Guards" %}
+                <img alt="friend coallition logo"
+                     id="friendCoallitionLogo"
+                     src="/static/images/The GuardsSymbol.svg" />
+                {% else %}
+                <img alt="friend coallition logo"
+                     id="friendCoallitionLogo"
+                     src="/static/images/The ForagersSymbol.svg" />
+                {% endif %}
             </div>
             <p id="userName">{{client.info.username}}</p>
             {% if client.info.online %}
