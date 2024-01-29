@@ -6,7 +6,16 @@ class LocalPongGame {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		document.getElementById("localGameContainer").appendChild(this.renderer.domElement);
 
-		const lineMaterial = new THREE.LineBasicMaterial( { color: 0xffffff } );
+		const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
+		this.scene.add(ambientLight);
+
+		const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+		directionalLight.position.set(0, 8, 2);
+		directionalLight.target.position.set(0, 0, 0);
+		this.scene.add(directionalLight);
+		this.scene.add(directionalLight.target);
+
+		const lineMaterial = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 		const points = [];
 		points.push(new THREE.Vector3(0, -50, 10));
 		points.push(new THREE.Vector3(0, 50, 10));
@@ -14,7 +23,7 @@ class LocalPongGame {
 		this.line = new THREE.Line(lineGeometry, lineMaterial);
 		this.scene.add(this.line);
 
-		const objectMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+		const objectMaterial = new THREE.MeshPhongMaterial({ color: 0x00FF00 });
 		const ballGeometry = new THREE.BoxGeometry(1, 1, 1);
 		this.ballMesh = new THREE.Mesh(ballGeometry, objectMaterial);
 		this.scene.add(this.ballMesh);
