@@ -44,7 +44,8 @@ def usersPage(request, name):
         return
     data = json.loads(expectedUser.content.decode())
     print("Data:")
-    print(data)
+    #print(data)
+    print(data["coallition"])
     #TODO: change this data to the real user data!!!!!!!!!
     is42 = request.user.is42
     lastGames = [
@@ -59,6 +60,7 @@ def usersPage(request, name):
         "username": name,
         "online": data["onlineStatus"],
         "isFriend": getFriendState(request, data["friendRequests"], data["friends"]),
+        "coallition": data["coallition"]
     }
     stats = {
         "totalGames": 100,
