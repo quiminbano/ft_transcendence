@@ -14,8 +14,8 @@ def pongInterface(request):
                 "source": source,
                 "is42" : is42,
             }
-        case "/pong/1v1":
-            context = {"content": "Pong1v1pages/oneVoneRemote.html"}
+        case "/pong/single":
+            context = {"content": "Pong1v1pages/singleMatchPage.html"}
         case "/pong/tournament":
             context = {"content": "PongTournamentPages/tournamentCreation.html"}
         case _:
