@@ -41,9 +41,9 @@ class SignupForm(CustomUserCreationForm):
         label="email",
         widget=forms.EmailInput(attrs={"class": "form-control"}))
     coallition = forms.ChoiceField(choices=(
-        ('builders', 'The Builders'),
-        ('foragers', 'The Foragers'),
-        ('guards', 'The Guards'),
+        ('The Builders', 'The Builders'),
+        ('The Foragers', 'The Foragers'),
+        ('The Guards', 'The Guards'),
     ), widget=forms.RadioSelect)
     password1 = forms.CharField(
         label='password',
@@ -83,7 +83,7 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['password1']
         )
         user.coallition = self.cleaned_data['coallition']
-        user.is42 = True #Temporary, just to test the restrictions of 42 users
+        user.is42 = False
         try:
             f = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(f)
