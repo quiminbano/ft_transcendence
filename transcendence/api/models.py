@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .imageValidation import validateFileType, validationImageSize, defineNameImage
 from django.core.files import File
+from django.utils import timezone
 
 
 class Players(models.Model):
@@ -23,6 +24,7 @@ class Tournament(models.Model):
     amount = models.IntegerField()
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
     players = models.ManyToManyField(Players, related_name='tournaments')
+    date = models.DateField(default=timezone.now)
 
 class DatabaseManager(BaseUserManager):
 

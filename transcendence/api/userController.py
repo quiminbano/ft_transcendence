@@ -126,7 +126,7 @@ def getUser(request, userName=None):
     if not request.user.is_authenticated:
         return redirect('/login')
     user = Database.objects.filter(username=userName).first()
-    if user is None or user == request.user:
+    if user is None:
         return redirect('/')
     if request.method == "GET":
         user_dict = model_to_dict(user)
@@ -142,6 +142,17 @@ def getUser(request, userName=None):
                 'username': friendRequests.username,
                 'avatarImage': stringifyImage(friendRequests) if friendRequests.avatarImage else None
             } for friendRequests in user_dict['friendRequests']]
+        if user_dict.get('completedMatches'):
+            user_dict['completedMatches'] = [{
+                'id': completedMatches.id,
+                "tournamentName": completedMatches.tournamentName,
+                "amount": completedMatches.amount,
+                "state": completedMatches.state,
+                "date": completedMatches.date,
+                "players": [
+                    {'name': player.name, 'score': player.score} for player in completedMatches.players.all()
+                ]
+            } for completedMatches in user_dict['completedMatches']]
         return JsonResponse(user_dict, status=200, safe=False)
     return JsonResponse({"message": "Method not implemented"}, status=501)
 
