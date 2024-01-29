@@ -66,6 +66,8 @@ class LocalPongGame {
 			this.padMesh1.position.y = this.pad1.y;
 			this.padMesh2.position.x = this.pad2.x;
 			this.padMesh2.position.y = this.pad2.y;
+			this.ballMesh.rotation.x += 0.01;
+			this.ballMesh.rotation.y += 0.01;
 			this.renderer.render(this.scene, this.camera);
 			this.player1ScoreUI.innerText = this.player1Score.score;
 			this.player2ScoreUI.innerText = this.player2Score.score;
