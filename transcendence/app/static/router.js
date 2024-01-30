@@ -12,7 +12,7 @@ const loaders = [
 	{ path: "/pong", function: loadPong },
 	{ path: "/pong/tournament", function: loadTournamentCreation },
 	{ path: "/pong/tournament/*", function: loadTournamentLobby },
-	{ path: "/pong/1v1", function: loadPong1v1 },
+	{ path: "/pong/single/1v1", function: loadOneVOne },
 	{ path: "/users/*", function: loadUsersPage },
 ]
 

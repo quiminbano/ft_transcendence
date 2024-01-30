@@ -1,28 +1,39 @@
-let matchMakingModal;
-let invitedUser;
-let timerToFindOpponent;
-const timeToFindOpponentInSeconds = 5;
-const loadPong1v1 = async () => {
-	matchMakingModal = new Modal(document.getElementById("oneVoneMatchmakingModal"));
+let OneVOneContentDisplay;
+const scenes = [
+	{ name: "gamePlay", id: "OneVOne-gamePlay" },
+	{ name: "endGame", id: "OneVOne-endGame"}
+]
+
+const loadOneVOne = async () => {
+
+	OneVOneContentDisplay = new ContentDisplayManager({ name: scenes[0].name, element: document.getElementById(scenes[0].id) });
+	for (let i = 1; i < scenes.length; i++) {
+		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
+	}
+
+	playGame();
 }
 
-const openMatchmakingModal = () => {
-	searchOpponent();
-	matchMakingModal.open();
-}
-const closeMatchmakingModal = () => {
-	matchMakingModal.close();
+const playGame = async () => {
+	const game = new LocalPongGame();
+	await game.startGame();
+	const score = game.getGameScore();
+	UpdateEndGameScene(score);
+	OneVOneContentDisplay.setActive("endGame");
 }
 
-const searchOpponent = () => {
-	//TODO: Handle all networking connections to find a match!!!
-	const matchmakingBoxActive = document.getElementById("matchmakingBoxActive");
-	const matchmakingBoxNonActive = document.getElementById("matchmakingBoxNonActive");
-	matchmakingBoxActive.style.display = "flex";
-	matchmakingBoxNonActive.style.display = "none";
-	timerToFindOpponent = setTimeout(() => {
-		matchmakingBoxActive.style.display = "none";
-		matchmakingBoxNonActive.style.display = "flex";
-		clearInterval(timerToFindOpponent);
-	}, timeToFindOpponentInSeconds * 1000);
+const UpdateEndGameScene = (score) => {
+	const playerOnePointsElement = document.getElementById("playerOnePoints");
+	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
+	playerOnePointsElement.innerText = score.player1;
+	playerTwoPointsElement.innerText = score.player2;
+}
+
+const oneVonePlayAgain = () => {
+	OneVOneContentDisplay.setActive("gamePlay");
+	playGame();
+}
+
+const oneVoneContinue = () => {
+	navigateTo("/pong/single");
 }
