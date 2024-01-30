@@ -50,5 +50,5 @@ const createTournamentInstance = (name, amount, id) => {
 }
 
 const play1v1 = () => {
-	navigateTo("/pong/1v1");
+	navigateTo("/pong/single");
 }
