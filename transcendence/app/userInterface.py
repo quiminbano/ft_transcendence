@@ -94,17 +94,22 @@ def postLoginUser(request):
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
+        userModel = get_user_model()
+        try:
+            userDatabase = userModel.objects.filter(username=username).get()
+        except userModel.DoesNotExist:
+           return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
+        if userDatabase.is42 == True:
+           return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
         user = authenticate(request, username=username, password=password)
         if user:
-           userModel = get_user_model()
-           userDatabase = userModel.objects.filter(username=username).get()
-           userDatabase.onlineStatus = True
-           userDatabase.full_clean()
-           userDatabase.save()
-           login(request, user)
-           return JsonResponse({"success": "true", "message": "Login completed successfuly"}, status=200)
+            userDatabase.onlineStatus = True
+            userDatabase.full_clean()
+            userDatabase.save()
+            login(request, user)
+            return JsonResponse({"success": "true", "message": "Login completed successfuly"}, status=200)
         else:
-           return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
+            return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
     else:
         return JsonResponse({"success": "false", "message": "the form is invalid"}, status=400)
 
