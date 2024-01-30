@@ -15,8 +15,8 @@ class pongObject {
 	}
 
 	moveBall(pad1, pad2, player1Score, player2Score) {
-		this.x += this.dirX;
-		this.y += this.dirY;
+		this.x += this.dirX * 3;
+		this.y += this.dirY * 3;
 
 		if (this.x - this.radius < pad1.x + pad1.radius && this.y > pad1.y - pad1.height/2 && this.y < pad1.y + pad1.height/2) {
 			this.x = pad1.x + pad1.radius + this.radius

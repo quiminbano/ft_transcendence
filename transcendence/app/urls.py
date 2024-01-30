@@ -10,6 +10,7 @@ urlpatterns = [
     path("settings", views.userInterface.settings, name="settings"),
     path("pong", views.pongTournament.pongInterface, name="pong"),
 	path("pong/single", views.pongTournament.pongInterface, name="pong1v1"),
+    path("pong/single/1v1", views.pongTournament.pongInterface, name="pong2v2"),
     path("pong/tournament", views.pongTournament.pongInterface, name="pongTournament"),
     path("pong/tournament/<int:id>", views.pongTournament.pongInterfaceWithId, name="pongTournamentLobby"),
     path("pong/tournament/<int:id>/start", views.pongTournament.pongInterfaceWithId, name="pongTournamentStart"),
