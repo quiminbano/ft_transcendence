@@ -23,7 +23,6 @@ const playGame = async () => {
 }
 
 const UpdateEndGameScene = (score) => {
-	console.log(score);
 	const playerOnePointsElement = document.getElementById("playerOnePoints");
 	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
 	playerOnePointsElement.innerText = score.player1;
