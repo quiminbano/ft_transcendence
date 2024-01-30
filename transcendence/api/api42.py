@@ -3,7 +3,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import QueryDict
 from django.shortcuts import redirect
 from django.utils.datastructures import MultiValueDict
-from .models import Database
+from .models import Database, Users42
 from app.forms import ProfilePicture
 from os import getenv
 import json
@@ -59,6 +59,33 @@ def getCoalition(id, header, connection):
     return (coalition, errorFlag)
 
 #==========================================
+#         GET PROPER LOGIN USER
+#==========================================
+
+def storeIn42(loginUser):
+    i = 1
+    try:
+        userIn42 = Users42.objects.filter(user_in_42=loginUser).get()
+        loginUser = userIn42.user_in_database
+        return loginUser
+    except Users42.DoesNotExist:
+        pass
+    try:
+        while True:
+            if i == 1:
+                tempUser = loginUser
+            else:
+                tempUser = loginUser + str(i)
+            databaseUser = Database.objects.filter(username=tempUser).get()
+            i += 1
+    except Database.DoesNotExist:
+        pass
+    newUser = Users42(user_in_42=loginUser, user_in_database=tempUser)
+    newUser.full_clean()
+    newUser.save()
+    return tempUser
+
+#==========================================
 #         GET INFORMATION
 #==========================================
 
@@ -82,6 +109,7 @@ def getInfo(token, expirationTime, refreshToken, destination, request):
     coalition, errorFlag = getCoalition(id=id, header=header, connection=connection)
     if errorFlag == 1:
         return redirect('/')
+    loginUser = storeIn42(loginUser)
     try:
         user42 = Database.objects.filter(username=loginUser).get()
     except Database.DoesNotExist:
