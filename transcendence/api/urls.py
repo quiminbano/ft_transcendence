@@ -11,6 +11,7 @@ urlpatterns = [
     path("searchUsers/<str:search>", views.userController.searchUsers, name="getUsers"),
     path("user", views.userController.Users, name="User"),
     path("user/<str:userName>", views.userController.getUser, name="getUser"),
+    path("matchHistory/<str:userName>", views.userController.getMatcHistory, name="getUser"),
 	
     path("friendRequest/<str:friendName>", views.userController.friendRequest, name="FriendRequest"),
     path("friendRequest", views.userController.friendRequest, name="FriendRequest"),

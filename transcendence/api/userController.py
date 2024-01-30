@@ -122,6 +122,29 @@ def searchUsers(request, search=None):
 #==========================================================
 #         GET SPECIFIC USER
 #==========================================================
+def getObjectsWithinUser(user_dict):
+    if user_dict.get('friends'):
+        user_dict['friends'] = [{
+            'username': friend.username,
+            'avatarImage': stringifyImage(friend) if friend.avatarImage else None
+    } for friend in user_dict['friends']]
+    if user_dict.get('friendRequests'):
+        user_dict['friendRequests'] = [{
+            'username': friendRequests.username,
+            'avatarImage': stringifyImage(friendRequests) if friendRequests.avatarImage else None
+        } for friendRequests in user_dict['friendRequests']]
+    if user_dict.get('completedMatches'):
+        user_dict['completedMatches'] = [{
+            'id': completedMatches.id,
+            "tournamentName": completedMatches.tournamentName,
+            "amount": completedMatches.amount,
+            "state": completedMatches.state,
+            "date": completedMatches.date,
+            "players": [
+                {'name': player.name, 'score': player.score} for player in completedMatches.players.all()
+            ]
+        } for completedMatches in user_dict['completedMatches']]
+    
 def getUser(request, userName=None):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -132,27 +155,7 @@ def getUser(request, userName=None):
         user_dict = model_to_dict(user)
         user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
         user_dict.pop('password', None)
-        if user_dict.get('friends'):
-            user_dict['friends'] = [{
-                'username': friend.username,
-                'avatarImage': stringifyImage(friend) if friend.avatarImage else None
-            } for friend in user_dict['friends']]
-        if user_dict.get('friendRequests'):
-            user_dict['friendRequests'] = [{
-                'username': friendRequests.username,
-                'avatarImage': stringifyImage(friendRequests) if friendRequests.avatarImage else None
-            } for friendRequests in user_dict['friendRequests']]
-        if user_dict.get('completedMatches'):
-            user_dict['completedMatches'] = [{
-                'id': completedMatches.id,
-                "tournamentName": completedMatches.tournamentName,
-                "amount": completedMatches.amount,
-                "state": completedMatches.state,
-                "date": completedMatches.date,
-                "players": [
-                    {'name': player.name, 'score': player.score} for player in completedMatches.players.all()
-                ]
-            } for completedMatches in user_dict['completedMatches']]
+        getObjectsWithinUser(user_dict)
         return JsonResponse(user_dict, status=200, safe=False)
     return JsonResponse({"message": "Method not implemented"}, status=501)
 
@@ -168,14 +171,40 @@ def Users(request):
             user_dict = model_to_dict(user)
             user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
             user_dict.pop('password', None)
-            if user_dict.get('friends'):
-                user_dict['friends'] = [friend.username for friend in user_dict['friends']]
+            getObjectsWithinUser(user_dict)
             return JsonResponse(user_dict, status=200, safe=False)
         case "DELETE":
             user.delete()
             return JsonResponse({"message":"Success"}, status=200, safe=False)
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
+
+
+#==========================================
+#          Mtach Hisory
+#==========================================
+def getMatcHistory(request, userName):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    user = Database.objects.filter(username=userName).first()
+    if user is None:
+        return redirect('/')
+    if request.method == "GET":
+        history = []
+        for matches in user.completedMatches.all():
+            match = {
+            'id': matches.id,
+            "tournamentName": matches.tournamentName,
+            "amount": matches.amount,
+            "state": matches.state,
+            "date": matches.date,
+            "players": [
+                {'name': player.name, 'score': player.score} for player in matches.players.all()
+            ]
+            }
+            history.append(match)
+        return JsonResponse(history, status=200, safe=False)
+    return JsonResponse({"message": "Method not implemented"}, status=501)
 
 
 #==========================================
@@ -194,3 +223,4 @@ def profilePicture(request):
         else:
             return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
     return JsonResponse({"success": "false", "message": "Accessing to an API route, not allowed"}, status=400)
+

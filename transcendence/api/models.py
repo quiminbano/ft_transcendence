@@ -70,6 +70,9 @@ class Database(AbstractUser):
     avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
     completedMatches = models.ManyToManyField(Tournament, blank=True, related_name="completedMatches")
+    matchesPlayed = models.IntegerField(default=0)
+    matchesWon = models.IntegerField(default=0)
+    matchesLost = models.IntegerField(default=0)
 
     objects = DatabaseManager()
 
