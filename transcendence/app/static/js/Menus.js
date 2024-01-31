@@ -211,6 +211,8 @@ const closeFriendsMenuEventHandler = (e) => {
 
 const loadLanguageDropDown  = () => {
 	const button = document.getElementById("lan-currentLanguage");
+	if (!button)
+		return;
 	button.setAttribute("src", "/static/images/england.png");
 	document.addEventListener("click", e => {
 		const isDropdownButton = e.target.matches("[data-lan-dropdown-btn]");
