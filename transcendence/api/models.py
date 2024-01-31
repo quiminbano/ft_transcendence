@@ -82,4 +82,8 @@ class Database(AbstractUser):
     def __str__(self):
         return self.username
 
+class Users42(models.Model):
+    user_in_42 = models.CharField(blank=True)
+    user_in_database = models.CharField(blank=True)
+
 
