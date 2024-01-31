@@ -16,8 +16,10 @@ def pongInterface(request):
             }
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html"}
+        case "/pong/single/2v2":
+            context={"content": "Pong1v1pages/twoVtwo.html"}
         case "/pong/single":
-          context = {"content": "Pong1v1pages/singleMatchPage.html"}  
+          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": stringifyImage(request.user)}
         case "/pong/tournament":
             context = {"content": "PongTournamentPages/tournamentCreation.html"}
         case _:

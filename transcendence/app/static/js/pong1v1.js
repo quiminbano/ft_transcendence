@@ -4,6 +4,10 @@ const scenes = [
 	{ name: "endGame", id: "OneVOne-endGame"}
 ]
 
+const loadSingle = () => {
+	loadMenus();
+}
+
 const loadOneVOne = async () => {
 
 	OneVOneContentDisplay = new ContentDisplayManager({ name: scenes[0].name, element: document.getElementById(scenes[0].id) });
