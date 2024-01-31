@@ -34,7 +34,7 @@ const cancelLocalTournament = () => {
 
 const startLocalGame = async () => {
 	contentManager.setActive("game");;
-	const pongGame = new LocalPongGame();
+	const pongGame = new Local1v1Game();
 	const match = tournament.schedule.getNextMatch();
 	await pongGame.startGame();
 	const score = pongGame.getGameScore();
