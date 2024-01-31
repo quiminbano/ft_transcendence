@@ -1,5 +1,6 @@
-class LocalPongGame {
+class Local2v2Game {
 	constructor() {
+		this.clock = new THREE.Clock(true);
 		this.scene = new THREE.Scene();
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 		this.renderer = new THREE.WebGLRenderer();
@@ -23,23 +24,35 @@ class LocalPongGame {
 		this.line = new THREE.Line(lineGeometry, lineMaterial);
 		this.scene.add(this.line);
 
-		const objectMaterial = new THREE.MeshPhongMaterial({ color: 0x00FF00 });
+		const ballMaterial = new THREE.MeshPhongMaterial({ color: 0x00FF00 });
 		const ballGeometry = new THREE.BoxGeometry(1, 1, 1);
-		this.ballMesh = new THREE.Mesh(ballGeometry, objectMaterial);
+		this.ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 		this.scene.add(this.ballMesh);
 
+		const team1Material = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
+		const team2Material = new THREE.MeshPhongMaterial({ color: 0x0000FF });
 		const padGeometry = new THREE.BoxGeometry(1, 5, 1);
-		this.padMesh1 = new THREE.Mesh(padGeometry, objectMaterial);
+		this.padMesh1 = new THREE.Mesh(padGeometry, team1Material);
 		this.scene.add(this.padMesh1);
 
-		this.padMesh2 = new THREE.Mesh(padGeometry, objectMaterial);
+		this.padMesh2 = new THREE.Mesh(padGeometry, team2Material);
 		this.scene.add(this.padMesh2);
+
+		this.padMesh3 = new THREE.Mesh(padGeometry, team1Material);
+		this.padMesh3.rotation.z = Math.PI / 2;
+		this.scene.add(this.padMesh3);
+
+		this.padMesh4 = new THREE.Mesh(padGeometry, team2Material);
+		this.padMesh4.rotation.z = Math.PI / 2;
+		this.scene.add(this.padMesh4);
 
 		this.camera.position.z = 30;
 
 		this.ball = new pongObject(0, 0, 1, 1);
 		this.pad1 = new pongObject(-30, 0, 0.5, 5);
 		this.pad2 = new pongObject(30, 0, 0.5, 5);
+		this.pad3 = new pongObject(0, -25, 0.5, 5);
+		this.pad4 = new pongObject(0, 25, 0.5, 5);
 		this.player1Score = new pongObject(0, 0, 0, 0);
 		this.player2Score = new pongObject(0, 0, 0, 0);
 		this.gameLoop = this.gameLoop.bind(this);
@@ -61,13 +74,18 @@ class LocalPongGame {
 			this.ballMesh.geometry.dispose();
 			this.ballMesh.material.dispose();
 			this.padMesh1.geometry.dispose();
+			this.padMesh1.material.dispose();
+			this.padMesh2.material.dispose();
 			document.getElementById("localGameContainer").removeChild(this.renderer.domElement);
 			onGameOver();
 		}
 		else {
-			this.ball.moveBall(this.pad1, this.pad2, this.player1Score, this.player2Score);
-			this.pad1.movePad();
-			this.pad2.movePad();
+			const deltaTime = this.clock.getDelta();
+			this.ball.moveBall(deltaTime, this.pad1, this.pad2, this.pad3, this.pad4, this.player1Score, this.player2Score);
+			this.pad1.movePad(deltaTime);
+			this.pad2.movePad(deltaTime);
+			this.pad3.movePad(deltaTime);
+			this.pad4.movePad(deltaTime);
 
 			this.ballMesh.position.x = this.ball.x;
 			this.ballMesh.position.y = this.ball.y;
@@ -75,8 +93,12 @@ class LocalPongGame {
 			this.padMesh1.position.y = this.pad1.y;
 			this.padMesh2.position.x = this.pad2.x;
 			this.padMesh2.position.y = this.pad2.y;
-			this.ballMesh.rotation.x += 0.01;
-			this.ballMesh.rotation.y += 0.01;
+			this.padMesh3.position.x = this.pad3.x;
+			this.padMesh3.position.y = this.pad3.y;
+			this.padMesh4.position.x = this.pad4.x;
+			this.padMesh4.position.y = this.pad4.y;
+			this.ballMesh.rotation.x += 2 * deltaTime;
+			this.ballMesh.rotation.y += 2 * deltaTime;
 			this.renderer.render(this.scene, this.camera);
 			this.player1ScoreUI.innerText = this.player1Score.score;
 			this.player2ScoreUI.innerText = this.player2Score.score;
@@ -87,16 +109,28 @@ class LocalPongGame {
 	handleKeyDown(event) {
 		switch (event.key) {
 			case "w":
-				this.pad1.padY = 0.2;
+				this.pad1.padY = 1;
 				break;
 			case "s":
-				this.pad1.padY = -0.2;
+				this.pad1.padY = -1;
 				break;
 			case "ArrowUp":
-				this.pad2.padY = 0.2;
+				this.pad2.padY = 1;
 				break;
 			case "ArrowDown":
-				this.pad2.padY = -0.2;
+				this.pad2.padY = -1;
+				break;
+			case "g":
+				this.pad3.padX = 1;
+				break;
+			case "f":
+				this.pad3.padX = -1;
+				break;
+			case "k":
+				this.pad4.padX = 1;
+				break;
+			case "j":
+				this.pad4.padX = -1;
 				break;
 		}
 	}
@@ -110,6 +144,14 @@ class LocalPongGame {
 			case "ArrowUp":
 			case "ArrowDown":
 				this.pad2.padY = 0;
+				break;
+			case "g":
+			case "f":
+				this.pad3.padX = 0;
+				break;
+			case "k":
+			case "j":
+				this.pad4.padX = 0;
 				break;
 		}
 	}

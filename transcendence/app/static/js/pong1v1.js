@@ -15,7 +15,7 @@ const loadOneVOne = async () => {
 }
 
 const playGame = async () => {
-	const game = new LocalPongGame();
+	const game = new Local1v1Game();
 	await game.startGame();
 	const score = game.getGameScore();
 	UpdateEndGameScene(score);
