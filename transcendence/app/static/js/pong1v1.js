@@ -1,5 +1,6 @@
 let OneVOneContentDisplay;
 const scenes = [
+	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent"},
 	{ name: "gamePlay", id: "OneVOne-gamePlay" },
 	{ name: "endGame", id: "OneVOne-endGame"}
 ]
@@ -14,8 +15,6 @@ const loadOneVOne = async () => {
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
 	}
-
-	playGame();
 }
 
 const playGame = async () => {
@@ -40,4 +39,13 @@ const oneVonePlayAgain = () => {
 
 const oneVoneContinue = () => {
 	navigateTo("/pong/single");
+}
+
+const inviteOpponent1v1 = (e) => {
+	e.preventDefault();
+	console.log("invited friend");
+	const form = new FormData(e.target);
+	const username = form.get("username");
+	const PIN = form.get("PIN");
+	console.log(username, PIN);
 }
