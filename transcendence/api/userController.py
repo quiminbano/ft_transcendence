@@ -15,10 +15,10 @@ def friendRequest(request, friendName=None):
         return redirect('/login')
     if (request.method == "GET" and friendName==None):
         requests = []
-        for friendRequest in user.friendRequests.all():
+        for friend_request in user.friend_requests.all():
             FriendObject = {
-                "username" : friendRequest.username,
-                "avatarImage" : stringifyImage(friendRequest) if friendRequest.avatarImage else None
+                "username" : friend_request.username,
+                "avatar_image" : stringifyImage(friend_request) if friend_request.avatar_image else None
             }
             requests.append(FriendObject)
         return JsonResponse(requests, status=200, safe=False)
@@ -32,18 +32,18 @@ def friendRequest(request, friendName=None):
         case "POST":
             if user.friends.filter(username=potentailFriend.username).exists():
                 return JsonResponse({"message":"already friends"}, status=400)
-            if potentailFriend.friendRequests.filter(username=user.username).exists():
+            if potentailFriend.friend_requests.filter(username=user.username).exists():
                 return JsonResponse({"message":"already sent friend request"}, status=400)
-            if user.friendRequests.filter(username=potentailFriend.username).exists():
-                user.friendRequests.remove(potentailFriend)
+            if user.friend_requests.filter(username=potentailFriend.username).exists():
+                user.friend_requests.remove(potentailFriend)
                 user.friends.add(potentailFriend)
                 return JsonResponse({"message":"Both sent friend request, firendship established!"}, status=200)
             else:
-                potentailFriend.friendRequests.add(user)
+                potentailFriend.friend_requests.add(user)
                 return JsonResponse({"message":"Success sent friend request"}, status=200)
         case "DELETE":
-            if potentailFriend.friendRequests.filter(username=user.username).exists():
-                potentailFriend.friendRequests.remove(user)
+            if potentailFriend.friend_requests.filter(username=user.username).exists():
+                potentailFriend.friend_requests.remove(user)
                 return JsonResponse({"message":"Success removed friend request"}, status=200)
             return JsonResponse({"message":"No friend request sent"}, status=200)
         case _:
@@ -66,8 +66,8 @@ def friends(request, friendName=None):
         return JsonResponse({"message":"this user does not exist"}, status=400)
     match request.method:
         case "POST":
-            if user.friendRequests.filter(username=friend.username).exists():
-                user.friendRequests.remove(friend)
+            if user.friend_requests.filter(username=friend.username).exists():
+                user.friend_requests.remove(friend)
                 user.friends.add(friend)
                 return JsonResponse({"message":"Success added friend"}, status=200)
             return JsonResponse({"message":"No friend request from that user"}, status=400)
@@ -94,8 +94,8 @@ def getFriends(request):
     for friend in user.friends.all():
         user_friend = {
             "username" : friend.username,
-            "avatarImage" : stringifyImage(friend) if friend.avatarImage else None,
-            "onlineStatus" : friend.onlineStatus,
+            "avatar_image" : stringifyImage(friend) if friend.avatar_image else None,
+            "online_status" : friend.online_status,
         }
         user_friends.append(user_friend)
     return JsonResponse(user_friends, status=200, safe=False)
@@ -114,7 +114,7 @@ def searchUsers(request, search=None):
     for user in users:
         user_friend = {
             "username" : user.username,
-            "avatarImage" : stringifyImage(user) if user.avatarImage else None,
+            "avatar_image" : stringifyImage(user) if user.avatar_image else None,
         }
         user_friends.append(user_friend)
     return JsonResponse(user_friends, status=200, safe=False)
@@ -126,24 +126,24 @@ def getObjectsWithinUser(user_dict):
     if user_dict.get('friends'):
         user_dict['friends'] = [{
             'username': friend.username,
-            'avatarImage': stringifyImage(friend) if friend.avatarImage else None
+            'avatar_image': stringifyImage(friend) if friend.avatar_image else None
     } for friend in user_dict['friends']]
-    if user_dict.get('friendRequests'):
-        user_dict['friendRequests'] = [{
-            'username': friendRequests.username,
-            'avatarImage': stringifyImage(friendRequests) if friendRequests.avatarImage else None
-        } for friendRequests in user_dict['friendRequests']]
-    if user_dict.get('completedMatches'):
-        user_dict['completedMatches'] = [{
-            'id': completedMatches.id,
-            "tournamentName": completedMatches.tournamentName,
-            "amount": completedMatches.amount,
-            "state": completedMatches.state,
-            "date": completedMatches.date,
+    if user_dict.get('friend_requests'):
+        user_dict['friend_requests'] = [{
+            'username': friend_requests.username,
+            'avatar_image': stringifyImage(friend_requests) if friend_requests.avatar_image else None
+        } for friend_requests in user_dict['friend_requests']]
+    if user_dict.get('completed_matches'):
+        user_dict['completed_matches'] = [{
+            'id': completed_matches.id,
+            "tournament_name": completed_matches.tournament_name,
+            "amount": completed_matches.amount,
+            "state": completed_matches.state,
+            "date": completed_matches.date,
             "players": [
-                {'name': player.name, 'score': player.score} for player in completedMatches.players.all()
+                {'name': player.name, 'score': player.score} for player in completed_matches.players.all()
             ]
-        } for completedMatches in user_dict['completedMatches']]
+        } for completed_matches in user_dict['completed_matches']]
     
 def getUser(request, userName=None):
     if not request.user.is_authenticated:
@@ -153,7 +153,7 @@ def getUser(request, userName=None):
         return redirect('/')
     if request.method == "GET":
         user_dict = model_to_dict(user)
-        user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
+        user_dict['avatar_image'] = stringifyImage(user) if user.avatar_image else None
         user_dict.pop('password', None)
         getObjectsWithinUser(user_dict)
         return JsonResponse(user_dict, status=200, safe=False)
@@ -169,7 +169,7 @@ def Users(request):
     match request.method:
         case "GET":
             user_dict = model_to_dict(user)
-            user_dict['avatarImage'] = stringifyImage(user) if user.avatarImage else None
+            user_dict['avatar_image'] = stringifyImage(user) if user.avatar_image else None
             user_dict.pop('password', None)
             getObjectsWithinUser(user_dict)
             return JsonResponse(user_dict, status=200, safe=False)
@@ -191,10 +191,10 @@ def getMatcHistory(request, userName):
         return redirect('/')
     if request.method == "GET":
         history = []
-        for matches in user.completedMatches.all():
+        for matches in user.completed_matches.all():
             match = {
             'id': matches.id,
-            "tournamentName": matches.tournamentName,
+            "tournament_name": matches.tournament_name,
             "amount": matches.amount,
             "state": matches.state,
             "date": matches.date,

@@ -12,8 +12,8 @@ import time
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if (request.user.is42 == True) and (time.time() > request.user.expirationTime):
-        return getTokens(request.user.refreshToken, 'refresh_token', 'refresh_token', '/dashboard', request)
+    if (request.user.is42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', '/dashboard', request)
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
@@ -21,9 +21,9 @@ def dashboard(request):
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is42" : is42,}
     return render(request, "index.html", context)
 
-def getFriendState(request, friendRequests, friends):
+def getFriendState(request, friend_requests, friends):
     friendState = "F"
-    for request_data in friendRequests:
+    for request_data in friend_requests:
         if request_data["username"] == request.user.username:
             friendState = "P"
             break
@@ -58,8 +58,8 @@ def usersPage(request, name):
     ]
     info = {
         "username": name,
-        "online": data["onlineStatus"],
-        "isFriend": getFriendState(request, data["friendRequests"], data["friends"]),
+        "online": data["online_status"],
+        "isFriend": getFriendState(request, data["friend_requests"], data["friends"]),
         "coallition": data["coallition"]
     }
     stats = {
@@ -103,7 +103,7 @@ def postLoginUser(request):
            return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
         user = authenticate(request, username=username, password=password)
         if user:
-            userDatabase.onlineStatus = True
+            userDatabase.online_status = True
             userDatabase.full_clean()
             userDatabase.save()
             login(request, user)
@@ -123,7 +123,7 @@ def loginUser(request):
             return postLoginUser(request)
 
 def logoutUser(request):
-    request.user.onlineStatus = False
+    request.user.online_status = False
     request.user.full_clean()
     request.user.save()
     logout(request)

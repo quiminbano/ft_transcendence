@@ -12,7 +12,7 @@ def JSONTournamentResponse(tournament, message):
             "message" : message,
             "tournament": {
                 "id": str(tournament.id),
-                "name": tournament.tournamentName,
+                "name": tournament.tournament_name,
                 "amount": tournament.amount,
                 "state": tournament.state,
                 "players": [{"name" : player.name, "id" : player.id} for player in tournament.players.all()],
@@ -72,12 +72,12 @@ def createTurnament(request):
     if "name" not in data or "number" not in data:
         return JsonResponse({'error': 'missing fields in request body'}, status=400)
     #Create a tournament object and add the player to it
-    tournament = Tournament.objects.create(tournamentName=data['name'], amount=data['number'])
+    tournament = Tournament.objects.create(tournament_name=data['name'], amount=data['number'])
     playerName = Players.objects.create(name=data['player'])
     tournament.players.add(playerName)
     request.user.tournament = tournament
     request.user.save()
-    print(tournament.tournamentName)
+    print(tournament.tournament_name)
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament created successfully"), status=200)
 
 def getTournament(tournament):
@@ -96,7 +96,7 @@ def getTournament(tournament):
 def deleteTournament(request, tournament):
     if tournament.state == 'A':
         print("MOVE")
-        request.user.completedMatches.add(tournament)
+        request.user.completed_matches.add(tournament)
         tournament.delete()
     else:
         print("DELE")

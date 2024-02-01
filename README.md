@@ -34,10 +34,14 @@ In order to run the poject you need:
     - POSTGRES_USER=""
     - POSTGRES_PASS=""
     - POSTGRES_DB=""
-    - POSTGRES_HOST=""
+    - DJANGO_SUPERUSER=""
     - DJANGO_SUPERUSER_EMAIL=""
     - DJANGO_SUPERUSER_PASS=""
-    - DJANGO_SUPERUSER=""
+    - DJANGO_SECRET_KEY=""
+    - PASSWORD_42=""
+    - UID=""
+    - SECRET_KEY=""
+    - REDIRECT_URI=""
 
 After you have done this you can simply run ***make***.
 
@@ -46,12 +50,12 @@ This is the user table.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | username              | Django-Builtin        | The identifier of the user.                       |
-| onlineStatus          | BooleanField          | Is the user currently online                      |
+| online_status         | BooleanField          | Is the user currently online                      |
 | is42                  | BooleanField          | Has the user registered through their 42 account  |
 | friends               | ManyToManyField       | All the friends of the user.                      |
-| friendRequests        | ManyToManyField       | All pending friend requests.                      |
+| friend_requests       | ManyToManyField       | All pending friend requests.                      |
 | coallition            | CharField             | The player's 42 coallition                        |
-| avatarImage           | FileField             | The path to the image of the user.                |
+| avatar_image          | FileField             | The path to the image of the user.                |
 | tournament            | OneToOneField         | Link to user's current hosted tournament.         |
 | objects               | CustomUserManager()   | Django required implementation.                   |
 | get_coallition(self)  | Function              | Returns the user's coallition.                    |
@@ -64,7 +68,7 @@ This is the user table.
 | STATE_CHOICES     | List of tuples    | List of possible states.      |
 | id                | AutoField         | Identifier of the tournament. |
 | uuid              | UUIDField         | Identifier of the host user.  |
-| tournamentName    | CharField         | Name of the tournament        |
+| tournament_name   | CharField         | Name of the tournament        |
 | amount            | IntegerField      | Max amount of layers allowed. |
 | state             | CharField         | The state of the tournament.  |
 | players           | ManyToManyField   | The current player aliases.   |

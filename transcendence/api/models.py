@@ -20,7 +20,7 @@ class Tournament(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    tournamentName = models.CharField(max_length=255)
+    tournament_name = models.CharField(max_length=255)
     amount = models.IntegerField()
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
     players = models.ManyToManyField(Players, related_name='tournaments')
@@ -48,9 +48,9 @@ class DatabaseManager(BaseUserManager):
         try:
             file = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(file)
-            extra_fields.setdefault('avatarImage', djangoFile)
+            extra_fields.setdefault('avatar_image', djangoFile)
         except FileNotFoundError:
-            extra_fields.setdefault('avatarImage', None)
+            extra_fields.setdefault('avatar_image', None)
         if extra_fields.get('is_staff') is not True:
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
@@ -59,20 +59,20 @@ class DatabaseManager(BaseUserManager):
 
 
 class Database(AbstractUser):
-    onlineStatus = models.BooleanField(default=False)
+    online_status = models.BooleanField(default=False)
     is42 = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
-    friendRequests = models.ManyToManyField('self', symmetrical=False, blank=True)
+    friend_requests = models.ManyToManyField('self', symmetrical=False, blank=True)
     coallition = models.CharField(blank=True)
-    accessToken = models.CharField(blank=True)
-    refreshToken = models.CharField(blank=True)
-    expirationTime = models.BigIntegerField(default=0)
-    avatarImage = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
+    access_token = models.CharField(blank=True)
+    refresh_token = models.CharField(blank=True)
+    expiration_time = models.BigIntegerField(default=0)
+    avatar_image = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
-    completedMatches = models.ManyToManyField(Tournament, blank=True, related_name="completedMatches")
-    matchesPlayed = models.IntegerField(default=0)
-    matchesWon = models.IntegerField(default=0)
-    matchesLost = models.IntegerField(default=0)
+    completed_matches = models.ManyToManyField(Tournament, blank=True, related_name="completed_matches")
+    matches_played = models.IntegerField(default=0)
+    matches_won = models.IntegerField(default=0)
+    matches_lost = models.IntegerField(default=0)
 
     objects = DatabaseManager()
 

@@ -56,11 +56,11 @@
 	font-size: 12px !important;
 }
 
-#userOnlineStatus {
+#useronline_status {
 	font-size: 10px;
 	display: inline-block;
 }
-#userOnlineStatus span {
+#useronline_status span {
 	width: 8px;
 	height: 8px;
 	border-radius: 50%;

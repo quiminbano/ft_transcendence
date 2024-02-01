@@ -26,18 +26,18 @@ def processImage(userModel : Database, imagePath : str):
     connection.request("GET", url)
     response = connection.getresponse()
     if response.status != 200:
-        userModel.avatarImage = None
+        userModel.avatar_image = None
         return None
     data = response.read()
     imageBytes = io.BytesIO(data)
     file = InMemoryUploadedFile(imageBytes, None, fileName, mime, len(data), None)
     body = MultiValueDict()
-    body.setlist('avatarImage', [file])
+    body.setlist('avatar_image', [file])
     form = ProfilePicture(qdict, body)
     if form.is_valid():
         form.save(userModel=userModel)
     else:
-        userModel.avatarImage = None
+        userModel.avatar_image = None
     return None
     
 #==========================================
@@ -89,7 +89,7 @@ def storeIn42(loginUser):
 #         GET INFORMATION
 #==========================================
 
-def getInfo(token, expirationTime, refreshToken, destination, request):
+def getInfo(token, expiration_time, refresh_token, destination, request):
     connection = http.client.HTTPSConnection('api.intra.42.fr')
     message = "Bearer " + token
     header = {'Authorization': message}
@@ -121,10 +121,10 @@ def getInfo(token, expirationTime, refreshToken, destination, request):
         user42.last_name = lastName
         processImage(user42, imagePath)
     if user42.is42 == True:
-        user42.accessToken = token
-        user42.refreshToken = refreshToken
-        user42.expirationTime = expirationTime
-        user42.onlineStatus = True
+        user42.access_token = token
+        user42.refresh_token = refresh_token
+        user42.expiration_time = expiration_time
+        user42.online_status = True
         user42.full_clean()
         user42.save()
         auth = authenticate(request, username=loginUser, password=getenv('PASSWORD_42'))
@@ -153,11 +153,11 @@ def getTokens(code, type, typeCode, destination, request):
     bruteData = response.read()
     if response.status == 200:
         token = json.loads(bruteData).get('access_token')
-        expirationTime = json.loads(bruteData).get('created_at') + json.loads(bruteData).get('expires_in')
-        refreshToken = json.loads(bruteData).get('refresh_token')
+        expiration_time = json.loads(bruteData).get('created_at') + json.loads(bruteData).get('expires_in')
+        refresh_token = json.loads(bruteData).get('refresh_token')
     else:
         print('ERROR') #Handle in the future with Andre.
-    return getInfo(token, expirationTime, refreshToken, destination, request)
+    return getInfo(token, expiration_time, refresh_token, destination, request)
 
 #==========================================
 #         42 CALLBACK

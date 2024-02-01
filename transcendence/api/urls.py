@@ -13,8 +13,8 @@ urlpatterns = [
     path("user/<str:userName>", views.userController.getUser, name="getUser"),
     path("matchHistory/<str:userName>", views.userController.getMatcHistory, name="getUser"),
 	
-    path("friendRequest/<str:friendName>", views.userController.friendRequest, name="FriendRequest"),
-    path("friendRequest", views.userController.friendRequest, name="FriendRequest"),
+    path("friend_request/<str:friendName>", views.userController.friendRequest, name="friendRequest"),
+    path("friend_request", views.userController.friendRequest, name="friendRequest"),
     path("friend/<str:friendName>", views.userController.friends, name="addFriend"),
 	
     path("tournament", views.tournamentController.tournamentManager, name="tournament"),

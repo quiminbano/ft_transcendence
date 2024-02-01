@@ -95,7 +95,7 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		const username = document.getElementById("navbarUsername").textContent;
 		matches.forEach(match => {
 			if (match.username !== username)
-				searchMatchItem(match.avatarImage || "/static/images/profileIcon.png", match.username, parentDiv)
+				searchMatchItem(match.avatar_image || "/static/images/profileIcon.png", match.username, parentDiv)
 		});
 	}
 }
@@ -178,7 +178,7 @@ const friendItem = async (friend, parentDiv) => {
 	itemDiv.addEventListener("click", () => navigateTo('/users/' + friend.username));
 	const picture = fragment.querySelector("#searchItemPicture");
 	if (picture) {
-		picture.setAttribute("src", friend.avatarImage || "/static/images/profileIcon.png");
+		picture.setAttribute("src", friend.avatar_image || "/static/images/profileIcon.png");
 		picture.removeAttribute("id");
 	}
 	const itemName = fragment.querySelector("#searchItemName");
@@ -186,12 +186,12 @@ const friendItem = async (friend, parentDiv) => {
 		itemName.textContent = friend.username;
 		itemName.removeAttribute("id");
 	}
-	const onlineStatusIcon = fragment.querySelector("#seachitemOnlineStatus");
-	if (onlineStatusIcon) {
-		if (friend.onlineStatus)
-			onlineStatusIcon.style.backgroundColor = "green";
+	const online_statusIcon = fragment.querySelector("#seachitemonline_status");
+	if (online_statusIcon) {
+		if (friend.online_status)
+			online_statusIcon.style.backgroundColor = "green";
 		else
-			onlineStatusIcon.style.backgroundColor = 'red';
+			online_statusIcon.style.backgroundColor = 'red';
 	}
 	generator.appendFragment(fragment, parentDiv);
 }
