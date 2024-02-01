@@ -22,18 +22,18 @@
 									<form onsubmit="confirmPlayer(event, 2)">
 										<div class="form-group">
 											<label for="opponentUsernameInput">Username</label>
-											<input type="text" id="opponentUsernameInput" name="username" required/>
+											<input class="form-control" type="text" id="opponentUsernameInput" name="username" required/>
 										</div>
 										<div class="form-group">
 											<label for="opponentPinInput">PIN Code</label>
-											<input type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required/>
+											<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required/>
 										</div>
 										<button class="btn btn-success w-100" type="submit">Confirm</button>
 									</form>
 								</div>
 								<div id="player2-accepted" class="player-accepted">
 									<p id="player2-name"></p>
-									<button class="btn btn-danger" onclick="showRegisterContent(2)">Unregister</button>
+									<button class="btn btn-danger" onclick="unregisterPlayer(2)">Unregister</button>
 								</div>
 							</div>
 						</div>
@@ -44,18 +44,18 @@
 									<form onsubmit="confirmPlayer(event, 3)">
 										<div class="form-group">
 											<label for="opponentUsernameInput">Username</label>
-											<input type="text" id="opponentUsernameInput" name="username" required/>
+											<input class="form-control"  type="text" id="opponentUsernameInput" name="username" required/>
 										</div>
 										<div class="form-group">
 											<label for="opponentPinInput">PIN Code</label>
-											<input type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required/>
+											<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required/>
 										</div>
 										<button class="btn btn-success w-100" type="submit">Confirm</button>
 									</form>
 								</div>
 								<div id="player3-accepted" class="player-accepted">
 									<p id="player3-name"></p>
-									<button class="btn btn-danger" onclick="showRegisterContent(3)">Unregister</button>
+									<button class="btn btn-danger" onclick="unregisterPlayer(3)">Unregister</button>
 								</div>
 							</div>
 						</div>
@@ -66,26 +66,32 @@
 									<form onsubmit="confirmPlayer(event, 4)">
 										<div class="form-group">
 											<label for="opponentUsernameInput">Username</label>
-											<input type="text" id="opponentUsernameInput" name="username" required/>
+											<input class="form-control"  type="text" id="opponentUsernameInput" name="username" required/>
 										</div>
 										<div class="form-group">
 											<label for="opponentPinInput">PIN Code</label>
-											<input type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required/>
+											<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required/>
 										</div>
 										<button class="btn btn-success w-100" type="submit">Confirm</button>
 									</form>
 								</div>
 								<div id="player4-accepted" class="player-accepted">
 									<p id="player4-name"></p>
-									<button class="btn btn-danger" onclick="showRegisterContent(4)">Unregister</button>
+									<button class="btn btn-danger" onclick="unregisterPlayer(4)">Unregister</button>
 								</div>
 							</div>
 						</div>
 					</div>
                 </div>
             </div>
+			{% include "Pong1v1Pages/twovtwoBoard.html" %}
+			<div class="row" id="play2v2ButtonArea">
+                <div class="col-12 col-md-6 offset-md-3 endGameButton">
+                    <button class="btn btn-success w-100" onclick="twoVtwoPlayAgain()">Play</button>
+                </div>
+            </div>
             <div class="row">
-                <div class="col-12 endGameButton">
+                <div class="col-12 col-md-6 offset-md-3 endGameButton">
                     <button class="btn btn-danger w-100" onclick="navigateTo('/pong/single')">Cancel Match</button>
                 </div>
             </div>

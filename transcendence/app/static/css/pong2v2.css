@@ -4,3 +4,63 @@
 	border-radius: 0.75rem;
 	background-color: aliceblue;
 }
+
+.boardContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: calc(260px + 50px + 300px);
+}
+
+#board-img {
+	width: 350px;
+	height: 260px;
+	position: relative;
+	background-image: url("/static/images/game.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.player-place {
+	position: absolute;
+	background: whitesmoke;
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: rgba(80, 162, 221, 0.882);
+	padding: 5px;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: column;
+}
+.player-register input[type=number] {
+    -webkit-text-security: disc;
+}
+.player-place * {
+	text-align: left;
+}
+.player-place.horizontal {
+	height: 260px;
+	width: 100px;
+}
+.player-place.vertical {
+	height: 150px;
+	width: 350px;
+}
+#player1-place {
+	right: 100%
+}
+#player2-place {
+	bottom: 100%;
+}
+#player3-place {
+	left: 100%;
+}
+#player4-place {
+	top: 100%;
+}
+
+.player-place p {
+	font-size: 10px;
+}
