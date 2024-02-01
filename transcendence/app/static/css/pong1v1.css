@@ -6,6 +6,7 @@
 	text-align: center;
 }
 
+#chooseOpponentContainer,
 #endGameContainer {
 	min-height: 100vh;
 	background-image: url(https://us.123rf.com/450wm/diy13/diy131810/diy13181000253/109500360-table-tennis-racket-and-ball-on-blue-table-sports-competitions-in-table-tennis-retro-style-photo.jpg?ver=6);
@@ -33,4 +34,20 @@
 }
 .endGameButton button {
 	border: 2px solid black;
+}
+
+.chooseOpponentTitle,
+.chooseOpponentSubtitle {
+	text-align: center;
+}
+
+.chooseOpponentTitle {
+	margin-bottom: 50px;
+}
+.chooseOpponentSubtitle {
+	margin-bottom: 30px;
+}
+
+#chooseOpponentContainer form input {
+	padding: 2px 5px;
 }

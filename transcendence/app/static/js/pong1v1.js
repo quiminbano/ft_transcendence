@@ -1,5 +1,6 @@
 let OneVOneContentDisplay;
 const scenes = [
+	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent"},
 	{ name: "gamePlay", id: "OneVOne-gamePlay" },
 	{ name: "endGame", id: "OneVOne-endGame"}
 ]
@@ -14,8 +15,6 @@ const loadOneVOne = async () => {
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
 	}
-
-	playGame();
 }
 
 const playGame = async () => {
@@ -33,11 +32,25 @@ const UpdateEndGameScene = (score) => {
 	playerTwoPointsElement.innerText = score.player2;
 }
 
-const oneVonePlayAgain = () => {
+const oneVonePlay = () => {
 	OneVOneContentDisplay.setActive("gamePlay");
 	playGame();
 }
 
 const oneVoneContinue = () => {
 	navigateTo("/pong/single");
+}
+
+const inviteOpponent1v1 = async (e) => {
+	e.preventDefault();
+	showLoadingSpinner();
+	const form = new FormData(e.target);
+	const username = form.get("username");
+	const PIN = form.get("PIN");
+
+
+	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
+
+	oneVonePlay();
+	hideLoadingSpinner();
 }
