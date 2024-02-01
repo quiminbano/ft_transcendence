@@ -40,6 +40,8 @@ WSGIPythonPath /app\n\
 </Directory>'\
 >> /etc/apache2/apache2.conf
 
+RUN chown -R www-data: /app /var/www/html
+
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
