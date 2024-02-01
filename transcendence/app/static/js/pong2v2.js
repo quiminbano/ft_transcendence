@@ -47,15 +47,20 @@ const twoVtwoContinue = () => {
 
 const confirmPlayer = (e, playerNumber) => {
 	e.preventDefault();
+	showLoadingSpinner();
 	const form = new FormData(e.target);
 	const info = {
 		username: form.get("username"),
 		pin: form.get("PIN")
 	}
+
+	//TODO: MAKE A REQUEST TO THE DATABASE TO ADD THE PLAYER
+
 	e.target.elements[0].value = "";
 	e.target.elements[1].value = "";
 	current2v2players++;
 	showAcceptContent(playerNumber, info.username);
+	hideLoadingSpinner();
 }
 
 const showAcceptContent = (playerNumber, username) => {
@@ -79,8 +84,12 @@ const showAcceptContent = (playerNumber, username) => {
 }
 
 const unregisterPlayer = (playerNumber) => {
+	showLoadingSpinner();
 	current2v2players--;
+
+	//TODO: MAKE A REQUEST TO THE DATABASE TO REMOVE THE PLAYER
 	showRegisterContent(playerNumber);
+	hideLoadingSpinner();
 }
 
 const showRegisterContent = (playerNumber) => {

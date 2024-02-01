@@ -32,7 +32,7 @@ const UpdateEndGameScene = (score) => {
 	playerTwoPointsElement.innerText = score.player2;
 }
 
-const oneVonePlayAgain = () => {
+const oneVonePlay = () => {
 	OneVOneContentDisplay.setActive("gamePlay");
 	playGame();
 }
@@ -44,13 +44,13 @@ const oneVoneContinue = () => {
 const inviteOpponent1v1 = async (e) => {
 	e.preventDefault();
 	showLoadingSpinner();
-	console.log("invited friend");
 	const form = new FormData(e.target);
 	const username = form.get("username");
 	const PIN = form.get("PIN");
-	console.log(username, PIN);
+
 
 	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
 
+	oneVonePlay();
 	hideLoadingSpinner();
 }
