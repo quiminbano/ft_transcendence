@@ -41,11 +41,16 @@ const oneVoneContinue = () => {
 	navigateTo("/pong/single");
 }
 
-const inviteOpponent1v1 = (e) => {
+const inviteOpponent1v1 = async (e) => {
 	e.preventDefault();
+	showLoadingSpinner();
 	console.log("invited friend");
 	const form = new FormData(e.target);
 	const username = form.get("username");
 	const PIN = form.get("PIN");
 	console.log(username, PIN);
+
+	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
+
+	hideLoadingSpinner();
 }
