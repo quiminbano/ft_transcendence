@@ -18,8 +18,8 @@ class Local2v2Game {
 
 		const lineMaterial = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 		const points = [];
-		points.push(new THREE.Vector3(0, -50, 10));
-		points.push(new THREE.Vector3(0, 50, 10));
+		points.push(new THREE.Vector3(0, -50, -1));
+		points.push(new THREE.Vector3(0, 50, -1));
 		const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
 		this.line = new THREE.Line(lineGeometry, lineMaterial);
 		this.scene.add(this.line);

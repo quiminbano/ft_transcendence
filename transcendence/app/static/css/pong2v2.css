@@ -20,6 +20,7 @@
 	background-image: url("/static/images/game.png");
 	background-size: cover;
 	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .player-place {
