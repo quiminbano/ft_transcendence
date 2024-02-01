@@ -47,3 +47,7 @@
 .chooseOpponentSubtitle {
 	margin-bottom: 30px;
 }
+
+#chooseOpponentContainer form input {
+	padding: 2px 5px;
+}
