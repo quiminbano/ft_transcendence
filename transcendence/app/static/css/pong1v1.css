@@ -51,3 +51,7 @@
 #chooseOpponentContainer form input {
 	padding: 2px 5px;
 }
+
+#chooseOpponentContainer form input[type=number] {
+	-webkit-text-security: disc;
+}
