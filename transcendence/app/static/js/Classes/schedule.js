@@ -87,7 +87,7 @@ class Schedule {
     #getCurrentStage8Teams() {
         if (this.nextGame.id <= 4)
             return "Quarter Finals"
-        else if (this.nextGame.id >= 5 && this.nextMatch.id <= 6)
+        else if (this.nextGame.id >= 5 && this.nextGame.id <= 6)
             return "Semi Final"
         else
             return "Final";
@@ -105,7 +105,7 @@ class Schedule {
     getMatch(id) {
         const match = this.matches.find(m => m.id === id);
         return match;
-    } 
+    }
     updateMatchScore(id, player1Score, player2Score) {
         this.totalMatchesPlayed++;
         const match = this.matches.find(m => m.id === id);
