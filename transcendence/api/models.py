@@ -44,7 +44,7 @@ class DatabaseManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('coallition', 'The Foragers')
-        extra_fields.setdefault('is42', False)
+        extra_fields.setdefault('is_42', False)
         try:
             file = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(file)
@@ -60,7 +60,7 @@ class DatabaseManager(BaseUserManager):
 
 class Database(AbstractUser):
     online_status = models.BooleanField(default=False)
-    is42 = models.BooleanField(default=False)
+    is_42 = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     friend_requests = models.ManyToManyField('self', symmetrical=False, blank=True)
     coallition = models.CharField(blank=True)

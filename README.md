@@ -51,7 +51,7 @@ This is the user table.
 | ------ | ------ | ------ |
 | username              | Django-Builtin        | The identifier of the user.                       |
 | online_status         | BooleanField          | Is the user currently online                      |
-| is42                  | BooleanField          | Has the user registered through their 42 account  |
+| is_42                 | BooleanField          | Has the user registered through their 42 account  |
 | friends               | ManyToManyField       | All the friends of the user.                      |
 | friend_requests       | ManyToManyField       | All pending friend requests.                      |
 | coallition            | CharField             | The player's 42 coallition                        |

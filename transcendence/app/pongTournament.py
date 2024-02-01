@@ -1,18 +1,22 @@
 from django.shortcuts import render, redirect
 from .userInterface import loginUser
 from .utils import stringifyImage
+from django.contrib.auth import logout
 
 def pongInterface(request):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
+        return redirect('/login')
     match request.path:
         case "/pong":
-            is42 = request.user.is42
+            is_42 = request.user.is_42
             source = stringifyImage(request.user)
             context = {
                 "content": "PongTournamentPages/pong.html",
                 "source": source,
-                "is42" : is42,
+                "is_42" : is_42,
             }
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html"}
@@ -29,6 +33,9 @@ def pongInterface(request):
 def pongInterfaceWithId(request, id : int):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
+        return redirect('/login')
     tournamentId = "/pong/tournament/" + str(id)
     startLocalTournament = tournamentId + "/start"
     remoteId = "/pong/remoteTournament/" + str(id)
@@ -44,7 +51,10 @@ def pongInterfaceWithId(request, id : int):
 
 def pongTournamentGame(request):
     if not request.user.is_authenticated:
-        return loginUser(request)
+        return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
+        return redirect('/login')
     context = {
         "content": "localPong.html"
     }

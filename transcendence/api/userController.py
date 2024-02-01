@@ -4,6 +4,7 @@ from .models import Database
 from app.forms import ProfilePicture
 from app.utils import stringifyImage
 from django.shortcuts import redirect
+from django.contrib.auth import logout
 import json
 
 #==========================================================================
@@ -12,6 +13,9 @@ import json
 def friendRequest(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
+        return redirect('/login')
+    if user.online_status == False:
+        logout(request)
         return redirect('/login')
     if (request.method == "GET" and friendName==None):
         requests = []
@@ -61,6 +65,9 @@ def friends(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
+    if user.online_status == False:
+        logout(request)
+        return redirect('/login')
     friend = Database.objects.filter(username=friendName).first()
     if friend is None:
         return JsonResponse({"message":"this user does not exist"}, status=400)
@@ -88,6 +95,9 @@ def getFriends(request):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
+    if user.online_status == False:
+        logout(request)
+        return redirect('/login')
     if request.method != "GET":
         return JsonResponse({"message": "Method not implemented"}, status=501)
     user_friends = []
@@ -106,6 +116,9 @@ def getFriends(request):
 #==========================================================
 def searchUsers(request, search=None):
     if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
         return redirect('/login')
     if request.method != "GET":
         return JsonResponse({"message": "Method not implemented"}, status=501)
@@ -146,11 +159,10 @@ def getObjectsWithinUser(user_dict):
         } for completed_matches in user_dict['completed_matches']]
     
 def getUser(request, userName=None):
-    if not request.user.is_authenticated:
-        return redirect('/login')
+#I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The state is not gonna change, because getUser is being called just there.
     user = Database.objects.filter(username=userName).first()
     if user is None:
-        return redirect('/')
+        return None
     if request.method == "GET":
         user_dict = model_to_dict(user)
         user_dict['avatar_image'] = stringifyImage(user) if user.avatar_image else None
@@ -164,6 +176,9 @@ def getUser(request, userName=None):
 #==========================================================
 def Users(request):
     if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
         return redirect('/login')
     user = request.user
     match request.method:
@@ -183,8 +198,11 @@ def Users(request):
 #==========================================
 #          Mtach Hisory
 #==========================================
-def getMatcHistory(request, userName):
+def getMatchHistory(request, userName):
     if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
         return redirect('/login')
     user = Database.objects.filter(username=userName).first()
     if user is None:
@@ -213,6 +231,9 @@ def getMatcHistory(request, userName):
 
 def profilePicture(request):
     if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
         return redirect('/login')
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)

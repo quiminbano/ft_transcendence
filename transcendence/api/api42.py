@@ -115,12 +115,12 @@ def getInfo(token, expiration_time, refresh_token, destination, request):
     except Database.DoesNotExist:
         user42 = Database.objects.create_user(loginUser, email, getenv('PASSWORD_42'))
         user42.username = loginUser
-        user42.is42 = True
+        user42.is_42 = True
         user42.coallition = coalition
         user42.first_name = firstName
         user42.last_name = lastName
         processImage(user42, imagePath)
-    if user42.is42 == True:
+    if user42.is_42 == True:
         user42.access_token = token
         user42.refresh_token = refresh_token
         user42.expiration_time = expiration_time
