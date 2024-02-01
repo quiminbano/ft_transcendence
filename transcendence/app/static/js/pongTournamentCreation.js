@@ -1,12 +1,15 @@
 let modal;
 let currentTournamentId;
+let pinModal
 
 const loadPong = () => {
+	pinModal = new Modal(document.getElementById("pinModal"));
+	pinModal.open();
 	loadMenus();
 }
 
 const loadTournamentCreation = async () => {
-	
+
 }
 
 const toggleTournamentCreationPages = (hasTournament) => {
@@ -51,4 +54,16 @@ const createTournamentInstance = (name, amount, id) => {
 
 const play1v1 = () => {
 	navigateTo("/pong/single");
+}
+
+const closePinModal = () => {
+	pinModal.close();
+}
+
+const savePin = async (e) => {
+	e.preventDefault();
+	const form = new FormData(e.target);
+	const pin = form.get("PIN");
+	console.log(pin);
+	pinModal.close();
 }
