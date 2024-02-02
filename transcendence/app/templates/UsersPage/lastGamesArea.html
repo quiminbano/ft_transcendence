@@ -1,13 +1,11 @@
-<div class="row">
-    <div class="col-12">
-        <div class="userLastGamesBox">
-            {%if client.lastGames|length > 0 %}
-                {% for game in client.lastGames %}
-                    {% include "lastGamesItem.html" %}
-                {% endfor %}
-            {% else %}
-            <p>No info available</p>
-            {% endif %}
-        </div>
-    </div>
+<div class="row g-0 userLastGamesBox">
+    {%if client.lastGames|length > 0 %}
+        {% for match in client.lastGames %}
+            <div class="col-12 dashboard-lastGameItem">
+                {% include "lastGamesItem.html" %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No info available</p>
+    {% endif %}
 </div>

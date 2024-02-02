@@ -1,5 +1,4 @@
 #friendsPageContainer {
-	min-height: 100vh;
 	width: 100vw;
 	background-image: url(https://icbstexas.com/wp-content/uploads/split-color-background.jpg);
 	background-repeat: no-repeat;
@@ -93,11 +92,6 @@
 
 .userLastGamesBox {
 	padding: 10px 20px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
 }
 
 /*Last game item*/

@@ -5,8 +5,9 @@
 .dashboard-lastGameItem {
     border: 2px solid black;
     border-radius: 10px;
-    padding: 10px 5px;
+    padding: 5px;
     background-color: #0096FF;
+    margin: 5px auto;
 }
 .dashboard-lastGameItem h5,
 .dashboard-lastGameItem p {
