@@ -13,7 +13,7 @@ def pongInterface(request):
                 "content": "PongTournamentPages/pong.html",
                 "source": source,
                 "is42" : is42,
-				"hasPin": True
+				"hasPin": False
             }
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html"}

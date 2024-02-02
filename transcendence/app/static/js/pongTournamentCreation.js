@@ -3,8 +3,11 @@ let currentTournamentId;
 let pinModal
 
 const loadPong = () => {
-	pinModal = new Modal(document.getElementById("pinModal"));
-	pinModal.open();
+	const pinModalElement = document.getElementById("pinModal");
+	if (pinModalElement) {
+		pinModal = new Modal(pinModalElement);
+		pinModal.open();
+	}
 	loadMenus();
 }
 
@@ -64,6 +67,9 @@ const savePin = async (e) => {
 	e.preventDefault();
 	const form = new FormData(e.target);
 	const pin = form.get("PIN");
+
+	//TODO: SEND POST REQUEST TO DB TO SAVE THE PIN!!!!!!
+
 	console.log(pin);
 	pinModal.close();
 }

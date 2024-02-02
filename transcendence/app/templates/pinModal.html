@@ -3,11 +3,11 @@
 	<div class="ModalContainerBG" onclick="closePinModal()"></div>
 	<div id="changePictureBox">
 		<h4>You need a game Pin</h4>
-		<p>In order to be able to play against other players you will need to have a game PIN.</p>
-		<form id="setPinForm">
+		<p>In order to be able to play against other players, in their own session, you will need to have a game PIN.</p>
+		<form onsubmit="savePin(event)" id="setPinForm">
 			<div class="form-group">
 				<label for="pin-input">Pin:</label>
-				<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required maxlength="4"/>
+				<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required oninput="limitInputNumberLength(this)"/>
 			</div>
 			<button class="btn btn-success" id="savePinButton" type="submit">Submit</button>
 		</form>
