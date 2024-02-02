@@ -83,16 +83,16 @@ class SignupForm(CustomUserCreationForm):
             self.cleaned_data['password1']
         )
         user.coallition = self.cleaned_data['coallition']
-        user.is42 = False
+        user.is_42 = False
         try:
             f = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(f)
-            user.avatarImage = djangoFile
+            user.avatar_image = djangoFile
             user.full_clean()
             user.save()
             f.close()
         except FileNotFoundError:
-            user.avatarImage = None
+            user.avatar_image = None
             user.save()
         return user
 
@@ -147,20 +147,20 @@ class ChangeProfile(forms.Form):
         if (len(self.cleaned_data['password1']) > 0):
             userModel.set_password(self.cleaned_data['password1'])
         userModel.email = self.cleaned_data['email']
-        if not default_storage.exists(str(userModel.avatarImage)):
-            userModel.avatarImage = None
+        if not default_storage.exists(str(userModel.avatar_image)):
+            userModel.avatar_image = None
         userModel.full_clean()
         userModel.save()
 
 class ProfilePicture(forms.Form):
 
-    avatarImage = forms.FileField(validators=[validationImageSize, validateFileType])
+    avatar_image = forms.FileField(validators=[validationImageSize, validateFileType])
 
     def save(self, userModel : Database):
-        if userModel.avatarImage:
-            if default_storage.exists(userModel.avatarImage.name):
-                default_storage.delete(userModel.avatarImage.name)
-        userModel.avatarImage = self.cleaned_data['avatarImage']
+        if userModel.avatar_image:
+            if default_storage.exists(userModel.avatar_image.name):
+                default_storage.delete(userModel.avatar_image.name)
+        userModel.avatar_image = self.cleaned_data['avatar_image']
         userModel.full_clean()
         userModel.save()
 

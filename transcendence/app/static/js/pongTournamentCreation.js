@@ -23,7 +23,7 @@ const createTournament = async (event) => {
 	event.preventDefault();
 
 	const formData = new FormData(event.target);
-	const name = formData.get("tournamentName");
+	const name = formData.get("tournament_name");
 	const totalPlayers = formData.get("totalPlayers");
 	const hostName = formData.get("hostName");
 	try {

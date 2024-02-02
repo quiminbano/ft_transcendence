@@ -12,18 +12,21 @@ import time
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if (request.user.is42 == True) and (time.time() > request.user.expirationTime):
-        return getTokens(request.user.refreshToken, 'refresh_token', 'refresh_token', '/dashboard', request)
+    if request.user.online_status == False:
+        logout(request)
+        return redirect('/login')
+    if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', '/dashboard', request)
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
-    is42 = request.user.is42
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is42" : is42,}
+    is_42 = request.user.is_42
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42,}
     return render(request, "index.html", context)
 
-def getFriendState(request, friendRequests, friends):
+def getFriendState(request, friend_requests, friends):
     friendState = "F"
-    for request_data in friendRequests:
+    for request_data in friend_requests:
         if request_data["username"] == request.user.username:
             friendState = "P"
             break
@@ -36,9 +39,10 @@ def getFriendState(request, friendRequests, friends):
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if request.user.online_status == False:
+        logout(request)
+        return redirect('/login')
     source = stringifyImage(request.user)
-
-
     expectedUser = getUser(request, name)
     if expectedUser == None:
         return
@@ -47,7 +51,7 @@ def usersPage(request, name):
     #print(data)
     print(data["coallition"])
     #TODO: change this data to the real user data!!!!!!!!!
-    is42 = request.user.is42
+    is_42 = request.user.is_42
     lastGames = [
     {
         "username": "affmde",
@@ -58,8 +62,8 @@ def usersPage(request, name):
     ]
     info = {
         "username": name,
-        "online": data["onlineStatus"],
-        "isFriend": getFriendState(request, data["friendRequests"], data["friends"]),
+        "online": data["online_status"],
+        "isFriend": getFriendState(request, data["friend_requests"], data["friends"]),
         "coallition": data["coallition"]
     }
     stats = {
@@ -76,7 +80,7 @@ def usersPage(request, name):
         "content": "usersPage.html",
         "source": source,
         "client": client,
-        "is42" : is42,
+        "is_42" : is_42,
     }
     return render(request, "index.html", context)
 
@@ -99,11 +103,11 @@ def postLoginUser(request):
             userDatabase = userModel.objects.filter(username=username).get()
         except userModel.DoesNotExist:
            return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
-        if userDatabase.is42 == True:
+        if userDatabase.is_42 == True:
            return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
         user = authenticate(request, username=username, password=password)
         if user:
-            userDatabase.onlineStatus = True
+            userDatabase.online_status = True
             userDatabase.full_clean()
             userDatabase.save()
             login(request, user)
@@ -123,7 +127,7 @@ def loginUser(request):
             return postLoginUser(request)
 
 def logoutUser(request):
-    request.user.onlineStatus = False
+    request.user.online_status = False
     request.user.full_clean()
     request.user.save()
     logout(request)
@@ -149,7 +153,7 @@ def postSignup(request):
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('/dashboard')
+        return redirect('/')
     match request.method:
         case "GET":
             return getSignup(request)
@@ -188,8 +192,11 @@ def putSettings(request):
 def settings(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.is42 == True:
-       return redirect('/dashboard')
+    if request.user.is_42 == True:
+       return redirect('/')
+    if request.user.online_status == False:
+        logout(request)
+        return redirect('/login')
     match request.method:
         case "GET":
             return getSettings(request)
