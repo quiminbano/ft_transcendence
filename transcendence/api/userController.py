@@ -149,7 +149,7 @@ def getObjectsWithinUser(user_dict):
     if user_dict.get('completed_matches'):
         user_dict['completed_matches'] = [{
             'id': completed_matches.id,
-            "match_name": completed_matches.match_name,
+            "tournament_name": completed_matches.tournament_name,
             "amount": completed_matches.amount,
             "state": completed_matches.state,
             "date": completed_matches.date,
@@ -212,7 +212,7 @@ def getMatchHistory(request, userName):
         for matches in user.completed_matches.all():
             match = {
             'id': matches.id,
-            "match_name": matches.match_name,
+            "tournament_name": matches.tournament_name,
             "amount": matches.amount,
             "state": matches.state,
             "date": matches.date,
