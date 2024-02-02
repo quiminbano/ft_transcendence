@@ -1,33 +1,23 @@
-<div class="lastGameItemBox">
-    <div class="row">
-        <div class="col-6">
-            <div class="row">
-				<div class="col-12">
-					<div class="lastMatchesInfoDiv">
-						<img alt="opponent profile picture"
-							 class="lastGameItemOpponentPicture"
-							 src="/static/images/profileIcon.png" />
-						<p>Andre</p>
-					</div>
-				</div>
+<div class="row">
+    <div class="col-12 col-md-3 d-flex align-items-center text-center justify-content-center">
+        <p class="matchDate">{{match.date}}</p>
+    </div>
+    <div class="col-12 col-md-5">
+        <h5>Opponents</h5>
+        <div class="row g-0">
+            <div class="col-12 d-flex align-items-center justify-content-around flex-wrap">
+            {% for user in match.team %}
+                <div class="d-flex justify-content-center align-items-center flex-column opponentInfo">
+                    <img alt="opponent picture"
+                         class="playedMatchOpponentPic"
+                         src="/static/images/profileIcon.png" />
+                    <p>{{user}}</p>
+                </div>
+            {% endfor %}
             </div>
         </div>
-        <div class="col-6 col-md-4">
-            <div class="row">
-				<div class="col-12">
-					<div class="lastMatchesInfoDiv">
-						<img alt="last game icon"
-							 class="lastGameItemGameIcon"
-							 src="/static/images/icons8-snake-50.png" />
-						<p>3-0</p>
-					</div>
-				</div>
-            </div>
-        </div>
-        <div class="col-2 md-hide">
-            <img alt="last game score icon"
-                 class="lastGameItemScoreIcon"
-                 src="/static/images/correct.svg" />
-        </div>
+    </div>
+    <div class="col-12 col-md-4 d-flex align-items-center justify-content-center text-center">
+        <p>{{match.score}}</p>
     </div>
 </div>

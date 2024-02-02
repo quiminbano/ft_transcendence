@@ -21,7 +21,21 @@ def dashboard(request):
     form = ProfilePicture()
     source = stringifyImage(request.user)
     is_42 = request.user.is_42
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42,}
+    lastGames = [
+    {
+        "date":"2-2-2024",
+        "team": ["Hello", "World"],
+        "picture": source,
+        "score": "3 - 2"
+    },
+    {
+        "date":"20-1-2024",
+        "team": ["Tester"],
+        "picture": source,
+        "score": "0 - 3"
+    },
+    ]
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": lastGames}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -54,11 +68,17 @@ def usersPage(request, name):
     is_42 = request.user.is_42
     lastGames = [
     {
-        "username": "affmde",
+        "date":"2-2-2024",
+        "team": ["Hello", "World"],
         "picture": source,
-        "type": "pong",
         "score": "3 - 2"
-    }
+    },
+    {
+        "date":"20-1-2024",
+        "team": ["Tester"],
+        "picture": source,
+        "score": "0 - 3"
+    },
     ]
     info = {
         "username": name,

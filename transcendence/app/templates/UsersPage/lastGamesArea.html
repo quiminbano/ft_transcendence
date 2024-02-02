@@ -3,7 +3,7 @@
         <div class="userLastGamesBox">
             {%if client.lastGames|length > 0 %}
                 {% for game in client.lastGames %}
-                    {% include "UsersPage/lastGameItem.html" %}
+                    {% include "lastGamesItem.html" %}
                 {% endfor %}
             {% else %}
             <p>No info available</p>

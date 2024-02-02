@@ -2,9 +2,13 @@
     <div class="col-10 offset-1">
         <h3 style="text-align:center">Last games</h3>
     </div>
-    <div class="col-10 offset-1">
-        <div class="lastGamesBox">
-            {% include "lastGamesItem.html" %}
+    <div class="col-12">
+        <div class="row g-0">
+            {% for match in lastGames %}
+            <div class="col-12 dashboard-lastGameItem">
+                {% include "lastGamesItem.html" %}
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
