@@ -9,10 +9,11 @@ from django.utils import timezone
 
 
 class Players(models.Model):
-    name = models.CharField(max_length=255)
+    database = models.ForeignKey('Database', on_delete=models.CASCADE, null=True, blank=True)
     score = models.IntegerField(default=0)
 
-class Tournament(models.Model):
+
+class   Match(models.Model):
     STATE_CHOICES = [
         ('P', 'Pending'),
         ('A', 'Active'),
@@ -20,11 +21,13 @@ class Tournament(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    tournament_name = models.CharField(max_length=255)
+    match_name = models.CharField(max_length=255)
     amount = models.IntegerField()
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
-    players = models.ManyToManyField(Players, related_name='tournaments')
+    players = models.ManyToManyField(Players, related_name='match')
     date = models.DateField(default=timezone.now)
+
+
 
 class DatabaseManager(BaseUserManager):
 
@@ -68,11 +71,13 @@ class Database(AbstractUser):
     refresh_token = models.CharField(blank=True)
     expiration_time = models.BigIntegerField(default=0)
     avatar_image = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
-    tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
-    completed_matches = models.ManyToManyField(Tournament, blank=True, related_name="completed_matches")
+
+    match = models.OneToOneField(Match, on_delete=models.SET_NULL,  null=True, blank=True)
+    completed_matches = models.ManyToManyField(Match, blank=True, related_name="completed_matches")
     matches_played = models.IntegerField(default=0)
     matches_won = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
+    pin = models.IntegerField(default=0)
 
     objects = DatabaseManager()
 
