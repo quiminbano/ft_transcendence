@@ -8,6 +8,10 @@
     padding: 5px;
     background-color: #0096FF;
     margin: 5px auto;
+    transition: all 0.20s linear;
+}
+.dashboard-lastGameItem:hover {
+    transform: scale(1.01);
 }
 .dashboard-lastGameItem h5,
 .dashboard-lastGameItem p {
