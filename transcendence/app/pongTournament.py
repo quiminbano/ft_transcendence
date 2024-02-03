@@ -16,8 +16,8 @@ def pongInterface(request):
             context = {
                 "content": "PongTournamentPages/pong.html",
                 "source": source,
-                "is42" : is42,
-				        "hasPin": False
+                "is_42" : is_42,
+		"hasPin": False
             }
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html"}
