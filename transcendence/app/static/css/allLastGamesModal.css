@@ -1,0 +1,8 @@
+#allLastGamesModal *{
+    color: black;
+}
+#lastGamesArea {
+    height: 50vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}

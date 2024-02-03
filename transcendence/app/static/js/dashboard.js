@@ -1,6 +1,10 @@
 const files = [];
+let allGamesModal;
 const loadDashboard = () => {
 	createInvitationsModal();
+	allGamesModal = new Modal(document.getElementById("allLastGamesModal"));
+	if (allGamesModal)
+		allGamesModal.close();
 	const saveButton = document.querySelector("#saveUploadedPictureButton");
 	if (saveButton) {
 		saveButton.style.display = "none";
@@ -161,3 +165,10 @@ const isValidImage = (file) => {
 	return false;
 }
 
+const openAllGamesModal = () => {
+	allGamesModal.open();
+}
+
+const closeAllGamesModal = () => {
+	allGamesModal.close();
+}

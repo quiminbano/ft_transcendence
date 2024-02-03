@@ -2,34 +2,45 @@
     font-family: PressStart;
 }
 
-.lastGameItemOpponentPicture,
-.lastGameItemGameIcon,
-.lastGameItemScoreIcon {
-    width: 20px;
-    height: 20px;
-	margin: auto;
+.dashboard-lastGameItem {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #0096FF;
+    margin: 5px auto;
+    transition: all 0.20s linear;
 }
-
-.lastGameItemBox {
-    border: 4px solid black;
-    border-radius: 5px;
-    padding: 3px 4px;
-	background-color: rgba(175, 253, 238, 0.766);
+.dashboard-lastGameItem:hover {
+    transform: scale(1.01);
 }
-.lastGameItemBox p {
+.dashboard-lastGameItem h5,
+.dashboard-lastGameItem p {
+    text-align: center;
+}
+.dashboard-lastGameItem h5 {
     font-size: 12px;
 }
-
-.lastMatchesInfoDiv {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-
+.dashboard-lastGameItem p {
+    font-size: 10px;
 }
-.lastMatchesInfoDiv * {
-	margin: 3px 5px;
-	text-overflow: ellipsis;
-	white-space: pre-wrap;
+.dashboard-lastGameItem img {
+    width: 25px;
+    margin: 0 auto;
+}
+.opponentInfo {
+    text-align: center;
+    margin: auto 5px;
+}
+.opponentInfo p {
+    margin-bottom: 0;
+}
+
+.showAllMatchesButton {
+    all: unset;
+    font-size: 10px;
+    text-decoration:underline;
+    margin-top: 5px;
+}
+.showAllMatchesButton:hover {
+    color: #0096FF;
 }

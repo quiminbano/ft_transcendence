@@ -1,13 +1,19 @@
-<div class="row">
-    <div class="col-12">
-        <div class="userLastGamesBox">
-            {%if client.lastGames|length > 0 %}
-                {% for game in client.lastGames %}
-                    {% include "UsersPage/lastGameItem.html" %}
-                {% endfor %}
-            {% else %}
-            <p>No info available</p>
-            {% endif %}
-        </div>
+{% with lastGames=client.lastGames %}
+<div class="row g-0 userLastGamesBox">
+    {%if client.lastGames|length > 0 %}
+    {% for match in client.lastGames|slice:":3" %}
+    <div class="col-12 dashboard-lastGameItem">
+        {% include "lastGamesItem.html" %}
     </div>
+    {% endfor %}
+    {% if client.lastGames|length > 3 %}
+    <div class="col-12 d-flex justify-content-end align-items-center">
+        <button class="showAllMatchesButton" onclick="openAllGamesModal()">Show all matches</button>
+    </div>
+    {% endif %}
+    {% else %}
+    <p>No info available</p>
+    {% endif %}
 </div>
+{% include "allLastGamesModal.html" %}
+{% endwith %}
