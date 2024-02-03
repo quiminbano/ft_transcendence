@@ -1,5 +1,8 @@
 const loadUsersPage = async () => {
 	loadMenus();
+	allGamesModal = new Modal(document.getElementById("allLastGamesModal"));
+	if (allGamesModal)
+		allGamesModal.close();
 	const winpercentChart = new CircleChart(120, 120);
 	await winpercentChart.createFragment();
 	const totalWinsText = document.getElementById("totalWins").innerText;

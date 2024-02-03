@@ -42,7 +42,7 @@ def dashboard(request):
     },
     {
         "date":"20-12-2023",
-        "team": ["Tester"],
+        "team": ["Another Tester"],
         "picture": source,
         "score": "2 - 4"
     },
@@ -90,6 +90,18 @@ def usersPage(request, name):
         "team": ["Tester"],
         "picture": source,
         "score": "0 - 3"
+    },
+    {
+        "date":"1-2-2024",
+        "team": ["Orange", "Banana"],
+        "picture": source,
+        "score": "3 - 1"
+    },
+    {
+        "date":"20-12-2023",
+        "team": ["Another Tester"],
+        "picture": source,
+        "score": "2 - 4"
     },
     ]
     info = {

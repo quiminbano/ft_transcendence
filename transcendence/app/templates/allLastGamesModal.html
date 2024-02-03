@@ -1,0 +1,25 @@
+<div class="ModalContainer container-fluid" id="allLastGamesModal">
+    <div class="ModalContainerBG" onclick="closeAllGamesModal()"></div>
+    <div class="row w-100">
+        <div class="col-12 col-md-10 col-xl-8 offset-md-1 offset-xl-2">
+            <div class="d-flex align-items-center justify-content-center flex-column w-100 invitationsBox">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 id="invitationsTitle">All games</h4>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-12" id="lastGamesArea">
+                        <div class="d-flex align-items-center justify-content-center flex-column w-100">
+                            {% for match in lastGames %}
+                            <div class="col-12 dashboard-lastGameItem">
+                                {% include "lastGamesItem.html" %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

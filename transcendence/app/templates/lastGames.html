@@ -11,9 +11,10 @@
             {% endfor %}
             {% if lastGames|length > 3 %}
             <div class="col-12 d-flex justify-content-end align-items-center">
-                <button class="showAllMatchesButton">Show all matches</button>
+                <button class="showAllMatchesButton" onclick="openAllGamesModal()">Show all matches</button>
             </div>
             {% endif %}
         </div>
     </div>
 </div>
+{% include "allLastGamesModal.html" %}
