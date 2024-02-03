@@ -60,6 +60,13 @@
     font-size: 12px;
     text-align: justify;
 }
+
+
+/* Pin Modal*/
+#setPinForm input[type=number] {
+    -webkit-text-security: disc;
+}
+
 /************/
 @media only screen and (max-width: 776px) {
     .pongPageButton {
