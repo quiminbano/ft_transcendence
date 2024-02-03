@@ -34,6 +34,18 @@ def dashboard(request):
         "picture": source,
         "score": "0 - 3"
     },
+    {
+        "date":"1-2-2024",
+        "team": ["Orange", "Banana"],
+        "picture": source,
+        "score": "3 - 1"
+    },
+    {
+        "date":"20-12-2023",
+        "team": ["Tester"],
+        "picture": source,
+        "score": "2 - 4"
+    },
     ]
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": lastGames}
     return render(request, "index.html", context)
