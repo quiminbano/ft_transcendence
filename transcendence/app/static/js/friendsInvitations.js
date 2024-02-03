@@ -5,7 +5,7 @@ const createInvitationsModal = () => {
 }
 
 const getFriendsInvitations = async () => {
-	const url = "api/friendRequest?friendName=None";
+	const url = "api/friend_request?friendName=None";
 	try {
 		const response  = await getRequest(url);
 		if (response.succeded) {
@@ -20,7 +20,7 @@ const getFriendsInvitations = async () => {
 }
 
 const inviteToBeFriend = async (username) => {
-	const url = `/api/friendRequest/${username}`
+	const url = `/api/friend_request/${username}`
 	try {
 		const response = await postRequest(url, "");
 		if (response.succeded) {
@@ -117,7 +117,7 @@ const createInvitationItem = async (fragment, invite) => {
 	nameText.innerText = invite.username;
 	nameText.removeAttribute("id");
 	const avatarPicture = fragment.getElementById("invitationUserPicture");
-	avatarPicture.setAttribute("src", invite.avatarImage);
+	avatarPicture.setAttribute("src", invite.avatar_image);
 	avatarPicture.removeAttribute("id");
 	const acceptButton = fragment.getElementById("acceptInvitation");
 	acceptButton.addEventListener("click", () => {
@@ -148,7 +148,7 @@ const acceptInvite = async (username) => {
 }
 
 const rejectInvitation = async (username) => {
-	const url = `/api/friendRequest/${username}`;
+	const url = `/api/friend_request/${username}`;
 	showLoadingSpinner();
 	try {
 		const response = await deleteRequest(url, "");

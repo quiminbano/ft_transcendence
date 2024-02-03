@@ -128,7 +128,7 @@ class LocalTournament {
         const player2 = { name: match.player2.name, points: match.score.player2Points };
         const htmlElement = document.querySelector(`.match[data-id="${match.id}"]`);
         
-        if (this.schedule.totalMatchesPlayed === this.schedule.totalMatchesToPlay) {
+        if (this.schedule.totalmatches_played === this.schedule.totalMatchesToPlay) {
             if (player1.points > player2.points)
                 this.winner = player1.name;
             else

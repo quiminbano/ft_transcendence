@@ -14,7 +14,7 @@ const loadDashboard = () => {
 
 	const dragArea = document.querySelector(".dropArea");
 	if (dragArea) {
-		const fileInput = dragArea.querySelector("input[name='avatarImage']");
+		const fileInput = dragArea.querySelector("input[name='avatar_image']");
 		dragArea.addEventListener("click", () => {
 			fileInput.click();
 		})
@@ -86,7 +86,7 @@ const savePicture = async (file) => {
 	const pElement = dragArea.querySelector("p");
 	const fd = new FormData();
 	pElement.textContent = "Uploading...";
-	fd.append("avatarImage", file);
+	fd.append("avatar_image", file);
 
 	try {
 		const config = {

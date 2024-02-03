@@ -8,7 +8,7 @@ class Schedule {
         this.currentStage = this.getCurrentStage();
         this.#updateDisplayNextGame();
         this.totalMatchesToPlay = this.#getTotalAmountOfMatches(this.amount);
-        this.totalMatchesPlayed = 0;
+        this.totalmatches_played = 0;
     }
     #getTotalAmountOfMatches(totalTeams) {
         switch (totalTeams) {
@@ -107,7 +107,7 @@ class Schedule {
         return match;
     }
     updateMatchScore(id, player1Score, player2Score) {
-        this.totalMatchesPlayed++;
+        this.totalmatches_played++;
         const match = this.matches.find(m => m.id === id);
         if (!match) return;
         match.addScore(player1Score, player2Score);
@@ -157,7 +157,7 @@ class Schedule {
         this.updateMatchScore(match.id, match.score.player1Points, match.score.player2Points)
     }
     areAllGamesPlayed() {
-        if (this.totalMatchesPlayed >= this.totalMatchesToPlay)
+        if (this.totalmatches_played >= this.totalMatchesToPlay)
             return true;
         return false;
     }
