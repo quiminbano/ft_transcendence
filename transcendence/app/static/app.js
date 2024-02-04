@@ -119,6 +119,12 @@ const goBack = async () => {
 	await handleLocation();
 }
 
+const limitInputNumberLength = (input) => {
+	if (input.value.length > 4) {
+		input.value = input.value.slice(0, 4);
+	}
+}
+
 
 const fakeUsers = [
 	{ name: 'John Smith', src: 'https://placekitten.com/200/300?image=1' },

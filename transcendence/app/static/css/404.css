@@ -1,0 +1,39 @@
+#page404 {
+    min-height: 100vh;
+    background-image: url(https://us.123rf.com/450wm/diy13/diy131810/diy13181000253/109500360-table-tennis-racket-and-ball-on-blue-table-sports-competitions-in-table-tennis-retro-style-photo.jpg?ver=6);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.info404 {
+    margin: 40px auto;
+    text-align: center;
+    color: whitesmoke;
+    font-family: PressStart;
+}
+#GoToHome404 {
+    margin-top: 50px;
+    text-align: center;
+    font-family: PressStart;
+    text-decoration: none;
+    border: 3px solid white;
+    border-radius: 50px;
+    background-color: transparent;
+    padding: 20px 40px;
+    color: whitesmoke;
+    transition: all 0.175s linear;
+}
+
+    #GoToHome404:hover {
+        background-color: #00308F;
+        border: 3px solid black;
+        color: black;
+    }
+#GoToHome404:active {
+    border: 5px solid blue;
+}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
 
 def status_404(request):
-    context = {}
-    return render(request, "404.html", context)
+    context = {"content": "404.html"}
+    return render(request, "index.html", context)
