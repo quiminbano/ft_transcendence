@@ -1,6 +1,7 @@
 const files = [];
 let allGamesModal;
 const loadDashboard = () => {
+	loadStats();
 	createInvitationsModal();
 	allGamesModal = new Modal(document.getElementById("allLastGamesModal"));
 	if (allGamesModal)

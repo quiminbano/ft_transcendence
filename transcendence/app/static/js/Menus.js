@@ -22,7 +22,6 @@ const loadMenus = () => {
 			}, 250);
 		}
 	})
-	makeChart();
 }
 
 const debounce = (func, delay = 300) => {
