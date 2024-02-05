@@ -1,0 +1,12 @@
+#statsContainer {
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: rgba(140, 145, 171, 0.26);
+    padding: 20px 10px;
+}
+#statsContainer * {
+    font-family: PressStart;
+}
+#statsContainer p {
+    font-size: 10px;
+}

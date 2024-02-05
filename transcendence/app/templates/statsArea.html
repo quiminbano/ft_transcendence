@@ -1,0 +1,51 @@
+<div class="row" id="statsContainer">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-10 offset-1">
+                <h3 style="text-align:center">Stats</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ lastGames|json_script:"lastGames" }}
+                {{ stats|json_script:"stats" }}
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-around align-items-center">
+                        <div class="chartArea d-flex justify-content-center align-items-center flex-column text-center">
+                            <p>Percentage of wins</p>
+                            <div id="winPercentChart"></div>
+                        </div>
+                        <div class="chartArea d-flex justify-content-center align-items-center flex-column text-center">
+                            <p>Percentage of losses</p>
+                            <div id="loosePercentChart"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-around align-items-center">
+                        <div class="statsInfo text-center">
+                            <p>Total matches</p>
+                            <p>{{stats.totalGames}}</p>
+                        </div>
+                        <div class="statsInfo text-center">
+                            <p>Total wins:</p>
+                            <p>{{stats.totalWins}}</p>
+                        </div>
+                        <div class="statsInfo text-center">
+                            <p>Total losses:</p>
+                            <p>{{stats.totalLooses}}</p>
+                        </div>
+                    </div>
+                    <div class="col-12 d-flex justify-content-around align-items-center">
+                        <div class="text-center">
+                            <p>Total Points Scored</p>
+                            <p>{{stats.totalPointsScored}}</p>
+                        </div>
+                        <div class="text-center">
+                            <p>Total Points Conceeded</p>
+                            <p>{{stats.totalPointsConceeded}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
