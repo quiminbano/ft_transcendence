@@ -47,10 +47,30 @@ const inviteOpponent1v1 = async (e) => {
 	const form = new FormData(e.target);
 	const username = form.get("username");
 	const PIN = form.get("PIN");
-
-
+	const url = "";
+	const userToInvite = {
+		username,
+		password: PIN
+	};
 	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
-
-	oneVonePlay();
+	const errorElement = document.getElementById("errorMessage1v1Invite");
+	try {
+		const response = await postRequest(url, userToInvite)
+		if (response.suceeded) {
+			if (errorElement) {
+				errorElement.innerText = "";
+				errorElement.style.display = "none";
+			}
+			oneVonePlay();
+		} else {
+			throw response;
+		}
+	} catch(error) {
+		if (errorElement) {
+			errorElement.innerText = "User doesnt exist or can't be invited";
+			errorElement.style.display = "block";
+		}
+		console.log(error);
+	}
 	hideLoadingSpinner();
 }
