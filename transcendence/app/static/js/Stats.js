@@ -1,8 +1,5 @@
 const loadStats = async () => {
-	const matches = JSON.parse(document.getElementById('lastGames').textContent);
 	const statsData = JSON.parse(document.getElementById('stats').textContent);
-	console.log("my data:", matches);
-	console.log("statsData", statsData);
 	const winPercentChart = new CircleChart(120, 120);
 	await winPercentChart.createFragment();
 	winPercentChart.setPercent(statsData.totalWins / statsData.totalGames * 100);

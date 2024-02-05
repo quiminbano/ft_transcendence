@@ -65,11 +65,7 @@ def usersPage(request, name):
         "isFriend": getFriendState(request, data["friend_requests"], data["friends"]),
         "coallition": data["coallition"]
     }
-    stats = {
-        "totalGames": 100,
-        "totalWins": 85,
-        "totalTournamentWins": 1,
-    }
+    stats = calculateStats(matches)
     client = {
         "info": info,
         "stats": stats,
