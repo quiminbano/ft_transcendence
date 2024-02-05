@@ -23,7 +23,7 @@ def dashboard(request):
     is_42 = request.user.is_42
     matches = lastGames.copy()
     for match in matches:
-        match = processMatch(match, "andrferr")
+        match = processMatch(match, request.user.username)
     stats = calculateStats(matches)
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": matches, "stats": stats}
     return render(request, "index.html", context)
