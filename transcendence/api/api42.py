@@ -4,6 +4,7 @@ from django.http import QueryDict, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDict
 from .models import Database, Users42
+from app.forms import password42
 from app.forms import ProfilePicture
 from os import getenv
 import json
@@ -151,7 +152,9 @@ def getRestInfo(request):
         case "DELETE":
             return deleteGetRestInfo(request, data)
         case "GET":
+            form = password42()
             context = {
+                "form": form,
                 "content": "set42password.html",
                 "data": data
             } 
