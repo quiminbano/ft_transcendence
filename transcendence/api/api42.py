@@ -93,6 +93,11 @@ def storeIn42(loginUser):
 #   FINISH CREATING THE 42 USER IF USER DEFINES A VALID PASSWORD
 #==========================================================================
 def postGetRestInfo(request, data):
+    passwordData = json.loads(request.body)
+    form = password42(passwordData)
+    if not form.is_valid():
+        errors = {field: form.errors[field][0] for field in form.errors}
+        return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
     token = data['access_token']
     refresh_token = data['refresh_token']
     expiration_time = data['expiration_time']
@@ -104,10 +109,11 @@ def postGetRestInfo(request, data):
     email = jsonData['email']
     imagePath = jsonData['image']['versions']['small']
     id = jsonData['id']
+    password = form.cleaned_data['password1']
     coalition, errorFlag = getCoalition(id=id, token=token)
     if errorFlag == 1:
         return redirect('/')
-    user42 = Database.objects.create_user(loginUser, email, getenv('PASSWORD_42'))
+    user42 = Database.objects.create_user(loginUser, email, password)
     user42.username = loginUser
     user42.is_42 = True
     user42.coallition = coalition
@@ -120,7 +126,7 @@ def postGetRestInfo(request, data):
     user42.online_status = True
     user42.full_clean()
     user42.save()
-    auth = authenticate(request, username=loginUser, password=getenv('PASSWORD_42'))
+    auth = authenticate(request, username=loginUser, password=password)
     login(request, auth)
     request.session["data"] = None
     return redirect(destination)
