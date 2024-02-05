@@ -17,8 +17,8 @@ urlpatterns = [
     path("friend_request", views.userController.friendRequest, name="friendRequest"),
     path("friend/<str:friendName>", views.userController.friends, name="addFriend"),
 	
-    path("tournament", views.tournamentController.tournamentManager, name="tournament"),
-	path("tournament/<int:id>", views.tournamentController.tournamentManagerID, name="tournamentID"),
-    path("tournament/player", views.tournamentController.tournamentPlayer, name="tournament/player"),
-    path("tournament/player/<int:id>", views.tournamentController.tournamentManagerPlayerID, name="tournamentPlayerID"),
+    # path("tournament", views.tournamentController.tournamentManager, name="tournament"),
+	# path("tournament/<int:id>", views.tournamentController.tournamentManagerID, name="tournamentID"),
+    # path("tournament/player", views.tournamentController.tournamentPlayer, name="tournament/player"),
+    # path("tournament/player/<int:id>", views.tournamentController.tournamentManagerPlayerID, name="tournamentPlayerID"),
 ]

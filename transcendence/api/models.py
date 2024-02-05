@@ -7,24 +7,31 @@ from .imageValidation import validateFileType, validationImageSize, defineNameIm
 from django.core.files import File
 from django.utils import timezone
 
-
-class Players(models.Model):
+#REMOVE THIS!
+class Players:
     name = models.CharField(max_length=255)
+
+
+class   Team(models.Model):
+    id = models.AutoField(primary_key=True)
     score = models.IntegerField(default=0)
+    players = models.ManyToManyField('Database', symmetrical=False, blank=True)
+
+class   Match(models.Model):
+    id = models.AutoField(primary_key=True)
+    teams = models.ManyToManyField(Team, blank=True)
+    date = models.DateField(default=timezone.now)
+
+    
+
 
 class Tournament(models.Model):
-    STATE_CHOICES = [
-        ('P', 'Pending'),
-        ('A', 'Active'),
-        ('F', 'Finished'),
-    ]
-
     id = models.AutoField(primary_key=True)
     tournament_name = models.CharField(max_length=255)
-    amount = models.IntegerField()
-    state = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
-    players = models.ManyToManyField(Players, related_name='tournaments')
-    date = models.DateField(default=timezone.now)
+    teams = models.IntegerField()
+    completed = models.BooleanField(False)
+    winner = models.CharField(max_length=255)
+    match = models.ManyToManyField(Match, blank=True)
 
 class DatabaseManager(BaseUserManager):
 
