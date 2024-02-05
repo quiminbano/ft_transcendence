@@ -225,6 +225,7 @@ def calculateStats(matches):
         "totalPointsConceeded": 0
     }
     for match in matches:
+        print(match)
         stats["totalGames"] += 1
         if match["win"]:
             stats["totalWins"] += 1
