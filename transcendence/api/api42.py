@@ -40,7 +40,7 @@ def processImage(userModel : Database, imagePath : str):
     else:
         userModel.avatar_image = None
     return None
-    
+
 #==========================================
 #         GET COALITION
 #==========================================
@@ -95,6 +95,7 @@ def storeIn42(loginUser):
 def postGetRestInfo(request, data):
     passwordData = json.loads(request.body)
     form = password42(passwordData)
+    print(passwordData)
     if not form.is_valid():
         errors = {field: form.errors[field][0] for field in form.errors}
         return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
@@ -112,10 +113,11 @@ def postGetRestInfo(request, data):
     password = form.cleaned_data['password1']
     coalition, errorFlag = getCoalition(id=id, token=token)
     if errorFlag == 1:
-        return redirect('/')
+        return JsonResponse({"success": "false", "message": "Something happened"}, status=400)
     user42 = Database.objects.create_user(loginUser, email, getenv('PASSWORD_42'))
     user42.username = loginUser
     user42.is_42 = True
+    user42.is_login = True
     user42.coallition = coalition
     user42.first_name = firstName
     user42.last_name = lastName
@@ -129,7 +131,7 @@ def postGetRestInfo(request, data):
     auth = authenticate(request, username=loginUser, password=getenv('PASSWORD_42'))
     login(request, auth)
     request.session["data"] = None
-    return redirect(destination)
+    return JsonResponse({"success": "true", "message": "success"}, status=200)
 
 #==========================================================================
 #   DELETE THE USER FROM 42 TABLE IF USER CANCELS THE PASSWORD CREATION
@@ -141,7 +143,8 @@ def deleteGetRestInfo(request, data):
         user42 = Users42.objects.filter(user_in_42=loginUser).get()
         user42.delete()
     except Users42.DoesNotExist:
-        redirect('/')
+        return JsonResponse({"success": "false", "message": "Deleted failed"}, status=400)
+    return JsonResponse({"success": "true", "message": "Deleted successfuly"}, status=200)
 
 #=======================================================
 #   GET THE REST OF THE INFO AFTER SETTING A PASSWORD
@@ -163,7 +166,7 @@ def getRestInfo(request):
                 "form": form,
                 "content": "set42password.html",
                 "data": data
-            } 
+            }
             return  render(request, "index.html", context)
         case _:
             return JsonResponse({'error': 'Bad request'}, status=400)
