@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 def pongInterface(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     match request.path:
@@ -26,7 +26,10 @@ def pongInterface(request):
         case "/pong/single":
           context = {"content": "Pong1v1pages/singleMatchPage.html", "source": stringifyImage(request.user)}
         case "/pong/tournament":
-            context = {"content": "PongTournamentPages/tournamentCreation.html"}
+            context = {
+                "content": "PongTournamentPages/tournamentCreation.html",
+				"username": request.user.get_username
+            }
         case _:
             context = {"content": "index.html"}
     return render(request, "index.html", context)
@@ -34,7 +37,7 @@ def pongInterface(request):
 def pongInterfaceWithId(request, id : int):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     tournamentId = "/pong/tournament/" + str(id)
@@ -53,7 +56,7 @@ def pongInterfaceWithId(request, id : int):
 def pongTournamentGame(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     context = {

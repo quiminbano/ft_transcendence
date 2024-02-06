@@ -1,11 +1,11 @@
-from .userInterface import loginUser
+from .userInterface import dashboard
 from django.shortcuts import render
 import urllib.parse
 from os import getenv
 
 def index(request):
     if request.user.is_authenticated:
-        return loginUser(request)
+        return dashboard(request)
     else:
         uid = getenv('UID')
         encodedCallback = urllib.parse.quote(getenv('REDIRECT_URI'), safe='')

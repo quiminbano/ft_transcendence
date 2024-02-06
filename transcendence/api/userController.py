@@ -117,7 +117,7 @@ def getFriends(request):
 def searchUsers(request, search=None):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     if request.method != "GET":
@@ -177,7 +177,7 @@ def getUser(request, userName=None):
 def Users(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     user = request.user
@@ -201,7 +201,7 @@ def Users(request):
 def getMatchHistory(request, userName):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     user = Database.objects.filter(username=userName).first()
@@ -232,7 +232,7 @@ def getMatchHistory(request, userName):
 def profilePicture(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     if request.method == 'POST':
