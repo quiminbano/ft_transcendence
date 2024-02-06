@@ -74,6 +74,9 @@ const addPlayerToDatabase = async (userData) => {
 		id: tournament.id
 	}
 	const url = `/api/tournament/${data.id}`
+	const passwordElement = document.getElementById("addPlayerPassword");
+	if (passwordElement)
+		passwordElement.value = "";
 	try {
 		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
 		const response = await postRequest(url, data);
