@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.http import QueryDict
-from django.shortcuts import redirect
+from django.http import QueryDict, JsonResponse
+from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDict
 from .models import Database, Users42
+from app.forms import password42
 from app.forms import ProfilePicture
 from os import getenv
 import json
@@ -44,7 +45,10 @@ def processImage(userModel : Database, imagePath : str):
 #         GET COALITION
 #==========================================
 
-def getCoalition(id, header, connection):
+def getCoalition(id, token):
+    connection = http.client.HTTPSConnection('api.intra.42.fr')
+    message = "Bearer " + token
+    header = {'Authorization': message}
     connection.request("GET", ('/v2/users/' + str(id) + '/coalitions'), headers=header)
     response = connection.getresponse()
     if response.status != 200:
@@ -85,11 +89,90 @@ def storeIn42(loginUser):
     newUser.save()
     return tempUser
 
-#==========================================
-#         GET INFORMATION
-#==========================================
+#==========================================================================
+#   FINISH CREATING THE 42 USER IF USER DEFINES A VALID PASSWORD
+#==========================================================================
+def postGetRestInfo(request, data):
+    passwordData = json.loads(request.body)
+    form = password42(passwordData)
+    if not form.is_valid():
+        errors = {field: form.errors[field][0] for field in form.errors}
+        return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
+    token = data['access_token']
+    refresh_token = data['refresh_token']
+    expiration_time = data['expiration_time']
+    destination = data['destination']
+    jsonData = data['body_42']
+    loginUser = jsonData['login']
+    firstName = jsonData['first_name']
+    lastName = jsonData['last_name']
+    email = jsonData['email']
+    imagePath = jsonData['image']['versions']['small']
+    id = jsonData['id']
+    password = form.cleaned_data['password1']
+    coalition, errorFlag = getCoalition(id=id, token=token)
+    if errorFlag == 1:
+        return redirect('/')
+    user42 = Database.objects.create_user(loginUser, email, password)
+    user42.username = loginUser
+    user42.is_42 = True
+    user42.coallition = coalition
+    user42.first_name = firstName
+    user42.last_name = lastName
+    processImage(user42, imagePath)
+    user42.access_token = token
+    user42.refresh_token = refresh_token
+    user42.expiration_time = expiration_time
+    user42.online_status = True
+    user42.full_clean()
+    user42.save()
+    auth = authenticate(request, username=loginUser, password=password)
+    login(request, auth)
+    request.session["data"] = None
+    return redirect(destination)
 
-def getInfo(token, expiration_time, refresh_token, destination, request):
+#==========================================================================
+#   DELETE THE USER FROM 42 TABLE IF USER CANCELS THE PASSWORD CREATION
+#==========================================================================
+def deleteGetRestInfo(request, data):
+    jsonData = data['body_42']
+    loginUser = jsonData['login']
+    try:
+        user42 = Users42.objects.filter(user_in_42=loginUser).get()
+        user42.delete()
+    except Users42.DoesNotExist:
+        redirect('/')
+
+#=======================================================
+#   GET THE REST OF THE INFO AFTER SETTING A PASSWORD
+#=======================================================
+def getRestInfo(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    data = request.session.get("data")
+    if data == None:
+        return redirect('/')
+    match request.method:
+        case "POST":
+            return postGetRestInfo(request, data)
+        case "DELETE":
+            return deleteGetRestInfo(request, data)
+        case "GET":
+            form = password42()
+            context = {
+                "form": form,
+                "content": "set42password.html",
+                "data": data
+            } 
+            return  render(request, "index.html", context)
+        case _:
+            return JsonResponse({'error': 'Bad request'}, status=400)
+
+#==================================================
+#   GET LOGIN AND SEND REQUEST TO SET PASSWORD
+#==================================================
+
+def getLogin(token, expiration_time, refresh_token, destination, request):
     connection = http.client.HTTPSConnection('api.intra.42.fr')
     message = "Bearer " + token
     header = {'Authorization': message}
@@ -101,25 +184,20 @@ def getInfo(token, expiration_time, refresh_token, destination, request):
     bruteData = response.read()
     jsonData = json.loads(bruteData)
     loginUser = jsonData['login']
-    firstName = jsonData['first_name']
-    lastName = jsonData['last_name']
-    email = jsonData['email']
-    imagePath = jsonData['image']['versions']['small']
-    id = jsonData['id']
-    coalition, errorFlag = getCoalition(id=id, header=header, connection=connection)
-    if errorFlag == 1:
-        return redirect('/')
     loginUser = storeIn42(loginUser)
     try:
         user42 = Database.objects.filter(username=loginUser).get()
     except Database.DoesNotExist:
-        user42 = Database.objects.create_user(loginUser, email, getenv('PASSWORD_42'))
-        user42.username = loginUser
-        user42.is_42 = True
-        user42.coallition = coalition
-        user42.first_name = firstName
-        user42.last_name = lastName
-        processImage(user42, imagePath)
+        context = {
+            "body_42": jsonData,
+            "content": "set42password.html",
+            "access_token": token,
+            "refresh_token": refresh_token,
+            "expiration_time": expiration_time,
+            "destination": destination
+        }
+        request.session["data"] = context
+        return redirect("/api/getRestInfo")
     if user42.is_42 == True:
         user42.access_token = token
         user42.refresh_token = refresh_token
@@ -157,7 +235,7 @@ def getTokens(code, type, typeCode, destination, request):
         refresh_token = json.loads(bruteData).get('refresh_token')
     else:
         print('ERROR') #Handle in the future with Andre.
-    return getInfo(token, expiration_time, refresh_token, destination, request)
+    return getLogin(token, expiration_time, refresh_token, destination, request)
 
 #==========================================
 #         42 CALLBACK

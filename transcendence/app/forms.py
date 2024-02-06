@@ -27,7 +27,7 @@ class CustomUserChangeForm(UserChangeForm):
 User = get_user_model()
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
 
 
@@ -35,11 +35,11 @@ class SignupForm(CustomUserCreationForm):
     username = forms.CharField(label='Username',
         min_length=5,
         max_length=150,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
     email = forms.EmailField(
         label="email",
-        widget=forms.EmailInput(attrs={"class": "form-control"}))
+        widget=forms.EmailInput(attrs={"class": "form-control", "autocomplete": "on"}))
     coallition = forms.ChoiceField(choices=(
         ('The Builders', 'The Builders'),
         ('The Foragers', 'The Foragers'),
@@ -99,16 +99,16 @@ class SignupForm(CustomUserCreationForm):
 
 class ChangeProfile(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}),
         min_length=5,
         max_length=100
         )
     firstName = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False,
         )
     lastName = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
+        attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False
         )
     password1 = forms.CharField(
@@ -124,7 +124,7 @@ class ChangeProfile(forms.Form):
     )
     email = forms.EmailField(
         label="Email",
-        widget=forms.EmailInput(attrs={"class": "form-control"})
+        widget=forms.EmailInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
@@ -163,4 +163,17 @@ class ProfilePicture(forms.Form):
         userModel.avatar_image = self.cleaned_data['avatar_image']
         userModel.full_clean()
         userModel.save()
+
+class password42(forms.Form):
+    password1 = forms.CharField(
+        label="New password",
+        widget=forms.PasswordInput(
+        attrs={'class': 'form-control', "autocomplete": "on"}),
+        required=False
+    )
+    password2 = forms.CharField(
+        label="Confirm new password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
+        required=False
+    )
 

@@ -8,11 +8,6 @@ from api.api42 import getTokens
 import json
 import time
 
-def test(request):
-    print("called")
-    print(request.headers)
-    return JsonResponse({"success": "true", "message": "called successfuly"}, status=200)
-
 #@login_required(login_url="/login")
 def dashboard(request):
     if not request.user.is_authenticated:
@@ -214,7 +209,7 @@ def processMatch(match, userName):
                 for opponentTeam in match["teams"]:
                     if opponentTeam != team:
                         match["opponentTeam"] = opponentTeam
-                        match["myTeam"] = team;
+                        match["myTeam"] = team
                         if opponentTeam["score"] > team["score"]:
                             match["win"] = False
                         else:
@@ -232,12 +227,15 @@ def calculateStats(matches):
     for match in matches:
         print(match)
         stats["totalGames"] += 1
-        if match["win"]:
-            stats["totalWins"] += 1
-        else:
-            stats["totalLooses"] += 1
-        stats["totalPointsScored"] += match["myTeam"]["score"]
-        stats["totalPointsConceeded"] += match["opponentTeam"]["score"]
+        try:
+            if match["win"]:
+                stats["totalWins"] += 1
+            else:
+                stats["totalLooses"] += 1
+            stats["totalPointsScored"] += match["myTeam"]["score"]
+            stats["totalPointsConceeded"] += match["opponentTeam"]["score"]
+        except KeyError:
+            pass
     return stats
 
 lastGames = [

@@ -2,8 +2,6 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
-	path("test", views.userInterface.test, name="test"),
-
     path("404", views.errors.status_404, name="404"),
     path("_404", views.errors.status_404, name="404"),
     path("login", views.userInterface.loginUser, name="login"),
