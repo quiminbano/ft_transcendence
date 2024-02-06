@@ -12,7 +12,7 @@ import time
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
@@ -43,7 +43,7 @@ def getFriendState(request, friend_requests, friends):
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     source = stringifyImage(request.user)
@@ -103,6 +103,7 @@ def postLoginUser(request):
         user = authenticate(request, username=username, password=password)
         if user:
             userDatabase.online_status = True
+            userDatabase.is_login = True
             userDatabase.full_clean()
             userDatabase.save()
             login(request, user)
@@ -123,6 +124,7 @@ def loginUser(request):
 
 def logoutUser(request):
     request.user.online_status = False
+    request.user.is_login = False
     request.user.full_clean()
     request.user.save()
     logout(request)
@@ -189,7 +191,7 @@ def settings(request):
         return redirect('/login')
     if request.user.is_42 == True:
        return redirect('/')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
         logout(request)
         return redirect('/login')
     match request.method:

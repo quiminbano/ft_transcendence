@@ -68,6 +68,7 @@ window.handleLocation = handleLocation;
 
 window.addEventListener("beforeunload", async (e) => {
 	e.preventDefault();
+	console.log(window.location.pathname)
 	try {
 		const response = await getRequest("/api/exit", {"triggerWindow": true});
 		console.log(response);

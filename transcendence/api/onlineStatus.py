@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 
 def handleOnlineStatus(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"success": "true", "message": "bad request"}, status=302)
     header = request.headers.get('triggerWindow')
     if header == None:
         return redirect('/404')
