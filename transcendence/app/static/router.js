@@ -48,7 +48,6 @@ const handleLocation = async (headers = {}) => {
 		if (!response.ok) {
 			window.history.pushState(null, null, "/");
 			handleLocation();
-			//throw new Error(`Failed to fetch route. Status: ${response.status}`);
 		}
 		const html = await response.text();
 		if (document.body) {
