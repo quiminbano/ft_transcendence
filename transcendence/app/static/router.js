@@ -72,5 +72,5 @@ window.addEventListener("beforeunload", (e) => {
 	} catch (error) {
 		console.log(error);
 	}
-	e.returnValue = true;
+	e.returnValue = "";
 })
