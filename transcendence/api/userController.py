@@ -14,7 +14,7 @@ def friendRequest(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
-    if user.online_status == False:
+    if user.is_login == False:
         logout(request)
         return redirect('/login')
     if (request.method == "GET" and friendName==None):
@@ -65,7 +65,7 @@ def friends(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
-    if user.online_status == False:
+    if user.is_login == False:
         logout(request)
         return redirect('/login')
     friend = Database.objects.filter(username=friendName).first()
@@ -95,7 +95,7 @@ def getFriends(request):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
-    if user.online_status == False:
+    if user.is_login == False:
         logout(request)
         return redirect('/login')
     if request.method != "GET":
