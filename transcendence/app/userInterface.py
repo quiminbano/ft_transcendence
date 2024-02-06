@@ -8,11 +8,6 @@ from api.api42 import getTokens
 import json
 import time
 
-def test(request):
-    print("called")
-    print(request.headers)
-    return JsonResponse({"success": "true", "message": "called successfuly"}, status=200)
-
 #@login_required(login_url="/login")
 def dashboard(request):
     if not request.user.is_authenticated:
