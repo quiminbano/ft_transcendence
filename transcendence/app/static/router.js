@@ -65,3 +65,14 @@ window.onpopstate = handleLocation;
 handleLocation();
 
 window.handleLocation = handleLocation;
+
+window.addEventListener("beforeunload", async (e) => {
+	e.preventDefault();
+	try {
+		const response = await getRequest("/test", {"triggerWindow": true});
+		console.log(response);
+	} catch (error) {
+		console.log(error);
+	}
+	e.returnValue = true;
+})
