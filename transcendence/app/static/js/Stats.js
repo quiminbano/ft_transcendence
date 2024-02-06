@@ -8,6 +8,7 @@ const loadStats = async () => {
 		const loosePercentChart = new CircleChart(120, 120);
 		await loosePercentChart.createFragment();
 		loosePercentChart.setPercent(statsData.totalLooses / statsData.totalGames *100);
+		loosePercentChart.appendFragment("loosePercentChart");
 	} catch (error) {
 
 	}
