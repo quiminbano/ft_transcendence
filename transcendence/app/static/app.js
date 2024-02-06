@@ -88,7 +88,6 @@ const deleteRequest = async (url) => {
 
 const getRequest = async (url, headers = {}) => {
 	try {
-		console.log(headers);
 		const response = await fetch(url, {
 			method: "GET",
 			headers: headers
