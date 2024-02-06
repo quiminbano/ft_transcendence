@@ -46,11 +46,11 @@ const inviteOpponent1v1 = async (e) => {
 	showLoadingSpinner();
 	const form = new FormData(e.target);
 	const username = form.get("username");
-	const PIN = form.get("PIN");
+	const password = form.get("password");
 	const url = "";
 	const userToInvite = {
 		username,
-		password: PIN
+		password
 	};
 	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
 	const errorElement = document.getElementById("errorMessage1v1Invite");
