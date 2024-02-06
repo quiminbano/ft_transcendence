@@ -63,15 +63,17 @@ const closeRegisterPlayerModal = () => {
 	modal.close();
 }
 
-const addPlayerToDatabase = async (username) => {
-	if (tournament.isRepeatedPlayer(username)) {
+const addPlayerToDatabase = async (userData) => {
+	if (tournament.isRepeatedPlayer(userData.username)) {
 		tournament.setErrorMessage("That name already exists");
 		return;
 	}
 	const data = {
-		player: username,
+		player: userData.username,
+		password: userData.password,
 		id: tournament.id
 	}
+	console.log(data);
 	const url = `/api/tournament/${data.id}`
 	try {
 		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
@@ -95,8 +97,10 @@ const addPlayer = (event) => {
 	showLoadingSpinner();
 	const formData = new FormData(event.target);
 	const username = formData.get("name");
+	const password  = formData.get("password");
+	const data = {username, password}
 	if (modal.isNew) {
-		addPlayerToDatabase(username);
+		addPlayerToDatabase(data);
 	} else {
 		editPlayer(username);
 	}

@@ -86,9 +86,13 @@ const deleteRequest = async (url) => {
 	}
 }
 
-const getRequest = async (url) => {
+const getRequest = async (url, headers = {}) => {
 	try {
-		const response = await fetch(url);
+		console.log(headers);
+		const response = await fetch(url, {
+			method: "GET",
+			headers: headers
+		});
 		const data = await response.json();
 		if (!response.ok)
 			throw data;
