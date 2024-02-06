@@ -113,7 +113,7 @@ def postGetRestInfo(request, data):
     coalition, errorFlag = getCoalition(id=id, token=token)
     if errorFlag == 1:
         return redirect('/')
-    user42 = Database.objects.create_user(loginUser, email, password)
+    user42 = Database.objects.create_user(loginUser, email, getenv('PASSWORD_42'))
     user42.username = loginUser
     user42.is_42 = True
     user42.coallition = coalition
@@ -126,7 +126,7 @@ def postGetRestInfo(request, data):
     user42.online_status = True
     user42.full_clean()
     user42.save()
-    auth = authenticate(request, username=loginUser, password=password)
+    auth = authenticate(request, username=loginUser, password=getenv('PASSWORD_42'))
     login(request, auth)
     request.session["data"] = None
     return redirect(destination)
@@ -202,6 +202,7 @@ def getLogin(token, expiration_time, refresh_token, destination, request):
         user42.access_token = token
         user42.refresh_token = refresh_token
         user42.expiration_time = expiration_time
+        user42.is_login = True
         user42.online_status = True
         user42.full_clean()
         user42.save()
@@ -246,6 +247,6 @@ def callback42(request):
         redirect('/login')
     code = request.GET.get('code') #if the callback was called successfully, we check if the code was sent to 42 to require the authentication token in the future.
     if code != None:
-        return getTokens(code, 'authorization_code', 'code', '/dashboard', request) #if the code was sent by 42, we call the function getToken to request the access token.
+        return getTokens(code, 'authorization_code', 'code', '/', request) #if the code was sent by 42, we call the function getToken to request the access token.
     else:
         return redirect('/') #if there is no token, we redirect the user to the main page. I guess this can be improved.
