@@ -65,11 +65,10 @@ handleLocation();
 
 window.handleLocation = handleLocation;
 
-window.addEventListener("beforeunload", async (e) => {
+window.addEventListener("beforeunload", (e) => {
 	e.preventDefault();
-	console.log(window.location.pathname)
 	try {
-		await getRequest("/api/exit", {"triggerWindow": true});
+		getRequest("/api/exit", {"triggerWindow": true});
 	} catch (error) {
 		console.log(error);
 	}
