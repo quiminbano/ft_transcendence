@@ -112,22 +112,15 @@ const hideLoadingSpinner = () => {
 	loadingSpinner.style.display = "none";
 }
 
-const navigateTo = async (url, data = {}) => {
+const navigateTo = async (url, headers = {}, data = {}) => {
 	history.pushState(data, null, url);
-	await window.handleLocation();
+	await window.handleLocation(headers);
 }
 
 const goBack = async () => {
 	history.back();
 	await handleLocation();
 }
-
-const limitInputNumberLength = (input) => {
-	if (input.value.length > 4) {
-		input.value = input.value.slice(0, 4);
-	}
-}
-
 
 const fakeUsers = [
 	{ name: 'John Smith', src: 'https://placekitten.com/200/300?image=1' },
