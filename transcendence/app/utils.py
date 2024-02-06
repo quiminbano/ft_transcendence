@@ -1,7 +1,6 @@
 import os
 from api.models import Database
 import base64
-from django.core.files.storage import default_storage
 
 def	stringifyImage(model : Database):
     try:
@@ -15,3 +14,13 @@ def	stringifyImage(model : Database):
         model.avatar_image = None
         model.save()
     return source
+
+def setOnline(user : Database):
+    user.online_status = True
+    user.full_clean()
+    user.save()
+
+def setOffline(user : Database):
+    user.online_status = False
+    user.full_clean()
+    user.save()

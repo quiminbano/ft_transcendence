@@ -2,7 +2,7 @@ from django.http import JsonResponse, QueryDict
 from django.forms.models import model_to_dict
 from .models import Database
 from app.forms import ProfilePicture
-from app.utils import stringifyImage
+from app.utils import stringifyImage, setOffline, setOnline
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 import json
@@ -15,8 +15,10 @@ def friendRequest(request, friendName=None):
     if not user.is_authenticated:
         return redirect('/login')
     if user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if (request.method == "GET" and friendName==None):
         requests = []
         for friend_request in user.friend_requests.all():
@@ -66,8 +68,10 @@ def friends(request, friendName=None):
     if not user.is_authenticated:
         return redirect('/login')
     if user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     friend = Database.objects.filter(username=friendName).first()
     if friend is None:
         return JsonResponse({"message":"this user does not exist"}, status=400)
@@ -96,8 +100,10 @@ def getFriends(request):
     if not user.is_authenticated:
         return redirect('/login')
     if user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if request.method != "GET":
         return JsonResponse({"message": "Method not implemented"}, status=501)
     user_friends = []
@@ -118,8 +124,10 @@ def searchUsers(request, search=None):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if request.method != "GET":
         return JsonResponse({"message": "Method not implemented"}, status=501)
     users = Database.objects.filter(username__icontains=search)
@@ -178,8 +186,10 @@ def Users(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     user = request.user
     match request.method:
         case "GET":
@@ -202,8 +212,10 @@ def getMatchHistory(request, userName):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     user = Database.objects.filter(username=userName).first()
     if user is None:
         return redirect('/')
@@ -233,8 +245,10 @@ def profilePicture(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():

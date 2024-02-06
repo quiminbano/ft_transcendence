@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
-from .utils import stringifyImage
+from .utils import stringifyImage, setOffline, setOnline
 from api.userController import getUser
 from api.api42 import getTokens
 import json
@@ -12,8 +12,8 @@ import time
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    print("is login: ", request.user.is_login)
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
     if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
@@ -45,8 +45,10 @@ def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
     if expectedUser == None:
@@ -124,10 +126,8 @@ def loginUser(request):
             return postLoginUser(request)
 
 def logoutUser(request):
-    request.user.online_status = False
     request.user.is_login = False
-    request.user.full_clean()
-    request.user.save()
+    setOffline(user=request.user)
     logout(request)
     return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
 
@@ -190,9 +190,8 @@ def putSettings(request):
 def settings(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.is_42 == True:
-       return redirect('/')
     if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
     match request.method:
