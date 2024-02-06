@@ -20,7 +20,7 @@ const loadTournamentLobby = async () => {
 	});
 
 	if (tournament.state === "A") {
-		await navigateTo(`/pong/tournament/${tournament.id}/start`);
+		await navigateTo(`/pong/tournament/${tournament.id}/start`, {"flag": true});
 		await loadStartTournament();
 		//TODO: DATABASE SHOULD RETURN MATCHES AS WELL!!!!
 		data.matches.forEach(match => tournament.schedule.editMatch(match.id, match));
@@ -110,7 +110,7 @@ const addPlayer = (event) => {
 }
 
 const startTournament = async () => {
-	await navigateTo(`${tournament.id}/start`);
+	await navigateTo(`${tournament.id}/start`, {"flag": true});
 	tournament.setState("A");
 	await loadStartTournament();
 }

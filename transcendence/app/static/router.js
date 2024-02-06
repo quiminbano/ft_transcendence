@@ -37,11 +37,14 @@ const load = (path) => {
 }
 
 const parser = new DOMParser();
-const handleLocation = async () => {
+const handleLocation = async (headers = {}) => {
 	const path = window.location.pathname;
 	try {
 		showLoadingSpinner();
-		const response = await fetch(path);
+		const response = await fetch(path, {
+			method: "GET",
+			headers: headers
+		});
 		if (!response.ok) {
 			window.history.pushState(null, null, "/");
 			handleLocation();
