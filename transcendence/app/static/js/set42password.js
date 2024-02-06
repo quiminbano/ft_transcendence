@@ -10,8 +10,9 @@ const set42password = async (e) => {
 	console.log(body);
 	try {
 		const response = await postRequest(url, body);
-		if (response.succeeded) {
-			console.log(response);
+		console.log(response);
+		if (response.succeded) {
+			await navigateTo("/");
 		} else {
 			throw response;
 		}
@@ -22,16 +23,18 @@ const set42password = async (e) => {
 
 const cancel42password = async (e) => {
 	e.preventDefault();
-	const url = "";
+	const url = "/api/getRestInfo";
 
 	try {
 		const response = await deleteRequest(url);
-		if (response.succeeded) {
+		if (response.succeded) {
 			console.log(response);
+			await navigateTo("/")
 		} else {
 			throw response;
 		}
 	} catch (error) {
 		console.log(error);
+		await navigateTo("/")
 	}
 }

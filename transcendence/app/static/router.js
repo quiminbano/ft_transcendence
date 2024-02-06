@@ -56,7 +56,6 @@ const handleLocation = async () => {
 		load(path);
 		hideLoadingSpinner();
 	} catch (error) {
-		console.log(error);
 		//Maybe we should send something to front end here!!!
 	}
 };
@@ -70,8 +69,7 @@ window.addEventListener("beforeunload", async (e) => {
 	e.preventDefault();
 	console.log(window.location.pathname)
 	try {
-		const response = await getRequest("/api/exit", {"triggerWindow": true});
-		console.log(response);
+		await getRequest("/api/exit", {"triggerWindow": true});
 	} catch (error) {
 		console.log(error);
 	}
