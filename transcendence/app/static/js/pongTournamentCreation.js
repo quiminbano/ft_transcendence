@@ -28,7 +28,6 @@ const createTournament = async (event) => {
 	let hostName;
 	try {
 		const username = JSON.parse(document.getElementById('username').textContent);
-		console.log("username: " ,username);
 		hostName = username;
 	} catch (error) {
 		hostName = "";

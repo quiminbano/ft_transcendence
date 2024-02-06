@@ -73,7 +73,6 @@ const addPlayerToDatabase = async (userData) => {
 		password: userData.password,
 		id: tournament.id
 	}
-	console.log(data);
 	const url = `/api/tournament/${data.id}`
 	try {
 		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");

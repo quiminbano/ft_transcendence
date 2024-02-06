@@ -67,9 +67,14 @@ class LocalTournament {
             fragment.getElementById("playerItem").setAttribute("data-id", this.players[i].id);
             fragment.getElementById("index").innerHTML = i + 1;
             fragment.getElementById("playerName").innerHTML = this.players[i].name;
-            const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
-			if (deleteIcon)
-            	deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
+			const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
+			if (i != 0) {
+				if (deleteIcon)
+					deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
+			} else {
+				if (deleteIcon)
+					deleteIcon.style.display = "none";
+			}
             div.appendChild(fragment);
         }
     }
