@@ -15,11 +15,11 @@
 						<p id="errorMessage1v1Invite" class="inputError"></p>
                         <div class="form-group">
                             <label for="opponentUsernameInput">Username</label>
-                            <input type="text" id="opponentUsernameInput" name="username" required/>
+                            <input type="text" id="opponentUsernameInput" name="username" required autocomplete="on"/>
                         </div>
                         <div class="form-group">
-                            <label for="opponentPinInput">PIN Code</label>
-                            <input type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required oninput="limitInputNumberLength(this)" />
+                            <label for="opponentPasswordInput">Password</label>
+                            <input type="password" id="opponentPasswordInput" name="password" required/>
                         </div>
                         <button class="btn btn-success w-100" type="submit">Confirm</button>
                     </form>

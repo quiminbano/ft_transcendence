@@ -37,15 +37,17 @@ const load = (path) => {
 }
 
 const parser = new DOMParser();
-const handleLocation = async () => {
+const handleLocation = async (headers = {}) => {
 	const path = window.location.pathname;
 	try {
 		showLoadingSpinner();
-		const response = await fetch(path);
+		const response = await fetch(path, {
+			method: "GET",
+			headers: headers
+		});
 		if (!response.ok) {
 			window.history.pushState(null, null, "/");
 			handleLocation();
-			//throw new Error(`Failed to fetch route. Status: ${response.status}`);
 		}
 		const html = await response.text();
 		if (document.body) {
@@ -65,10 +67,10 @@ handleLocation();
 
 window.handleLocation = handleLocation;
 
-window.addEventListener("beforeunload", (e) => {
+window.addEventListener("beforeunload", async (e) => {
 	e.preventDefault();
 	try {
-		getRequest("/api/exit", {"triggerWindow": true});
+		await getRequest("/api/exit", {"triggerWindow": true});
 	} catch (error) {
 		console.log(error);
 	}
