@@ -25,7 +25,13 @@ const createTournament = async (event) => {
 	const formData = new FormData(event.target);
 	const name = formData.get("tournament_name");
 	const totalPlayers = formData.get("totalPlayers");
-	const hostName = formData.get("hostName");
+	let hostName;
+	try {
+		const username = JSON.parse(document.getElementById('username').textContent);
+		hostName = username;
+	} catch (error) {
+		hostName = "";
+	}
 	try {
 		const url = "/api/tournament"
 		const data = {

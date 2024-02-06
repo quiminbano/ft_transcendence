@@ -26,7 +26,10 @@ def pongInterface(request):
         case "/pong/single":
           context = {"content": "Pong1v1pages/singleMatchPage.html", "source": stringifyImage(request.user)}
         case "/pong/tournament":
-            context = {"content": "PongTournamentPages/tournamentCreation.html"}
+            context = {
+                "content": "PongTournamentPages/tournamentCreation.html",
+				"username": request.user.get_username
+            }
         case _:
             context = {"content": "index.html"}
     return render(request, "index.html", context)

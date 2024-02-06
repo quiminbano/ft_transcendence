@@ -67,10 +67,14 @@ class LocalTournament {
             fragment.getElementById("playerItem").setAttribute("data-id", this.players[i].id);
             fragment.getElementById("index").innerHTML = i + 1;
             fragment.getElementById("playerName").innerHTML = this.players[i].name;
-            const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
-            deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
-            const editIcon = fragment.querySelector('.unregisterUserButton[alt="Edit user button"]')
-            editIcon.addEventListener("click", () => openRegisterPlayerModal({ isNew: false, id: this.players[i].id }));
+			const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
+			if (i != 0) {
+				if (deleteIcon)
+					deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
+			} else {
+				if (deleteIcon)
+					deleteIcon.style.display = "none";
+			}
             div.appendChild(fragment);
         }
     }
@@ -127,7 +131,7 @@ class LocalTournament {
         const player1 = { name: match.player1.name, points: match.score.player1Points };
         const player2 = { name: match.player2.name, points: match.score.player2Points };
         const htmlElement = document.querySelector(`.match[data-id="${match.id}"]`);
-        
+
         if (this.schedule.totalmatches_played === this.schedule.totalMatchesToPlay) {
             if (player1.points > player2.points)
                 this.winner = player1.name;
