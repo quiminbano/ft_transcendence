@@ -12,6 +12,7 @@ import time
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
+    print("is login: ", request.user.is_login)
     if request.user.is_login == False:
         logout(request)
         return redirect('/login')
