@@ -55,3 +55,11 @@
 #chooseOpponentContainer form input[type=number] {
 	-webkit-text-security: disc;
 }
+
+.playerDescription {
+	font-size: 10px;
+}
+
+.playerName {
+	font-size: 18px;
+}
