@@ -62,6 +62,9 @@ const inviteOpponent1v1 = async (e) => {
 				errorElement.style.display = "none";
 			}
 			oneVonePlay();
+			const opponentName = document.getElementById("opponentName");
+			if (opponentName)
+				opponentName.innerText = userToInvite.username;
 		} else {
 			throw response;
 		}
@@ -72,5 +75,9 @@ const inviteOpponent1v1 = async (e) => {
 		}
 		console.log(error);
 	}
+	oneVonePlay();
+	const opponentName = document.getElementById("opponentName");
+	if (opponentName)
+		opponentName.innerText = userToInvite.username;
 	hideLoadingSpinner();
 }

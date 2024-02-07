@@ -169,11 +169,13 @@ class password42(forms.Form):
         label="New password",
         widget=forms.PasswordInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False
+        required=False,
+        min_length=5
     )
     password2 = forms.CharField(
         label="Confirm new password",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False
+        required=False,
+        min_length=5
     )
 
