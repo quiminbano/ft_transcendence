@@ -30,6 +30,6 @@ urlpatterns = [
 	path("getDoc/youAreInvitedItem", views.youAreInvitedItemTemplate, name="youAreInvitedItemTemplate"),
     path("getDoc/bracket4", views.bracketFourTemplate, name="bracket4Template"),
     path("getDoc/bracket8", views.bracketEightTemplate, name="bracket8Template"),
-    re_path(r'^.*$', views.mainPage.index, name='catch_all'),
     path("", views.mainPage.index, name="index"),
+    re_path(r'^.*$', views.errors.status_404, name='catch_all'),
 ]

@@ -15,8 +15,11 @@ const set42password = async (e) => {
 			throw response;
 		}
 	} catch(error) {
-		console.log(error);
-		cancel42password(e);
+		const errorMessage42password = document.getElementById("errorMessage42password");
+		if (errorMessage42password) {
+			errorMessage42password.style.display = "block";
+			errorMessage42password.innerText = error.errors['password2'];
+		}
 	}
 }
 
@@ -27,13 +30,11 @@ const cancel42password = async (e) => {
 	try {
 		const response = await deleteRequest(url);
 		if (response.succeded) {
-			console.log(response);
 			await navigateTo("/")
 		} else {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
 		await navigateTo("/404")
 	}
 }

@@ -80,7 +80,6 @@ const addPlayerToDatabase = async (userData) => {
 	try {
 		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
 		const response = await postRequest(url, data);
-		console.log(response);
 		if (response.succeded) {
 			addNewPlayerErrorMessage.innerText = "";
 			tournament.addPlayer({ name: response.player.name, id: response.player.id });
