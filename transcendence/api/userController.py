@@ -29,11 +29,12 @@ def friendRequest(request, friendName=None):
             requests.append(FriendObject)
         return JsonResponse(requests, status=200, safe=False)
     potentailFriend = Database.objects.filter(username=friendName).first()
+    print("I am:", request.user)
+    print("This is potential friend: ", potentailFriend)
     if potentailFriend is None:
         return JsonResponse({"message":"user does not exist"}, status=400)
     if user == potentailFriend:
         return JsonResponse({"message":"you cant manipulate yourself"}, status=400)
-    
     match request.method:
         case "POST":
             if user.friends.filter(username=potentailFriend.username).exists():
@@ -48,8 +49,10 @@ def friendRequest(request, friendName=None):
                 potentailFriend.friend_requests.add(user)
                 return JsonResponse({"message":"Success sent friend request"}, status=200)
         case "DELETE":
-            if potentailFriend.friend_requests.filter(username=user.username).exists():
-                potentailFriend.friend_requests.remove(user)
+            if user.friend_requests.filter(username=potentailFriend.username).exists():
+                user.friend_requests.remove(potentailFriend)
+                user.full_clean()
+                user.save()
                 return JsonResponse({"message":"Success removed friend request"}, status=200)
             return JsonResponse({"message":"No friend request sent"}, status=200)
         case _:
