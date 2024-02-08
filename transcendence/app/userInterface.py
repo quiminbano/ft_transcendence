@@ -52,7 +52,7 @@ def usersPage(request, name):
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
     if expectedUser == None:
-        return
+        return redirect("/404")
     data = json.loads(expectedUser.content.decode())
     #TODO: change this data to the real user data!!!!!!!!!
     is_42 = request.user.is_42
