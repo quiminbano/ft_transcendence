@@ -114,7 +114,7 @@ def postGetRestInfo(request, data):
     coalition, errorFlag = getCoalition(id=id, token=token)
     if errorFlag == 1:
         return JsonResponse({"success": "false", "message": "Something happened"}, status=400)
-    user42 = Database.objects.create_user(loginUser, email, getenv('PASSWORD_42'))
+    user42 = Database.objects.create_user(loginUser, email, password)
     user42.username = loginUser
     user42.is_42 = True
     user42.is_login = True
@@ -128,10 +128,10 @@ def postGetRestInfo(request, data):
     user42.online_status = True
     user42.full_clean()
     user42.save()
-    auth = authenticate(request, username=loginUser, password=getenv('PASSWORD_42'))
+    auth = authenticate(request, username=loginUser, password=password)
     login(request, auth)
     request.session["data"] = None
-    return JsonResponse({"success": "true", "message": "success"}, status=200)
+    return JsonResponse({"success": "true", "message": "success", "destination": destination}, status=200)
 
 #==========================================================================
 #   DELETE THE USER FROM 42 TABLE IF USER CANCELS THE PASSWORD CREATION
