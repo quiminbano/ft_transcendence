@@ -209,8 +209,7 @@ def getLogin(token, expiration_time, refresh_token, destination, request):
         user42.online_status = True
         user42.full_clean()
         user42.save()
-        auth = authenticate(request, username=loginUser, password=getenv('PASSWORD_42'))
-        login(request, auth)
+        login(request, user42)
         return redirect(destination)
     return redirect('/') #This should handle a case where a regular user is using already the login of 42 user.
 
