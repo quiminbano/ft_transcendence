@@ -113,7 +113,7 @@ def postGetRestInfo(request, data):
     password = form.cleaned_data['password1']
     coalition, errorFlag = getCoalition(id=id, token=token)
     if errorFlag == 1:
-        return JsonResponse({"success": "false", "message": "Something happened"}, status=400)
+        return JsonResponse({"success": "false", "message": "coalition fetching failed", "errors": "Fetching coalition failed"}, status=400)
     user42 = Database.objects.create_user(loginUser, email, password)
     user42.username = loginUser
     user42.is_42 = True
