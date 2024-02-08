@@ -37,23 +37,21 @@ const debounce = (func, delay = 300) => {
 const onSearch = async (event) => {
 	const input = event.target.value;
 
-	//PROPERLY MAKE A GET REQUEST TO GET THE MATCH USERS!!!!
-
 	const url = `/api/searchUsers/${input}`;
 	try {
-		const response = await getRequest(url);
-		if (response.succeded) {
-			const menu = document.getElementById("dropdownMenu");
-			if (input.length > 0) {
+		const menu = document.getElementById("dropdownMenu");
+		if (input.length > 0) {
+			const response = await getRequest(url);
+			if (response.succeded) {
 				showDropdown(menu);
 				const parentDiv = document.getElementById("dropdownMenu");
 				const matches = response.data;
 				displayDropdownElements(matches, parentDiv);
+			} else {
+				throw response;
 			}
-			else
-				hideDropdown(menu);
 		} else {
-			throw response
+			hideDropdown(menu);
 		}
 	} catch (error) {
 		console.log(error);
