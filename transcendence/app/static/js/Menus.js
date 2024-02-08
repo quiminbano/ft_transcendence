@@ -42,6 +42,7 @@ const onSearch = async (event) => {
 	const url = `/api/searchUsers/${input}`;
 	try {
 		const response = await getRequest(url);
+		console.log(response.succeded)
 		if (response.succeded) {
 			const menu = document.getElementById("dropdownMenu");
 			if (input.length > 0) {

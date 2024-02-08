@@ -179,3 +179,11 @@ class password42(forms.Form):
         min_length=5
     )
 
+    def clean_password2(self):
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+
+        if password1 and password2 and password1 != password2:
+            raise ValidationError("Password don't match")
+        return password2
+
