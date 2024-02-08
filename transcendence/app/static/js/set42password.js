@@ -7,17 +7,16 @@ const set42password = async (e) => {
 		password1: form.get("password1"),
 		password2: form.get("password2")
 	}
-	console.log(body);
 	try {
 		const response = await postRequest(url, body);
-		console.log(response);
 		if (response.succeded) {
-			await navigateTo("/");
+			await navigateTo(response.destination);
 		} else {
 			throw response;
 		}
 	} catch(error) {
 		console.log(error);
+		cancel42password(e);
 	}
 }
 
@@ -35,6 +34,6 @@ const cancel42password = async (e) => {
 		}
 	} catch (error) {
 		console.log(error);
-		await navigateTo("/")
+		await navigateTo("/404")
 	}
 }
