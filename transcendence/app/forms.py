@@ -169,14 +169,12 @@ class password42(forms.Form):
         label="New password",
         widget=forms.PasswordInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False,
-        min_length=5
+        min_length=8
     )
     password2 = forms.CharField(
         label="Confirm new password",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False,
-        min_length=5
+        min_length=8
     )
 
     def clean_password2(self):
