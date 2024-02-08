@@ -16,7 +16,9 @@
 		<div id="dropdownMenu" class="dropdownCollapsed"></div>
 	</div>
     <p id="navbarUsername">{{user.get_username}}</p>
-	{% include "languagesDropdown.html" %}
+    {% if request.path == "/" %}
+	    {% include "languagesDropdown.html" %}
+    {% endif %}
     {% endif %}
 </nav>
 <div id="menuHamburger" class="hamburgerNotExpanded"
