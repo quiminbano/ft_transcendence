@@ -54,9 +54,6 @@ def usersPage(request, name):
     if expectedUser == None:
         return
     data = json.loads(expectedUser.content.decode())
-    print("Data:")
-    #print(data)
-    print(data["coallition"])
     #TODO: change this data to the real user data!!!!!!!!!
     is_42 = request.user.is_42
     matches = lastGames.copy()
@@ -227,7 +224,6 @@ def calculateStats(matches):
         "totalPointsConceeded": 0
     }
     for match in matches:
-        print(match)
         stats["totalGames"] += 1
         try:
             if match["win"]:
