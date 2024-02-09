@@ -16,7 +16,7 @@
     -webkit-clip-path: polygon(0 0, calc(100% - 10vh) 0, 100% 100%, 0 100%);
     margin-right: -4.2vh;
     padding: 5px 11vh 5px 5px;
-    background-color: rgb(79, 79, 219);
+    background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%);
     text-align: center;
     animation: slideInLeft 1s ease-in-out forwards;
     position: relative;
