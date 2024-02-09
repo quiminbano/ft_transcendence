@@ -1,0 +1,115 @@
+#splashContainer {
+    overflow: hidden;
+}
+
+.splashView {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: white;
+    position: relative;
+}
+
+.leftSide {
+    width: 60%;
+    clip-path: polygon(0 0, calc(100% - 10vh) 0, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, calc(100% - 10vh) 0, 100% 100%, 0 100%);
+    margin-right: -4.2vh;
+    padding: 5px 11vh 5px 5px;
+    background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%);
+    text-align: center;
+    animation: slideInLeft 1s ease-in-out forwards;
+    position: relative;
+}
+.rightSide {
+    width: 60%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, calc(0% + 10vh) 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, calc(0% + 10vh) 100%);
+    margin-left: -4.2vh;
+    padding: 5px 5px 5px 11vh;
+    background-color: rgb(79, 79, 219);
+    text-align: center;
+    animation: slideInRight 1s ease-in-out forwards;
+    position: relative;
+}
+
+@keyframes slideInRight {
+    0% {
+        right: -200px;
+    }
+
+    100% {
+        right: 0;
+    }
+}
+@keyframes slideInLeft {
+    0% {
+        left: -200px;
+    }
+
+    100% {
+        left: 0;
+    }
+}
+
+.splashDivider {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+    background: url("/static/images/icons8-ping-pong-100.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 2;
+    transform: rotateY(180deg);
+    animation: padelAnim 0.25s ease-in-out forwards;
+    animation-delay: 0.75s;
+    transform: scale(0);
+}
+
+@keyframes padelAnim {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1.5);
+    }
+}
+
+.splashContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    animation: contentAnim 0.25s ease-in-out forwards;
+    animation-delay: 0.50s;
+    transform: scale(0);
+}
+
+@keyframes contentAnim {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+.splashPlayerPicture {
+    width: 150px;
+    border-radius: 10px;
+}
+
+.splashContent p {
+    font-family: PressStart;
+    font-size: 20px;
+    margin-top: 25px;
+}

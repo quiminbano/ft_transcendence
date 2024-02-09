@@ -22,9 +22,11 @@ def pongInterface(request):
 		"hasPin": False
             }
         case "/pong/single/1v1":
-            context={"content": "Pong1v1pages/OnevOne.html"}
+            source = stringifyImage(request.user)
+            context={"content": "Pong1v1pages/OnevOne.html", "source": source}
         case "/pong/single/2v2":
-            context={"content": "Pong1v1pages/twoVtwo.html"}
+            source = stringifyImage(request.user)
+            context={"content": "Pong1v1pages/twoVtwo.html", "source": source}
         case "/pong/single":
           context = {"content": "Pong1v1pages/singleMatchPage.html", "source": stringifyImage(request.user)}
         case "/pong/tournament":
