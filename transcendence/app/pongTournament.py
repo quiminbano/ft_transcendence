@@ -22,7 +22,8 @@ def pongInterface(request):
 		"hasPin": False
             }
         case "/pong/single/1v1":
-            context={"content": "Pong1v1pages/OnevOne.html"}
+            source = stringifyImage(request.user)
+            context={"content": "Pong1v1pages/OnevOne.html", "source": source}
         case "/pong/single/2v2":
             context={"content": "Pong1v1pages/twoVtwo.html"}
         case "/pong/single":
