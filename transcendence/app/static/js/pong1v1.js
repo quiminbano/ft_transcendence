@@ -1,6 +1,7 @@
 let OneVOneContentDisplay;
 const scenes = [
-	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent"},
+	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent" },
+	{ name: "splash", id: "OneVOne-splash" },
 	{ name: "gamePlay", id: "OneVOne-gamePlay" },
 	{ name: "endGame", id: "OneVOne-endGame"}
 ]
@@ -15,6 +16,7 @@ const loadOneVOne = async () => {
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
 	}
+	OneVOneContentDisplay.setActive("splash")
 }
 
 const playGame = async () => {

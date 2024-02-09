@@ -1,0 +1,29 @@
+#splashContainer {
+    overflow: hidden;
+}
+
+.splashView {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: #F46835;
+}
+
+.leftSide {
+    width: 50%;
+    clip-path: polygon(0 0, calc(100% - 10vh) 0, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, calc(100% - 10vh) 0, 100% 100%, 0 100%);
+    margin-right: -4.2vh;
+    padding: 5px 11vh 5px 5px;
+    background-color: #4cff00;
+    text-align: center;
+}
+.rightSide {
+    width: 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, calc(0% + 10vh) 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, calc(0% + 10vh) 100%);
+    margin-left: -4.2vh;
+    padding: 5px 5px 5px 11vh;
+    background-color: #44325A;
+    text-align: center;
+}
