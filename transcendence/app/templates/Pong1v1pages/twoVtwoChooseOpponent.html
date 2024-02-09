@@ -20,13 +20,14 @@
 								<h5>Player 2</h5>
 								<div id="player2-register" class="player-register">
 									<form onsubmit="confirmPlayer(event, 2)">
+										<p id="errorMessageP2Invite" class="inputError"></p>
 										<div class="form-group">
-											<label for="opponentUsernameInput">Username</label>
-											<input class="form-control" type="text" id="opponentUsernameInput" name="username" required/>
+											<label for="opponent2UsernameInput">Username</label>
+											<input class="form-control" type="text" id="opponent2UsernameInput" name="username" required autocomplete="on"/>
 										</div>
 										<div class="form-group">
-											<label for="opponentPinInput">PIN Code</label>
-											<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required oninput="limitInputNumberLength(this)"/>
+											<label for="opponent2PasswordInput">Password</label>
+											<input class="form-control" type="password" id="opponent2PasswordInput" name="password" required />
 										</div>
 										<button class="btn btn-success w-100" type="submit">Confirm</button>
 									</form>
@@ -34,6 +35,7 @@
 								<div id="player2-accepted" class="player-accepted">
 									<p id="player2-name"></p>
 									<button class="btn btn-danger" onclick="unregisterPlayer(2)">Unregister</button>
+									<p id="p2UnregisterError" class="inputError"></p>
 								</div>
 							</div>
 						</div>
@@ -42,13 +44,14 @@
 								<h5>Player 3</h5>
 								<div id="player3-register" class="player-register">
 									<form onsubmit="confirmPlayer(event, 3)">
+										<p id="errorMessageP3Invite" class="inputError"></p>
 										<div class="form-group">
-											<label for="opponentUsernameInput">Username</label>
-											<input class="form-control"  type="text" id="opponentUsernameInput" name="username" required/>
+											<label for="opponent3UsernameInput">Username</label>
+											<input class="form-control"  type="text" id="opponent3UsernameInput" name="username" required autocomplete="on"/>
 										</div>
 										<div class="form-group">
-											<label for="opponentPinInput">PIN Code</label>
-											<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required oninput="limitInputNumberLength(this)"/>
+											<label for="opponent3PasswordInput">Password</label>
+											<input class="form-control" type="password" id="opponent3PasswordInput" name="password" required />
 										</div>
 										<button class="btn btn-success w-100" type="submit">Confirm</button>
 									</form>
@@ -56,6 +59,7 @@
 								<div id="player3-accepted" class="player-accepted">
 									<p id="player3-name"></p>
 									<button class="btn btn-danger" onclick="unregisterPlayer(3)">Unregister</button>
+									<p id="p3UnregisterError" class="inputError"></p>
 								</div>
 							</div>
 						</div>
@@ -64,13 +68,14 @@
 								<h5>Player 4</h5>
 								<div id="player4-register" class="player-register">
 									<form onsubmit="confirmPlayer(event, 4)">
+										<p id="errorMessageP4Invite" class="inputError"></p>
 										<div class="form-group">
-											<label for="opponentUsernameInput">Username</label>
-											<input class="form-control"  type="text" id="opponentUsernameInput" name="username" required/>
+											<label for="opponent4UsernameInput">Username</label>
+											<input class="form-control" type="text" id="opponent4UsernameInput" name="username" required autocomplete="on"/>
 										</div>
 										<div class="form-group">
-											<label for="opponentPinInput">PIN Code</label>
-											<input class="form-control"  type="number" min="0" max="9999" id="opponentPinInput" name="PIN" required oninput="limitInputNumberLength(this)"/>
+											<label for="opponent4PasswordInput">Password</label>
+											<input class="form-control" type="password" id="opponent4PasswordInput" name="password" required />
 										</div>
 										<button class="btn btn-success w-100" type="submit">Confirm</button>
 									</form>
@@ -78,6 +83,7 @@
 								<div id="player4-accepted" class="player-accepted">
 									<p id="player4-name"></p>
 									<button class="btn btn-danger" onclick="unregisterPlayer(4)">Unregister</button>
+									<p id="p4UnregisterError" class="inputError"></p>
 								</div>
 							</div>
 						</div>

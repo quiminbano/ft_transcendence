@@ -20,7 +20,7 @@ const loadTournamentLobby = async () => {
 	});
 
 	if (tournament.state === "A") {
-		await navigateTo(`/pong/tournament/${tournament.id}/start`);
+		await navigateTo(`/pong/tournament/${tournament.id}/start`, {"flag": true});
 		await loadStartTournament();
 		//TODO: DATABASE SHOULD RETURN MATCHES AS WELL!!!!
 		data.matches.forEach(match => tournament.schedule.editMatch(match.id, match));
@@ -63,16 +63,20 @@ const closeRegisterPlayerModal = () => {
 	modal.close();
 }
 
-const addPlayerToDatabase = async (username) => {
-	if (tournament.isRepeatedPlayer(username)) {
+const addPlayerToDatabase = async (userData) => {
+	if (tournament.isRepeatedPlayer(userData.username)) {
 		tournament.setErrorMessage("That name already exists");
 		return;
 	}
 	const data = {
-		player: username,
+		player: userData.username,
+		password: userData.password,
 		id: tournament.id
 	}
 	const url = `/api/tournament/${data.id}`
+	const passwordElement = document.getElementById("addPlayerPassword");
+	if (passwordElement)
+		passwordElement.value = "";
 	try {
 		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
 		const response = await postRequest(url, data);
@@ -95,8 +99,10 @@ const addPlayer = (event) => {
 	showLoadingSpinner();
 	const formData = new FormData(event.target);
 	const username = formData.get("name");
+	const password  = formData.get("password");
+	const data = {username, password}
 	if (modal.isNew) {
-		addPlayerToDatabase(username);
+		addPlayerToDatabase(data);
 	} else {
 		editPlayer(username);
 	}
@@ -104,7 +110,7 @@ const addPlayer = (event) => {
 }
 
 const startTournament = async () => {
-	await navigateTo(`${tournament.id}/start`);
+	await navigateTo(`${tournament.id}/start`, {"flag": true});
 	tournament.setState("A");
 	await loadStartTournament();
 }

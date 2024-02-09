@@ -44,3 +44,14 @@
 .showAllMatchesButton:hover {
     color: #0096FF;
 }
+
+.gameWin {
+    border: 3px solid #097969;
+    background: linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147));
+    color: whitesmoke;
+}
+.gameLoose {
+    background: linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%);
+    border: 3px solid #D2122E;
+    color: whitesmoke;
+}

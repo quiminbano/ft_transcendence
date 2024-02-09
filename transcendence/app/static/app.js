@@ -86,9 +86,12 @@ const deleteRequest = async (url) => {
 	}
 }
 
-const getRequest = async (url) => {
+const getRequest = async (url, headers = {}) => {
 	try {
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			method: "GET",
+			headers: headers
+		});
 		const data = await response.json();
 		if (!response.ok)
 			throw data;
@@ -109,44 +112,12 @@ const hideLoadingSpinner = () => {
 	loadingSpinner.style.display = "none";
 }
 
-const navigateTo = async (url, data = {}) => {
+const navigateTo = async (url, headers = {}, data = {}) => {
 	history.pushState(data, null, url);
-	await window.handleLocation();
+	await window.handleLocation(headers);
 }
 
 const goBack = async () => {
 	history.back();
 	await handleLocation();
 }
-
-const limitInputNumberLength = (input) => {
-	if (input.value.length > 4) {
-		input.value = input.value.slice(0, 4);
-	}
-}
-
-
-const fakeUsers = [
-	{ name: 'John Smith', src: 'https://placekitten.com/200/300?image=1' },
-	{ name: 'Emily Johnson', src: 'https://placekitten.com/200/300?image=2' },
-	{ name: 'William Brown', src: 'https://placekitten.com/200/300?image=3' },
-	{ name: 'Sophia Miller', src: 'https://placekitten.com/200/300?image=4' },
-	{ name: 'James Wilson', src: 'https://placekitten.com/200/300?image=5' },
-	{ name: 'Olivia Moore', src: 'https://placekitten.com/200/300?image=6' },
-	{ name: 'Daniel Davis', src: 'https://placekitten.com/200/300?image=7' },
-	{ name: 'Ava Taylor', src: 'https://placekitten.com/200/300?image=8' },
-	{ name: 'Michael Jackson', src: 'https://placekitten.com/200/300?image=9' },
-	{ name: 'Emma White', src: 'https://placekitten.com/200/300?image=10' },
-	{ name: 'Christopher Johnson', src: 'https://placekitten.com/200/300?image=11' },
-	{ name: 'Isabella Martin', src: 'https://placekitten.com/200/300?image=12' },
-	{ name: 'Matthew Harris', src: 'https://placekitten.com/200/300?image=13' },
-	{ name: 'Amelia Brown', src: 'https://placekitten.com/200/300?image=14' },
-	{ name: 'David Robinson', src: 'https://placekitten.com/200/300?image=15' },
-	{ name: 'Sophie Davis', src: 'https://placekitten.com/200/300?image=16' },
-	{ name: 'Andrew Miller', src: 'https://placekitten.com/200/300?image=17' },
-	{ name: 'Ella Anderson', src: 'https://placekitten.com/200/300?image=18' },
-	{ name: 'Joshua Taylor', src: 'https://placekitten.com/200/300?image=19' },
-	{ name: 'Mia Wilson', src: 'https://placekitten.com/200/300?image=20' },
-];
-
-const fakeFriends = ["Andre", "Carlos", "Hans", "Joao", "Lucas"]
