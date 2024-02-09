@@ -95,7 +95,6 @@ def storeIn42(loginUser):
 def postGetRestInfo(request, data):
     passwordData = json.loads(request.body)
     form = password42(passwordData)
-    print(passwordData)
     if not form.is_valid():
         errors = {field: form.errors[field][0] for field in form.errors}
         return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
