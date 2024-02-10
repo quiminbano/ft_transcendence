@@ -19,16 +19,17 @@ class   Team(models.Model):
 
 class   Match(models.Model):
     id = models.AutoField(primary_key=True)
-    teams = models.ManyToManyField(Team, blank=True)
+    team1 = models.OneToOneField(Team, blank=True, on_delete=models.CASCADE, related_name='Team1')
+    team2 = models.OneToOneField(Team, blank=True, on_delete=models.CASCADE, related_name='Team2')
     date = models.DateField(default=timezone.now)
 
 class Tournament(models.Model):
     id = models.AutoField(primary_key=True)
     tournament_name = models.CharField(max_length=255)
     teams = models.IntegerField()
-    completed = models.BooleanField(False)
+    completed = models.BooleanField(default=False)
     winner = models.CharField(max_length=255)
-    match = models.ManyToManyField(Match, blank=True)
+    matches = models.ManyToManyField(Match, blank=True)
 
 class DatabaseManager(BaseUserManager):
 
