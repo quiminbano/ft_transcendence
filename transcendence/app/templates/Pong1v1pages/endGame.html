@@ -1,11 +1,12 @@
-<div class="container-fluid" id="endGameContainer">
-    <div class="row">
+<div class="container-fluid d-flex justify-content-center align-items-center" id="endGameContainer">
+    <div class="row w-100">
         <div class="col-12 col-md-6 offset-md-3 scoreBox">
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="d-flex justify-content-center">
                         <div class="endGamePointsDiv">
-                            <p>Player 1</p>
+                            <p class="playerDescription">Player 1</p>
+                            <p class="playerName">{{ user.get_username }}</p>
                             <p id="playerOnePoints"></p>
                         </div>
                     </div>
@@ -13,7 +14,8 @@
                 <div class="col-12 col-md-6">
                     <div class="d-flex justify-content-center">
                         <div class="endGamePointsDiv">
-                            <p>Player 2</p>
+                            <p class="playerDescription">Player 2</p>
+                            <p class="playerName" id="opponentName"></p>
                             <p id="playerTwoPoints"></p>
                         </div>
                     </div>

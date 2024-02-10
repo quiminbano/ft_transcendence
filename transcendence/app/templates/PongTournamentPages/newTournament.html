@@ -27,17 +27,7 @@
 									<option value="8">8</option>
 								</select>
 							</div>
-							<br />
-							<div class="form-group">
-								<label for="chooseHostName">What is your name?</label>
-								<input type="text"
-									placeholder="Your name"
-									id="chooseHostName"
-									class="form-control"
-									name="hostName"
-									required
-								/>
-							</div>
+							{{ username|json_script:"username" }}
 							<div class="d-flex align-items-center justify-content-center flex-column">
 								<button
 									type="submit"

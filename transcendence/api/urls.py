@@ -3,7 +3,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("exit", views.onlineStatus.handleOnlineStatus, name="exit"),
+
     path("oauth2/callback", views.api42.callback42, name="callback42"),
+
+    path("getRestInfo", views.api42.getRestInfo, name="getRestInfo"),
 	
     path("userProfilePicture", views.userController.profilePicture, name="user"),
 	

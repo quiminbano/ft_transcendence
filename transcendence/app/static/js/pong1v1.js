@@ -1,6 +1,7 @@
 let OneVOneContentDisplay;
 const scenes = [
-	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent"},
+	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent" },
+	{ name: "splash", id: "OneVOne-splash" },
 	{ name: "gamePlay", id: "OneVOne-gamePlay" },
 	{ name: "endGame", id: "OneVOne-endGame"}
 ]
@@ -10,7 +11,6 @@ const loadSingle = () => {
 }
 
 const loadOneVOne = async () => {
-
 	OneVOneContentDisplay = new ContentDisplayManager({ name: scenes[0].name, element: document.getElementById(scenes[0].id) });
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
@@ -46,11 +46,50 @@ const inviteOpponent1v1 = async (e) => {
 	showLoadingSpinner();
 	const form = new FormData(e.target);
 	const username = form.get("username");
-	const PIN = form.get("PIN");
-
-
+	const password = form.get("password");
+	const url = "";
+	const userToInvite = {
+		username,
+		password
+	};
 	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
-
-	oneVonePlay();
+	const errorElement = document.getElementById("errorMessage1v1Invite");
+	try {
+		const response = await postRequest(url, userToInvite)
+		if (response.suceeded) {
+			if (errorElement) {
+				errorElement.innerText = "";
+				errorElement.style.display = "none";
+			}
+			const opponent = {
+				username: userToInvite.username,
+				picture: undefined
+			}
+			splash(opponent);
+		} else {
+			throw response;
+		}
+	} catch(error) {
+		if (errorElement) {
+			errorElement.innerText = "User doesnt exist or can't be invited";
+			errorElement.style.display = "block";
+		}
+	}
 	hideLoadingSpinner();
+}
+
+const splash = (opponent) => {
+	OneVOneContentDisplay.setActive("splash");
+	const splashPlayerTwoName = document.getElementById("splashPlayerTwoName");
+	if (splashPlayerTwoName)
+		splashPlayerTwoName.innerText = opponent.username;
+	const splashPlayerTwoPicture = document.getElementById("splashPlayerTwoPicture");
+	if (splashPlayerTwoPicture)
+		splashPlayerTwoPicture.setAttribute("src", opponent.picture || "/static/images/profileIcon.png");
+	setTimeout(() => {
+		oneVonePlay();
+		const opponentName = document.getElementById("opponentName");
+		if (opponentName)
+			opponentName.innerText = opponent.username;
+	}, 2500)
 }

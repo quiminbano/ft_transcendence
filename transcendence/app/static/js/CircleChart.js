@@ -15,7 +15,6 @@ class CircleChart {
             const doc = parser.parseFromString(html, 'text/html');
             const content = doc.body.innerHTML;
             return content;
-            
         } catch (error) {
             console.log(error);
         }

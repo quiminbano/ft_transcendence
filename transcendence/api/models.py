@@ -64,6 +64,7 @@ class DatabaseManager(BaseUserManager):
 
 class Database(AbstractUser):
     online_status = models.BooleanField(default=False)
+    is_login = models.BooleanField(default=False)
     is_42 = models.BooleanField(default=False)
     friends = models.ManyToManyField('self', blank=True)
     friend_requests = models.ManyToManyField('self', symmetrical=False, blank=True)

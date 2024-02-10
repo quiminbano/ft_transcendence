@@ -2,7 +2,7 @@ from django.http import JsonResponse, QueryDict
 from django.forms.models import model_to_dict
 from .models import Database
 from app.forms import ProfilePicture
-from app.utils import stringifyImage
+from app.utils import stringifyImage, setOffline, setOnline
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 import json
@@ -14,9 +14,11 @@ def friendRequest(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
-    if user.online_status == False:
+    if user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if (request.method == "GET" and friendName==None):
         requests = []
         for friend_request in user.friend_requests.all():
@@ -31,7 +33,6 @@ def friendRequest(request, friendName=None):
         return JsonResponse({"message":"user does not exist"}, status=400)
     if user == potentailFriend:
         return JsonResponse({"message":"you cant manipulate yourself"}, status=400)
-    
     match request.method:
         case "POST":
             if user.friends.filter(username=potentailFriend.username).exists():
@@ -46,8 +47,10 @@ def friendRequest(request, friendName=None):
                 potentailFriend.friend_requests.add(user)
                 return JsonResponse({"message":"Success sent friend request"}, status=200)
         case "DELETE":
-            if potentailFriend.friend_requests.filter(username=user.username).exists():
-                potentailFriend.friend_requests.remove(user)
+            if user.friend_requests.filter(username=potentailFriend.username).exists():
+                user.friend_requests.remove(potentailFriend)
+                user.full_clean()
+                user.save()
                 return JsonResponse({"message":"Success removed friend request"}, status=200)
             return JsonResponse({"message":"No friend request sent"}, status=200)
         case _:
@@ -65,9 +68,11 @@ def friends(request, friendName=None):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
-    if user.online_status == False:
+    if user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     friend = Database.objects.filter(username=friendName).first()
     if friend is None:
         return JsonResponse({"message":"this user does not exist"}, status=400)
@@ -95,9 +100,11 @@ def getFriends(request):
     user = request.user
     if not user.is_authenticated:
         return redirect('/login')
-    if user.online_status == False:
+    if user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if request.method != "GET":
         return JsonResponse({"message": "Method not implemented"}, status=501)
     user_friends = []
@@ -117,9 +124,11 @@ def getFriends(request):
 def searchUsers(request, search=None):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if request.method != "GET":
         return JsonResponse({"message": "Method not implemented"}, status=501)
     users = Database.objects.filter(username__icontains=search)
@@ -177,9 +186,11 @@ def getUser(request, userName=None):
 def Users(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     user = request.user
     match request.method:
         case "GET":
@@ -201,9 +212,11 @@ def Users(request):
 def getMatchHistory(request, userName):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     user = Database.objects.filter(username=userName).first()
     if user is None:
         return redirect('/')
@@ -232,9 +245,11 @@ def getMatchHistory(request, userName):
 def profilePicture(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user)
     if request.method == 'POST':
         form = ProfilePicture(request.POST, request.FILES)
         if form.is_valid():

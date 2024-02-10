@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
-from .utils import stringifyImage
+from .utils import stringifyImage, setOffline, setOnline
 from api.userController import getUser
 from api.api42 import getTokens
 import json
@@ -12,42 +12,21 @@ import time
 def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
     if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
-        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', '/dashboard', request)
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
     is_42 = request.user.is_42
-    lastGames = [
-    {
-        "date":"2-2-2024",
-        "team": ["Hello", "World"],
-        "picture": source,
-        "score": "3 - 2"
-    },
-    {
-        "date":"20-1-2024",
-        "team": ["Tester"],
-        "picture": source,
-        "score": "0 - 3"
-    },
-    {
-        "date":"1-2-2024",
-        "team": ["Orange", "Banana"],
-        "picture": source,
-        "score": "3 - 1"
-    },
-    {
-        "date":"20-12-2023",
-        "team": ["Another Tester"],
-        "picture": source,
-        "score": "2 - 4"
-    },
-    ]
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": lastGames}
+    matches = lastGames.copy()
+    for match in matches:
+        match = processMatch(match, request.user.username)
+    stats = calculateStats(matches)
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": matches, "stats": stats}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -65,60 +44,34 @@ def getFriendState(request, friend_requests, friends):
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.online_status == False:
+    if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    setOnline(user=request.user) 
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
     if expectedUser == None:
-        return
+        return redirect("/404")
     data = json.loads(expectedUser.content.decode())
-    print("Data:")
-    #print(data)
-    print(data["coallition"])
     #TODO: change this data to the real user data!!!!!!!!!
     is_42 = request.user.is_42
-    lastGames = [
-    {
-        "date":"2-2-2024",
-        "team": ["Hello", "World"],
-        "picture": source,
-        "score": "3 - 2"
-    },
-    {
-        "date":"20-1-2024",
-        "team": ["Tester"],
-        "picture": source,
-        "score": "0 - 3"
-    },
-    {
-        "date":"1-2-2024",
-        "team": ["Orange", "Banana"],
-        "picture": source,
-        "score": "3 - 1"
-    },
-    {
-        "date":"20-12-2023",
-        "team": ["Another Tester"],
-        "picture": source,
-        "score": "2 - 4"
-    },
-    ]
+    matches = lastGames.copy()
+    for match in matches:
+        match = processMatch(match, name)
     info = {
         "username": name,
         "online": data["online_status"],
         "isFriend": getFriendState(request, data["friend_requests"], data["friends"]),
         "coallition": data["coallition"]
     }
-    stats = {
-        "totalGames": 100,
-        "totalWins": 85,
-        "totalTournamentWins": 1,
-    }
+    stats = calculateStats(matches)
     client = {
         "info": info,
         "stats": stats,
-        "lastGames": lastGames
+        "lastGames": matches
     }
     context = {
         "content": "usersPage.html",
@@ -152,6 +105,7 @@ def postLoginUser(request):
         user = authenticate(request, username=username, password=password)
         if user:
             userDatabase.online_status = True
+            userDatabase.is_login = True
             userDatabase.full_clean()
             userDatabase.save()
             login(request, user)
@@ -171,9 +125,8 @@ def loginUser(request):
             return postLoginUser(request)
 
 def logoutUser(request):
-    request.user.online_status = False
-    request.user.full_clean()
-    request.user.save()
+    request.user.is_login = False
+    setOffline(user=request.user)
     logout(request)
     return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
 
@@ -236,9 +189,8 @@ def putSettings(request):
 def settings(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.is_42 == True:
-       return redirect('/')
-    if request.user.online_status == False:
+    if request.user.is_login == False:
+        setOffline(user=request.user)
         logout(request)
         return redirect('/login')
     match request.method:
@@ -246,3 +198,89 @@ def settings(request):
             return getSettings(request)
         case "PUT":
             return putSettings(request)
+
+
+def processMatch(match, userName):
+    match["score"] = str(match["teams"][0]["score"])
+    match["score"] += "-"
+    match["score"] += str(match["teams"][1]["score"])
+    for team in match["teams"]:
+        for player in team["players"]:
+            if (player["name"] == userName):
+                for opponentTeam in match["teams"]:
+                    if opponentTeam != team:
+                        match["opponentTeam"] = opponentTeam
+                        match["myTeam"] = team
+                        if opponentTeam["score"] > team["score"]:
+                            match["win"] = False
+                        else:
+                            match["win"] = True
+                        return match
+
+def calculateStats(matches):
+    stats = {
+        "totalGames": 0,
+        "totalWins": 0,
+        "totalLooses": 0,
+        "totalPointsScored": 0,
+        "totalPointsConceeded": 0
+    }
+    for match in matches:
+        stats["totalGames"] += 1
+        try:
+            if match["win"]:
+                stats["totalWins"] += 1
+            else:
+                stats["totalLooses"] += 1
+            stats["totalPointsScored"] += match["myTeam"]["score"]
+            stats["totalPointsConceeded"] += match["opponentTeam"]["score"]
+        except KeyError:
+            pass
+    return stats
+
+lastGames = [
+    {
+        "id": 0,
+        "date":"2-2-2024",
+        "teams": [
+            {
+                "id": 0,
+                "score": 3,
+                "players": [
+                    {"name": "Carlos", "avatarPic": ""},
+                    {"name": "Lucas", "avatarPic": ""}
+                ]
+            },
+            {
+                "id": 1,
+                "score": 5,
+                "players": [
+                    {"name": "andrferr", "avatarPic": ""},
+                    {"name": "Hans", "avatarPic": ""}
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "date":"2-3-2024",
+        "teams": [
+            {
+                "id": 0,
+                "score": 4,
+                "players": [
+                    {"name": "Carlos", "avatarPic": ""},
+                    {"name": "Lucas", "avatarPic": ""}
+                ]
+            },
+            {
+                "id": 1,
+                "score": 2,
+                "players": [
+                    {"name": "andrferr", "avatarPic": ""},
+                    {"name": "Hans", "avatarPic": ""}
+                ]
+            }
+        ]
+    },
+]

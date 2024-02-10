@@ -151,7 +151,7 @@ const rejectInvitation = async (username) => {
 	const url = `/api/friend_request/${username}`;
 	showLoadingSpinner();
 	try {
-		const response = await deleteRequest(url, "");
+		const response = await deleteRequest(url, username);
 		if (response.succeded) {
 			removeItem(username);
 		} else {
