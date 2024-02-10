@@ -29,8 +29,6 @@ def friendRequest(request, friendName=None):
             requests.append(FriendObject)
         return JsonResponse(requests, status=200, safe=False)
     potentailFriend = Database.objects.filter(username=friendName).first()
-    print("I am:", request.user)
-    print("This is potential friend: ", potentailFriend)
     if potentailFriend is None:
         return JsonResponse({"message":"user does not exist"}, status=400)
     if user == potentailFriend:

@@ -2,10 +2,14 @@ from django.shortcuts import render, redirect
 from .userInterface import loginUser
 from .utils import stringifyImage, setOffline, setOnline
 from django.contrib.auth import logout
+from api.api42 import getTokens
+import time
 
 def pongInterface(request):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
     if request.user.is_login == False:
         setOffline(user=request.user)
         logout(request)
@@ -41,6 +45,8 @@ def pongInterface(request):
 def pongInterfaceWithId(request, id : int):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
     if request.user.is_login == False:
         setOffline(user=request.user)
         logout(request)
@@ -66,6 +72,8 @@ def pongInterfaceWithId(request, id : int):
 def pongTournamentGame(request):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
     if request.user.is_login == False:
         setOffline(user=request.user)
         logout(request)
