@@ -32,9 +32,9 @@ class LocalTournament {
         this.#updateDisplay();
     }
 
-    removePlayer(id) {
+    removePlayer(username) {
         if (this.players.length <= 0) return;
-        this.players = this.players.filter(p => p.id !== id);
+        this.players = this.players.filter(p => p.name !== username);
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
     }
@@ -70,7 +70,7 @@ class LocalTournament {
 			const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
 			if (i != 0) {
 				if (deleteIcon)
-					deleteIcon.addEventListener("click", () => removePlayer(this.players[i].id));
+					deleteIcon.addEventListener("click", () => removePlayer(this.players[i].name));
 			} else {
 				if (deleteIcon)
 					deleteIcon.style.display = "none";

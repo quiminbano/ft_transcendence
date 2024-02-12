@@ -63,7 +63,7 @@ const putRequest = async (url, data) => {
 	}
 }
 
-const deleteRequest = async (url) => {
+const deleteRequest = async (url, data = {}) => {
 	const csrftoken = getCookie('csrftoken');
 	const config = {
 		method: "DELETE",
@@ -71,6 +71,7 @@ const deleteRequest = async (url) => {
 			'Content-Type': 'application/json',
 			'X-CSRFToken': csrftoken
 		},
+		body: JSON.stringify(data)
 	}
 	try {
 		const response = await fetch(url, config);
