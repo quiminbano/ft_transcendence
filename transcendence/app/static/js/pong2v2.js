@@ -63,6 +63,7 @@ const confirmPlayer = async (e, playerNumber) => {
 	try {
 		const response = await postRequest(url, info);
 		if (response.succeded) {
+			match2v2.addPlayer(response.player.username, playerNumber);
 			opponents.push({ username: response.player.username, picture: response.player.picture });
 			current2v2players++;
 			showAcceptContent(playerNumber, response.player.username);
