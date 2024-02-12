@@ -23,6 +23,6 @@ urlpatterns = [
 	
     path("tournament", views.tournamentController.tournamentManager, name="tournament"),
 	path("tournament/<int:id>", views.tournamentController.tournamentManagerID, name="tournamentID"),
-    path("tournament/player", views.tournamentController.tournamentPlayer, name="tournament/player"),
-    path("tournament/player/<int:id>", views.tournamentController.tournamentManagerPlayerID, name="tournamentPlayerID"),
+    path("tournament/<int:id>/player", views.tournamentController.tournamentPlayerManager, name="tournamentPlayerID"),
+    path("tournament/<int:id>/match", views.tournamentController.tournamentMatchManager, name="tournamentPlayerID"),
 ]

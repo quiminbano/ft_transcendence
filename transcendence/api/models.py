@@ -7,24 +7,30 @@ from .imageValidation import validateFileType, validationImageSize, defineNameIm
 from django.core.files import File
 from django.utils import timezone
 
-
-class Players(models.Model):
+#REMOVE THIS!
+class Players:
     name = models.CharField(max_length=255)
+
+
+class   Team(models.Model):
+    id = models.AutoField(primary_key=True)
     score = models.IntegerField(default=0)
+    players = models.ManyToManyField('Database', symmetrical=False, blank=True)
+
+class   Match(models.Model):
+    id = models.AutoField(primary_key=True)
+    team1 = models.OneToOneField(Team, blank=True, on_delete=models.CASCADE, related_name='Team1')
+    team2 = models.OneToOneField(Team, blank=True, on_delete=models.CASCADE, related_name='Team2')
+    date = models.DateField(default=timezone.now)
 
 class Tournament(models.Model):
-    STATE_CHOICES = [
-        ('P', 'Pending'),
-        ('A', 'Active'),
-        ('F', 'Finished'),
-    ]
-
     id = models.AutoField(primary_key=True)
-    tournament_name = models.CharField(max_length=255)
-    amount = models.IntegerField()
-    state = models.CharField(max_length=1, choices=STATE_CHOICES, default='P')
-    players = models.ManyToManyField(Players, related_name='tournaments')
-    date = models.DateField(default=timezone.now)
+    tournament_name = models.CharField(max_length=255, blank=True)
+    player_amount = models.IntegerField()
+    players = models.ManyToManyField('Database', symmetrical=False, blank=True, related_name='players')
+    completed = models.BooleanField(default=False)
+    winner = models.CharField(max_length=255)
+    matches = models.ManyToManyField(Match, blank=True)
 
 class DatabaseManager(BaseUserManager):
 
