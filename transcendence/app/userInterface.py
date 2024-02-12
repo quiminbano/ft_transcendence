@@ -17,7 +17,7 @@ def dashboard(request):
         logout(request)
         return redirect('/login')
     if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
-        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', '/dashboard', request)
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
@@ -44,11 +44,13 @@ def getFriendState(request, friend_requests, friends):
 def usersPage(request, name):
     if not request.user.is_authenticated:
         return redirect('/login')
+    if (request.user.is_42 == True) and (time.time() > request.user.expiration_time):
+        return getTokens(request.user.refresh_token, 'refresh_token', 'refresh_token', request.path, request)
     if request.user.is_login == False:
         setOffline(user=request.user)
         logout(request)
         return redirect('/login')
-    setOnline(user=request.user)
+    setOnline(user=request.user) 
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
     if expectedUser == None:

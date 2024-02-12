@@ -1,9 +1,14 @@
 let contentManager2v2;
 let current2v2players;
+<<<<<<< HEAD
 let match2v2;
 
+=======
+const opponents = [];
+>>>>>>> 7d58d85d009990b498cdc0074aa25fff0bb906c0
 const scenes2v2 = [
 	{ name: "chooseOpponents", id: "twoVtwo-choseeOpponents" },
+	{ name: "splash", id: "towVtwo-splash" },
 	{ name: "gamePlay", id: "twoVtwo-gamePlay" },
 	{ name: "endGame", id: "twoVtwo-endGame"}
 ]
@@ -28,6 +33,7 @@ const load2v2Page = () => {
 }
 
 const play2v2Game = async () => {
+	contentManager2v2.setActive("gamePlay");
 	const game = new Local2v2Game();
 	await game.startGame();
 	const score = game.getGameScore();
@@ -40,11 +46,6 @@ const UpdateEndGameScene2v2 = (score) => {
 	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
 	playerOnePointsElement.innerText = score.player1;
 	playerTwoPointsElement.innerText = score.player2;
-}
-
-const twoVtwoPlayAgain = () => {
-	contentManager2v2.setActive("gamePlay");
-	play2v2Game();
 }
 
 const twoVtwoContinue = () => {
@@ -65,6 +66,7 @@ const confirmPlayer = async (e, playerNumber) => {
 	try {
 		const response = await postRequest(url, info);
 		if (response.succeeded) {
+			opponents.push({ username: info.username, picture: undefined });
 			current2v2players++;
 			showAcceptContent(playerNumber, info.username);
 			if (errorMessageElement) {
@@ -154,4 +156,23 @@ const showRegisterContent = (playerNumber) => {
 		if (!play2v2ButtonArea) return;
 		play2v2ButtonArea.style.display = "none";
 	}
+}
+
+const splash2v2 = () => {
+	contentManager2v2.setActive("splash");
+	opponents.forEach((opponent, i) => splashSetPlayerData(i + 2, opponent));
+	setTimeout(() => {
+		while (opponents.length)
+			opponents.pop();
+		play2v2Game();
+	}, 4000);
+}
+
+const splashSetPlayerData = (idShortcut, player) => {
+	const splashPlayerName = document.getElementById(`splashPlayer${idShortcut}Name`);
+	if (splashPlayerName)
+		splashPlayerName.innerText = player.username;
+	const splashPlayerPicture = document.getElementById(`splashPlayer${idShortcut}Picture`);
+	if (splashPlayerPicture)
+		splashPlayerPicture.setAttribute("src", player.picture || "/static/images/profileIcon.png");
 }

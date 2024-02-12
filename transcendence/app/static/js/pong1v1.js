@@ -1,6 +1,7 @@
 let OneVOneContentDisplay;
 const scenes = [
-	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent"},
+	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent" },
+	{ name: "splash", id: "OneVOne-splash" },
 	{ name: "gamePlay", id: "OneVOne-gamePlay" },
 	{ name: "endGame", id: "OneVOne-endGame"}
 ]
@@ -10,7 +11,6 @@ const loadSingle = () => {
 }
 
 const loadOneVOne = async () => {
-
 	OneVOneContentDisplay = new ContentDisplayManager({ name: scenes[0].name, element: document.getElementById(scenes[0].id) });
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
@@ -61,10 +61,11 @@ const inviteOpponent1v1 = async (e) => {
 				errorElement.innerText = "";
 				errorElement.style.display = "none";
 			}
-			oneVonePlay();
-			const opponentName = document.getElementById("opponentName");
-			if (opponentName)
-				opponentName.innerText = userToInvite.username;
+			const opponent = {
+				username: userToInvite.username,
+				picture: undefined
+			}
+			splash(opponent);
 		} else {
 			throw response;
 		}
@@ -73,11 +74,22 @@ const inviteOpponent1v1 = async (e) => {
 			errorElement.innerText = "User doesnt exist or can't be invited";
 			errorElement.style.display = "block";
 		}
-		console.log(error);
 	}
-	oneVonePlay();
-	const opponentName = document.getElementById("opponentName");
-	if (opponentName)
-		opponentName.innerText = userToInvite.username;
 	hideLoadingSpinner();
+}
+
+const splash = (opponent) => {
+	OneVOneContentDisplay.setActive("splash");
+	const splashPlayerTwoName = document.getElementById("splashPlayerTwoName");
+	if (splashPlayerTwoName)
+		splashPlayerTwoName.innerText = opponent.username;
+	const splashPlayerTwoPicture = document.getElementById("splashPlayerTwoPicture");
+	if (splashPlayerTwoPicture)
+		splashPlayerTwoPicture.setAttribute("src", opponent.picture || "/static/images/profileIcon.png");
+	setTimeout(() => {
+		oneVonePlay();
+		const opponentName = document.getElementById("opponentName");
+		if (opponentName)
+			opponentName.innerText = opponent.username;
+	}, 2500)
 }
