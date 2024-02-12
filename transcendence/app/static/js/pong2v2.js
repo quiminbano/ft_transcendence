@@ -54,7 +54,7 @@ const confirmPlayer = async (e, playerNumber) => {
 	showLoadingSpinner();
 	const form = new FormData(e.target);
 	const info = {
-		username: form.get("username"),
+		player: form.get("username"),
 		password: form.get("password")
 	}
 
@@ -63,9 +63,9 @@ const confirmPlayer = async (e, playerNumber) => {
 	try {
 		const response = await postRequest(url, info);
 		if (response.succeded) {
-			opponents.push({ username: info.username, picture: undefined });
+			opponents.push({ username: response.player.username, picture: response.player.picture });
 			current2v2players++;
-			showAcceptContent(playerNumber, info.username);
+			showAcceptContent(playerNumber, response.player.username);
 			if (errorMessageElement) {
 				errorMessageElement.innerText = "";
 				errorMessageElement.style.display = "none";
