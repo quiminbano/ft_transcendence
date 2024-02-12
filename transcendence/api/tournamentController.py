@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
-from .models import Tournament, Players, Database
+from .models import Tournament, Players, Database, Match, Team
+from app.utils import stringifyImage
 import json
 
 #==========================================
@@ -13,11 +14,21 @@ def JSONTournamentResponse(tournament, message):
             "tournament": {
                 "id": str(tournament.id),
                 "name": tournament.tournament_name,
-                "amount": tournament.amount,
-                "state": tournament.state,
-                "players": [{"name" : player.name, "id" : player.id} for player in tournament.players.all()],
+                "player_amount": tournament.player_amount,
+                "completed": tournament.completed,
+                "winner" : tournament.winner,
+                "players": [{"name" : user.username} for user in tournament.players.all()],
+                "matches": [{"id": match.id,
+							"team1-id": match.team1.id,
+                            "team1-score": match.team1.score,
+                            "team1-players": [{"name": player.username} for player in match.team1.players.all()],
+                            "team2-id": match.team2.id,
+                            "team2-score": match.team2.score,
+                            "team2-players": [{"name": player.username} for player in match.team2.players.all()],
+							} for match in tournament.matches.all()],
             }
         }
+    print (response)
     return (response)
 
 def unknownMethod():
@@ -26,42 +37,34 @@ def unknownMethod():
 #==========================================
 #       Tournament Player Functions                                                                                                                                           
 #==========================================
-def tournamentAddPlayer(request, tournament):
-    data = json.loads(request.body)
-    if "player" not in data:
-        return JsonResponse({'error': 'missing fields in request body'}, status=400)
-    player = Players.objects.create(name=data['player'])
-    tournament.players.add(player)
-    playerdict = model_to_dict(player)
-    if tournament.players.count() >= tournament.amount:
-        tournament.state = 'A'
-        tournament.save()
-    return JsonResponse({'message': 'Player added successfully', 'player': playerdict}, status=200)
+def tournamentAddPlayer(playerName, existing_tournament):
+                
+    #todo isValid = CarlosValidation(player.username, password)
+    #check user ddoes not exist in databse already
+    player = Database.objects.filter(username=playerName).first()
+    if player is None:
+        return JsonResponse({'error': 'player not found'}, status=400)
+    print ( existing_tournament.players.count() , '  ',  existing_tournament.player_amount)
+    if existing_tournament.players.count() >= existing_tournament.player_amount:
+        return JsonResponse({'error': 'too many players'}, status=400)
+    print ("hee")
+    existing_tournament.players.add(player)
+    print ("hee")
+    playerToReturn = {
+        "username": player.username,
+        "picture": stringifyImage(player) if player.avatar_image else None
+    }
+    print ("hee")
+    return JsonResponse({'message': 'Player added successfully', 'player':  playerToReturn}, status=200)
 
-def tournamentUpdatePlayer(request):
-    data = json.loads(request.body)
-    if "id" not in data or "username" not in data:
-        return JsonResponse({'error': 'missing fields in request body'}, status=400)
-    player = Players.objects.filter(id=data['id']).first()
-    if player is not None:
-        player.name =  data["username"]
-        player.save()
+def tournamentDeletePlayer(playerName, existing_tournament):
+    player = Database.objects.filter(username=playerName).first()
+    if player is None or existing_tournament.players.filter(username=player.username).first() is None:
+        return JsonResponse({'error': 'player does not exist within tournament or database'}, status=400)
     else:
-        return JsonResponse({'error': 'player does not exist'}, status=400)
-    playerdict = model_to_dict(player)
-    return JsonResponse({'message': 'Player name change succefull', 'player': playerdict}, status=200)
-
-def tournamentDeletePlayer(player):
-    tournament = Tournament.objects.filter(players=player).first()
-    if tournament is not None:
-        tournament.players.remove(player)
-        player.delete()
-        if tournament.players.count() < tournament.amount:
-            tournament.state = 'P'
-            tournament.save()
+        existing_tournament.players.remove(player)
         return JsonResponse({'succes!': 'player got removed'}, status=200)
-    else:
-        return JsonResponse({'error': 'player or tournament does not exist'}, status=400)
+
 
 
 #==========================================
@@ -71,37 +74,24 @@ def createTurnament(request):
     data = json.loads(request.body)
     if "name" not in data or "number" not in data:
         return JsonResponse({'error': 'missing fields in request body'}, status=400)
-    #Create a tournament object and add the player to it
-    tournament = Tournament.objects.create(tournament_name=data['name'], amount=data['number'])
-    playerName = Players.objects.create(name=data['player'])
-    tournament.players.add(playerName)
+    tournament = Tournament.objects.create(tournament_name=data['name'], player_amount=data['number'])
+    tournament.players.add(request.user)
     request.user.tournament = tournament
     request.user.save()
-    print(tournament.tournament_name)
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament created successfully"), status=200)
 
 def getTournament(tournament):
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament already exist"), status=200)
 
 
-#
-#
-#
-#
-#       TEMPORARY ADD MATCHES TO COMPLETED COLUMN IF THEY ARE ACTIVE CHANGE THIS TO BE BETTER MANAGE!!!!!
-#                                               (READ!!!)
-#
-#
-#
 def deleteTournament(request, tournament):
-    if tournament.state == 'A':
+    if tournament.completed == True:
         print("MOVE")
         request.user.completed_matches.add(tournament)
-        tournament.delete()
     else:
         print("DELE")
-        for TournamentPlayer in tournament.players.all():
-            TournamentPlayer.delete()
+        for match in tournament.matches.all():
+            match.delete()
         tournament.delete()
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
 
@@ -147,8 +137,6 @@ def tournamentManagerID(request, id=None):
         match request.method:
             case "GET":
                 return getTournament(existing_tournament)
-            case "POST":
-                return tournamentAddPlayer(request, existing_tournament)
             case "DELETE":
                 return deleteTournament(request, existing_tournament)
             case _:
@@ -157,33 +145,57 @@ def tournamentManagerID(request, id=None):
         return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
 
 #==========================================
-#         Tournament Player Management
+#         Tournament ID Player Management
 #==========================================
-def tournamentPlayer(request):
+def tournamentPlayerManager(request, id=None):
+    existing_tournament = Tournament.objects.filter(id=id).first()
     data = json.loads(request.body)
     print(data)
-    print(request.method)
-    match request.method:
-        case "PUT":
-            return(tournamentUpdatePlayer(request))
-        case _:
-            return unknownMethod()
-
-
-
-
-#==========================================
-#         Tournament Player ID Management
-#==========================================
-def tournamentManagerPlayerID(request, id=None):
-    player = Players.objects.filter(id=id).first()
-    if player is not None:
+    if "player" in data and existing_tournament is not None:
         match request.method:
+            case "POST":
+                return tournamentAddPlayer(data['player'], existing_tournament)
             case "DELETE":
-                return tournamentDeletePlayer(player)
+                print("DELE")
+                return tournamentDeletePlayer(data['player'], existing_tournament)
             case _:
                 return unknownMethod()
     else:
-        return JsonResponse({'error': 'player does not exist'}, status=400)
+        return JsonResponse({'error': 'something went wrong'}, status=400)
 
 
+def tournamentAddMatch(request, existing_tournament):
+    data = json.loads(request.body)
+    if 'score1' not in data or 'player1' not in data or 'score2' not in data or 'player2' not in data:
+        return JsonResponse({'error': 'missing felds in body'}, status=400)
+
+    #Team one
+    team1 = Team.objects.create()
+    team1.score = data['score1']
+    team1.players.add(data['player1'])
+    if 'player2' in data:
+        team1.players.add(data['player2'])
+
+    #Team two
+    team2 = Team.objects.create()
+    team2.score = data['score2']
+    team2.players.add(data['player3'])
+    if 'player4' in data:
+        team2.players.add(data['player4'])
+    
+    match = Match.objects.create(team1, team2)
+    existing_tournament.matches.add(match)
+
+#==========================================
+#         Tournament ID Match Management
+#==========================================
+def tournamentMatchManager(request, id=None):
+    existing_tournament = Tournament.objects.filter(id=id).first()
+    if existing_tournament is not None:
+        match request.method:
+            case "POST":
+                return tournamentAddMatch(request, existing_tournament)
+            case _:
+                return unknownMethod()
+    else:
+        return JsonResponse({'error': 'something went wrong'}, status=400)

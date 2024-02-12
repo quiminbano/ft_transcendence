@@ -1,4 +1,5 @@
 let OneVOneContentDisplay;
+let currentTournament;
 const scenes = [
 	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent" },
 	{ name: "splash", id: "OneVOne-splash" },
@@ -15,6 +16,7 @@ const loadOneVOne = async () => {
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
 	}
+	create1v1Tournament();
 }
 
 const playGame = async () => {
@@ -47,23 +49,24 @@ const inviteOpponent1v1 = async (e) => {
 	const form = new FormData(e.target);
 	const username = form.get("username");
 	const password = form.get("password");
-	const url = "";
+	const url = `/api/tournament/${currentTournament}/player`;
 	const userToInvite = {
-		username,
+		player: username,
 		password
 	};
 	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
 	const errorElement = document.getElementById("errorMessage1v1Invite");
 	try {
 		const response = await postRequest(url, userToInvite)
-		if (response.suceeded) {
+		console.log(response);
+		if (response.succeded) {
 			if (errorElement) {
 				errorElement.innerText = "";
 				errorElement.style.display = "none";
 			}
 			const opponent = {
-				username: userToInvite.username,
-				picture: undefined
+				username: response.player.username,
+				picture: response.player.picture
 			}
 			splash(opponent);
 		} else {
@@ -92,4 +95,24 @@ const splash = (opponent) => {
 		if (opponentName)
 			opponentName.innerText = opponent.username;
 	}, 2500)
+}
+
+const create1v1Tournament = async () => {
+	const url = "/api/tournament";
+	try {
+		const body = {
+			name: "",
+			number: 2,
+			player: "",
+		}
+		const response = await postRequest(url, body);
+		if (response.succeded) {
+			console.log(response);
+			currentTournament = response.tournament.id;
+		} else {
+			throw response;
+		}
+	} catch(error) {
+		console.log(error);
+	}
 }
