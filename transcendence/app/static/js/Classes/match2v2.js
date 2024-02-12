@@ -39,4 +39,5 @@ class Match2v2 extends Match {
 		if (this.readyToPlay)
 			this.readyToPlay = false;
 	}
+	get
 }

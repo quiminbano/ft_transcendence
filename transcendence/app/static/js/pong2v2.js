@@ -1,5 +1,7 @@
 let contentManager2v2;
 let current2v2players;
+let match2v2;
+
 const scenes2v2 = [
 	{ name: "chooseOpponents", id: "twoVtwo-choseeOpponents" },
 	{ name: "gamePlay", id: "twoVtwo-gamePlay" },
@@ -19,6 +21,10 @@ const load2v2Page = () => {
 	const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
 	if (!play2v2ButtonArea) return;
 	play2v2ButtonArea.style.display = "none";
+	match2v2 = new Match2v2(0);
+	const username = JSON.parse(document.getElementById('username').textContent);
+	match2v2.addPlayer(username, 1);
+	console.log(match2v2);
 }
 
 const play2v2Game = async () => {
@@ -75,6 +81,9 @@ const confirmPlayer = async (e, playerNumber) => {
 		}
 		console.log(error);
 	}
+	match2v2.addPlayer(info.username, playerNumber);
+	console.log(match2v2);
+
 	e.target.elements[0].value = "";
 	e.target.elements[1].value = "";
 	hideLoadingSpinner();

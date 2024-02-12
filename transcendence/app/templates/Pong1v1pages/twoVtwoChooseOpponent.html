@@ -13,6 +13,7 @@
 							<div class="twoVtwo-playerRequestDiv w-100 h-100">
 								<h5>Player 1</h5>
 								<p>{{user.get_username}}</p>
+								{{ client.info.username|json_script:"username" }}
 							</div>
 						</div>
 						<div class="col-12 col-sm-6 col-md-3">
