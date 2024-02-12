@@ -12,7 +12,6 @@ import json
 def validateUser(request, source):
     model = get_user_model()
     data = json.loads(request.body)
-    print(data)
     form = LoginForm(data)
     if not form.is_valid():
         errors = {field: form.errors[field][0] for field in form.errors}

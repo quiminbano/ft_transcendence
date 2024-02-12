@@ -52,7 +52,6 @@ def getCoalition(id, token):
     connection.request("GET", ('/v2/users/' + str(id) + '/coalitions'), headers=header)
     response = connection.getresponse()
     if response.status != 200:
-        print('ERROR')
         coalition = ""
         errorFlag = 1
     else:
