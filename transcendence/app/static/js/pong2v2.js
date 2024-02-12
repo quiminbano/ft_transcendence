@@ -1,7 +1,5 @@
 let contentManager2v2;
-let current2v2players;
 let match2v2;
-const opponents = [];
 const scenes2v2 = [
 	{ name: "chooseOpponents", id: "twoVtwo-choseeOpponents" },
 	{ name: "splash", id: "towVtwo-splash" },
@@ -10,7 +8,6 @@ const scenes2v2 = [
 ]
 
 const load2v2Page = async () => {
-	current2v2players = 1;
 	contentManager2v2 = new ContentDisplayManager({ name: scenes2v2[0].name, element: document.getElementById(scenes2v2[0].id) });
 	for (let i = 1; i < scenes2v2.length; i++) {
 		contentManager2v2.addContent(scenes2v2[i].name, document.getElementById(scenes2v2[i].id));
@@ -30,7 +27,6 @@ const load2v2Page = async () => {
 		picture
 	}
 	match2v2.addPlayer(hostPlayer, 1);
-	console.log(match2v2);
 	await create2v2Tournament();
 }
 
@@ -62,15 +58,12 @@ const confirmPlayer = async (e, playerNumber) => {
 		player: form.get("username"),
 		password: form.get("password")
 	}
-
 	const url = `/api/tournament/${match2v2.id}/player`;
 	const errorMessageElement = document.getElementById(`errorMessageP${playerNumber}Invite`);
 	try {
 		const response = await postRequest(url, info);
 		if (response.succeded) {
 			match2v2.addPlayer(response.player, playerNumber);
-			opponents.push({ username: response.player.username, picture: response.player.picture });
-			current2v2players++;
 			showAcceptContent(playerNumber, response.player.username);
 			if (errorMessageElement) {
 				errorMessageElement.innerText = "";
@@ -104,22 +97,26 @@ const showAcceptContent = (playerNumber, username) => {
 	if (!playerNameDiv)
 		return;
 	playerNameDiv.innerText = username;
-	if (current2v2players === 4) {
+	if (match2v2.readyToPlay) {
 		const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
 		if (!play2v2ButtonArea) return;
 		play2v2ButtonArea.style.display = "block";
 	}
 }
 
-const unregisterPlayer = (playerNumber) => {
+const unregisterPlayer = async (playerNumber) => {
 	showLoadingSpinner();
-	current2v2players--;
 
-	const url = ""; //TODO: USE THE CORRECT URL FOR THIS DELETION!!!!!!!
+	const url = `/api/tournament/${match2v2.id}/player`;
 	const unregisterErrorElement = document.getElementById(`p${playerNumber}UnregisterError`);
+	const usernameElement = document.getElementById(`player${playerNumber}-name`);
+	if (!usernameElement)
+		return;
+	const username = usernameElement.innerText;
 	try {
-		const response = deleteRequest(url);
-		if (response.succeeded) {
+		const response = await deleteRequest(url, {player: username});
+		if (response.succeded) {
+			match2v2.removePlayer(username, playerNumber);
 			showRegisterContent(playerNumber);
 			if (unregisterErrorElement) {
 				unregisterErrorElement.innerText = "";
@@ -151,7 +148,7 @@ const showRegisterContent = (playerNumber) => {
 	return;
 	playerNameOnBoard.innerText = `Player ${playerNumber}`
 	playerNameDiv.innerText = "";
-	if (current2v2players < 4) {
+	if (!match2v2.readyToPlay) {
 		const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
 		if (!play2v2ButtonArea) return;
 		play2v2ButtonArea.style.display = "none";
@@ -160,10 +157,8 @@ const showRegisterContent = (playerNumber) => {
 
 const splash2v2 = () => {
 	contentManager2v2.setActive("splash");
-	opponents.forEach((opponent, i) => splashSetPlayerData(i + 2, opponent));
+	match2v2.registeredPlayers.forEach((player, i) => splashSetPlayerData(i + 1, player));
 	setTimeout(() => {
-		while (opponents.length)
-			opponents.pop();
 		play2v2Game();
 	}, 4000);
 }
@@ -186,9 +181,7 @@ const create2v2Tournament = async () => {
 			player: "",
 		}
 		const response = await postRequest(url, body);
-		console.log(response);
 		if (response.succeded) {
-			console.log(response);
 			match2v2.id = response.tournament.id;
 		} else {
 			throw response;
