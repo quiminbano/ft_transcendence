@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core.serializers import serialize
 from .models import Tournament, Players, Database, Match, Team
+from app.utils import stringifyImage
 import json
 
 #==========================================
@@ -13,7 +14,7 @@ def JSONTournamentResponse(tournament, message):
             "tournament": {
                 "id": str(tournament.id),
                 "name": tournament.tournament_name,
-                "teams": tournament.player_amount,
+                "player_amount": tournament.player_amount,
                 "completed": tournament.completed,
                 "winner" : tournament.winner,
                 "players": [{"name" : user.username} for user in tournament.players.all()],
@@ -36,15 +37,19 @@ def unknownMethod():
 #==========================================
 #       Tournament Player Functions                                                                                                                                           
 #==========================================
-def tournamentAddPlayer(request, existing_tournament):
+def tournamentAddPlayer(playerName, existing_tournament):
 
-    player = Database.objects.filter(username=data['player']).first()
+    player = Database.objects.filter(username=playerName).first()
     if player is None:
         return JsonResponse({'error': 'player not found'}, status=400)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
         return JsonResponse({'error': 'too many players'}, status=400)
     existing_tournament.players.add(player)
-    return JsonResponse({'message': 'Player added successfully', 'player': player.username}, status=200)
+    playerToReturn = {
+        "username": player.username,
+        "picture": stringifyImage(player.avatar_image) if player.avatar_image else None
+    }
+    return JsonResponse({'message': 'Player added successfully', 'player':  playerToReturn}, status=200)
 
 def tournamentDeletePlayer(player, existing_tournament):
     if existing_tournament.players.filter(player.username).first() is None:
