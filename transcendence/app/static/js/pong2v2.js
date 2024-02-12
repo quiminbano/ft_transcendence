@@ -1,11 +1,7 @@
 let contentManager2v2;
 let current2v2players;
-<<<<<<< HEAD
 let match2v2;
-
-=======
 const opponents = [];
->>>>>>> 7d58d85d009990b498cdc0074aa25fff0bb906c0
 const scenes2v2 = [
 	{ name: "chooseOpponents", id: "twoVtwo-choseeOpponents" },
 	{ name: "splash", id: "towVtwo-splash" },
@@ -13,7 +9,7 @@ const scenes2v2 = [
 	{ name: "endGame", id: "twoVtwo-endGame"}
 ]
 
-const load2v2Page = () => {
+const load2v2Page = async () => {
 	current2v2players = 1;
 	contentManager2v2 = new ContentDisplayManager({ name: scenes2v2[0].name, element: document.getElementById(scenes2v2[0].id) });
 	for (let i = 1; i < scenes2v2.length; i++) {
@@ -30,6 +26,7 @@ const load2v2Page = () => {
 	const username = JSON.parse(document.getElementById('username').textContent);
 	match2v2.addPlayer(username, 1);
 	console.log(match2v2);
+	await create2v2Tournament();
 }
 
 const play2v2Game = async () => {
@@ -61,11 +58,11 @@ const confirmPlayer = async (e, playerNumber) => {
 		pin: form.get("PIN")
 	}
 
-	const url = ""; //TODO: ADD THE PROPER URL!!!!!
+	const url = `/api/tournament/${match2v2.id}/player`;
 	const errorMessageElement = document.getElementById(`errorMessageP${playerNumber}Invite`);
 	try {
 		const response = await postRequest(url, info);
-		if (response.succeeded) {
+		if (response.succeded) {
 			opponents.push({ username: info.username, picture: undefined });
 			current2v2players++;
 			showAcceptContent(playerNumber, info.username);
@@ -175,4 +172,25 @@ const splashSetPlayerData = (idShortcut, player) => {
 	const splashPlayerPicture = document.getElementById(`splashPlayer${idShortcut}Picture`);
 	if (splashPlayerPicture)
 		splashPlayerPicture.setAttribute("src", player.picture || "/static/images/profileIcon.png");
+}
+
+const create2v2Tournament = async () => {
+	const url = "/api/tournament";
+	try {
+		const body = {
+			name: "",
+			number: 4,
+			player: "",
+		}
+		const response = await postRequest(url, body);
+		console.log(response);
+		if (response.succeded) {
+			console.log(response);
+			match2v2.id = response.tournament.id;
+		} else {
+			throw response;
+		}
+	} catch(error) {
+		console.log(error);
+	}
 }
