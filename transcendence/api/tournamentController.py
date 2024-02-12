@@ -38,22 +38,29 @@ def unknownMethod():
 #       Tournament Player Functions                                                                                                                                           
 #==========================================
 def tournamentAddPlayer(playerName, existing_tournament):
-
+                
+    #todo isValid = CarlosValidation(player.username, password)
+    #check user ddoes not exist in databse already
     player = Database.objects.filter(username=playerName).first()
     if player is None:
         return JsonResponse({'error': 'player not found'}, status=400)
+    print ( existing_tournament.players.count() , '  ',  existing_tournament.player_amount)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
         return JsonResponse({'error': 'too many players'}, status=400)
+    print ("hee")
     existing_tournament.players.add(player)
+    print ("hee")
     playerToReturn = {
         "username": player.username,
-        "picture": stringifyImage(player.avatar_image) if player.avatar_image else None
+        "picture": stringifyImage(player) if player.avatar_image else None
     }
+    print ("hee")
     return JsonResponse({'message': 'Player added successfully', 'player':  playerToReturn}, status=200)
 
-def tournamentDeletePlayer(player, existing_tournament):
-    if existing_tournament.players.filter(player.username).first() is None:
-        return JsonResponse({'error': 'player does not exist within tournament'}, status=400)
+def tournamentDeletePlayer(playerName, existing_tournament):
+    player = Database.objects.filter(username=playerName).first()
+    if player is None or existing_tournament.players.filter(username=player.username).first() is None:
+        return JsonResponse({'error': 'player does not exist within tournament or database'}, status=400)
     else:
         existing_tournament.players.remove(player)
         return JsonResponse({'succes!': 'player got removed'}, status=200)
@@ -69,6 +76,8 @@ def createTurnament(request):
         return JsonResponse({'error': 'missing fields in request body'}, status=400)
     tournament = Tournament.objects.create(tournament_name=data['name'], player_amount=data['number'])
     tournament.players.add(request.user)
+    request.user.tournament = tournament
+    request.user.save()
     return JsonResponse(JSONTournamentResponse(tournament, "Tournament created successfully"), status=200)
 
 def getTournament(tournament):
@@ -141,11 +150,13 @@ def tournamentManagerID(request, id=None):
 def tournamentPlayerManager(request, id=None):
     existing_tournament = Tournament.objects.filter(id=id).first()
     data = json.loads(request.body)
+    print(data)
     if "player" in data and existing_tournament is not None:
         match request.method:
             case "POST":
                 return tournamentAddPlayer(data['player'], existing_tournament)
             case "DELETE":
+                print("DELE")
                 return tournamentDeletePlayer(data['player'], existing_tournament)
             case _:
                 return unknownMethod()

@@ -43,8 +43,9 @@ const editPlayer = async (username) => {
 const removePlayer = async (id) => {
     showLoadingSpinner();
 	try {
-		const url = `/api/tournament/player/${id}`;
-		const response = await deleteRequest(url);
+		const url = `/api/tournament/${tournament.id}/player`;
+		const response = await deleteRequest(url, {player: id});
+		console.log(response);
 		if (!response.succeded) {
 			throw new Error("Failed to delete player");
 		} else {
