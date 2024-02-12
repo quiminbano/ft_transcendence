@@ -40,5 +40,11 @@ class Match2v2 extends Match {
 		if (this.readyToPlay)
 			this.readyToPlay = false;
 	}
-	get
+	addScore(teamOnePoints, teamTwoPoints) {
+		this.score = {
+			teamOne: teamOnePoints,
+			teamTwo: teamTwoPoints,
+			asString: teamOnePoints + "-" + teamTwoPoints
+		}
+	}
 }

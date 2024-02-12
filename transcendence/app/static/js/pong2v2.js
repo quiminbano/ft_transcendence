@@ -37,6 +37,8 @@ const play2v2Game = async () => {
 	const score = game.getGameScore();
 	UpdateEndGameScene2v2(score);
 	contentManager2v2.setActive("endGame");
+	match2v2.addScore(score.player1, score.player2);
+	console.log(match2v2);
 }
 
 const UpdateEndGameScene2v2 = (score) => {
@@ -65,6 +67,7 @@ const confirmPlayer = async (e, playerNumber) => {
 		if (response.succeded) {
 			match2v2.addPlayer(response.player, playerNumber);
 			showAcceptContent(playerNumber, response.player.username);
+			e.target.elements[0].value = "";
 			if (errorMessageElement) {
 				errorMessageElement.innerText = "";
 				errorMessageElement.style.display = "none";
@@ -79,7 +82,6 @@ const confirmPlayer = async (e, playerNumber) => {
 		}
 		console.log(error);
 	}
-	e.target.elements[0].value = "";
 	e.target.elements[1].value = "";
 	hideLoadingSpinner();
 }
