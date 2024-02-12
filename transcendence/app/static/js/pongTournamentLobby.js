@@ -90,10 +90,9 @@ const addPlayerToDatabase = async (userData) => {
 			throw response;
 		}
 	} catch (error) {
-		addNewPlayerErrorMessage.innerText = "Failed to add player";
+		addNewPlayerErrorMessage.innerText = error.error;
 		console.log(error);
 	}
-	closeRegisterPlayerModal();
 }
 
 const addPlayer = (event) => {
