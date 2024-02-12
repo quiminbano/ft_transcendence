@@ -25,8 +25,9 @@ class   Match(models.Model):
 
 class Tournament(models.Model):
     id = models.AutoField(primary_key=True)
-    tournament_name = models.CharField(max_length=255)
-    teams = models.IntegerField()
+    tournament_name = models.CharField(max_length=255, blank=True)
+    player_amount = models.IntegerField()
+    players = models.ManyToManyField('Database', symmetrical=False, blank=True, related_name='players')
     completed = models.BooleanField(default=False)
     winner = models.CharField(max_length=255)
     matches = models.ManyToManyField(Match, blank=True)
