@@ -49,14 +49,14 @@ const confirmPlayer = async (e, playerNumber) => {
 	const form = new FormData(e.target);
 	const info = {
 		username: form.get("username"),
-		pin: form.get("PIN")
+		password: form.get("password")
 	}
 
 	const url = ""; //TODO: ADD THE PROPER URL!!!!!
 	const errorMessageElement = document.getElementById(`errorMessageP${playerNumber}Invite`);
 	try {
 		const response = await postRequest(url, info);
-		if (response.succeeded) {
+		if (response.succeded) {
 			opponents.push({ username: info.username, picture: undefined });
 			current2v2players++;
 			showAcceptContent(playerNumber, info.username);
