@@ -24,7 +24,12 @@ const load2v2Page = async () => {
 	play2v2ButtonArea.style.display = "none";
 	match2v2 = new Match2v2(0);
 	const username = JSON.parse(document.getElementById('username').textContent);
-	match2v2.addPlayer(username, 1);
+	const picture = JSON.parse(document.getElementById('picture').textContent);
+	const hostPlayer = {
+		username,
+		picture
+	}
+	match2v2.addPlayer(hostPlayer, 1);
 	console.log(match2v2);
 	await create2v2Tournament();
 }
@@ -63,7 +68,7 @@ const confirmPlayer = async (e, playerNumber) => {
 	try {
 		const response = await postRequest(url, info);
 		if (response.succeded) {
-			match2v2.addPlayer(response.player.username, playerNumber);
+			match2v2.addPlayer(response.player, playerNumber);
 			opponents.push({ username: response.player.username, picture: response.player.picture });
 			current2v2players++;
 			showAcceptContent(playerNumber, response.player.username);
@@ -81,9 +86,6 @@ const confirmPlayer = async (e, playerNumber) => {
 		}
 		console.log(error);
 	}
-	match2v2.addPlayer(info.username, playerNumber);
-	console.log(match2v2);
-
 	e.target.elements[0].value = "";
 	e.target.elements[1].value = "";
 	hideLoadingSpinner();

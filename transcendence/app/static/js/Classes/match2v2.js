@@ -9,10 +9,12 @@ class Match2v2 extends Match {
 		this.currentIndex = 0;
 		this.readyToPlay = false;
 	}
-	addPlayer(username, playerNumber) {
+	addPlayer(player, playerNumber) {
+		console.log(playerNumber);
 		const playerToAdd = {
 			id: this.currentIndex,
-			username
+			username: player.username,
+			picture: player.picture
 		}
 		this.registeredPlayers.push(playerToAdd);
 		if (playerNumber === 1 || playerNumber === 4)
