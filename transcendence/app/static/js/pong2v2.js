@@ -19,15 +19,19 @@ const load2v2Page = async () => {
 	const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
 	if (!play2v2ButtonArea) return;
 	play2v2ButtonArea.style.display = "none";
-	match2v2 = new Match2v2(0);
-	const username = JSON.parse(document.getElementById('username').textContent);
-	const picture = JSON.parse(document.getElementById('picture').textContent);
-	const hostPlayer = {
-		username,
-		picture
+	try {
+		const id = await create2v2Tournament();
+		match2v2 = new Match2v2(id);
+		const username = JSON.parse(document.getElementById('username').textContent);
+		const picture = JSON.parse(document.getElementById('picture').textContent);
+		const hostPlayer = {
+			username,
+			picture
+		}
+		match2v2.addPlayer(hostPlayer, 1);
+	} catch (error) {
+		navigateTo("/pong/single");
 	}
-	match2v2.addPlayer(hostPlayer, 1);
-	await create2v2Tournament();
 }
 
 const play2v2Game = async () => {
@@ -38,7 +42,7 @@ const play2v2Game = async () => {
 	UpdateEndGameScene2v2(score);
 	contentManager2v2.setActive("endGame");
 	match2v2.addScore(score.player1, score.player2);
-	console.log(match2v2);
+	await save2v2Score();
 }
 
 const UpdateEndGameScene2v2 = (score) => {
@@ -175,6 +179,7 @@ const splashSetPlayerData = (idShortcut, player) => {
 }
 
 const create2v2Tournament = async () => {
+	showLoadingSpinner();
 	const url = "/api/tournament";
 	try {
 		const body = {
@@ -184,11 +189,44 @@ const create2v2Tournament = async () => {
 		}
 		const response = await postRequest(url, body);
 		if (response.succeded) {
-			match2v2.id = response.tournament.id;
+			return response.tournament.id;
 		} else {
 			throw response;
 		}
 	} catch(error) {
+		throw error;
+	}
+	hideLoadingSpinner();
+}
+
+const play2v2Again = async () => {
+	showLoadingSpinner();
+	const id = await create2v2Tournament();
+	match2v2.id = id;
+	hideLoadingSpinner();
+	play2v2Game();
+}
+
+const save2v2Score = async () => {
+	showLoadingSpinner();
+	const url = `/api/tournament/${match2v2.id}/match`;
+	try {
+		const matchData = {
+			teamOne: {
+				players: [match2v2.teamOne[0].username, match2v2.teamOne[1].username],
+				score: match2v2.score.teamOne
+			},
+			teamTwo: {
+				players: [match2v2.teamTwo[0].username, match2v2.teamTwo[1].username],
+				score: match2v2.score.teamTwo
+			},
+			stage: "Final"
+		}
+		const response = await postRequest(url, matchData);
+		if (!response.succeded)
+			throw response;
+	} catch (error) {
 		console.log(error);
 	}
+	hideLoadingSpinner();
 }
