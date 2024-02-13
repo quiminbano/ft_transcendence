@@ -36,6 +36,8 @@ const startLocalGame = async () => {
 	contentManager.setActive("game");;
 	const pongGame = new Local1v1Game();
 	const match = tournament.schedule.getNextMatch();
+	console.log(tournament);
+	console.log(match);
 	await pongGame.startGame();
 	const score = pongGame.getGameScore();
 	tournament.updateScore(match.id, score.player1, score.player2);
@@ -49,7 +51,6 @@ const endGamePopulator = () => {
 	titleText.innerText = tournament.name;
 	const winnerUsernameText = document.getElementById("localWinnerUsername");
 	winnerUsernameText.innerText = tournament.winner;
-	console.log(tournament);
 }
 
 const scoreAfterGamePageLoader = (match) => {
@@ -87,8 +88,9 @@ const saveTournamentScore = async (match) => {
 				players: [match.player2.name],
 				score: match.score.player2Points
 			},
-			stage: tournament.schedule.currentStage
+			stage: tournament.schedule.areAllGamesPlayed ? "Final" : "is not final"
 		}
+		console.log(matchData.stage);
 		const response = await postRequest(url, matchData);
 		if (!response.succeded)
 			throw response;

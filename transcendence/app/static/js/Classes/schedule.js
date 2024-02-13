@@ -157,6 +157,8 @@ class Schedule {
         this.updateMatchScore(match.id, match.score.player1Points, match.score.player2Points)
     }
     areAllGamesPlayed() {
+		console.log("matches played: ", this.totalmatches_played);
+		console.log("total to play: ", this.#getTotalAmountOfMatches)
         if (this.totalmatches_played >= this.totalMatchesToPlay)
             return true;
         return false;
