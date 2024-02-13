@@ -1,25 +1,9 @@
 from django.http import JsonResponse
-from django.forms.models import model_to_dict
-from django.core.serializers import serialize
 from django.contrib.auth.hashers import check_password
-from .models import Tournament, Players, Database, Match, Team
+from .models import Tournament, Database, Match, Team
 from app.utils import stringifyImage
 from app.forms import TournamentForm
 import json
-
-#==========================================
-#      Validate user for Tournaments
-#==========================================
-def validateUser(playerName, password):
-    try:
-        user = Database.objects.filter(username=playerName).get()
-    except Database.DoesNotExist:
-        errors = "player nor found"
-        return None, errors
-    if not check_password(password, user.password):
-        errors = "incorrect password"
-        return None, errors
-    return user, ""
 
 #==========================================
 #      Validate user for Tournaments
@@ -58,7 +42,6 @@ def JSONTournamentResponse(tournament, message):
 							} for match in tournament.matches.all()],
             }
         }
-    print (response)
     return (response)
 
 def unknownMethod():
