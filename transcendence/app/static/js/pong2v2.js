@@ -77,7 +77,7 @@ const confirmPlayer = async (e, playerNumber) => {
 		}
 	} catch(error) {
 		if (errorMessageElement) {
-			errorMessageElement.innerText = "Invalid user";
+			errorMessageElement.innerText = error.error;
 			errorMessageElement.style.display = "block";
 		}
 		console.log(error);

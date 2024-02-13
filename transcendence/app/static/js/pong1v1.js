@@ -74,7 +74,7 @@ const inviteOpponent1v1 = async (e) => {
 		}
 	} catch(error) {
 		if (errorElement) {
-			errorElement.innerText = "User doesnt exist or can't be invited";
+			errorElement.innerText = error.error;
 			errorElement.style.display = "block";
 		}
 	}
