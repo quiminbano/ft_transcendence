@@ -6,7 +6,7 @@ from app.utils import stringifyImage
 import json
 
 #==========================================
-#                   Utils
+#                | UTILS |
 #==========================================
 def JSONTournamentResponse(tournament, message):
     response = {
@@ -35,26 +35,35 @@ def unknownMethod():
     return JsonResponse({'error': 'Method not supported'}, status=405)
 
 #==========================================
-#       Tournament Player Functions                                                                                                                                           
+#       Tournament | PLAYER | Functions                                                                                                                                           
 #==========================================
 def tournamentAddPlayer(playerName, existing_tournament):
-                
+
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
     #todo isValid = CarlosValidation(player.username, password)
-    #check user ddoes not exist in databse already
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     player = Database.objects.filter(username=playerName).first()
     if player is None:
         return JsonResponse({'error': 'player not found'}, status=400)
-    print ( existing_tournament.players.count() , '  ',  existing_tournament.player_amount)
+    if existing_tournament.players.filter(username=player).first() is not None:
+        return JsonResponse({'error': 'player already in match'}, status=400)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
         return JsonResponse({'error': 'too many players'}, status=400)
-    print ("hee")
     existing_tournament.players.add(player)
-    print ("hee")
+
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #TEMPORARY FIX for completed match
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    if existing_tournament.players.count() >= existing_tournament.player_amount:
+        existing_tournament.completed = True
+        existing_tournament.save()
+
+
     playerToReturn = {
         "username": player.username,
         "picture": stringifyImage(player) if player.avatar_image else None
     }
-    print ("hee")
     return JsonResponse({'message': 'Player added successfully', 'player':  playerToReturn}, status=200)
 
 def tournamentDeletePlayer(playerName, existing_tournament):
@@ -68,7 +77,7 @@ def tournamentDeletePlayer(playerName, existing_tournament):
 
 
 #==========================================
-#         Tournament Functions                                                                                                                                           
+#        | TOURNAMENT | Functions                                                                                                                                           
 #==========================================
 def createTurnament(request):
     data = json.loads(request.body)
@@ -87,13 +96,43 @@ def getTournament(tournament):
 def deleteTournament(request, tournament):
     if tournament.completed == True:
         print("MOVE")
-        request.user.completed_matches.add(tournament)
+        for player in tournament.players.all():
+            player.completed_matches.add(tournament)
+        request.user.tournament = None
     else:
         print("DELE")
         for match in tournament.matches.all():
             match.delete()
         tournament.delete()
+        request.user.tournament = None
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
+
+
+
+#==========================================
+#        | MATCH | Functions                                                                                                                                           
+#==========================================
+def tournamentAddMatch(request, existing_tournament):
+    data = json.loads(request.body)
+    if 'score1' not in data or 'player1' not in data or 'score2' not in data or 'player2' not in data:
+        return JsonResponse({'error': 'missing felds in body'}, status=400)
+
+    #Team one
+    team1 = Team.objects.create()
+    team1.score = data['score1']
+    team1.players.add(data['player1'])
+    if 'player2' in data:
+        team1.players.add(data['player2'])
+
+    #Team two
+    team2 = Team.objects.create()
+    team2.score = data['score2']
+    team2.players.add(data['player3'])
+    if 'player4' in data:
+        team2.players.add(data['player4'])
+    
+    match = Match.objects.create(team1, team2)
+    existing_tournament.matches.add(match)
 
 
 #====================================================================================
@@ -156,35 +195,11 @@ def tournamentPlayerManager(request, id=None):
             case "POST":
                 return tournamentAddPlayer(data['player'], existing_tournament)
             case "DELETE":
-                print("DELE")
                 return tournamentDeletePlayer(data['player'], existing_tournament)
             case _:
                 return unknownMethod()
     else:
         return JsonResponse({'error': 'something went wrong'}, status=400)
-
-
-def tournamentAddMatch(request, existing_tournament):
-    data = json.loads(request.body)
-    if 'score1' not in data or 'player1' not in data or 'score2' not in data or 'player2' not in data:
-        return JsonResponse({'error': 'missing felds in body'}, status=400)
-
-    #Team one
-    team1 = Team.objects.create()
-    team1.score = data['score1']
-    team1.players.add(data['player1'])
-    if 'player2' in data:
-        team1.players.add(data['player2'])
-
-    #Team two
-    team2 = Team.objects.create()
-    team2.score = data['score2']
-    team2.players.add(data['player3'])
-    if 'player4' in data:
-        team2.players.add(data['player4'])
-    
-    match = Match.objects.create(team1, team2)
-    existing_tournament.matches.add(match)
 
 #==========================================
 #         Tournament ID Match Management
