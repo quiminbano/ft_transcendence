@@ -121,7 +121,7 @@ This is the user table.
 ### Tournament Match API <a name="Tournament-Match"></a>
 | HTTP Method | Endpoint | Description |
 | ------ | ------ | ------ |
-| POST      | /api/tournament/:id/match       | Adds the match provided in the body that tournament ID.|            |
+| POST      | /api/tournament/:id/match       | Adds the match provided in the body to that tournament ID.|
 
 ### Database API <a name="Database"></a>
 | HTTP Method | Endpoint | Description |
