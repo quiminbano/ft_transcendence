@@ -60,6 +60,12 @@ const openRegisterPlayerModal = (data) => {
 	modal.open();
 }
 const closeRegisterPlayerModal = () => {
+	const addPlayerPassword = document.getElementById("addPlayerPassword");
+	if (addPlayerPassword)
+		addPlayerPassword.value = "";
+	const newPlayerInputName = document.getElementById("newPlayerInputName");
+	if (newPlayerInputName)
+		newPlayerInputName.value = "";
 	modal.close();
 }
 
@@ -88,7 +94,6 @@ const addPlayerToDatabase = async (userData) => {
 		}
 	} catch (error) {
 		addNewPlayerErrorMessage.innerText = error.error;
-		console.log(error);
 	}
 }
 
