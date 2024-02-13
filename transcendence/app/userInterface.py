@@ -65,7 +65,8 @@ def usersPage(request, name):
         "username": name,
         "online": data["online_status"],
         "isFriend": getFriendState(request, data["friend_requests"], data["friends"]),
-        "coallition": data["coallition"]
+        "coallition": data["coallition"],
+        "picture": data["avatar_image"]
     }
     stats = calculateStats(matches)
     client = {
