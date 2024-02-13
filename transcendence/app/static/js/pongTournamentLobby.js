@@ -6,7 +6,6 @@ const loadTournamentLobby = async () => {
 		return;
     }
 	const data = loadTournamentLobbyInfo.tournament;
-	console.log("data: ", data )
 	tournament = createTournamentInstance(data.name, data.player_amount, data.id);
 	tournament.setState(data.state);
 
@@ -45,7 +44,6 @@ const removePlayer = async (id) => {
 	try {
 		const url = `/api/tournament/${tournament.id}/player`;
 		const response = await deleteRequest(url, {player: id});
-		console.log(response);
 		if (!response.succeded) {
 			throw new Error("Failed to delete player");
 		} else {
@@ -81,7 +79,6 @@ const addPlayerToDatabase = async (userData) => {
 	try {
 		const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
 		const response = await postRequest(url, data);
-		console.log(response);
 		if (response.succeded) {
 			addNewPlayerErrorMessage.innerText = "";
 			tournament.addPlayer({ name: response.player.username, id: response.player.id || 0 });
