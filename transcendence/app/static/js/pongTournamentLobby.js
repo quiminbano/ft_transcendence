@@ -70,8 +70,13 @@ const closeRegisterPlayerModal = () => {
 }
 
 const addPlayerToDatabase = async (userData) => {
+	showLoadingSpinner();
+	const passwordElement = document.getElementById("addPlayerPassword");
 	if (tournament.isRepeatedPlayer(userData.username)) {
 		tournament.setErrorMessage("That name already exists");
+		if (passwordElement)
+			passwordElement.value = "";
+		hideLoadingSpinner();
 		return;
 	}
 	const data = {
@@ -79,7 +84,6 @@ const addPlayerToDatabase = async (userData) => {
 		password: userData.password,
 	}
 	const url = `/api/tournament/${tournament.id}/player`
-	const passwordElement = document.getElementById("addPlayerPassword");
 	if (passwordElement)
 		passwordElement.value = "";
 	try {
@@ -95,21 +99,18 @@ const addPlayerToDatabase = async (userData) => {
 	} catch (error) {
 		addNewPlayerErrorMessage.innerText = error.error;
 	}
+	hideLoadingSpinner();
 }
 
 const addPlayer = (event) => {
 	event.preventDefault();
-	showLoadingSpinner();
 	const formData = new FormData(event.target);
 	const username = formData.get("name");
 	const password  = formData.get("password");
 	const data = {username, password}
 	if (modal.isNew) {
 		addPlayerToDatabase(data);
-	} else {
-		editPlayer(username);
 	}
-	hideLoadingSpinner();
 }
 
 const startTournament = async () => {
