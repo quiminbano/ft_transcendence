@@ -177,8 +177,9 @@ def putSettings(request):
     if form.is_valid():
         passwordValidation, response = form.isPasswordValid(request.user)
         if passwordValidation == True:
-            form.save(request.user)
-            print("Update successful")
+            flag, reason = form.save(request.user)
+            if not flag:
+                return JsonResponse({"message": "Failed to update profile", "errors": reason}, status=400)
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
             login(request, user)
         return response

@@ -160,8 +160,23 @@ class ChangeProfile(forms.Form):
             userModel.save()
         except ValidationError as e:
             error_dict = e.error_dict
-            reason = {field: error_list[0].message for field, error_list in error_dict.items()}
-            print(reason)
+            reason_list = next(val for val in error_dict.values())
+            reason = reason_list[0].message
+            return False, reason
+        if not userModel.is_42:
+            return True, ""
+        try:
+            data_42 = Users42.objects.filter(user_in_database=old_username).get()
+        except Users42.DoesNotExist:
+            return False, "Unspecified error"
+        data_42.user_in_database = self.cleaned_data['username']
+        try:
+            data_42.full_clean()
+            data_42.save()
+        except ValidationError:
+            return False, "There was an issue changing the username"
+        return True, ""
+
 
 class ProfilePicture(forms.Form):
 
