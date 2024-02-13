@@ -38,6 +38,7 @@
 }
 #friendAvatar {
 	position: absolute;
+	border-radius: 10px;
 }
 .personalDiv p {
 	font-size: 14px;
@@ -46,7 +47,7 @@
 	position: absolute;
 	top: 10%;
 	left: 100%;
-	margin-left: 10px;
+	margin-left: 5px;
 	width: 30px;
 }
 
