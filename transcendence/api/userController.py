@@ -155,16 +155,16 @@ def getObjectsWithinUser(user_dict):
             'username': friend_requests.username,
             'avatar_image': stringifyImage(friend_requests) if friend_requests.avatar_image else None
         } for friend_requests in user_dict['friend_requests']]
-    if user_dict.get('completed_matches'):
-        user_dict['completed_matches'] = [{
-            'id': completed_matches.id,
-            "tournament_name": completed_matches.tournament_name,
-            "player_amount": completed_matches.player_amount,
-            "completed": completed_matches.completed,
+    if user_dict.get('completed_tournaments'):
+        user_dict['completed_tournaments'] = [{
+            'id': completed_tournaments.id,
+            "tournament_name": completed_tournaments.tournament_name,
+            "player_amount": completed_tournaments.player_amount,
+            "completed": completed_tournaments.completed,
             "players": [
-                {'name': player.username} for player in completed_matches.players.all()
+                {'name': player.username} for player in completed_tournaments.players.all()
             ]
-        } for completed_matches in user_dict['completed_matches']]
+        } for completed_tournaments in user_dict['completed_tournaments']]
 
 def getUser(request, userName=None):
 #I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The completed is not gonna change, because getUser is being called just there.
@@ -221,7 +221,7 @@ def getMatchHistory(request, userName):
         return redirect('/')
     if request.method == "GET":
         history = []
-        for matches in user.completed_matches.all():
+        for matches in user.completed_tournaments.all():
             match = {
             'id': matches.id,
             "tournament_name": matches.tournament_name,

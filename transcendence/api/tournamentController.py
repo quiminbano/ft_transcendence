@@ -30,7 +30,6 @@ def JSONTournamentResponse(tournament, message):
                 "name": tournament.tournament_name,
                 "player_amount": tournament.player_amount,
                 "completed": tournament.completed,
-                "winner" : tournament.winner,
                 "players": [{"name" : user.username} for user in tournament.players.all()],
                 "matches": [{"id": match.id,
 							"team1-id": match.team1.id,
@@ -49,7 +48,7 @@ def unknownMethod():
 
 def saveTournament(request, tournament):
     for player in tournament.players.all():
-        player.completed_matches.add(tournament)
+        player.completed_tournaments.add(tournament)
     request.user.tournament = None
 
 #==========================================
@@ -63,6 +62,7 @@ def tournamentAddPlayer(playerName, password, existing_tournament):
         return JsonResponse({'error': 'Player already in match'}, status=400)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
         return JsonResponse({'error': 'Too many players'}, status=400)
+    print ("adding player ", player)
     existing_tournament.players.add(player)
     playerToReturn = {
         "username": player.username,
@@ -110,10 +110,26 @@ def deleteTournament(request, tournament):
     return JsonResponse({'message': 'Succefully delete tournament'}, status=200)
 
 
-
 #==========================================
 #        | MATCH | Functions
 #==========================================
+def updatePlayers(teamData, match, team, tournament, final):
+    for player in teamData:
+        playerObj = Database.objects.filter(username=player).first()
+        if playerObj is not None:
+            playerObj.completed_matches.add(match)
+            playerObj.total_points_scored += team.score
+            playerObj.matches_played += 1
+            if team.winner:
+                playerObj.matches_won += 1
+            if tournament.matches.count() > 1 and final:
+                playerObj.tournaments_played += 1
+                if team.winner:
+                    playerObj.tournaments_won += 1
+            team.players.add(playerObj)
+            playerObj.save()
+    team.save()
+
 def tournamentAddMatch(request, existing_tournament):
     data = json.loads(request.body)
     print (data)
@@ -122,30 +138,35 @@ def tournamentAddMatch(request, existing_tournament):
     teamOne = data["teamOne"]
     teamTwo = data["teamTwo"]
 
+    print ("0.5")
+    match = Match.objects.create()
     print ("1")
-    #Team one
     team1 = Team.objects.create()
     team1.score = teamOne['score']
-    for player in data["teamOne"]['players']:
-        playerObj = Database.objects.filter(username=player).first() is not None
-        if playerObj is not None:
-            team1.players.add(playerObj)
-
-    print ("2")
-    #Team two
     team2 = Team.objects.create()
     team2.score = teamTwo['score']
-    for player in data["teamTwo"]['players']:
-        playerObj = Database.objects.filter(username=player).first() is not None
-        if playerObj is not None:
-            team2.players.add(playerObj)
+    print ("team1 score", team1.score)
+    print ("team2 score", team2.score)
+    if team1.score > team2.score:
+        team1.winner = True
+    else:
+        team2.winner = True
+    
+    print ("2")
+    final = 'stage' in data and data['stage'] == 'Final'
+    updatePlayers(data["teamOne"]['players'], match, team1, existing_tournament, final)
+    updatePlayers(data["teamTwo"]['players'], match, team2, existing_tournament, final)
+
 
     print ("3")
-    match = Match.objects.create(team1=team1, team2=team2)
+    match.team1 = team1
+    match.team2 = team2
+    match.save()
+    print ("3.5")
     existing_tournament.matches.add(match)
 
     print ("4")
-    if 'stage' in data and data['stage'] == 'Final':
+    if final:
         existing_tournament.completed = True
         existing_tournament.save()
         saveTournament(request, existing_tournament)
