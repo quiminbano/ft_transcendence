@@ -19,7 +19,8 @@ const load2v2Page = async () => {
 	const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
 	if (!play2v2ButtonArea) return;
 	play2v2ButtonArea.style.display = "none";
-	match2v2 = new Match2v2(0);
+	const id = await create2v2Tournament();
+	match2v2 = new Match2v2(id);
 	const username = JSON.parse(document.getElementById('username').textContent);
 	const picture = JSON.parse(document.getElementById('picture').textContent);
 	const hostPlayer = {
@@ -27,7 +28,6 @@ const load2v2Page = async () => {
 		picture
 	}
 	match2v2.addPlayer(hostPlayer, 1);
-	await create2v2Tournament();
 }
 
 const play2v2Game = async () => {
@@ -38,7 +38,6 @@ const play2v2Game = async () => {
 	UpdateEndGameScene2v2(score);
 	contentManager2v2.setActive("endGame");
 	match2v2.addScore(score.player1, score.player2);
-	console.log(match2v2);
 }
 
 const UpdateEndGameScene2v2 = (score) => {
@@ -175,6 +174,7 @@ const splashSetPlayerData = (idShortcut, player) => {
 }
 
 const create2v2Tournament = async () => {
+	showLoadingSpinner();
 	const url = "/api/tournament";
 	try {
 		const body = {
@@ -184,11 +184,20 @@ const create2v2Tournament = async () => {
 		}
 		const response = await postRequest(url, body);
 		if (response.succeded) {
-			match2v2.id = response.tournament.id;
+			return response.tournament.id;
 		} else {
 			throw response;
 		}
 	} catch(error) {
 		console.log(error);
 	}
+	hideLoadingSpinner();
+}
+
+const play2v2Again = async () => {
+	showLoadingSpinner();
+	const id = await create2v2Tournament();
+	match2v2.id = id;
+	hideLoadingSpinner();
+	play2v2Game();
 }
