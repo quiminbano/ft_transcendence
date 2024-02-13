@@ -19,15 +19,19 @@ const load2v2Page = async () => {
 	const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
 	if (!play2v2ButtonArea) return;
 	play2v2ButtonArea.style.display = "none";
-	const id = await create2v2Tournament();
-	match2v2 = new Match2v2(id);
-	const username = JSON.parse(document.getElementById('username').textContent);
-	const picture = JSON.parse(document.getElementById('picture').textContent);
-	const hostPlayer = {
-		username,
-		picture
+	try {
+		const id = await create2v2Tournament();
+		match2v2 = new Match2v2(id);
+		const username = JSON.parse(document.getElementById('username').textContent);
+		const picture = JSON.parse(document.getElementById('picture').textContent);
+		const hostPlayer = {
+			username,
+			picture
+		}
+		match2v2.addPlayer(hostPlayer, 1);
+	} catch (error) {
+		navigateTo("/pong/single")
 	}
-	match2v2.addPlayer(hostPlayer, 1);
 }
 
 const play2v2Game = async () => {
@@ -189,7 +193,7 @@ const create2v2Tournament = async () => {
 			throw response;
 		}
 	} catch(error) {
-		console.log(error);
+		throw error;
 	}
 	hideLoadingSpinner();
 }

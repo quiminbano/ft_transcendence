@@ -130,9 +130,9 @@ const create1v1Tournament = async () => {
 }
 
 const save1v1Score = async () => {
+	showLoadingSpinner();
 	const url = `/api/tournament/${match1v1.id}/match`;
 	try {
-		console.log(match1v1);
 		const matchData = {
 			teamOne: {
 				players:[match1v1.player1.username],
@@ -153,6 +153,7 @@ const save1v1Score = async () => {
 	} catch (error) {
 		console.log(error);
 	}
+	hideLoadingSpinner();
 }
 
 const play1v1Again = async () => {
