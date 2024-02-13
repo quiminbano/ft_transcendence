@@ -43,7 +43,6 @@ To run the project you need the following:
     - DJANGO_SUPERUSER_EMAIL=""
     - DJANGO_SUPERUSER_PASS=""
     - DJANGO_SECRET_KEY=""
-    - PASSWORD_42=""
     - UID=""
     - SECRET_KEY=""
     - REDIRECT_URI=""
