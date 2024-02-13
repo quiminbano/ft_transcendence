@@ -145,9 +145,7 @@ const save1v1Score = async () => {
 			},
 			stage: "Final"
 		}
-		console.log("score: ", score);
-		const response = await postRequest(url, {score: match1v1.score});
-		console.log(response);
+		const response = await postRequest(url, score);
 		if (response.succeded) {
 			console.log(response);
 		} else {
@@ -165,7 +163,6 @@ const play1v1Again = async () => {
 		tempMatch.addPlayer1(match1v1.player1);
 		tempMatch.addPlayer2(match1v1.player2);
 		match1v1 = tempMatch;
-		console.log("current Match: ", match1v1);
 		oneVonePlay();
 	} catch (error) {
 		console.log(error);
