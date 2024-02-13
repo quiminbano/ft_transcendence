@@ -58,7 +58,6 @@ const inviteOpponent1v1 = async (e) => {
 	const errorElement = document.getElementById("errorMessage1v1Invite");
 	try {
 		const response = await postRequest(url, userToInvite)
-		console.log(response);
 		if (response.succeded) {
 			if (errorElement) {
 				errorElement.innerText = "";
