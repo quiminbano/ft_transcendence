@@ -23,15 +23,3 @@ class Match {
     }
     setCompleted() { this.completed = true; }
 }
-
-const score = {
-	teamOne: {
-		players: [player1],
-		score: 0
-	},
-	teamTwo: {
-		players: [player3, player4],
-		score: 0
-	},
-	stage: "Final"
-}
