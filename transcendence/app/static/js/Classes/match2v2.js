@@ -9,10 +9,11 @@ class Match2v2 extends Match {
 		this.currentIndex = 0;
 		this.readyToPlay = false;
 	}
-	addPlayer(username, playerNumber) {
+	addPlayer(player, playerNumber) {
 		const playerToAdd = {
 			id: this.currentIndex,
-			username
+			username: player.username,
+			picture: player.picture
 		}
 		this.registeredPlayers.push(playerToAdd);
 		if (playerNumber === 1 || playerNumber === 4)
@@ -39,5 +40,11 @@ class Match2v2 extends Match {
 		if (this.readyToPlay)
 			this.readyToPlay = false;
 	}
-	get
+	addScore(teamOnePoints, teamTwoPoints) {
+		this.score = {
+			teamOne: teamOnePoints,
+			teamTwo: teamTwoPoints,
+			asString: teamOnePoints + "-" + teamTwoPoints
+		}
+	}
 }
