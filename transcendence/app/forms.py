@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from api.imageValidation import validateFileType, validationImageSize
+from api.models import Users42
 from django.core.files import File
 from django.http import JsonResponse
 
@@ -145,6 +146,7 @@ class ChangeProfile(forms.Form):
         return True, JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
 
     def save(self, userModel : Database):
+        old_username = userModel.username
         userModel.username = self.cleaned_data['username']
         userModel.first_name = self.cleaned_data['firstName']
         userModel.last_name = self.cleaned_data['lastName']
@@ -153,8 +155,13 @@ class ChangeProfile(forms.Form):
         userModel.email = self.cleaned_data['email']
         if not default_storage.exists(str(userModel.avatar_image)):
             userModel.avatar_image = None
-        userModel.full_clean()
-        userModel.save()
+        try:
+            userModel.full_clean()
+            userModel.save()
+        except ValidationError as e:
+            error_dict = e.error_dict
+            reason = {field: error_list[0].message for field, error_list in error_dict.items()}
+            print(reason)
 
 class ProfilePicture(forms.Form):
 
