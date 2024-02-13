@@ -107,7 +107,6 @@ const create1v1Tournament = async () => {
 		}
 		const response = await postRequest(url, body);
 		if (response.succeded) {
-			console.log(response);
 			currentTournament = response.tournament.id;
 		} else {
 			throw response;
