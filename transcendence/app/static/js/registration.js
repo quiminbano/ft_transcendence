@@ -133,6 +133,8 @@ const handleUpdateErrors = (errors) => {
 		handleError(errorPassword3Field, errors["password2"]);
 	else if (errors["password3"])
 		handleError(errorPassword3Field, errors["password3"]);
+	else if (errors["validation"])
+		handleError(errorPassword3Field, errors["validation"]);
 }
 
 const openSettingsModal = () => {

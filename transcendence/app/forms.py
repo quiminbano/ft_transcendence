@@ -138,10 +138,8 @@ class ChangeProfile(forms.Form):
 
     def isPasswordValid(self, userModel : Database):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-            print("password1 and password2 does not match")
             return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password2": "New passwords don't match"}}, status=400)
         if check_password(self.cleaned_data['password3'], userModel.password) == False:
-            print("Password provided does not match with the original one")
             return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password3": "Your current password is not correct"}}, status=400)
         return True, JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
 
@@ -162,9 +160,9 @@ class ChangeProfile(forms.Form):
             error_dict = e.error_dict
             reason_list = next(val for val in error_dict.values())
             reason = reason_list[0].message
-            return False, reason
+            return False, {"validation": reason}
         if not userModel.is_42:
-            return True, ""
+            return True, {"validation": ""}
         try:
             data_42 = Users42.objects.filter(user_in_database=old_username).get()
         except Users42.DoesNotExist:
@@ -174,8 +172,8 @@ class ChangeProfile(forms.Form):
             data_42.full_clean()
             data_42.save()
         except ValidationError:
-            return False, "There was an issue changing the username"
-        return True, ""
+            return False, {"validation": "There was an issue changing the username"}
+        return True, {"validation": ""}
 
 
 class ProfilePicture(forms.Form):
