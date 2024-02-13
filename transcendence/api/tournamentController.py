@@ -53,7 +53,7 @@ def saveTournament(request, tournament):
     request.user.tournament = None
 
 #==========================================
-#       Tournament | PLAYER | Functions                                                                                                                                           
+#       Tournament | PLAYER | Functions
 #==========================================
 def tournamentAddPlayer(playerName, password, existing_tournament):
     player, reason = validateUser(playerName, password)
@@ -81,7 +81,7 @@ def tournamentDeletePlayer(playerName, existing_tournament):
 
 
 #==========================================
-#        | TOURNAMENT | Functions                                                                                                                                           
+#        | TOURNAMENT | Functions
 #==========================================
 def createTurnament(request):
     data = json.loads(request.body)
@@ -112,35 +112,45 @@ def deleteTournament(request, tournament):
 
 
 #==========================================
-#        | MATCH | Functions                                                                                                                                           
+#        | MATCH | Functions
 #==========================================
 def tournamentAddMatch(request, existing_tournament):
     data = json.loads(request.body)
-    if 'score1' not in data or 'player1' not in data or 'score2' not in data or 'player2' not in data:
+    print (data)
+    if 'teamOne' not in data or 'teamTwo' not in data or 'players' not in data['teamOne']or 'players' not in data['teamTwo'] or 'score' not in data['teamTwo'] or 'score' not in data['teamOne']:
         return JsonResponse({'error': 'missing felds in body'}, status=400)
+    teamOne = data["teamOne"]
+    teamTwo = data["teamTwo"]
 
+    print ("1")
     #Team one
     team1 = Team.objects.create()
-    team1.score = data['score1']
-    team1.players.add(data['player1'])
-    if 'player2' in data:
-        team1.players.add(data['player2'])
+    team1.score = teamOne['score']
+    for player in data["teamOne"]['players']:
+        playerObj = Database.objects.filter(username=player).first() is not None
+        if playerObj is not None:
+            team1.players.add(playerObj)
 
+    print ("2")
     #Team two
     team2 = Team.objects.create()
-    team2.score = data['score2']
-    team2.players.add(data['player3'])
-    if 'player4' in data:
-        team2.players.add(data['player4'])
-    
-    match = Match.objects.create(team1, team2)
+    team2.score = teamTwo['score']
+    for player in data["teamTwo"]['players']:
+        playerObj = Database.objects.filter(username=player).first() is not None
+        if playerObj is not None:
+            team2.players.add(playerObj)
+
+    print ("3")
+    match = Match.objects.create(team1=team1, team2=team2)
     existing_tournament.matches.add(match)
 
+    print ("4")
     if 'stage' in data and data['stage'] == 'Final':
         existing_tournament.completed = True
         existing_tournament.save()
-        saveTournament()
+        saveTournament(request, existing_tournament)
 
+    print ("5")
     return JsonResponse({'message': 'Succefully saved match'}, status=200)
 
 
@@ -173,7 +183,7 @@ def tournamentManager(request):
             return createTurnament(request)
         else:
             return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
-        
+
 
 #==========================================
 #         TournamentID Manager
