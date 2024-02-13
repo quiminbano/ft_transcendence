@@ -47,6 +47,11 @@ def JSONTournamentResponse(tournament, message):
 def unknownMethod():
     return JsonResponse({'error': 'Method not supported'}, status=405)
 
+def saveTournament(request, tournament):
+    for player in tournament.players.all():
+        player.completed_matches.add(tournament)
+    request.user.tournament = None
+
 #==========================================
 #       Tournament | PLAYER | Functions                                                                                                                                           
 #==========================================
@@ -59,15 +64,6 @@ def tournamentAddPlayer(playerName, password, existing_tournament):
     if existing_tournament.players.count() >= existing_tournament.player_amount:
         return JsonResponse({'error': 'Too many players'}, status=400)
     existing_tournament.players.add(player)
-
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #TEMPORARY FIX for completed match
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    if existing_tournament.players.count() >= existing_tournament.player_amount:
-        existing_tournament.completed = True
-        existing_tournament.save()
-
-
     playerToReturn = {
         "username": player.username,
         "picture": stringifyImage(player) if player.avatar_image else None
@@ -103,10 +99,8 @@ def getTournament(tournament):
 
 def deleteTournament(request, tournament):
     if tournament.completed == True:
-        print("MOVE")
-        for player in tournament.players.all():
-            player.completed_matches.add(tournament)
-        request.user.tournament = None
+        print("Save")
+        saveTournament(request, tournament)
     else:
         print("DELE")
         for match in tournament.matches.all():
@@ -141,6 +135,13 @@ def tournamentAddMatch(request, existing_tournament):
     
     match = Match.objects.create(team1, team2)
     existing_tournament.matches.add(match)
+
+    if 'stage' in data and data['stage'] == 'Final':
+        existing_tournament.completed = True
+        existing_tournament.save()
+        saveTournament()
+
+    return JsonResponse({'message': 'Succefully saved match'}, status=200)
 
 
 #====================================================================================
