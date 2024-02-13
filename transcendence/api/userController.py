@@ -56,10 +56,10 @@ def friendRequest(request, friendName=None):
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
 
-    
-    
-    
-        
+
+
+
+
 
 #==========================================================================
 #                   ACCEPT Friend and REMOVE Friend
@@ -144,40 +144,64 @@ def searchUsers(request, search=None):
 #==========================================================
 #         GET SPECIFIC USER
 #==========================================================
-def getObjectsWithinUser(user_dict):
-    if user_dict.get('friends'):
-        user_dict['friends'] = [{
+
+def getUserStats(user):
+    userInfo = {
+        "username" : user.username,
+        "online_status" : user.online_status,
+        "is_login" : user.is_login,
+        "is_42" : user.is_42,
+        "friends" : [{
             'username': friend.username,
             'avatar_image': stringifyImage(friend) if friend.avatar_image else None
-    } for friend in user_dict['friends']]
-    if user_dict.get('friend_requests'):
-        user_dict['friend_requests'] = [{
-            'username': friend_requests.username,
-            'avatar_image': stringifyImage(friend_requests) if friend_requests.avatar_image else None
-        } for friend_requests in user_dict['friend_requests']]
-    if user_dict.get('completed_matches'):
-        user_dict['completed_matches'] = [{
-            'id': completed_matches.id,
-            "tournament_name": completed_matches.tournament_name,
-            "amount": completed_matches.amount,
-            "state": completed_matches.state,
-            "date": completed_matches.date,
-            "players": [
-                {'name': player.name, 'score': player.score} for player in completed_matches.players.all()
-            ]
-        } for completed_matches in user_dict['completed_matches']]
-    
+        } for friend in user.friends.all()],
+        "friend_requests" :[{
+            'username': friend_request.username,
+            'avatar_image': stringifyImage(friend_request) if friend_request.avatar_image else None
+        } for friend_request in user.friend_requests.all()],
+        "coallition" : user.coallition,
+        "access_token" : user.access_token,
+        "refresh_token" : user.refresh_token,
+        "expiration_time" : user.expiration_time,
+        "avatar_image" : stringifyImage(user) if user.avatar_image else None,
+        "completed_matches" : [{
+            "id" : match.id,
+            "teamOne" : {
+                "id" : match.team1.id,
+                "winner" : match.team1.winner,
+                "score" : match.team1.score,
+                "players" : [{
+                    "username" : player.username,
+                } for player in match.team1.players.all()],
+            },
+            "teamTwo" : {
+                "id" : match.team2.id,
+                "winner" : match.team2.winner,
+                "score" : match.team2.score,
+                "players" : [{
+                    "username" : player.username,
+                } for player in match.team1.players.all()],
+            },
+            "date" : match.date,
+        } for match in user.completed_matches.all()],
+        "total_points_scored" : user.total_points_scored,
+        "total_points_conceded" : user.total_points_conceded,
+        "matches_played" : user.matches_played,
+        "matches_won" : user.matches_won,
+        "tournaments_played" : user.matches_won,
+        "tournaments_won" : user.matches_won,
+    }
+    return(userInfo)
+
+
 def getUser(request, userName=None):
-#I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The state is not gonna change, because getUser is being called just there.
+#I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The completed is not gonna change, because getUser is being called just there.
     user = Database.objects.filter(username=userName).first()
     if user is None:
         return None
     if request.method == "GET":
-        user_dict = model_to_dict(user)
-        user_dict['avatar_image'] = stringifyImage(user) if user.avatar_image else None
-        user_dict.pop('password', None)
-        getObjectsWithinUser(user_dict)
-        return JsonResponse(user_dict, status=200, safe=False)
+        userInfo = getUserStats(user)
+        return JsonResponse(userInfo, status=200, safe=False)
     return JsonResponse({"message": "Method not implemented"}, status=501)
 
 #==========================================================
@@ -194,11 +218,8 @@ def Users(request):
     user = request.user
     match request.method:
         case "GET":
-            user_dict = model_to_dict(user)
-            user_dict['avatar_image'] = stringifyImage(user) if user.avatar_image else None
-            user_dict.pop('password', None)
-            getObjectsWithinUser(user_dict)
-            return JsonResponse(user_dict, status=200, safe=False)
+            userInfo = getUserStats(user)
+            return JsonResponse(userInfo, status=200, safe=False)
         case "DELETE":
             user.delete()
             return JsonResponse({"message":"Success"}, status=200, safe=False)
@@ -222,15 +243,15 @@ def getMatchHistory(request, userName):
         return redirect('/')
     if request.method == "GET":
         history = []
-        for matches in user.completed_matches.all():
+        for matches in user.completed_tournaments.all():
             match = {
             'id': matches.id,
             "tournament_name": matches.tournament_name,
-            "amount": matches.amount,
-            "state": matches.state,
+            "player_amount": matches.player_amount,
+            "completed": matches.completed,
             "date": matches.date,
             "players": [
-                {'name': player.name, 'score': player.score} for player in matches.players.all()
+                {'name': player.username} for player in matches.players.all()
             ]
             }
             history.append(match)

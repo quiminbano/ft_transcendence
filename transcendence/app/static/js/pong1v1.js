@@ -1,5 +1,5 @@
 let OneVOneContentDisplay;
-let currentTournament;
+let match1v1;
 const scenes = [
 	{ name: "chooseOpponent", id: "OneVOne-choseeOpponent" },
 	{ name: "splash", id: "OneVOne-splash" },
@@ -16,7 +16,15 @@ const loadOneVOne = async () => {
 	for (let i = 1; i < scenes.length; i++) {
 		OneVOneContentDisplay.addContent(scenes[i].name, document.getElementById(scenes[i].id));
 	}
-	create1v1Tournament();
+	try {
+		const id = await create1v1Tournament();
+		match1v1 = new Match(id);
+		const username = JSON.parse(document.getElementById('username').textContent);
+		const picture = JSON.parse(document.getElementById('picture').textContent);
+		match1v1.addPlayer1({username, picture})
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 const playGame = async () => {
@@ -25,6 +33,8 @@ const playGame = async () => {
 	const score = game.getGameScore();
 	UpdateEndGameScene(score);
 	OneVOneContentDisplay.setActive("endGame");
+	match1v1.addScore(score.player1, score.player2);
+	await save1v1Score();
 }
 
 const UpdateEndGameScene = (score) => {
@@ -49,7 +59,7 @@ const inviteOpponent1v1 = async (e) => {
 	const form = new FormData(e.target);
 	const username = form.get("username");
 	const password = form.get("password");
-	const url = `/api/tournament/${currentTournament}/player`;
+	const url = `/api/tournament/${match1v1.id}/player`;
 	const userToInvite = {
 		player: username,
 		password
@@ -58,7 +68,6 @@ const inviteOpponent1v1 = async (e) => {
 	const errorElement = document.getElementById("errorMessage1v1Invite");
 	try {
 		const response = await postRequest(url, userToInvite)
-		console.log(response);
 		if (response.succeded) {
 			if (errorElement) {
 				errorElement.innerText = "";
@@ -68,6 +77,7 @@ const inviteOpponent1v1 = async (e) => {
 				username: response.player.username,
 				picture: response.player.picture
 			}
+			match1v1.addPlayer2(opponent);
 			splash(opponent);
 		} else {
 			throw response;
@@ -107,11 +117,49 @@ const create1v1Tournament = async () => {
 		}
 		const response = await postRequest(url, body);
 		if (response.succeded) {
-			currentTournament = response.tournament.id;
+			return response.tournament.id;
 		} else {
 			throw response;
 		}
 	} catch(error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+const save1v1Score = async () => {
+	showLoadingSpinner();
+	const url = `/api/tournament/${match1v1.id}/match`;
+	try {
+		const matchData = {
+			teamOne: {
+				players:[match1v1.player1.username],
+				score: match1v1.score.player1Points
+			},
+			teamTwo: {
+				players: [match1v1.player2.username],
+				score: match1v1.score.player2Points
+			},
+			stage: "Final"
+		}
+		const response = await postRequest(url, matchData);
+		if (!response.succeded)
+			throw response;
+	} catch (error) {
+		console.log(error);
+	}
+	hideLoadingSpinner();
+}
+
+const play1v1Again = async () => {
+	try {
+		const id = await create1v1Tournament();
+		const tempMatch = new Match(id);
+		tempMatch.addPlayer1(match1v1.player1);
+		tempMatch.addPlayer2(match1v1.player2);
+		match1v1 = tempMatch;
+		oneVonePlay();
+	} catch (error) {
 		console.log(error);
 	}
 }

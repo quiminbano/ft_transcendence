@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from os import getenv
 from django.db.models import Q
 from api.models import Tournament
-from api.models import Players
 User = get_user_model()
 if not User.objects.filter(Q(username='admin')
                             | Q(username='Lucas')
@@ -19,19 +18,3 @@ if not User.objects.filter(Q(username='admin')
 
     admin.friends.add(Lucas)
     admin.friends.add(Andre)
-
-    player1 = Players.objects.create(name="admin1")
-    player2 = Players.objects.create(name="admin2")
-    player3 = Players.objects.create(name="admin3")
-    player4 = Players.objects.create(name="admin4")
-
-    tournament = Tournament.objects.create(tournament_name="Tour1", amount=4)
-    tournament.players.add(player1)
-    tournament.players.add(player2)
-    tournament.players.add(player3)
-    tournament.players.add(player4)
-    admin.completed_matches.add(tournament)
-
-    tournament1 = Tournament.objects.create(tournament_name="Tour2", amount=4)
-    admin.completed_matches.add(tournament1)
-    admin.save()
