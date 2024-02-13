@@ -1,4 +1,5 @@
 
+
 # ft_transcendence
 
 <p align="center">
@@ -18,8 +19,12 @@
     - [Models](#Database-M)
         - [Database Model](#Database-M) 
         - [Tournament Model](#Tournament-M) 
+        - [Tournament Model](#Match-M) 
+        - [Tournament Model](#Team-M) 
     - [Endpoints](#Tournament)
         - [Tournament API](#Tournament)
+        - [Tournament Player API](#Tournament-Player)
+        - [Tournament Match API](#Tournament-Match)
         - [Database API](#Database)
 
 
@@ -50,13 +55,20 @@ This is the user table.
 | Name | Type | Description |
 | ------ | ------ | ------ |
 | username              | Django-Builtin        | The identifier of the user.                       |
-| online_status         | BooleanField          | Is the user currently online                      |
+| is_login				| BooleanField          | Is the user currently online                      |
 | is_42                 | BooleanField          | Has the user registered through their 42 account  |
 | friends               | ManyToManyField       | All the friends of the user.                      |
 | friend_requests       | ManyToManyField       | All pending friend requests.                      |
 | coallition            | CharField             | The player's 42 coallition                        |
+| access_token          | CharField             | ?                       |
+| refresh_token         | CharField             | ?                       |
+| expiration_time       | BigIntegerField       | ?                     |
 | avatar_image          | FileField             | The path to the image of the user.                |
 | tournament            | OneToOneField         | Link to user's current hosted tournament.         |
+| completed_matches     | ManyToManyField       | all tournaments the user has participated in.     |
+| matches_played        | IntegerField          |                        |
+| matches_won           | IntegerField          |                        |
+| matches_lost          | IntegerField          |                        |
 | objects               | CustomUserManager()   | Django required implementation.                   |
 | get_coallition(self)  | Function              | Returns the user's coallition.                    |
 | \_\_str\_\_(self)     | Function              | Returns the username of the user.                 |
@@ -65,13 +77,29 @@ This is the user table.
 ### Tournament Model <a name="Tournament-M"></a>
 | Name | Type | Description |
 | ------ | ------ | ------ |
-| STATE_CHOICES     | List of tuples    | List of possible states.      |
 | id                | AutoField         | Identifier of the tournament. |
-| uuid              | UUIDField         | Identifier of the host user.  |
 | tournament_name   | CharField         | Name of the tournament        |
-| amount            | IntegerField      | Max amount of layers allowed. |
-| state             | CharField         | The state of the tournament.  |
+| player_amount     | IntegerField      | Max amount of layers allowed. |
 | players           | ManyToManyField   | The current player aliases.   |
+| completed         | BooleanField      |  |
+| winner         	| CharField      	|  |
+| matches         	| ManyToManyField   | a link between all the matches within the tournament. |
+
+### Match Model <a name="Match-M"></a>
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| id                | AutoField         | Identifier of the Match. |
+| team1             | OneToOneField         | link to team one. |
+| team2             | OneToOneField         | link to team two. |
+| date	            | DateField         |  |
+
+### Team Model <a name="Team-M"></a>
+| Name | Type | Description |
+| ------ | ------ | ------ |
+| id                | AutoField         | Identifier of the Team. |
+| score             | AutoField         | score of the team. |
+| players           | AutoField         | link to all the plaeyrs in the team. |
+
 
 ### Tournament API <a name="Tournament"></a>
 | HTTP Method | Endpoint | Description |
@@ -80,12 +108,20 @@ This is the user table.
 | POST      | /api/tournament           | Creates a new tournament for the authenticated user   |
 | DELETE    | /api/tournament           | Deletes the tournament of the authenticated user      |
 | GET       | /api/tournament/:id       | Gets a tournament by ID                               |
-| POST      | /api/tournament/:id       | Creates a new player on that tournament ID            |
 | DELETE    | /api/tournament/:id       | Deletes the tournament that has the specific ID       |
-| PUT       | api/tournament/player/:id | Updates a tournamentUser by ID                        |
-| DELETE    | api/tournament/player/:id | Deletes a tournamentUser by ID                        |
 
 
+### Tournament Player API <a name="Tournament-Player"></a>
+| HTTP Method | Endpoint | Description |
+| ------ | ------ | ------ |
+| POST 		| /api/tournament/:id/player | Adds the user provided in the body to the tournament ID.  |
+| DELETE	| /api/tournament/:id/player | Removes the user provided in the body from the tournament ID. |
+
+
+### Tournament Match API <a name="Tournament-Match"></a>
+| HTTP Method | Endpoint | Description |
+| ------ | ------ | ------ |
+| POST      | /api/tournament/:id/match       | Adds the match provided in the body that tournament ID.|            |
 
 ### Database API <a name="Database"></a>
 | HTTP Method | Endpoint | Description |
