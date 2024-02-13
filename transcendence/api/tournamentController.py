@@ -1,9 +1,23 @@
 from django.http import JsonResponse
-from django.forms.models import model_to_dict
-from django.core.serializers import serialize
-from .models import Tournament, Players, Database, Match, Team
+from django.contrib.auth.hashers import check_password
+from .models import Tournament, Database, Match, Team
 from app.utils import stringifyImage
+from app.forms import TournamentForm
 import json
+
+#==========================================
+#      Validate user for Tournaments
+#==========================================
+def validateUser(playerName, password):
+    try:
+        user = Database.objects.filter(username=playerName).get()
+    except Database.DoesNotExist:
+        errors = "Player nor found"
+        return None, errors
+    if not check_password(password, user.password):
+        errors = "Incorrect password"
+        return None, errors
+    return user, ""
 
 #==========================================
 #                | UTILS |
@@ -28,7 +42,6 @@ def JSONTournamentResponse(tournament, message):
 							} for match in tournament.matches.all()],
             }
         }
-    print (response)
     return (response)
 
 def unknownMethod():
@@ -37,19 +50,14 @@ def unknownMethod():
 #==========================================
 #       Tournament | PLAYER | Functions                                                                                                                                           
 #==========================================
-def tournamentAddPlayer(playerName, existing_tournament):
-
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-    #todo isValid = CarlosValidation(player.username, password)
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    player = Database.objects.filter(username=playerName).first()
+def tournamentAddPlayer(playerName, password, existing_tournament):
+    player, reason = validateUser(playerName, password)
     if player is None:
-        return JsonResponse({'error': 'player not found'}, status=400)
+        return JsonResponse({'error': reason}, status=400)
     if existing_tournament.players.filter(username=player).first() is not None:
-        return JsonResponse({'error': 'player already in match'}, status=400)
+        return JsonResponse({'error': 'Player already in match'}, status=400)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
-        return JsonResponse({'error': 'too many players'}, status=400)
+        return JsonResponse({'error': 'Too many players'}, status=400)
     existing_tournament.players.add(player)
 
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -189,11 +197,14 @@ def tournamentManagerID(request, id=None):
 def tournamentPlayerManager(request, id=None):
     existing_tournament = Tournament.objects.filter(id=id).first()
     data = json.loads(request.body)
-    print(data)
     if "player" in data and existing_tournament is not None:
         match request.method:
             case "POST":
-                return tournamentAddPlayer(data['player'], existing_tournament)
+                form = TournamentForm(data)
+                if not form.is_valid():
+                    errors = {field: form.errors[field][0] for field in form.errors}
+                    return JsonResponse({"success": "false", "error":errors}, status=400)
+                return tournamentAddPlayer(data['player'], data['password'], existing_tournament)
             case "DELETE":
                 return tournamentDeletePlayer(data['player'], existing_tournament)
             case _:
