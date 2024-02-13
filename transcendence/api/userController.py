@@ -56,10 +56,10 @@ def friendRequest(request, friendName=None):
         case _:
             return JsonResponse({"message": "Method not implemented"}, status=501)
 
-    
-    
-    
-        
+
+
+
+
 
 #==========================================================================
 #                   ACCEPT Friend and REMOVE Friend
@@ -159,16 +159,15 @@ def getObjectsWithinUser(user_dict):
         user_dict['completed_matches'] = [{
             'id': completed_matches.id,
             "tournament_name": completed_matches.tournament_name,
-            "amount": completed_matches.amount,
-            "state": completed_matches.state,
-            "date": completed_matches.date,
+            "player_amount": completed_matches.player_amount,
+            "completed": completed_matches.completed,
             "players": [
-                {'name': player.name, 'score': player.score} for player in completed_matches.players.all()
+                {'name': player.username} for player in completed_matches.players.all()
             ]
         } for completed_matches in user_dict['completed_matches']]
-    
+
 def getUser(request, userName=None):
-#I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The state is not gonna change, because getUser is being called just there.
+#I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The completed is not gonna change, because getUser is being called just there.
     user = Database.objects.filter(username=userName).first()
     if user is None:
         return None
@@ -226,11 +225,11 @@ def getMatchHistory(request, userName):
             match = {
             'id': matches.id,
             "tournament_name": matches.tournament_name,
-            "amount": matches.amount,
-            "state": matches.state,
+            "player_amount": matches.player_amount,
+            "completed": matches.completed,
             "date": matches.date,
             "players": [
-                {'name': player.name, 'score': player.score} for player in matches.players.all()
+                {'name': player.username} for player in matches.players.all()
             ]
             }
             history.append(match)

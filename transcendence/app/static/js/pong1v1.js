@@ -134,7 +134,7 @@ const save1v1Score = async () => {
 	const url = `/api/tournament/${match1v1.id}/match`;
 	try {
 		console.log(match1v1);
-		const score = {
+		const matchData = {
 			teamOne: {
 				players:[match1v1.player1.username],
 				score: match1v1.score.player1Points
@@ -145,7 +145,7 @@ const save1v1Score = async () => {
 			},
 			stage: "Final"
 		}
-		const response = await postRequest(url, score);
+		const response = await postRequest(url, matchData);
 		if (response.succeded) {
 			console.log(response);
 		} else {
