@@ -48,6 +48,7 @@ const endGamePopulator = () => {
 	titleText.innerText = tournament.name;
 	const winnerUsernameText = document.getElementById("localWinnerUsername");
 	winnerUsernameText.innerText = tournament.winner;
+	console.log(tournament);
 }
 
 const scoreAfterGamePageLoader = (match) => {

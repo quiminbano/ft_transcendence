@@ -115,3 +115,11 @@
 	text-align: center;
 	color: white;
 }
+
+
+.firework {
+	width: 300px;
+}
+#localWinnerUsername {
+	font-size: 20px;
+}
