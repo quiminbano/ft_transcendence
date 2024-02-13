@@ -29,13 +29,13 @@
 
 
 ## Introduction <a name="Introduction"></a>
-This project is created by using vanilla JavaScript for the SPA frontend and Python with Django on Apache/WSGI as backend.
+This project uses vanilla JavaScript for the SPA front end and Python with Django on Apache/WSGI as the backend.
 
 ## Setup <a name="Setup"></a>
-In order to run the poject you need:
+To run the project you need the following:
 1. Docker
 2. Docker Compose v2.x.x
-3. A .env file in the root of the project with following variables (fill in whatever value you want):
+3. A .env file in the root of the project with the following variables (fill in whatever value you want):
     - POSTGRES_USER=""
     - POSTGRES_PASS=""
     - POSTGRES_DB=""
@@ -59,7 +59,7 @@ This is the user table.
 | is_42                 | BooleanField          | Has the user registered through their 42 account  |
 | friends               | ManyToManyField       | All the friends of the user.                      |
 | friend_requests       | ManyToManyField       | All pending friend requests.                      |
-| coallition            | CharField             | The player's 42 coallition                        |
+| coallition            | CharField             | The player's 42 coalition                        |
 | access_token          | CharField             | ?                       |
 | refresh_token         | CharField             | ?                       |
 | expiration_time       | BigIntegerField       | ?                     |
@@ -98,7 +98,7 @@ This is the user table.
 | ------ | ------ | ------ |
 | id                | AutoField         | Identifier of the Team. |
 | score             | AutoField         | score of the team. |
-| players           | AutoField         | link to all the plaeyrs in the team. |
+| players           | AutoField         | link to all the players in the team. |
 
 
 ### Tournament API <a name="Tournament"></a>
@@ -127,9 +127,9 @@ This is the user table.
 | HTTP Method | Endpoint | Description |
 | ------ | ------ | ------ |
 | POST		| /api/userProfilePicture           | Uploads the user's profile picture.                                   |
-| GET		| /api/friends                      | Returns all the friends of the logged in user.                        |
+| GET		| /api/friends                      | Returns all the friends of the logged-in user.                        |
 | GET		| /api/searchUsers/:search          | Returns summary info about all the users matching the search query.   |
-| GET		| /api/users                        | Returns info about the logged in user.                                |
+| GET		| /api/users                        | Returns info about the logged-in user.                                |
 | DELETE	| /api/users                        | Deletes the logged in user.                                           |
 | GET		| /api/users/:userName              | Returns all the info about the specific user.                         |
 | POST		| /api/friendRequest/:friendName    | Sends friend request to friendName.                                   |
