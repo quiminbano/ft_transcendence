@@ -13,6 +13,7 @@ class Players:
 
 
 class   Team(models.Model):
+    winner = models.BooleanField(default=False)
     id = models.AutoField(primary_key=True)
     score = models.IntegerField(default=0)
     players = models.ManyToManyField('Database', symmetrical=False, blank=True)
@@ -75,11 +76,20 @@ class Database(AbstractUser):
     refresh_token = models.CharField(blank=True)
     expiration_time = models.BigIntegerField(default=0)
     avatar_image = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
+
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
     completed_matches = models.ManyToManyField(Tournament, blank=True, related_name="completed_matches")
+    # listOfPlayedGames =
+
+    total_points_scored = models.IntegerField(default=0)
+    total_points_conceded = models.IntegerField(default=0)
+
     matches_played = models.IntegerField(default=0)
     matches_won = models.IntegerField(default=0)
-    matches_lost = models.IntegerField(default=0)
+
+    tournaments_played = models.IntegerField(default=0)
+    tournaments_won = models.IntegerField(default=0)
+
 
     objects = DatabaseManager()
 
