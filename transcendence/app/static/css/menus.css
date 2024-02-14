@@ -101,6 +101,10 @@
     background-color: transparent;
 }
 
+#menuHamburger:focus {
+    outline: none;
+}
+
 .hamburgerExpanded {
     transition: all 0.25s linear;
     left: 150px;
