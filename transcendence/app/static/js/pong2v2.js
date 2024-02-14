@@ -42,7 +42,7 @@ const play2v2Game = async () => {
 	match2v2.addScore(score.player1, score.player2);
 	UpdateEndGameScene2v2(score);
 	contentManager2v2.setActive("endGame");
-	await save2v2Score();
+	await save2v2Match();
 }
 
 const UpdateEndGameScene2v2 = (score) => {
@@ -223,26 +223,17 @@ const play2v2Again = async () => {
 	play2v2Game();
 }
 
-const save2v2Score = async () => {
-	showLoadingSpinner();
-	const url = `/api/tournament/${match2v2.id}/match`;
-	try {
-		const matchData = {
-			teamOne: {
-				players: [match2v2.teamOne[0].username, match2v2.teamOne[1].username],
-				score: match2v2.score.teamOne
-			},
-			teamTwo: {
-				players: [match2v2.teamTwo[0].username, match2v2.teamTwo[1].username],
-				score: match2v2.score.teamTwo
-			},
-			stage: "Final"
-		}
-		const response = await postRequest(url, matchData);
-		if (!response.succeded)
-			throw response;
-	} catch (error) {
-		console.log(error);
+const save2v2Match = async () => {
+	const matchData = {
+		teamOne: {
+			players: [match2v2.teamOne[0].username, match2v2.teamOne[1].username],
+			score: match2v2.score.teamOne
+		},
+		teamTwo: {
+			players: [match2v2.teamTwo[0].username, match2v2.teamTwo[1].username],
+			score: match2v2.score.teamTwo
+		},
+		stage: "Final"
 	}
-	hideLoadingSpinner();
+	await saveGameInDatabase(match2v2.id, matchData);
 }

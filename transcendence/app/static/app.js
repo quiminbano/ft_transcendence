@@ -128,7 +128,6 @@ const saveGameInDatabase = async (id, data) => {
 	const url = `/api/tournament/${id}/match`;
 	try {
 		const response = await postRequest(url, data);
-		console.log(response);
 		if (!response.succeded)
 			throw response;
 	} catch (error) {
