@@ -39,10 +39,10 @@ const play2v2Game = async () => {
 	const game = new Local2v2Game();
 	await game.startGame();
 	const score = game.getGameScore();
+	match2v2.addScore(score.player1, score.player2);
 	UpdateEndGameScene2v2(score);
 	contentManager2v2.setActive("endGame");
-	match2v2.addScore(score.player1, score.player2);
-	await save2v2Score();
+	await save2v2Match();
 }
 
 const UpdateEndGameScene2v2 = (score) => {
@@ -50,6 +50,22 @@ const UpdateEndGameScene2v2 = (score) => {
 	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
 	playerOnePointsElement.innerText = score.player1;
 	playerTwoPointsElement.innerText = score.player2;
+	const playerPictures = [];
+	playerPictures.push(document.getElementById("score2v2Player1Picture"));
+	playerPictures.push(document.getElementById("score2v2Player2Picture"));
+	playerPictures.push(document.getElementById("score2v2Player3Picture"));
+	playerPictures.push(document.getElementById("score2v2Player4Picture"));
+	if (playerPictures.length === 4) {
+		for (let i = 0; i < playerPictures.length; i++) {
+			playerPictures[i].setAttribute("src", match2v2.registeredPlayers[i].picture || "/static/images/profileIcon.png");
+		}
+	}
+	for (let i = 0; i < 4; i++) {
+		const element = document.getElementById(`score2v2Player${i + 1}Name`);
+		if (element) {
+			element.innerText = match2v2.registeredPlayers[i].username || `Player ${i + 1}`;
+		}
+	}
 }
 
 const twoVtwoContinue = () => {
@@ -207,26 +223,17 @@ const play2v2Again = async () => {
 	play2v2Game();
 }
 
-const save2v2Score = async () => {
-	showLoadingSpinner();
-	const url = `/api/tournament/${match2v2.id}/match`;
-	try {
-		const matchData = {
-			teamOne: {
-				players: [match2v2.teamOne[0].username, match2v2.teamOne[1].username],
-				score: match2v2.score.teamOne
-			},
-			teamTwo: {
-				players: [match2v2.teamTwo[0].username, match2v2.teamTwo[1].username],
-				score: match2v2.score.teamTwo
-			},
-			stage: "Final"
-		}
-		const response = await postRequest(url, matchData);
-		if (!response.succeded)
-			throw response;
-	} catch (error) {
-		console.log(error);
+const save2v2Match = async () => {
+	const matchData = {
+		teamOne: {
+			players: [match2v2.teamOne[0].username, match2v2.teamOne[1].username],
+			score: match2v2.score.teamOne
+		},
+		teamTwo: {
+			players: [match2v2.teamTwo[0].username, match2v2.teamTwo[1].username],
+			score: match2v2.score.teamTwo
+		},
+		stage: "Final"
 	}
-	hideLoadingSpinner();
+	await saveGameInDatabase(match2v2.id, matchData);
 }

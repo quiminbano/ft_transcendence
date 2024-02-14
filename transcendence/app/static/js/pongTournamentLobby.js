@@ -8,16 +8,13 @@ const loadTournamentLobby = async () => {
 	const data = loadTournamentLobbyInfo.tournament;
 	tournament = createTournamentInstance(data.name, data.player_amount, data.id);
 	tournament.setState(data.state);
-
-	//TODO: MAKE SURE DATABASE RETURNS THE STATE ACTIVE IF TOURNAMENT AS STARTED ALREADY!!!!
-
-	data.players.forEach(player => {
-		try {
-			tournament.addPlayer({ name: player.name, id: player.id });
-		} catch (error) {
-			console.log(error.message);
-		}
-	});
+	try {
+		const username = JSON.parse(document.getElementById('username').textContent);
+		const picture = JSON.parse(document.getElementById('picture').textContent);
+		tournament.addPlayer({ name: username, picture });
+	} catch (error) {
+		tournament.addPlayer({ name: "Player One", undefined });
+	}
 }
 
 const removePlayer = async (id) => {
@@ -74,7 +71,7 @@ const addPlayerToDatabase = async (userData) => {
 		const response = await postRequest(url, data);
 		if (response.succeded) {
 			addNewPlayerErrorMessage.innerText = "";
-			tournament.addPlayer({ name: response.player.username, id: response.player.id || 0 });
+			tournament.addPlayer({ name: response.player.username, picture: response.player.picture });
 			closeRegisterPlayerModal();
 		} else {
 			throw response;

@@ -63,3 +63,15 @@
 .playerName {
 	font-size: 18px;
 }
+.scorePoints1v1 {
+	font-size: 20px;
+}
+
+.playerScore1v1Picture {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 10px;
+	margin-bottom: 25px;
+}

@@ -31,17 +31,24 @@ const playGame = async () => {
 	const game = new Local1v1Game();
 	await game.startGame();
 	const score = game.getGameScore();
-	UpdateEndGameScene(score);
-	OneVOneContentDisplay.setActive("endGame");
 	match1v1.addScore(score.player1, score.player2);
-	await save1v1Score();
+	UpdateEndGameScene();
+	OneVOneContentDisplay.setActive("endGame");
+	save1v1Match();
 }
 
-const UpdateEndGameScene = (score) => {
+const UpdateEndGameScene = () => {
+	const defaultPicture = "/static/images/profileIcon.png";
 	const playerOnePointsElement = document.getElementById("playerOnePoints");
 	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
-	playerOnePointsElement.innerText = score.player1;
-	playerTwoPointsElement.innerText = score.player2;
+	playerOnePointsElement.innerText = match1v1.score.player1Points;
+	playerTwoPointsElement.innerText = match1v1.score.player2Points;
+	const score1v1Player1Picture = document.getElementById("score1v1Player1Picture");
+	const score1v1Player2Picture = document.getElementById("score1v1Player2Picture");
+	if (score1v1Player1Picture && score1v1Player2Picture) {
+		score1v1Player1Picture.setAttribute("src", match1v1.player1.picture || defaultPicture);
+		score1v1Player2Picture.setAttribute("src", match1v1.player2.picture || defaultPicture);
+	}
 }
 
 const oneVonePlay = () => {
@@ -127,28 +134,19 @@ const create1v1Tournament = async () => {
 	}
 }
 
-const save1v1Score = async () => {
-	showLoadingSpinner();
-	const url = `/api/tournament/${match1v1.id}/match`;
-	try {
-		const matchData = {
-			teamOne: {
-				players:[match1v1.player1.username],
-				score: match1v1.score.player1Points
-			},
-			teamTwo: {
-				players: [match1v1.player2.username],
-				score: match1v1.score.player2Points
-			},
-			stage: "Final"
-		}
-		const response = await postRequest(url, matchData);
-		if (!response.succeded)
-			throw response;
-	} catch (error) {
-		console.log(error);
+const save1v1Match = async () => {
+	const matchData = {
+		teamOne: {
+			players: [match1v1.player1.username],
+			score: match1v1.score.player1Points
+		},
+		teamTwo: {
+			players: [match1v1.player2.username],
+			score: match1v1.score.player2Points
+		},
+		stage: "Final"
 	}
-	hideLoadingSpinner();
+	await saveGameInDatabase(match1v1.id, matchData);
 }
 
 const play1v1Again = async () => {
