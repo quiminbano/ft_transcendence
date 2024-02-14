@@ -6,22 +6,39 @@ const loadMenus = () => {
 	const searchButton = document.getElementById("searchButton");
 	if (!searchButton)
 		return;
-	const search = document.getElementById("search");
+	searchButton.addEventListener("click", () => loadSearchFunctionality())
+	searchButton.addEventListener("keyup", (e) => e.key === "Enter" && searchButton.click());
+	const searchContainer = document.getElementById("search-container");
+	searchButton.addEventListener("focus", () => {
+		searchContainer.classList.add("focused");
+	});
 
-	searchButton.addEventListener("click", () => {
-		if (search.classList.contains("search")) {
-			search.classList.remove("search");
-			search.classList.add("searchExpanded");
-			search.focus();
-			search.setAttribute("placeholder", "Search for friends");
-		} else if (search.classList.contains("searchExpanded")) {
-			hideDropdown(document.getElementById("dropdownMenu"));
-			setTimeout(() => {
-				search.classList.remove("searchExpanded");
-				search.classList.add("search");
-			}, 250);
+	searchButton.addEventListener("blur", () => {
+		searchContainer.classList.remove("focused");
+	});
+	const search = document.getElementById("search");
+	search.addEventListener("blur", () => {
+		if (search.classList.contains("searchExpanded") && search.value.length <= 0) {
+			loadSearchFunctionality();
+			searchButton.focus();
 		}
 	})
+}
+
+const loadSearchFunctionality = () => {
+	const search = document.getElementById("search");
+	if (search.classList.contains("search")) {
+		search.classList.remove("search");
+		search.classList.add("searchExpanded");
+		search.focus();
+		search.setAttribute("placeholder", "Search for friends");
+	} else if (search.classList.contains("searchExpanded")) {
+		hideDropdown(document.getElementById("dropdownMenu"));
+		setTimeout(() => {
+			search.classList.remove("searchExpanded");
+			search.classList.add("search");
+		}, 250);
+	}
 }
 
 const debounce = (func, delay = 300) => {
@@ -90,7 +107,7 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 		parentDiv.appendChild(noMatches);
 	} else {
 		const username = document.getElementById("navbarUsername").textContent;
-		matches.forEach(match => {
+		matches.forEach((match, i) => {
 			if (match.username !== username)
 				searchMatchItem(match.avatar_image || "/static/images/profileIcon.png", match.username, parentDiv)
 		});
