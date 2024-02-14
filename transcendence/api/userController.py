@@ -188,8 +188,8 @@ def getUserStats(user):
         "total_points_conceded" : user.total_points_conceded,
         "matches_played" : user.matches_played,
         "matches_won" : user.matches_won,
-        "tournaments_played" : user.matches_won,
-        "tournaments_won" : user.matches_won,
+        "tournaments_played" : user.tournaments_played,
+        "tournaments_won" : user.tournaments_won,
     }
     return(userInfo)
 
@@ -198,7 +198,7 @@ def getUser(request, userName=None):
 #I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The completed is not gonna change, because getUser is being called just there.
     user = Database.objects.filter(username=userName).first()
     if user is None:
-        return None
+        return JsonResponse({'error': 'user does not exist'}, status=400)
     if request.method == "GET":
         userInfo = getUserStats(user)
         return JsonResponse(userInfo, status=200, safe=False)

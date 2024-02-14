@@ -122,3 +122,16 @@ const goBack = async () => {
 	history.back();
 	await handleLocation();
 }
+
+const saveGameInDatabase = async (id, data) => {
+	showLoadingSpinner();
+	const url = `/api/tournament/${id}/match`;
+	try {
+		const response = await postRequest(url, data);
+		if (!response.succeded)
+			throw response;
+	} catch (error) {
+		console.log(error);
+	}
+	hideLoadingSpinner();
+}

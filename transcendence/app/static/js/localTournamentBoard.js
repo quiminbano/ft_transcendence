@@ -41,7 +41,7 @@ const startLocalGame = async () => {
 	tournament.updateScore(match.id, score.player1, score.player2);
 	scoreAfterGamePageLoader(match);
 	contentManager.setActive("scorePage");
-	await saveTournamentScore(match);
+	await saveTournamentMatch(match);
 }
 
 const endGamePopulator = () => {
@@ -62,6 +62,13 @@ const scoreAfterGamePageLoader = (match) => {
 	scorePlayerTwoName.innerText = match.player2.name;
 	const scorePlayerTwoPoints = document.getElementById("scorePlayerTwoPoints");
 	scorePlayerTwoPoints.innerText = match.score.player2Points;
+	const defaultPic = "/static/images/profileIcon.png";
+	const player1Picture = document.getElementById("score1v1Player1Picture");
+	if (player1Picture)
+		player1Picture.setAttribute("src", match.player1.picture || defaultPic);
+	const player2Picture = document.getElementById("score1v1Player2Picture");
+	if (player2Picture)
+		player2Picture.setAttribute("src", match.player2.picture || defaultPic);
 }
 
 const continueAfterScorePage = () => {
@@ -73,26 +80,17 @@ const continueAfterScorePage = () => {
 	}
 }
 
-const saveTournamentScore = async (match) => {
-	showLoadingSpinner();
-	const url = `/api/tournament/${tournament.id}/match`;
-	try {
-		const matchData = {
-			teamOne: {
-				players: [match.player1.name],
-				score: match.score.player1Points
-			},
-			teamTwo: {
-				players: [match.player2.name],
-				score: match.score.player2Points
-			},
-			stage: tournament.state === "C" ? "Final" : "is not final"
-		}
-		const response = await postRequest(url, matchData);
-		if (!response.succeded)
-			throw response;
-	} catch (error) {
-		console.log(error);
+const saveTournamentMatch = async (match) => {
+	const matchData = {
+		teamOne: {
+			players: [match.player1.name],
+			score: match.score.player1Points
+		},
+		teamTwo: {
+			players: [match.player2.name],
+			score: match.score.player2Points
+		},
+		stage: tournament.state === "C" ? "Final" : "is not final"
 	}
-	hideLoadingSpinner();
+	await saveGameInDatabase(tournament.id, matchData);
 }
