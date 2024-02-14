@@ -34,7 +34,7 @@ const playGame = async () => {
 	match1v1.addScore(score.player1, score.player2);
 	UpdateEndGameScene();
 	OneVOneContentDisplay.setActive("endGame");
-	await save1v1Score();
+	save1v1Match();
 }
 
 const UpdateEndGameScene = () => {
@@ -134,28 +134,19 @@ const create1v1Tournament = async () => {
 	}
 }
 
-const save1v1Score = async () => {
-	showLoadingSpinner();
-	const url = `/api/tournament/${match1v1.id}/match`;
-	try {
-		const matchData = {
-			teamOne: {
-				players:[match1v1.player1.username],
-				score: match1v1.score.player1Points
-			},
-			teamTwo: {
-				players: [match1v1.player2.username],
-				score: match1v1.score.player2Points
-			},
-			stage: "Final"
-		}
-		const response = await postRequest(url, matchData);
-		if (!response.succeded)
-			throw response;
-	} catch (error) {
-		console.log(error);
+const save1v1Match = async () => {
+	const matchData = {
+		teamOne: {
+			players: [match1v1.player1.username],
+			score: match1v1.score.player1Points
+		},
+		teamTwo: {
+			players: [match1v1.player2.username],
+			score: match1v1.score.player2Points
+		},
+		stage: "Final"
 	}
-	hideLoadingSpinner();
+	await saveGameInDatabase(match1v1.id, matchData);
 }
 
 const play1v1Again = async () => {
