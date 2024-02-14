@@ -65,3 +65,36 @@
 .player-place p {
 	font-size: 10px;
 }
+
+.endGamePointsDiv {
+	width: 100%;
+}
+
+.teamPlayersPictureDiv {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 25px auto;
+}
+.teamPlayerInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.teamPlayersPicture {
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 50%;
+}
+.teamPlayersName {
+	margin-top: 15px;
+}
+
+.score2v2Points {
+	font-size: 20px;
+}

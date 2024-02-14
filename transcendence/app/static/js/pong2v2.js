@@ -39,9 +39,9 @@ const play2v2Game = async () => {
 	const game = new Local2v2Game();
 	await game.startGame();
 	const score = game.getGameScore();
+	match2v2.addScore(score.player1, score.player2);
 	UpdateEndGameScene2v2(score);
 	contentManager2v2.setActive("endGame");
-	match2v2.addScore(score.player1, score.player2);
 	await save2v2Score();
 }
 
@@ -50,6 +50,22 @@ const UpdateEndGameScene2v2 = (score) => {
 	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
 	playerOnePointsElement.innerText = score.player1;
 	playerTwoPointsElement.innerText = score.player2;
+	const playerPictures = [];
+	playerPictures.push(document.getElementById("score2v2Player1Picture"));
+	playerPictures.push(document.getElementById("score2v2Player2Picture"));
+	playerPictures.push(document.getElementById("score2v2Player3Picture"));
+	playerPictures.push(document.getElementById("score2v2Player4Picture"));
+	if (playerPictures.length === 4) {
+		for (let i = 0; i < playerPictures.length; i++) {
+			playerPictures[i].setAttribute("src", match2v2.registeredPlayers[i].picture || "/static/images/profileIcon.png");
+		}
+	}
+	for (let i = 0; i < 4; i++) {
+		const element = document.getElementById(`score2v2Player${i + 1}Name`);
+		if (element) {
+			element.innerText = match2v2.registeredPlayers[i].username || `Player ${i + 1}`;
+		}
+	}
 }
 
 const twoVtwoContinue = () => {
