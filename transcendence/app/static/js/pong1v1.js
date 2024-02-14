@@ -31,17 +31,24 @@ const playGame = async () => {
 	const game = new Local1v1Game();
 	await game.startGame();
 	const score = game.getGameScore();
-	UpdateEndGameScene(score);
-	OneVOneContentDisplay.setActive("endGame");
 	match1v1.addScore(score.player1, score.player2);
+	UpdateEndGameScene();
+	OneVOneContentDisplay.setActive("endGame");
 	await save1v1Score();
 }
 
-const UpdateEndGameScene = (score) => {
+const UpdateEndGameScene = () => {
+	const defaultPicture = "/static/images/profileIcon.png";
 	const playerOnePointsElement = document.getElementById("playerOnePoints");
 	const playerTwoPointsElement = document.getElementById("playerTwoPoints");
-	playerOnePointsElement.innerText = score.player1;
-	playerTwoPointsElement.innerText = score.player2;
+	playerOnePointsElement.innerText = match1v1.score.player1Points;
+	playerTwoPointsElement.innerText = match1v1.score.player2Points;
+	const score1v1Player1Picture = document.getElementById("score1v1Player1Picture");
+	const score1v1Player2Picture = document.getElementById("score1v1Player2Picture");
+	if (score1v1Player1Picture && score1v1Player2Picture) {
+		score1v1Player1Picture.setAttribute("src", match1v1.player1.picture || defaultPicture);
+		score1v1Player2Picture.setAttribute("src", match1v1.player2.picture || defaultPicture);
+	}
 }
 
 const oneVonePlay = () => {
