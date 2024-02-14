@@ -55,9 +55,11 @@ const removePlayer = async (id) => {
     hideLoadingSpinner();
 }
 
-const openRegisterPlayerModal = (data) => {
-	modal.setData(data);
+const openRegisterPlayerModal = () => {
 	modal.open();
+	const newPlayerInputName = document.getElementById("newPlayerInputName");
+	if (newPlayerInputName)
+		newPlayerInputName.focus();
 }
 const closeRegisterPlayerModal = () => {
 	const addPlayerPassword = document.getElementById("addPlayerPassword");
