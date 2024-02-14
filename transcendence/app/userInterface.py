@@ -174,17 +174,18 @@ def getSettings(request):
 def putSettings(request):
     data = json.loads(request.body)
     form = ChangeProfile(data)
-    if form.is_valid():
-        passwordValidation, response = form.isPasswordValid(request.user)
-        if passwordValidation == True:
-            form.save(request.user)
-            print("Update successful")
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-            login(request, user)
-        return response
-    else:
+    if not form.is_valid():
         errors = {field: form.errors[field][0] for field in form.errors}
         return JsonResponse({"message": "Failed to update profile", "errors": errors}, status=400)
+    passwordValidation, response = form.isPasswordValid(request.user)
+    if not passwordValidation:
+        return response
+    flag, reason = form.save(request.user)
+    if not flag:
+        return JsonResponse({"message": "Failed to update profile", "errors": reason}, status=400)
+    user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+    login(request, user)
+    return response
 
 def settings(request):
     if not request.user.is_authenticated:

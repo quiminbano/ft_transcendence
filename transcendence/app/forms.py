@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from api.imageValidation import validateFileType, validationImageSize
+from api.models import Users42
 from django.core.files import File
 from django.http import JsonResponse
 
@@ -137,14 +138,13 @@ class ChangeProfile(forms.Form):
 
     def isPasswordValid(self, userModel : Database):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-            print("password1 and password2 does not match")
             return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password2": "New passwords don't match"}}, status=400)
         if check_password(self.cleaned_data['password3'], userModel.password) == False:
-            print("Password provided does not match with the original one")
             return False, JsonResponse({"success": "false", "message": "Failed to update profile", "errors": {"password3": "Your current password is not correct"}}, status=400)
         return True, JsonResponse({"success": "true", "message": "profile updated successfuly"}, status=200)
 
     def save(self, userModel : Database):
+        old_username = userModel.username
         userModel.username = self.cleaned_data['username']
         userModel.first_name = self.cleaned_data['firstName']
         userModel.last_name = self.cleaned_data['lastName']
@@ -153,8 +153,28 @@ class ChangeProfile(forms.Form):
         userModel.email = self.cleaned_data['email']
         if not default_storage.exists(str(userModel.avatar_image)):
             userModel.avatar_image = None
-        userModel.full_clean()
-        userModel.save()
+        try:
+            userModel.full_clean()
+            userModel.save()
+        except ValidationError as e:
+            error_dict = e.error_dict
+            reason_list = next(val for val in error_dict.values())
+            reason = reason_list[0].message
+            return False, {"validation": reason}
+        if not userModel.is_42:
+            return True, {"validation": ""}
+        try:
+            data_42 = Users42.objects.filter(user_in_database=old_username).get()
+        except Users42.DoesNotExist:
+            return False, "Unspecified error"
+        data_42.user_in_database = self.cleaned_data['username']
+        try:
+            data_42.full_clean()
+            data_42.save()
+        except ValidationError:
+            return False, {"validation": "There was an issue changing the username"}
+        return True, {"validation": ""}
+
 
 class ProfilePicture(forms.Form):
 
