@@ -97,5 +97,6 @@ class Database(AbstractUser):
 class Users42(models.Model):
     user_in_42 = models.CharField(blank=True)
     user_in_database = models.CharField(blank=True)
+    has_password = models.BooleanField(default=False)
 
 
