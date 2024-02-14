@@ -7,10 +7,6 @@ from .imageValidation import validateFileType, validationImageSize, defineNameIm
 from django.core.files import File
 from django.utils import timezone
 
-#REMOVE THIS!
-class Players:
-    name = models.CharField(max_length=255)
-
 
 class   Team(models.Model):
     winner = models.BooleanField(default=False)
@@ -20,8 +16,8 @@ class   Team(models.Model):
 
 class   Match(models.Model):
     id = models.AutoField(primary_key=True)
-    team1 = models.OneToOneField(Team, blank=True, on_delete=models.CASCADE, related_name='Team1')
-    team2 = models.OneToOneField(Team, blank=True, on_delete=models.CASCADE, related_name='Team2')
+    team1 = models.OneToOneField(Team, blank=True, null=True, on_delete=models.CASCADE, related_name='Team1')
+    team2 = models.OneToOneField(Team, blank=True, null=True, on_delete=models.CASCADE, related_name='Team2')
     date = models.DateField(default=timezone.now)
 
 class Tournament(models.Model):
@@ -30,7 +26,6 @@ class Tournament(models.Model):
     player_amount = models.IntegerField()
     players = models.ManyToManyField('Database', symmetrical=False, blank=True, related_name='players')
     completed = models.BooleanField(default=False)
-    winner = models.CharField(max_length=255)
     matches = models.ManyToManyField(Match, blank=True)
 
 class DatabaseManager(BaseUserManager):
@@ -77,9 +72,9 @@ class Database(AbstractUser):
     expiration_time = models.BigIntegerField(default=0)
     avatar_image = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
 
-    tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL,  null=True, blank=True)
-    completed_matches = models.ManyToManyField(Tournament, blank=True, related_name="completed_matches")
-    # listOfPlayedGames =
+    tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL, null=True, blank=True)
+    completed_matches = models.ManyToManyField(Match, blank=True, related_name="completed_matches")
+    completed_tournaments = models.ManyToManyField(Tournament, blank=True, related_name="completed_tournaments")
 
     total_points_scored = models.IntegerField(default=0)
     total_points_conceded = models.IntegerField(default=0)

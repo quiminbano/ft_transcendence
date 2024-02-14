@@ -22,7 +22,6 @@ const loadOneVOne = async () => {
 		const username = JSON.parse(document.getElementById('username').textContent);
 		const picture = JSON.parse(document.getElementById('picture').textContent);
 		match1v1.addPlayer1({username, picture})
-		console.log("match: ", match1v1);
 	} catch (error) {
 		console.log(error);
 	}
@@ -69,7 +68,6 @@ const inviteOpponent1v1 = async (e) => {
 	const errorElement = document.getElementById("errorMessage1v1Invite");
 	try {
 		const response = await postRequest(url, userToInvite)
-		console.log(response);
 		if (response.succeded) {
 			if (errorElement) {
 				errorElement.innerText = "";
@@ -80,7 +78,6 @@ const inviteOpponent1v1 = async (e) => {
 				picture: response.player.picture
 			}
 			match1v1.addPlayer2(opponent);
-			console.log(match1v1);
 			splash(opponent);
 		} else {
 			throw response;
@@ -131,9 +128,9 @@ const create1v1Tournament = async () => {
 }
 
 const save1v1Score = async () => {
+	showLoadingSpinner();
 	const url = `/api/tournament/${match1v1.id}/match`;
 	try {
-		console.log(match1v1);
 		const matchData = {
 			teamOne: {
 				players:[match1v1.player1.username],
@@ -146,14 +143,12 @@ const save1v1Score = async () => {
 			stage: "Final"
 		}
 		const response = await postRequest(url, matchData);
-		if (response.succeded) {
-			console.log(response);
-		} else {
+		if (!response.succeded)
 			throw response;
-		}
 	} catch (error) {
 		console.log(error);
 	}
+	hideLoadingSpinner();
 }
 
 const play1v1Again = async () => {
