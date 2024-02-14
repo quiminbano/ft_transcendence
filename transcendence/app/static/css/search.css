@@ -16,7 +16,13 @@
 	border: 4px solid rgb(0, 110, 255);
 	position: absolute;
 }
+#searchButton:focus {
+	outline:none;
+}
 #search-container:hover:before {
+	animation: grow 1s 3 forwards;
+}
+#search-container.focused:before {
 	animation: grow 1s 3 forwards;
 }
 @keyframes grow {
@@ -100,12 +106,15 @@
 	align-items: center;
 	justify-content: flex-start;
 	cursor: pointer;
+	background-color: transparent;
+	border: none;
 }
 .searchItem * {
 	overflow-x: hidden;
 	font-size: 12px;
 }
-.searchItem:hover {
+.searchItem:hover,
+.searchItem:focus{
 	background-color: orange;
 	color: black;
 	font-weight: bold;

@@ -5,6 +5,7 @@
 			alt="search button"
 			src="/static/images/search.png"
 			id="searchButton"
+            tabindex="0"
 		/>
 		<input
 			type="search"
@@ -19,20 +20,22 @@
 	{% include "languagesDropdown.html" %}
     {% endif %}
 </nav>
-<div id="menuHamburger" class="hamburgerNotExpanded"
+<button id="menuHamburger" class="hamburgerNotExpanded"
      onclick="toggleMenu()"
      onmouseover="menuOnHover()"
-     onmouseout="menuOnMouseLeave()">
+     onmouseout="menuOnMouseLeave()"
+     tabindex="0">
     <div class="hamburgerSpan"></div>
     <div class="hamburgerSpan"></div>
     <div class="hamburgerSpan"></div>
-</div>
+</button>
 <div onclick="toggleMenu()" id="sideMenuExpandBg"></div>
 <div id="sideMenuContainer" class="menu sideMenuNotExpanded">
     <div class="sideMenuHeader">
         <img alt="profile picture"
              src={{source}}
-             id="sideMenuProfilePic" />
+             id="sideMenuProfilePic" 
+             tabindex="0"/>
         {% if user.is_authenticated %}
         <p id="sideMenuProfileName">{{user.get_username}}</p>
         {% endif %}
@@ -57,10 +60,10 @@
         <img onclick="navigateTo('/settings')"
              id="sideMenuSettingsIcon"
              class="sideMenuItemIcon"
-             alt="Settings" />
+             alt="Settings">
         <img id="sideMenuLogoutIcon"
              class="sideMenuItemIcon"
              alt="Logout"
-             onclick="logoutUser()" />
+             onclick="logoutUser()">
     </div>
 </div>
