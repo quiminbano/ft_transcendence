@@ -4,7 +4,7 @@
             <div id="personalDivPicDiv">
                 <img alt="friend picture"
                      id="friendAvatar"
-                     src="/static/images/profileIcon.png" />
+                     src="{% if client.info.picture %}{{ client.info.picture }}{% else %}/static/images/profileIcon.png{% endif %}""/>
                 {% if client.info.coallition == "The Builders" %}
                 <img alt="friend coallition logo"
                      id="friendCoallitionLogo"

@@ -65,7 +65,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 .bracketBox {
 	background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
@@ -73,7 +73,7 @@
     background-repeat: no-repeat;
 	padding: 30px 20px;
 	border: 5px solid black;
-	overflow-x: scroll !important;
+	overflow-x: auto !important;
 	display: flex;
 	align-items: center;
 	justify-content: center;
