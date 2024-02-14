@@ -18,25 +18,6 @@ const loadTournamentLobby = async () => {
 			console.log(error.message);
 		}
 	});
-
-	if (tournament.state === "A") {
-		await navigateTo(`/pong/tournament/${tournament.id}/start`, {"flag": true});
-		await loadStartTournament();
-		//TODO: DATABASE SHOULD RETURN MATCHES AS WELL!!!!
-		data.matches.forEach(match => tournament.schedule.editMatch(match.id, match));
-	}
-}
-
-const editPlayer = async (username) => {
-    const url = "/api/tournament/player"
-    const data = { id: modal.getPlayerId(), username };
-	const response = await putRequest(url, data);
-	if (response.succeded) {
-		tournament.editPlayer(modal.getPlayerId(), username)
-		closeRegisterPlayerModal();
-	} else {
-		console.log(response);
-	}
 }
 
 const removePlayer = async (id) => {
@@ -55,9 +36,11 @@ const removePlayer = async (id) => {
     hideLoadingSpinner();
 }
 
-const openRegisterPlayerModal = (data) => {
-	modal.setData(data);
+const openRegisterPlayerModal = () => {
 	modal.open();
+	const newPlayerInputName = document.getElementById("newPlayerInputName");
+	if (newPlayerInputName)
+		newPlayerInputName.focus();
 }
 const closeRegisterPlayerModal = () => {
 	const addPlayerPassword = document.getElementById("addPlayerPassword");

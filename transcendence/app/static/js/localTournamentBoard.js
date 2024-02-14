@@ -86,7 +86,7 @@ const saveTournamentScore = async (match) => {
 				players: [match.player2.name],
 				score: match.score.player2Points
 			},
-			stage: tournament.schedule.currentStage
+			stage: tournament.state === "C" ? "Final" : "is not final"
 		}
 		const response = await postRequest(url, matchData);
 		if (!response.succeded)
