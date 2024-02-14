@@ -62,6 +62,13 @@ const scoreAfterGamePageLoader = (match) => {
 	scorePlayerTwoName.innerText = match.player2.name;
 	const scorePlayerTwoPoints = document.getElementById("scorePlayerTwoPoints");
 	scorePlayerTwoPoints.innerText = match.score.player2Points;
+	const defaultPic = "/static/images/profileIcon.png";
+	const player1Picture = document.getElementById("score1v1Player1Picture");
+	if (player1Picture)
+		player1Picture.setAttribute("src", match.player1.picture || defaultPic);
+	const player2Picture = document.getElementById("score1v1Player2Picture");
+	if (player2Picture)
+		player2Picture.setAttribute("src", match.player2.picture || defaultPic);
 }
 
 const continueAfterScorePage = () => {

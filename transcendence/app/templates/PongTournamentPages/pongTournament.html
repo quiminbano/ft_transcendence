@@ -1,5 +1,7 @@
 <div class="container-fluid" id="pongRegistrationContainer">
+    {{ user.get_username|json_script:"username" }}
+    {{ source|json_script:"picture" }}
     <div class="blackOverlay"></div>
     {% include "PongTournamentPages/tournamentLobby.html" %}
-	{% include "PongTournamentPages/addNewplayer.html" %}
+    {% include "PongTournamentPages/addNewplayer.html" %}
 </div>
