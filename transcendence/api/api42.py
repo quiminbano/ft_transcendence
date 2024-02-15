@@ -69,8 +69,10 @@ def storeIn42(loginUser):
     i = 1
     try:
         userIn42 = Users42.objects.filter(user_in_42=loginUser).get()
-        loginUser = userIn42.user_in_database
-        return loginUser
+        tempUser = userIn42.user_in_database
+        if userIn42.has_password:
+            return tempUser
+        userIn42.delete()
     except Users42.DoesNotExist:
         pass
     try:
@@ -102,7 +104,7 @@ def postGetRestInfo(request, data):
     expiration_time = data['expiration_time']
     destination = data['destination']
     jsonData = data['body_42']
-    loginUser = jsonData['login']
+    loginUser = data['loginUser']
     firstName = jsonData['first_name']
     lastName = jsonData['last_name']
     email = jsonData['email']
@@ -129,6 +131,13 @@ def postGetRestInfo(request, data):
     auth = authenticate(request, username=loginUser, password=password)
     login(request, auth)
     request.session["data"] = None
+    try:
+        instance_42 = Users42.objects.filter(user_in_database=loginUser).get()
+    except Users42.DoesNotExist:
+        return JsonResponse({"success": "false", "message": "Undefined error"}, status=400)
+    instance_42.has_password = True
+    instance_42.full_clean()
+    instance_42.save()
     return JsonResponse({"success": "true", "message": "success", "destination": destination}, status=200)
 
 #==========================================================================
@@ -191,6 +200,7 @@ def getLogin(token, expiration_time, refresh_token, destination, request):
     except Database.DoesNotExist:
         context = {
             "body_42": jsonData,
+            "loginUser": loginUser,
             "content": "set42password.html",
             "access_token": token,
             "refresh_token": refresh_token,
