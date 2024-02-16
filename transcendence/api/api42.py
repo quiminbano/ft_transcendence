@@ -1,8 +1,9 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDict
+from app.utils import setOffline
 from .models import Database, Users42
 from app.forms import password42
 from app.forms import ProfilePicture
@@ -23,7 +24,6 @@ def processImage(userModel : Database, imagePath : str):
     url = imagePath[23:]
     qdict = QueryDict('')
     connection = http.client.HTTPSConnection('cdn.intra.42.fr')
-    print(url)
     connection.request("GET", url)
     response = connection.getresponse()
     if response.status != 200:
@@ -113,7 +113,7 @@ def postGetRestInfo(request, data):
     password = form.cleaned_data['password1']
     coalition, errorFlag = getCoalition(id=id, token=token)
     if errorFlag == 1:
-        return JsonResponse({"success": "false", "message": "coalition fetching failed", "errors": "Fetching coalition failed"}, status=400)
+        return JsonResponse({"success": "false", "message": "coalition fetching failed", "errors": {"password2": "Fetching coalition failed"}}, status=400)
     user42 = Database.objects.create_user(loginUser, email, password)
     user42.username = loginUser
     user42.is_42 = True
@@ -134,7 +134,7 @@ def postGetRestInfo(request, data):
     try:
         instance_42 = Users42.objects.filter(user_in_database=loginUser).get()
     except Users42.DoesNotExist:
-        return JsonResponse({"success": "false", "message": "Undefined error"}, status=400)
+        return JsonResponse({"success": "false", "message": "Undefined error", "errors": {"password2": "Undefined error"}}, status=400)
     instance_42.has_password = True
     instance_42.full_clean()
     instance_42.save()
@@ -150,7 +150,7 @@ def deleteGetRestInfo(request, data):
         user42 = Users42.objects.filter(user_in_42=loginUser).get()
         user42.delete()
     except Users42.DoesNotExist:
-        return JsonResponse({"success": "false", "message": "Deleted failed"}, status=400)
+        return JsonResponse({"success": "false", "message": "Delete failed"}, status=400)
     return JsonResponse({"success": "true", "message": "Deleted successfuly"}, status=200)
 
 #=======================================================
@@ -189,8 +189,7 @@ def getLogin(token, expiration_time, refresh_token, destination, request):
     connection.request("GET", '/v2/me', headers=header)
     response = connection.getresponse()
     if response.status != 200:
-        print('ERROR')
-        return redirect('/')
+        return redirect('/login')
     bruteData = response.read()
     jsonData = json.loads(bruteData)
     loginUser = jsonData['login']
@@ -244,9 +243,18 @@ def getTokens(code, type, typeCode, destination, request):
         token = json.loads(bruteData).get('access_token')
         expiration_time = json.loads(bruteData).get('created_at') + json.loads(bruteData).get('expires_in')
         refresh_token = json.loads(bruteData).get('refresh_token')
+        return getLogin(token, expiration_time, refresh_token, destination, request)
+    if typeCode == 'code':
+        request.session["error_42"] = "Authentication with 42 failed"
     else:
-        print('ERROR') #Handle in the future with Andre.
-    return getLogin(token, expiration_time, refresh_token, destination, request)
+        request.session["error_42"] = "Your session with 42 is expired. Please login again"
+        request.user.is_login = False
+        setOffline(request.user)
+        logout(request)
+    return redirect('/')
+        
+
+
 
 #==========================================
 #         42 CALLBACK
@@ -254,9 +262,10 @@ def getTokens(code, type, typeCode, destination, request):
 
 def callback42(request):
     if request.user.is_authenticated:
-        redirect('/login')
+        redirect('/')
     code = request.GET.get('code') #if the callback was called successfully, we check if the code was sent to 42 to require the authentication token in the future.
     if code != None:
         return getTokens(code, 'authorization_code', 'code', '/', request) #if the code was sent by 42, we call the function getToken to request the access token.
     else:
-        return redirect('/') #if there is no token, we redirect the user to the main page. I guess this can be improved.
+        request.session["error_42"] = "Authentication with 42 failed"
+        return redirect('/') #if there is no code, we redirect the user to the main page. I guess this can be improved.

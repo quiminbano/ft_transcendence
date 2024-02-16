@@ -21,12 +21,11 @@ def dashboard(request):
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
-    is_42 = request.user.is_42
     matches = lastGames.copy()
     for match in matches:
         match = processMatch(match, request.user.username)
     stats = calculateStats(matches)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": matches, "stats": stats}
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "lastGames": matches, "stats": stats}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -57,7 +56,6 @@ def usersPage(request, name):
         return redirect("/404")
     data = json.loads(expectedUser.content.decode())
     #TODO: change this data to the real user data!!!!!!!!!
-    is_42 = request.user.is_42
     matches = lastGames.copy()
     for match in matches:
         match = processMatch(match, name)
@@ -77,8 +75,7 @@ def usersPage(request, name):
     context = {
         "content": "usersPage.html",
         "source": source,
-        "client": client,
-        "is_42" : is_42,
+        "client": client
     }
     return render(request, "index.html", context)
 
