@@ -12,7 +12,7 @@
 						<div class="col-12 col-sm-6 col-md-3">
 							<div class="twoVtwo-playerRequestDiv w-100 h-100">
 								<h5>Player 1</h5>
-								<p>{{user.get_username}}</p>
+								<p class="invite2v2PlayerName">{{user.get_username}}</p>
 								{{ user.get_username|json_script:"username" }}
 								{{ source|json_script:"picture" }}
 							</div>
@@ -35,7 +35,7 @@
 									</form>
 								</div>
 								<div id="player2-accepted" class="player-accepted">
-									<p id="player2-name"></p>
+									<p class="invite2v2PlayerName" id="player2-name"></p>
 									<button class="btn btn-danger" onclick="unregisterPlayer(2)">Unregister</button>
 									<p id="p2UnregisterError" class="inputError"></p>
 								</div>
@@ -59,7 +59,7 @@
 									</form>
 								</div>
 								<div id="player3-accepted" class="player-accepted">
-									<p id="player3-name"></p>
+									<p class="invite2v2PlayerName" id="player3-name"></p>
 									<button class="btn btn-danger" onclick="unregisterPlayer(3)">Unregister</button>
 									<p id="p3UnregisterError" class="inputError"></p>
 								</div>
@@ -83,7 +83,7 @@
 									</form>
 								</div>
 								<div id="player4-accepted" class="player-accepted">
-									<p id="player4-name"></p>
+									<p class="invite2v2PlayerName" id="player4-name"></p>
 									<button class="btn btn-danger" onclick="unregisterPlayer(4)">Unregister</button>
 									<p id="p4UnregisterError" class="inputError"></p>
 								</div>
