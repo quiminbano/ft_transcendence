@@ -83,6 +83,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
 }
 .teamPlayersPicture {
 	width: 150px;
@@ -93,8 +94,16 @@
 }
 .teamPlayersName {
 	margin-top: 15px;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .score2v2Points {
 	font-size: 20px;
+}
+
+.invite2v2PlayerName {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
