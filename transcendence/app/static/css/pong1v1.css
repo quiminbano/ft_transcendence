@@ -68,10 +68,17 @@
 }
 
 .playerScore1v1Picture {
-	width: 200px;
+	width: 100%;
+	max-width: 200px;
 	height: 200px;
 	object-fit: cover;
 	object-position: center;
 	border-radius: 10px;
 	margin-bottom: 25px;
+}
+
+.splashPlayerName {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 45vw;
 }

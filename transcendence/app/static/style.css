@@ -287,6 +287,11 @@ body {
 	font-family: PressStart;
 	text-align: center;
 }
+#dashboardUserProfileName {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+}
 .coalitionArea {
 	display: flex;
 	flex-direction: column;

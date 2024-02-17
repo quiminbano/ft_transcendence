@@ -15,6 +15,8 @@
 #nextHomePlayerName,
 #nextAwayPlayerName {
 	font-size: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #pongTournamentStart * {
@@ -63,10 +65,13 @@
 }
 
 #localWinnerUsername {
-	font-size: 18px;
+	font-size: 20px;
 	font-family: PressStart;
 	color: whitesmoke;
 	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 25px;
 }
 
 /*SCORE AFTER GAME PAGE*/
@@ -85,13 +90,15 @@
 #afterGameScoreBox *{
 	font-family: PressStart;
 	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 #scoreGameStage {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 .scorePlayerDiv {
-	margin: 10px 20px;
+	margin: 10px 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -120,6 +127,4 @@
 .firework {
 	width: 300px;
 }
-#localWinnerUsername {
-	font-size: 20px;
-}
+
