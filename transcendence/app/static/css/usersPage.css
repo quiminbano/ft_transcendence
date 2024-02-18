@@ -36,6 +36,11 @@
 	position: relative;
 	overflow: visible;
 }
+#userName {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 #friendAvatar {
 	position: absolute;
 	border-radius: 10px;
