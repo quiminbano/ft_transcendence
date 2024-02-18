@@ -3,11 +3,13 @@ const loadStats = async () => {
 		const statsData = JSON.parse(document.getElementById('stats').textContent);
 		const winPercentChart = new CircleChart(120, 120);
 		await winPercentChart.createFragment();
-		winPercentChart.setPercent(statsData.totalWins / statsData.totalGames * 100);
+		const winPercent = Math.round(statsData.totalWins / statsData.totalGames * 100);
+		winPercentChart.setPercent(winPercent);
 		winPercentChart.appendFragment("winPercentChart");
 		const loosePercentChart = new CircleChart(120, 120);
 		await loosePercentChart.createFragment();
-		loosePercentChart.setPercent(statsData.totalLooses / statsData.totalGames *100);
+		const loosePercent = Math.round(statsData.totalLooses / statsData.totalGames * 100);
+		loosePercentChart.setPercent(loosePercent);
 		loosePercentChart.appendFragment("loosePercentChart");
 	} catch (error) {
 
