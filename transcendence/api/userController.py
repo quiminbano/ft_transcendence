@@ -172,6 +172,7 @@ def getUserStats(user):
                 "score" : match.team1.score,
                 "players" : [{
                     "username" : player.username,
+                    'avatar_image': stringifyImage(player) if player.avatar_image else None
                 } for player in match.team1.players.all()],
             },
             "teamTwo" : {
@@ -180,7 +181,8 @@ def getUserStats(user):
                 "score" : match.team2.score,
                 "players" : [{
                     "username" : player.username,
-                } for player in match.team1.players.all()],
+                    'avatar_image': stringifyImage(player) if player.avatar_image else None
+                } for player in match.team2.players.all()],
             },
             "date" : match.date,
         } for match in user.completed_matches.all()],
