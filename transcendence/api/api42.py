@@ -85,6 +85,8 @@ def storeIn42(loginUser):
             i += 1
     except Database.DoesNotExist:
         pass
+    if len(tempUser) > 150:
+        return None
     newUser = Users42(user_in_42=loginUser, user_in_database=tempUser)
     newUser.full_clean()
     newUser.save()
@@ -194,6 +196,9 @@ def getLogin(token, expiration_time, refresh_token, destination, request):
     jsonData = json.loads(bruteData)
     loginUser = jsonData['login']
     loginUser = storeIn42(loginUser)
+    if loginUser == None:
+        request.session["error_42"] = "Error creating the 42 user"
+        return redirect('/')
     try:
         user42 = Database.objects.filter(username=loginUser).get()
     except Database.DoesNotExist:
