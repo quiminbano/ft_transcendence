@@ -95,6 +95,11 @@
 	padding: 10px 20px;
 }
 
+.userLastGamesBox p {
+	width: 100%;
+	text-align: center;
+}
+
 .active {
 	display: block !important;
 }

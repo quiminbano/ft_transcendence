@@ -30,8 +30,9 @@ def dashboard(request):
     matches = matchesList.copy()
     for match in matches:
         match = processUserMatch(match, request.user.username)
+    reversedMatches = matches[::-1]
     stats = setStats(data)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": matches, "stats": stats}
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": reversedMatches, "stats": stats}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -67,6 +68,7 @@ def usersPage(request, name):
     #TODO: change this data to the real user data!!!!!!!!!
     for match in matches:
         match = processUserMatch(match, name)
+    reversedMatches = matches[::-1]
     info = {
         "username": name,
         "online": data["online_status"],
@@ -78,7 +80,7 @@ def usersPage(request, name):
     client = {
         "info": info,
         "stats": stats,
-        "lastGames": matches
+        "lastGames": reversedMatches
     }
     context = {
         "content": "usersPage.html",
