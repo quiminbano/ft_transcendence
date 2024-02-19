@@ -3,7 +3,10 @@ class FragmentGenerator {
         this.url = url;
     }
     #getTemplate = async () => {
-        const response = await fetch(this.url);
+        const response = await fetch(this.url, {
+			method: "GET",
+			headers: {flag: true}
+		});
         const html = await response.text();
         return html;
     }

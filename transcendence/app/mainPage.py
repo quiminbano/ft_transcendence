@@ -6,7 +6,6 @@ from .utils import setOnline
 
 def index(request):
     error = request.session.get("error_42")
-    print('This is error:', error)
     if (request.user.is_authenticated) and (error == None):
         setOnline(user=request.user)
         return dashboard(request)

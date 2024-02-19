@@ -55,9 +55,7 @@ def pongInterfaceWithId(request, id : int):
     if request.path == tournamentId:
         context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user)}
     elif request.path == startLocalTournament:
-        print(request.headers)
         if "flag" not in request.headers or not request.headers["flag"]:
-            print("does not have flag")
             return redirect("/404")
         context = {"content": "PongTournamentPages/tournamentStart.html"}
     elif request.path == remoteId:
