@@ -32,9 +32,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
 
 class TournamentForm(forms.Form):
-    player = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
-
+    player = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
 
 class SignupForm(CustomUserCreationForm):
     username = forms.CharField(label='Username',
@@ -52,18 +51,24 @@ class SignupForm(CustomUserCreationForm):
     ), widget=forms.RadioSelect)
     password1 = forms.CharField(
         label='password',
-        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"}),
+        max_length=128
     )
     password2 = forms.CharField(
         label='Confirm password',
-        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
+        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"}),
+        max_length=128
     )
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
+
+        if len(username) > 150:
+            raise ValidationError("Username is too long")
+
         new = Database.objects.filter(username = username)
         if new.count():
-            raise ValidationError("User Already Exist")
+            raise ValidationError("Usename Already Exist")
         return username
 
     def email_clean(self):
@@ -78,7 +83,11 @@ class SignupForm(CustomUserCreationForm):
         password2 = self.cleaned_data['password2']
 
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Password don't match")
+            raise ValidationError("Passwords don't match")
+
+        if len(password2) > 150:
+            raise ValidationError("Password is too long")
+
         return password2
 
     def save(self, commit = True):
@@ -106,25 +115,29 @@ class ChangeProfile(forms.Form):
     username = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}),
         min_length=5,
-        max_length=100
+        max_length=150
         )
     firstName = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}),
         required=False,
+        max_length=150
         )
     lastName = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False
+        required=False,
+        max_length=150
         )
     password1 = forms.CharField(
         label="New password",
         widget=forms.PasswordInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
+        max_length=128,
         required=False
     )
     password2 = forms.CharField(
         label="Confirm new password",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
+        max_length=128,
         required=False
     )
     email = forms.EmailField(
@@ -133,7 +146,8 @@ class ChangeProfile(forms.Form):
     )
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
-        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"},),
+        max_length=128
     )
 
     def isPasswordValid(self, userModel : Database):
@@ -193,12 +207,14 @@ class password42(forms.Form):
         label="New password",
         widget=forms.PasswordInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
-        min_length=8
+        min_length=8,
+        max_length=128
     )
     password2 = forms.CharField(
         label="Confirm new password",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        min_length=8
+        min_length=8,
+        max_length=128
     )
 
     def clean_password2(self):
@@ -206,6 +222,10 @@ class password42(forms.Form):
         password2 = self.cleaned_data['password2']
 
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Password don't match")
+            raise ValidationError("Passwords don't match")
+
+        if len(password2) > 128:
+            raise ValidationError("Password is too long")
+
         return password2
 

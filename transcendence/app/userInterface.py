@@ -21,7 +21,6 @@ def dashboard(request):
     coallition = request.user.coallition
     form = ProfilePicture()
     source = stringifyImage(request.user)
-    is_42 = request.user.is_42
     expectedUser = getUser(request, request.user.username)
     if expectedUser == None:
         return redirect("/404")
@@ -32,7 +31,7 @@ def dashboard(request):
         match = processUserMatch(match, request.user.username)
     reversedMatches = matches[::-1]
     stats = setStats(data)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": reversedMatches, "stats": stats}
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "lastGames": reversedMatches, "stats": stats}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -56,7 +55,6 @@ def usersPage(request, name):
         setOffline(user=request.user)
         logout(request)
         return redirect('/login')
-    is_42 = request.user.is_42
     setOnline(user=request.user) 
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
@@ -85,8 +83,7 @@ def usersPage(request, name):
     context = {
         "content": "usersPage.html",
         "source": source,
-        "client": client,
-        "is_42" : is_42,
+        "client": client
     }
     return render(request, "index.html", context)
 
