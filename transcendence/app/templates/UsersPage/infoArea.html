@@ -28,6 +28,7 @@
         </div>
     </div>
 </div>
+{% if client.info.username != user.get_username %}
 <div class="row">
     <div class="col-12">
 		{{ client.info.username|json_script:"username" }}
@@ -37,3 +38,4 @@
         <button class="btn btn-success w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'F' %} nonActive {% endif %}" onclick="inviteToBeFriend('{{client.info.username}}')" id="addFriendBtn">Add as friend</button>
     </div>
 </div>
+{% endif %}
