@@ -15,6 +15,13 @@ def index(request):
     if error is not None:
         errorString = error
         request.session["error_42"] = None
+        error_flag = request.session.get("error_42_flag")
+        if error_flag is None:
+            request.session["error_42_flag"] = "1"
+            request.session["error_42"] = errorString
+        else:
+            request.session["error_42_flag"] = None
+            request.session["error_42"] = None
     else:
         errorString = ""
     context = {
