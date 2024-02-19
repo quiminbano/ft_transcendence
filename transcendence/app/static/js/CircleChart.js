@@ -10,7 +10,10 @@ class CircleChart {
         const parser = new DOMParser();
         const url = "/getDoc/circleChart";
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+				method: "GET",
+				headers: {flag: true}
+			});
             const html = await response.text();
             const doc = parser.parseFromString(html, 'text/html');
             const content = doc.body.innerHTML;

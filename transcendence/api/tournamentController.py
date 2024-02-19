@@ -48,7 +48,6 @@ def unknownMethod():
 
 def saveTournament(request, tournament, winnerTeam):
     for player in tournament.players.all():
-        print ("player in tournament: ", player)
         player.tournaments_played += 1
         if winnerTeam.players.filter(username=player).first():
             player.tournaments_won += 1
@@ -67,7 +66,6 @@ def tournamentAddPlayer(playerName, password, existing_tournament):
         return JsonResponse({'error': 'Player already in match'}, status=400)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
         return JsonResponse({'error': 'Too many players'}, status=400)
-    print ("adding player ", player)
     existing_tournament.players.add(player)
     playerToReturn = {
         "username": player.username,

@@ -91,7 +91,10 @@ class LocalTournament {
 		const parser = new DOMParser();
         const url = "/getDoc/registerPlayer";
 		try {
-			const response = await fetch(url);
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {flag: true}
+			});
 			const html = await response.text();
             const doc = parser.parseFromString(html, 'text/html');
 
