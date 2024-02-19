@@ -3,17 +3,17 @@
         <p class="matchDate">{{match.date}}</p>
     </div>
     <div class="col-12 col-md-5">
-        <h5>Opponent{% if match.opponentTeam|length > 1 %}s{% endif %}</h5>
+        <h5>Opponent{% if match.opponentTeam.players|length > 1 %}s{% endif %}</h5>
         <div class="row g-0">
             <div class="col-12 d-flex align-items-center justify-content-around flex-wrap">
-            {% for user in match.opponentTeam.players %}
+                {% for user in match.opponentTeam.players %}
                 <div class="d-flex justify-content-center align-items-center flex-column opponentInfo">
                     <img alt="opponent picture"
                          class="playedMatchOpponentPic"
-                         src="/static/images/profileIcon.png" />
-                    <p>{{user.name}}</p>
+                         src="{{ user.avatar_image|default:'/static/images/profileIcon.png' }}" />
+                    <p>{{user.username}}</p>
                 </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         </div>
     </div>

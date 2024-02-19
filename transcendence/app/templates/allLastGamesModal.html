@@ -13,11 +13,11 @@
                     <div class="col-12" id="lastGamesArea">
                         <div class="d-flex align-items-center justify-content-center flex-column w-100">
                             {% for match in lastGames %}
-                            <div class="col-12 dashboard-lastGameItem">
-                                {% include "lastGamesItem.html" %}
+                               <div class="col-12 dashboard-lastGameItem {% if match.myTeam.winner %}gameWin{% else %}gameLoose{% endif %}">
+                                    {% include "lastGamesItem.html" %}
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                        </div>
                     </div>
                 </div>
             </div>

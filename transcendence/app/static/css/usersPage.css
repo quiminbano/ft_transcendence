@@ -36,6 +36,11 @@
 	position: relative;
 	overflow: visible;
 }
+#userName {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 #friendAvatar {
 	position: absolute;
 	border-radius: 10px;
@@ -93,6 +98,11 @@
 
 .userLastGamesBox {
 	padding: 10px 20px;
+}
+
+.userLastGamesBox p {
+	width: 100%;
+	text-align: center;
 }
 
 .active {

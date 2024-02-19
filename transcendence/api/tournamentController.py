@@ -111,12 +111,13 @@ def deleteTournament(request, tournament):
 #==========================================
 #        | MATCH | Functions
 #==========================================
-def updatePlayers(teamData, match, team):
+def updatePlayers(teamData, match, team, otherTeamScore):
     for player in teamData:
         playerObj = Database.objects.filter(username=player).first()
         if playerObj is not None:
             playerObj.completed_matches.add(match)
             playerObj.total_points_scored += team.score
+            playerObj.total_points_conceded += otherTeamScore
             playerObj.matches_played += 1
             if team.winner:
                 playerObj.matches_won += 1
@@ -126,45 +127,35 @@ def updatePlayers(teamData, match, team):
 
 def tournamentAddMatch(request, existing_tournament):
     data = json.loads(request.body)
-    print (data)
-    if 'teamOne' not in data or 'teamTwo' not in data or 'players' not in data['teamOne']or 'players' not in data['teamTwo'] or 'score' not in data['teamTwo'] or 'score' not in data['teamOne']:
+    if 'teamOne' not in data or 'teamTwo' not in data or 'players' not in data['teamOne'] or 'players' not in data['teamTwo'] or 'score' not in data['teamTwo'] or 'score' not in data['teamOne']:
         return JsonResponse({'error': 'missing felds in body'}, status=400)
     teamOne = data["teamOne"]
     teamTwo = data["teamTwo"]
 
-    print ("0.5")
     match = Match.objects.create()
-    print ("1")
     team1 = Team.objects.create()
     team1.score = teamOne['score']
     team2 = Team.objects.create()
     team2.score = teamTwo['score']
-    print ("team1 score", team1.score)
-    print ("team2 score", team2.score)
     if team1.score > team2.score:
         winnerTeam = team1
     else:
         winnerTeam = team2
     winnerTeam.winner = True
-    print ("2")
-    updatePlayers(data["teamOne"]['players'], match, team1)
-    updatePlayers(data["teamTwo"]['players'], match, team2)
+    updatePlayers(data["teamOne"]['players'], match, team1, team2.score)
+    updatePlayers(data["teamTwo"]['players'], match, team2, team1.score)
 
 
-    print ("3")
     match.team1 = team1
     match.team2 = team2
     match.save()
-    print ("3.5")
     existing_tournament.matches.add(match)
 
-    print ("4")
     if 'stage' in data and data['stage'] == 'Final' and existing_tournament.matches.count() > 1:
         existing_tournament.completed = True
         existing_tournament.save()
         saveTournament(request, existing_tournament, winnerTeam)
 
-    print ("5")
     return JsonResponse({'message': 'Succefully saved match'}, status=200)
 
 
