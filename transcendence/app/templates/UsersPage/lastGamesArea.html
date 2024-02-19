@@ -2,7 +2,7 @@
 <div class="row g-0 userLastGamesBox">
     {%if client.lastGames|length > 0 %}
     {% for match in client.lastGames|slice:":3" %}
-    <div class="col-12 dashboard-lastGameItem {% if match.win %}gameWin{% else %}gameLoose{% endif %}">
+    <div class="col-12 dashboard-lastGameItem {% if match.myTeam.winner %}gameWin{% else %}gameLoose{% endif %}">
         {% include "lastGamesItem.html" %}
     </div>
     {% endfor %}

@@ -22,11 +22,17 @@ def dashboard(request):
     form = ProfilePicture()
     source = stringifyImage(request.user)
     is_42 = request.user.is_42
-    matches = lastGames.copy()
+    expectedUser = getUser(request, request.user.username)
+    if expectedUser == None:
+        return redirect("/404")
+    data = json.loads(expectedUser.content.decode())
+    matchesList = data["completed_matches"]
+    matches = matchesList.copy()
     for match in matches:
-        match = processMatch(match, request.user.username)
-    stats = calculateStats(matches)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": matches, "stats": stats}
+        match = processUserMatch(match, request.user.username)
+    reversedMatches = matches[::-1]
+    stats = setStats(data)
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "is_42" : is_42, "lastGames": reversedMatches, "stats": stats}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -50,17 +56,19 @@ def usersPage(request, name):
         setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    is_42 = request.user.is_42
     setOnline(user=request.user) 
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
     if expectedUser == None:
         return redirect("/404")
     data = json.loads(expectedUser.content.decode())
+    matchesList = data["completed_matches"]
+    matches = matchesList.copy()
     #TODO: change this data to the real user data!!!!!!!!!
-    is_42 = request.user.is_42
-    matches = lastGames.copy()
     for match in matches:
-        match = processMatch(match, name)
+        match = processUserMatch(match, name)
+    reversedMatches = matches[::-1]
     info = {
         "username": name,
         "online": data["online_status"],
@@ -68,11 +76,11 @@ def usersPage(request, name):
         "coallition": data["coallition"],
         "picture": data["avatar_image"]
     }
-    stats = calculateStats(matches)
+    stats = setStats(data)
     client = {
         "info": info,
         "stats": stats,
-        "lastGames": matches
+        "lastGames": reversedMatches
     }
     context = {
         "content": "usersPage.html",
@@ -201,88 +209,25 @@ def settings(request):
         case "PUT":
             return putSettings(request)
 
-
-def processMatch(match, userName):
-    match["score"] = str(match["teams"][0]["score"])
-    match["score"] += "-"
-    match["score"] += str(match["teams"][1]["score"])
-    for team in match["teams"]:
-        for player in team["players"]:
-            if (player["name"] == userName):
-                for opponentTeam in match["teams"]:
-                    if opponentTeam != team:
-                        match["opponentTeam"] = opponentTeam
-                        match["myTeam"] = team
-                        if opponentTeam["score"] > team["score"]:
-                            match["win"] = False
-                        else:
-                            match["win"] = True
-                        return match
-
-def calculateStats(matches):
-    stats = {
-        "totalGames": 0,
-        "totalWins": 0,
-        "totalLooses": 0,
-        "totalPointsScored": 0,
-        "totalPointsConceeded": 0
-    }
-    for match in matches:
-        stats["totalGames"] += 1
-        try:
-            if match["win"]:
-                stats["totalWins"] += 1
-            else:
-                stats["totalLooses"] += 1
-            stats["totalPointsScored"] += match["myTeam"]["score"]
-            stats["totalPointsConceeded"] += match["opponentTeam"]["score"]
-        except KeyError:
-            pass
+def processUserMatch(match, userName):
+    match["score"] = str(match["teamOne"]["score"]) + "-" + str(match["teamTwo"]["score"])
+    for player in match["teamOne"]["players"]:
+        if player["username"] == userName:
+            match["myTeam"] = match["teamOne"]
+            match["opponentTeam"] = match["teamTwo"]
+            return match
+    for player in match["teamTwo"]["players"]:
+        if player["username"] == userName:
+            match["myTeam"] = match["teamTwo"]
+            match["opponentTeam"] = match["teamOne"]
+            return match
+    
+def setStats(stats):
+    stats["totalGames"] = stats["matches_played"]
+    stats["totalWins"] = stats["matches_won"]
+    stats["totalLooses"] = stats["matches_played"] - stats["matches_won"]
+    stats["totalPointsScored"] = stats["total_points_scored"]
+    stats["totalPointsConceeded"] = stats["total_points_conceded"]
+    stats["totalTournaments"] = stats["tournaments_played"]
+    stats["totalTournamentsWon"] = stats["tournaments_won"]
     return stats
-
-lastGames = [
-    {
-        "id": 0,
-        "date":"2-2-2024",
-        "teams": [
-            {
-                "id": 0,
-                "score": 3,
-                "players": [
-                    {"name": "Carlos", "avatarPic": ""},
-                    {"name": "Lucas", "avatarPic": ""}
-                ]
-            },
-            {
-                "id": 1,
-                "score": 5,
-                "players": [
-                    {"name": "andrferr", "avatarPic": ""},
-                    {"name": "Hans", "avatarPic": ""}
-                ]
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "date":"2-3-2024",
-        "teams": [
-            {
-                "id": 0,
-                "score": 4,
-                "players": [
-                    {"name": "Carlos", "avatarPic": ""},
-                    {"name": "Lucas", "avatarPic": ""}
-                ]
-            },
-            {
-                "id": 1,
-                "score": 2,
-                "players": [
-                    {"name": "andrferr", "avatarPic": ""},
-                    {"name": "Hans", "avatarPic": ""}
-                ]
-            }
-        ]
-    },
-]
