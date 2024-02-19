@@ -46,6 +46,9 @@ const closeRegisterPlayerModal = () => {
 	const newPlayerInputName = document.getElementById("newPlayerInputName");
 	if (newPlayerInputName)
 		newPlayerInputName.value = "";
+	const addNewPlayerErrorMessage = document.getElementById("addNewPlayerErrorMessage");
+	if (addNewPlayerErrorMessage) {}
+		addNewPlayerErrorMessage.innerText = ""
 	modal.close();
 }
 
