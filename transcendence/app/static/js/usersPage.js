@@ -16,4 +16,3 @@ const challengeForPong = async () => {
 		if (pininput)
 			pininput.focus();
 }
-
