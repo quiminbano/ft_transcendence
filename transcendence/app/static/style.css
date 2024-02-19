@@ -66,6 +66,17 @@ body {
 	text-align: center;
 }
 
+.error42div {
+	max-width: 80vw;
+	padding: 30px;
+	background-color: whitesmoke;
+}
+
+.error42div p {
+	color: black;
+	font-family: PressStart;
+}
+
 #homepageButtons {
 	margin-top: 10vh;
 	display: flex;
