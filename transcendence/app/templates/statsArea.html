@@ -7,10 +7,10 @@
         </div>
         <div class="row">
             <div class="col-12">
-                {{ lastGames|json_script:"lastGames" }}
                 {{ stats|json_script:"stats" }}
                 <div class="row">
                     <div class="col-12 d-flex justify-content-around align-items-center">
+						{% if stats.totalGames > 0 %}
                         <div class="chartArea d-flex justify-content-center align-items-center flex-column text-center">
                             <p class="stats-subtitle">Percentage of wins</p>
                             <div id="winPercentChart"></div>
@@ -19,6 +19,7 @@
                             <p class="stats-subtitle">Percentage of losses</p>
                             <div id="loosePercentChart"></div>
                         </div>
+						{% endif %}
                     </div>
                     <div class="col-12 d-flex justify-content-around align-items-center">
                         <div class="statsInfo text-center">

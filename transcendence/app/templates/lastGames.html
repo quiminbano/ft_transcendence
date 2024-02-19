@@ -4,6 +4,9 @@
     </div>
     <div class="col-12">
         <div class="row g-0">
+			{% if lastGames|length == 0 %}
+				<p class="text-center w-100">No games played yet</p>
+			{% endif %}
             {% for match in lastGames|slice:":3" %}
             <div class="col-12 dashboard-lastGameItem {% if match.myTeam.winner %}gameWin{% else %}gameLoose{% endif %}">
                 {% include "lastGamesItem.html" %}
