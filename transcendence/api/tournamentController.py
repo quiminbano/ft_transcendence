@@ -219,7 +219,8 @@ def tournamentPlayerManager(request, id=None):
                 form = TournamentForm(data)
                 if not form.is_valid():
                     errors = {field: form.errors[field][0] for field in form.errors}
-                    return JsonResponse({"success": "false", "error":errors}, status=400)
+                    reason = next(val for val in errors.values())
+                    return JsonResponse({"success": "false", "error":reason}, status=400)
                 return tournamentAddPlayer(data['player'], data['password'], existing_tournament)
             case "DELETE":
                 return tournamentDeletePlayer(data['player'], existing_tournament)
