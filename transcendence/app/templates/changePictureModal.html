@@ -1,17 +1,17 @@
 <div class="ModalContainer container-fluid">
 	<div class="ModalContainerBG" onclick="togglePictureModal()"></div>
 	<div id="changePictureBox">
-		<h4>Change Picture</h4>
+		<h4>{{ dashboardTexts.changePicture }}</h4>
 		<div class="dropArea">
 			<form enctype="multipart/form-data" id="updatePictureForm">
 				{% csrf_token %}
-				<p>Drop the image here or click to upload it</p>
+				<p>{{ dashboardTexts.dropDescription }}</p>
 				<img
 					id="previewUploadedImage"
 				/>
 				{{form.as_p}}
 			</form>
 		</div>
-		<button class="btn btn-success" id="saveUploadedPictureButton">Save</button>
+		<button class="btn btn-success" id="saveUploadedPictureButton">{{ dashboardTexts.saveButton }}</button>
 	</div>
 </div>

@@ -1,11 +1,11 @@
 <div class="row" id="lastGamesContainer">
     <div class="col-10 offset-1">
-        <h3 style="text-align:center">Last games</h3>
+        <h3 style="text-align:center">{{ dashboardTexts.lastGames }}</h3>
     </div>
     <div class="col-12">
         <div class="row g-0">
 			{% if lastGames|length == 0 %}
-				<p class="text-center w-100">No games played yet</p>
+				<p class="text-center w-100">{{ dashboardTexts.noGamesPlayed }}</p>
 			{% endif %}
             {% for match in lastGames|slice:":3" %}
             <div class="col-12 dashboard-lastGameItem {% if match.myTeam.winner %}gameWin{% else %}gameLoose{% endif %}">
@@ -14,7 +14,7 @@
             {% endfor %}
             {% if lastGames|length > 3 %}
             <div class="col-12 d-flex justify-content-end align-items-center">
-                <button class="showAllMatchesButton" onclick="openAllGamesModal()">Show all matches</button>
+                <button class="showAllMatchesButton" onclick="openAllGamesModal()">{{ dashboardTexts.showAllGames }}</button>
             </div>
             {% endif %}
         </div>

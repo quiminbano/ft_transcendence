@@ -24,3 +24,8 @@ def setOffline(user : Database):
     user.online_status = False
     user.full_clean()
     user.save()
+
+def getTextsForLanguage(dictionary):
+    language = "eng" #TODO: CHANGE THIS TO GET THE CORRECT LANGUAGE!!!!!!!
+    texts_for_language = {key: value.get(language, '') for key, value in dictionary.items()}
+    return texts_for_language
