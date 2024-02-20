@@ -6,7 +6,7 @@
             <div class="col-12 col-md-8 offset-md-2 col-xl-6 offset-xl-3">
                 <div class="row">
                     <div class="col-12">
-                        <h5 id="registeredPlayersTitle">Registered Players</h5>
+                        <h5 id="registeredPlayersTitle">{{ texts.registeredPlayers }}</h5>
                         <p id="currentNumberPlayers"></p>
                     </div>
                     <div class="col-12">
@@ -14,7 +14,7 @@
                         <button class="btn btn-success addNewPlayerBtn"
                                 onclick="openRegisterPlayerModal()"
                                 id="addNewPlayerButton">
-                            Add new player
+                            {{ texts.addNewPlayer }}
                             <img alt="add player button"
                                  src="/static/images/add.png"
                                  class="registerNewPlayerButtonIcon" />
@@ -22,20 +22,15 @@
                         <button class="btn btn-success addNewPlayerBtn"
                                 onclick="startTournament()"
                                 id="startTournamentBtn">
-                            Start
+                            {{ texts.start }}
                         </button>
                         <button class="btn btn-danger addNewPlayerBtn"
                                 onclick="cancelAndDeleteTournament()">
-                            Cancel
+                            {{ texts.cancel }}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-	<div id="loadingSpinnerContainer">
-		<div class="spinner-border text-primary" style="width: 100px; height: 100px;" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>
-	</div>
 </div>

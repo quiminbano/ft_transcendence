@@ -35,7 +35,8 @@ def pongInterface(request):
         case "/pong/tournament":
             context = {
                 "content": "PongTournamentPages/tournamentCreation.html",
-				"username": request.user.get_username
+				"username": request.user.get_username,
+                "texts": getTextsForLanguage(pages["tournament"])
             }
         case _:
             context = {"content": "index.html"}
@@ -55,7 +56,7 @@ def pongInterfaceWithId(request, id : int):
     startLocalTournament = tournamentId + "/start"
     remoteId = "/pong/remoteTournament/" + str(id)
     if request.path == tournamentId:
-        context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user)}
+        context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user), "texts": getTextsForLanguage(pages["tournament"])}
     elif request.path == startLocalTournament:
         if "flag" not in request.headers or not request.headers["flag"]:
             return redirect("/404")

@@ -4,17 +4,17 @@
 			<div id="tournmentCreationBox">
 				<div class="row">
 					<div class="col-12">
-						<h3 id="tournamentRegistrationTitle">Create a new tournament</h3>
+						<h3 id="tournamentRegistrationTitle">{{ texts.formTitle }}</h3>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12">
 						<form onsubmit="createTournament(event)" id="tournamentCreationForm">
 							<div class="form-group">
-								<label for="tournament_name">What is the name of your tournament?</label>
+								<label for="tournament_name">{{ texts.nameLabel }}</label>
 								<input type="text"
 										name="tournament_name"
-										placeholder="Tournament name"
+										placeholder="{{ texts.namePlaceholder }}"
 										class="form-control"
 										id="tournament_name"
 										required
@@ -22,7 +22,7 @@
 								/>
 							</div>
 							<div class="form-group">
-								<label for="totalPlayers">Choose number of players:</label>
+								<label for="totalPlayers">{{ texts.amountLabel }}</label>
 								<select id="totalPlayers" class="form-control" name="totalPlayers" required>
 									<option value="4">4</option>
 									<option value="8">8</option>
@@ -35,14 +35,14 @@
 									class="btn btn-success tournamentCreationButton"
 									style="width: 60%;"
 								>
-									Create
+									{{ texts.create }}
 								</button>
 								<button
 									type="button"
 									class="btn btn-danger tournamentCreationButton"
 									onclick="navigateTo('/pong')"
 								>
-									Cancel
+									{{ texts.cancel }}
 								</button>
 							</div>
 						</form>
