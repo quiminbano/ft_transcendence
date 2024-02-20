@@ -1,13 +1,13 @@
-dictionary = {
+﻿dictionary = {
     "lastGames": {
         "eng": "Last games",
-        "fin": "Viimeisimmät pelit",
-        "swe": "Senaste spel"
+        "fin": "Viimeiset pelit",
+        "swe": "Senaste spelen"
     },
     "noGamesPlayed": {
         "eng": "No games played yet",
-        "fin": "Ei peliä pelattu vielä",
-        "swe": "Inga spel har spelats än"
+        "fin": "Ei vielä pelattuja pelejä",
+        "swe": "Inga spel spelade ännu"
     },
     "showAllGames": {
         "eng": "Show all matches",
@@ -21,52 +21,52 @@ dictionary = {
     },
     "winPercent": {
         "eng": "Percentage of wins",
-        "fin": "Voittojen osuus",
+        "fin": "Voittoprosentti",
         "swe": "Vinstprocent"
     },
     "loosePercent": {
         "eng": "Percentage of losses",
-        "fin": "Häviöiden osuus",
+        "fin": "Häviöprosentti",
         "swe": "Förlustprocent"
     },
     "totalMatches": {
         "eng": "Total matches",
-        "fin": "Kaikki ottelut",
+        "fin": "Yhteensä pelatut ottelut",
         "swe": "Totalt antal matcher"
     },
     "totalWins": {
         "eng": "Total wins",
-        "fin": "Kaikki voitot",
+        "fin": "Voittojen kokonaismäärä",
         "swe": "Totalt antal vinster"
     },
     "totalLosses": {
         "eng": "Total losses",
-        "fin": "Kaikki häviöt",
+        "fin": "Häviöiden kokonaismäärä",
         "swe": "Totalt antal förluster"
     },
     "tournamentsPlayed": {
         "eng": "Tournaments played",
-        "fin": "Peliturnaukset pelattu",
-        "swe": "Spelade turneringar"
+        "fin": "",
+        "swe": ""
     },
     "tournamentsWon": {
         "eng": "Tournaments won",
-        "fin": "Peliturnaukset voittu",
+        "fin": "Voitetut turnaukset",
         "swe": "Vunna turneringar"
     },
     "totalPointsScored": {
         "eng": "Total points scored",
-        "fin": "Kaikki pisteet pistettynä",
+        "fin": "Kokonaispisteet",
         "swe": "Totalt antal poäng"
     },
     "totalPointsConceded": {
         "eng": "Total points conceded",
-        "fin": "Kaikki pisteet myönnetty",
-        "swe": "Totalt antal poäng som gavs"
+        "fin": "Kokonaispisteet päästetty",
+        "swe": "Totalt antal insläppta poäng"
     },
     "changePicture": {
         "eng": "Change picture",
-        "fin": "Vaihda kuvaa",
+        "fin": "Vaihda kuva",
         "swe": "Byt bild"
     },
     "dropDescription": {

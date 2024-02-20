@@ -11,7 +11,7 @@
 					<div class="row">
 						<div class="col-12 col-sm-6 col-lg-3">
 							<div class="twoVtwo-playerRequestDiv w-100 h-100">
-								<h5>Player 1</h5>
+								<h5>{{ texts.player1 }}</h5>
 								<p class="invite2v2PlayerName">{{user.get_username}}</p>
 								{{ user.get_username|json_script:"username" }}
 								{{ source|json_script:"picture" }}
@@ -19,72 +19,72 @@
 						</div>
 						<div class="col-12 col-sm-6 col-lg-3">
 							<div class="twoVtwo-playerRequestDiv w-100 h-100">
-								<h5>Player 2</h5>
+								<h5>{{ texts.player1 }}</h5>
 								<div id="player2-register" class="player-register">
 									<form onsubmit="confirmPlayer(event, 2)">
 										<p id="errorMessageP2Invite" class="inputError"></p>
 										<div class="form-group">
-											<label for="opponent2UsernameInput">Username</label>
+											<label for="opponent2UsernameInput">{{ texts.username }}</label>
 											<input class="form-control" type="text" id="opponent2UsernameInput" name="username" required autocomplete="on"/>
 										</div>
 										<div class="form-group">
-											<label for="opponent2PasswordInput">Password</label>
+											<label for="opponent2PasswordInput">{{ texts.password }}</label>
 											<input class="form-control" type="password" id="opponent2PasswordInput" name="password" required autocomplete="on"/>
 										</div>
-										<button class="btn btn-success w-100" type="submit">Confirm</button>
+										<button class="btn btn-success w-100" type="submit">{{ texts.confirm }}</button>
 									</form>
 								</div>
 								<div id="player2-accepted" class="player-accepted">
 									<p class="invite2v2PlayerName" id="player2-name"></p>
-									<button class="btn btn-danger" onclick="unregisterPlayer(2)">Unregister</button>
+									<button class="btn btn-danger" onclick="unregisterPlayer(2)">{{ texts.unregister }}</button>
 									<p id="p2UnregisterError" class="inputError"></p>
 								</div>
 							</div>
 						</div>
 						<div class="col-12 col-sm-6 col-lg-3">
 							<div class="twoVtwo-playerRequestDiv w-100 h-100">
-								<h5>Player 3</h5>
+								<h5>{{ texts.player3 }}</h5>
 								<div id="player3-register" class="player-register">
 									<form onsubmit="confirmPlayer(event, 3)">
 										<p id="errorMessageP3Invite" class="inputError"></p>
 										<div class="form-group">
-											<label for="opponent3UsernameInput">Username</label>
+											<label for="opponent3UsernameInput">{{ texts.username }}</label>
 											<input class="form-control"  type="text" id="opponent3UsernameInput" name="username" required autocomplete="on"/>
 										</div>
 										<div class="form-group">
-											<label for="opponent3PasswordInput">Password</label>
+											<label for="opponent3PasswordInput">{{ texts.password }}</label>
 											<input class="form-control" type="password" id="opponent3PasswordInput" name="password" required autocomplete="on"/>
 										</div>
-										<button class="btn btn-success w-100" type="submit">Confirm</button>
+										<button class="btn btn-success w-100" type="submit">{{ texts.confirm }}</button>
 									</form>
 								</div>
 								<div id="player3-accepted" class="player-accepted">
 									<p class="invite2v2PlayerName" id="player3-name"></p>
-									<button class="btn btn-danger" onclick="unregisterPlayer(3)">Unregister</button>
+									<button class="btn btn-danger" onclick="unregisterPlayer(3)">{{ texts.unregister }}</button>
 									<p id="p3UnregisterError" class="inputError"></p>
 								</div>
 							</div>
 						</div>
 						<div class="col-12 col-sm-6 col-lg-3">
 							<div class="twoVtwo-playerRequestDiv w-100 h-100">
-								<h5>Player 4</h5>
+								<h5>{{ texts.player4 }}</h5>
 								<div id="player4-register" class="player-register">
 									<form onsubmit="confirmPlayer(event, 4)">
 										<p id="errorMessageP4Invite" class="inputError"></p>
 										<div class="form-group">
-											<label for="opponent4UsernameInput">Username</label>
+											<label for="opponent4UsernameInput">{{ texts.username }}</label>
 											<input class="form-control" type="text" id="opponent4UsernameInput" name="username" required autocomplete="on"/>
 										</div>
 										<div class="form-group">
-											<label for="opponent4PasswordInput">Password</label>
+											<label for="opponent4PasswordInput">{{ texts.password }}</label>
 											<input class="form-control" type="password" id="opponent4PasswordInput" name="password" required autocomplete="on"/>
 										</div>
-										<button class="btn btn-success w-100" type="submit">Confirm</button>
+										<button class="btn btn-success w-100" type="submit">{{ texts.confirm }}</button>
 									</form>
 								</div>
 								<div id="player4-accepted" class="player-accepted">
 									<p class="invite2v2PlayerName" id="player4-name"></p>
-									<button class="btn btn-danger" onclick="unregisterPlayer(4)">Unregister</button>
+									<button class="btn btn-danger" onclick="unregisterPlayer(4)">{{ texts.unregister }}</button>
 									<p id="p4UnregisterError" class="inputError"></p>
 								</div>
 							</div>
@@ -95,12 +95,12 @@
 			{% include "Pong1v1Pages/twovtwoBoard.html" %}
 			<div class="row" id="play2v2ButtonArea">
                 <div class="col-12 col-md-6 offset-md-3 endGameButton">
-                    <button class="btn btn-success w-100" onclick="splash2v2()">Play</button>
+                    <button class="btn btn-success w-100" onclick="splash2v2()">{{ texts.play }}</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6 offset-md-3 endGameButton">
-                    <button class="btn btn-danger w-100" onclick="navigateTo('/pong/single')">Cancel Match</button>
+                    <button class="btn btn-danger w-100" onclick="navigateTo('/pong/single')">{{ texts.cancelMatch }}</button>
                 </div>
             </div>
         </div>

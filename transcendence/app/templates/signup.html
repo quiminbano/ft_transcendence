@@ -2,6 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12 col-md-6 offset-md-3">
+				{% include "changeLanguage.html" %}
 				<div id="sign-up-box">
 					<div class="row">
 						<div class="col-12">
@@ -26,13 +27,11 @@
 									<label for="{{ form.coallition.id_for_label }}" class="loginLabel">Coallition:</label>
 									<ul id="coallitionOptions">
 										{% for radio in form.coallition %}
-											<li class="coallitionOption">
-												<img
-													alt="coallition logo"
-													class="signupCoallitionLogo"
-												/>
-												{{ radio.tag }}
-											</li>
+										<li class="coallitionOption">
+											<img alt="coallition logo"
+												 class="signupCoallitionLogo" />
+											{{ radio.tag }}
+										</li>
 										{% endfor %}
 									</ul>
 								</div>
