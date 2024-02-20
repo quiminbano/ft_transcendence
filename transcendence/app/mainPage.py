@@ -2,7 +2,8 @@ from .userInterface import dashboard
 from django.shortcuts import render
 import urllib.parse
 from os import getenv
-from .utils import setOnline
+from .utils import setOnline, getTextsForLanguage
+from api.translations.translation import pages
 
 def index(request):
     error = request.session.get("error_42")
@@ -26,6 +27,8 @@ def index(request):
     context = {
         "content": "main.html",
         "url42" : "https://api.intra.42.fr/oauth/authorize?client_id=" + uid + "&redirect_uri=" + encodedCallback + "&response_type=code",
-        "error" : errorString
+        "error" : errorString,
+        "texts": getTextsForLanguage(pages["main"]),
+        "language": "eng"
     }
     return render(request, "index.html", context)

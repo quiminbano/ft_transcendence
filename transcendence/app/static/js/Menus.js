@@ -31,7 +31,6 @@ const loadSearchFunctionality = () => {
 		search.classList.remove("search");
 		search.classList.add("searchExpanded");
 		search.focus();
-		search.setAttribute("placeholder", "Search for friends");
 	} else if (search.classList.contains("searchExpanded")) {
 		hideDropdown(document.getElementById("dropdownMenu"));
 		setTimeout(() => {

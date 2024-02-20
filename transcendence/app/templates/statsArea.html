@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="row">
             <div class="col-10 offset-1">
-                <h3 style="text-align:center">Stats</h3>
+                <h3 style="text-align:center">{{ dashboardTexts.Stats }}</h3>
             </div>
         </div>
         <div class="row">
@@ -12,46 +12,46 @@
                     <div class="col-12 d-flex justify-content-around align-items-center">
 						{% if stats.totalGames > 0 %}
                         <div class="chartArea d-flex justify-content-center align-items-center flex-column text-center">
-                            <p class="stats-subtitle">Percentage of wins</p>
+                            <p class="stats-subtitle">{{ dashboardTexts.winPercent }}:</p>
                             <div id="winPercentChart"></div>
                         </div>
                         <div class="chartArea d-flex justify-content-center align-items-center flex-column text-center">
-                            <p class="stats-subtitle">Percentage of losses</p>
+                            <p class="stats-subtitle">{{ dashboardTexts.loosePercent }}:</p>
                             <div id="loosePercentChart"></div>
                         </div>
 						{% endif %}
                     </div>
                     <div class="col-12 d-flex justify-content-around align-items-center">
                         <div class="statsInfo text-center">
-                            <p class="stats-subtitle">Total matches</p>
+                            <p class="stats-subtitle">{{ dashboardTexts.totalMatches }}:</p>
                             <p>{{stats.totalGames}}</p>
                         </div>
                         <div class="statsInfo text-center">
-                            <p class="stats-subtitle">Total wins:</p>
+                            <p class="stats-subtitle">{{ dashboardTexts.totalWins }}:</p>
                             <p>{{stats.totalWins}}</p>
                         </div>
                         <div class="statsInfo text-center">
-                            <p class="stats-subtitle">Total losses:</p>
+                            <p class="stats-subtitle">{{ dashboard.totalLosses }}:</p>
                             <p>{{stats.totalLooses}}</p>
                         </div>
                     </div>
                     <div class="col-12 d-flex justify-content-around align-items-center">
                         <div class="text-center">
-                            <p class="stats-subtitle">Tournaments played</p>
+                            <p class="stats-subtitle">{{ dashboard.tournamentsPlayed }}</p>
                             <p>{{stats.totalTournaments}}</p>
                         </div>
                         <div class="text-center">
-                            <p class="stats-subtitle">Tournaments won</p>
+                            <p class="stats-subtitle">{{ dashboard.tournamentsWon }}</p>
                             <p>{{stats.totalTournamentsWon}}</p>
                         </div>
                     </div>
                     <div class="col-12 d-flex justify-content-around align-items-center">
                         <div class="text-center">
-                            <p class="stats-subtitle">Total Points Scored</p>
+                            <p class="stats-subtitle">{{ dashboardTexts.totalPointsScored }}</p>
                             <p>{{stats.totalPointsScored}}</p>
                         </div>
                         <div class="text-center">
-                            <p class="stats-subtitle">Total Points Conceeded</p>
+                            <p class="stats-subtitle">{{ dashboardTexts.totalPointsConceded }}</p>
                             <p>{{stats.totalPointsConceeded}}</p>
                         </div>
                     </div>

@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
-from .utils import stringifyImage, setOffline, setOnline
+from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage
 from api.userController import getUser
 from api.api42 import getTokens
 import json
 import time
+from api.translations.translation import pages
 
 #@login_required(login_url="/login")
 def dashboard(request):
@@ -31,7 +32,7 @@ def dashboard(request):
         match = processUserMatch(match, request.user.username)
     reversedMatches = matches[::-1]
     stats = setStats(data)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "lastGames": reversedMatches, "stats": stats}
+    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "lastGames": reversedMatches, "stats": stats, "menus": getTextsForLanguage(pages["menus"]), "dashboardTexts": getTextsForLanguage(pages["dashboard"])}
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
