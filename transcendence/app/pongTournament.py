@@ -29,7 +29,7 @@ def pongInterface(request):
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle1v1"])}
         case "/pong/single/2v2":
-            context={"content": "Pong1v1pages/twoVtwo.html", "source": source}
+            context={"content": "Pong1v1pages/twoVtwo.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle2v2"])}
         case "/pong/single":
           context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle"])}
         case "/pong/tournament":

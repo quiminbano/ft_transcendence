@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-6">
                     <div class="d-flex justify-content-center">
                         <div class="endGamePointsDiv">
-                            <p>Team 1</p>
+                            <p>{{ texts.team1 }}</p>
                             <div class="teamPlayersPictureDiv">
                                 <div class="teamPlayerInfo">
                                     <img alt="Player one picture"
@@ -28,7 +28,7 @@
                 <div class="col-12 col-md-6">
                     <div class="d-flex justify-content-center">
                         <div class="endGamePointsDiv">
-                            <p>Team 2</p>
+                            <p>{{ texts.team2 }}</p>
                             <div class="teamPlayersPictureDiv">
                                 <div class="teamPlayerInfo">
                                     <img alt="Player three picture"
@@ -50,10 +50,10 @@
             </div>
             <div class="row">
                 <div class="col-12 endGameButton">
-                    <button class="btn btn-success w-100" onclick="play2v2Again()">Play Again</button>
+                    <button class="btn btn-success w-100" onclick="play2v2Again()">{{ texts.playAgain }}</button>
                 </div>
                 <div class="col-12 endGameButton">
-                    <button class="btn btn-secondary w-100" onclick="twoVtwoContinue()">Continue</button>
+                    <button class="btn btn-secondary w-100" onclick="twoVtwoContinue()">{{ texts.continue }}</button>
                 </div>
             </div>
         </div>
