@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-6">
                     <div class="d-flex justify-content-center">
                         <div class="endGamePointsDiv">
-                            <p class="playerDescription">Player 1</p>
+                            <p class="playerDescription">{{ texts.player1 }}</p>
                             <p class="playerName">{{ user.get_username }}</p>
                             <img alt="player one picture" class="playerScore1v1Picture" id="score1v1Player1Picture"/>
                             <p id="playerOnePoints" class="scorePoints1v1"></p>
@@ -15,7 +15,7 @@
                 <div class="col-12 col-md-6">
                     <div class="d-flex justify-content-center">
                         <div class="endGamePointsDiv">
-                            <p class="playerDescription">Player 2</p>
+                            <p class="playerDescription">{{ texts.player2 }}</p>
                             <p class="playerName" id="opponentName"></p>
                             <img alt="player two picture" class="playerScore1v1Picture" id="score1v1Player2Picture" />
                             <p id="playerTwoPoints" class="scorePoints1v1"></p>
@@ -25,10 +25,10 @@
             </div>
             <div class="row">
                 <div class="col-12 endGameButton">
-                    <button class="btn btn-success w-100" onclick="play1v1Again()">Play Again</button>
+                    <button class="btn btn-success w-100" onclick="play1v1Again()">{{ texts.playAgain }}</button>
                 </div>
                 <div class="col-12 endGameButton">
-                    <button class="btn btn-secondary w-100" onclick="oneVoneContinue()">Continue</button>
+                    <button class="btn btn-secondary w-100" onclick="oneVoneContinue()">{{ texts.continue }}</button>
                 </div>
             </div>
         </div>
