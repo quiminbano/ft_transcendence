@@ -13,7 +13,7 @@ def index(request):
     uid = getenv('UID')
     encodedCallback = urllib.parse.quote(getenv('REDIRECT_URI'), safe='')
     language = request.session.get("lang")
-    if (language is not "eng") and (language is not "fin") and (language is not "swe"):
+    if (language != "eng") and (language != "fin") and (language != "swe"):
         request.session["lang"] = "eng"
     if error is not None:
         errorString = error

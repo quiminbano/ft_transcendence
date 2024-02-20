@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 import json
 
 def	setLanguage(request):
-    if request.method is not "POST":
+    if request.method != "POST":
         return redirect('/404')
     if not request.headers.get('flag'):
         return redirect('/404')
@@ -11,7 +11,7 @@ def	setLanguage(request):
     except json.JSONDecodeError:
         return redirect('/404')
     try:
-        language = data['lang']
+        language = data['language']
     except KeyError:
         return redirect('/404')
     destination = request.headers.get('destination')
