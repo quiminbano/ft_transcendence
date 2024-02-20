@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+﻿from django.shortcuts import render, redirect
 from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage
 from django.contrib.auth import logout
 from api.api42 import getTokens
@@ -27,15 +27,16 @@ def pongInterface(request):
                 "texts": getTextsForLanguage(pages["pong"])
             }
         case "/pong/single/1v1":
-            context={"content": "Pong1v1pages/OnevOne.html", "source": source}
+            context={"content": "Pong1v1pages/OnevOne.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle1v1"])}
         case "/pong/single/2v2":
-            context={"content": "Pong1v1pages/twoVtwo.html", "source": source}
+            context={"content": "Pong1v1pages/twoVtwo.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle2v2"])}
         case "/pong/single":
-          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source}
+          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle"])}
         case "/pong/tournament":
             context = {
                 "content": "PongTournamentPages/tournamentCreation.html",
-				"username": request.user.get_username
+				"username": request.user.get_username,
+                "texts": getTextsForLanguage(pages["tournament"])
             }
         case _:
             context = {"content": "index.html"}
@@ -55,11 +56,11 @@ def pongInterfaceWithId(request, id : int):
     startLocalTournament = tournamentId + "/start"
     remoteId = "/pong/remoteTournament/" + str(id)
     if request.path == tournamentId:
-        context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user)}
+        context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user), "texts": getTextsForLanguage(pages["tournament"])}
     elif request.path == startLocalTournament:
         if "flag" not in request.headers or not request.headers["flag"]:
             return redirect("/404")
-        context = {"content": "PongTournamentPages/tournamentStart.html"}
+        context = {"content": "PongTournamentPages/tournamentStart.html", "texts": getTextsForLanguage(pages["tournamentBoard"])}
     elif request.path == remoteId:
         context = {"content": "PongTournamentPages/remoteLobby.html"}
     else:

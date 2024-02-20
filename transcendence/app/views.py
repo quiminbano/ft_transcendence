@@ -3,7 +3,8 @@ from . import errors
 from . import mainPage
 from . import userInterface
 from . import pongTournament
-
+from .utils import getTextsForLanguage
+from api.translations.translation import pages
 
 def getRegisterPlayersTemplate(request):
     if not request.user.is_authenticated:
@@ -36,7 +37,10 @@ def bracketFourTemplate(request):
         return redirect("/404")
     if not request.headers.get("flag"):
         return redirect("/404")
-    return render(request, "TournamentBrackets/tournamentBracket4.html", {})
+    context = {
+        "texts": getTextsForLanguage(pages["tournamentBoard"])
+    }
+    return render(request, "TournamentBrackets/tournamentBracket4.html", context)
 def bracketEightTemplate(request):
     if not request.user.is_authenticated:
         return redirect("/404")

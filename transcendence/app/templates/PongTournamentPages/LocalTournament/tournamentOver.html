@@ -7,7 +7,7 @@
                     <h2 id="tournamentTitle"></h2>
                 </div>
                 <div class="col-12 congratsBox">
-                    <h3 id="congratulationsText">Congratulations</h3>
+                    <h3 id="congratulationsText">{{ texts.congratulations }}</h3>
                     <p id="localWinnerUsername"></p>
 					<img class="firework" src="/static/images/firework.gif"/>
                 </div>
@@ -20,7 +20,7 @@
                 id="endLocalTournamentContinueButton"
                 class="btn btn-success"
                 onclick="cancelLocalTournament()"
-            >Continue</button>
+            >{{ texts.continue }}</button>
         </div>
     </div>
 </div>
