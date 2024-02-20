@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .utils import stringifyImage, setOffline, setOnline
+from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage
 from django.contrib.auth import logout
 from api.api42 import getTokens
 import time
+from api.translations.translation import pages
 
 def pongInterface(request):
     if not request.user.is_authenticated:
@@ -22,7 +23,8 @@ def pongInterface(request):
                 "content": "PongTournamentPages/pong.html",
                 "source": source,
                 "is_42" : is_42,
-		"hasPin": False
+		        "hasPin": False,
+                "texts": getTextsForLanguage(pages["pong"])
             }
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html", "source": source}

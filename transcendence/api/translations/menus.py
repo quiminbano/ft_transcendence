@@ -9,21 +9,19 @@ dictionary = {
         "fin": "",
         "swe": ""
     },
-    "languages": {
-        "England": {
-            "eng": "English",
-            "fin": "",
-            "swe": ""
-        },
-        "Finland": {
-            "eng": "Finnish",
-            "fin": "",
-            "swe": ""
-        },
-        "Sweden": {
-            "eng": "Swedish",
-            "fin": "",
-            "swe": ""
-        }
+    "England": {
+        "eng": "English",
+        "fin": "",
+        "swe": ""
+    },
+    "Finland": {
+        "eng": "Finnish",
+        "fin": "",
+        "swe": ""
+    },
+    "Sweden": {
+        "eng": "Swedish",
+        "fin": "",
+        "swe": ""
     }
 }

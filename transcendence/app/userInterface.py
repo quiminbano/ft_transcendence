@@ -33,6 +33,7 @@ def dashboard(request):
     reversedMatches = matches[::-1]
     stats = setStats(data)
     context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "lastGames": reversedMatches, "stats": stats, "menus": getTextsForLanguage(pages["menus"]), "dashboardTexts": getTextsForLanguage(pages["dashboard"])}
+    print(context["menus"])
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):

@@ -64,4 +64,19 @@ dictionary = {
         "fin": "",
         "swe": ""
     },
+    "changePicture": {
+        "eng": "Change picture",
+        "fin": "",
+        "swe": ""
+    },
+    "dropDescription": {
+        "eng": "Drop the image here or click to upload it",
+        "fin": "",
+        "swe": ""
+    },
+    "saveButton": {
+        "eng": "Save",
+        "fin": "",
+        "swe": ""
+    },
 }
