@@ -140,6 +140,7 @@ const changeLanguage = async (language) => {
 	showLoadingSpinner();
 	const url = '/api/setLanguage';
 	const csrftoken = getCookie('csrftoken');
+	const destination = location.pathname;
 	try {
 		const response = await fetch(url, {
 			method: "POST",
@@ -148,14 +149,14 @@ const changeLanguage = async (language) => {
 				'Content-Type': 'application/json',
 				'X-CSRFToken': csrftoken,
 				flag: true,
-				destination: location.pathname,
 			}
 		})
 		if (!response.ok)
 			throw response;
-		console.log(response);
+		navigateTo(destination);
 	} catch (error) {
 		console.log(error);
+		navigateTo('/404');
 	}
 	hideLoadingSpinner();
 }

@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.http import JsonResponse
 import json
 
 def	setLanguage(request):
@@ -9,13 +10,10 @@ def	setLanguage(request):
     try:
         data = json.loads(request.body)
     except json.JSONDecodeError:
-        return redirect('/404')
+        return JsonResponse({"success": "false", "message": "redirect to 404"}, status=404)
     try:
         language = data['language']
     except KeyError:
-        return redirect('/404')
-    destination = request.headers.get('destination')
-    if destination is None:
         return redirect('/404')
     match language:
         case "eng":
@@ -26,4 +24,4 @@ def	setLanguage(request):
             request.session['lang'] = "swe"
         case _:
             request.session['lang'] = "eng"
-    return redirect(destination)
+    return JsonResponse({"success": "true", "message": "success"}, status=200)
