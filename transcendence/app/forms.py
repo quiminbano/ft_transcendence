@@ -28,14 +28,16 @@ class CustomUserChangeForm(UserChangeForm):
 User = get_user_model()
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), label="Hello")
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}), label="Hello")
 
 class TournamentForm(forms.Form):
     player = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
 
 class SignupForm(CustomUserCreationForm):
+
     username = forms.CharField(label='Username',
         min_length=5,
         max_length=150,

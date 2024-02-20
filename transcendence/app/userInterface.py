@@ -97,15 +97,16 @@ def usersPage(request, name):
     }
     return render(request, "index.html", context)
 
-def getLoginUser(request):
+def getLoginUser(request, language):
     form = LoginForm()
     context = {
         "form": form,
-        "content": "login.html"
+        "content": "login.html",
+        "texts": getTextsForLanguage(pages["login"], request)
     }
     return render(request, 'index.html', context)
 
-def postLoginUser(request):
+def postLoginUser(request, language):
     data = json.loads(request.body)
     form = LoginForm(data)
     if form.is_valid():
@@ -134,11 +135,14 @@ def postLoginUser(request):
 def loginUser(request):
     if request.user.is_authenticated:
         return redirect('/')
+    language = request.session.get('lang')
+    if (language is None) or ((language != "eng") and (language != "fin") and (language != "swe")):
+        request.session['lang'] = 'eng'
     match request.method:
         case "GET":
-            return getLoginUser(request)
+            return getLoginUser(request, language)
         case "POST":
-            return postLoginUser(request)
+            return postLoginUser(request, language)
 
 def logoutUser(request):
     request.user.is_login = False

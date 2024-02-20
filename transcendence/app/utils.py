@@ -32,3 +32,12 @@ def getTextsForLanguage(dictionary, request):
         language = request.session["lang"]
     texts_for_language = {key: value.get(language, '') for key, value in dictionary.items()}
     return texts_for_language
+
+def getTextForm(dictionary, key, language):
+    try:
+        seccion = dictionary[key]
+        translation = seccion[language]
+    except KeyError:
+        translation = None
+    print(translation)
+    return translation
