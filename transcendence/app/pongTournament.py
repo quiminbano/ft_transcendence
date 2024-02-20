@@ -31,7 +31,7 @@ def pongInterface(request):
         case "/pong/single/2v2":
             context={"content": "Pong1v1pages/twoVtwo.html", "source": source}
         case "/pong/single":
-          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source}
+          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle"])}
         case "/pong/tournament":
             context = {
                 "content": "PongTournamentPages/tournamentCreation.html",
