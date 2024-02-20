@@ -7,7 +7,7 @@
         <div class="col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3 nextGameDiv">
             <div class="row">
                 <div class="col-12 nextGameBox">
-                    <h5>Next Game</h5>
+                    <h5>{{ texts.nextGame }}</h5>
                     <div id="nextGameOpponentsDiv">
                         <div class="row align-items-center">
                             <div class="col-12 col-md-5">
@@ -20,22 +20,22 @@
                                 <p id="nextAwayPlayerName"></p>
                             </div>
                         </div>
-                        <p id="matchRound">Round 1</p>
+                        <p id="matchRound">{{ texts.round }} 1</p>
                     </div>
                     <button class="btn btn-info nextGameButton"
                             onclick="openTournamentBracketModal()" ;>
-                        Check ranks
+                        {{ texts.checkRanks }}
                     </button>
                     <button class="btn btn-success w-100"
                             id="playNextGameButton"
                             onclick="startLocalGame()">
-                        Play
+                        {{ texts.play }}
                     </button>
 
                     <button onclick="toggleModal()"
                             class="btn btn-danger"
                             id="cancelLocalTournamentButton">
-                        Cancel tournament
+                        {{ texts.cancelTournament }}
                     </button>
                 </div>
             </div>
@@ -50,18 +50,18 @@
                 <div class="d-flex align-items-center justify-content-center flex-column w-100 pongModalBox">
                     <div class="row">
                         <div class="col-12" style="padding: 10px 15px">
-                            <p style="text-align: center">Are you sure you want to cancel the tournament? You will loose all the data</p>
+                            <p style="text-align: center">{{ texts.cancelInfo }}</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <button class="btn btn-success"
                                     onclick="cancelLocalTournament()">
-                                Confirm
+                                {{ texts.confirm }}
                             </button>
                             <button class="btn btn-danger"
                                     onclick="toggleModal()">
-                                Cancel
+                                {{ texts.cancel }}
                             </button>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+﻿from django.shortcuts import render, redirect
 from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage
 from django.contrib.auth import logout
 from api.api42 import getTokens
@@ -60,7 +60,7 @@ def pongInterfaceWithId(request, id : int):
     elif request.path == startLocalTournament:
         if "flag" not in request.headers or not request.headers["flag"]:
             return redirect("/404")
-        context = {"content": "PongTournamentPages/tournamentStart.html"}
+        context = {"content": "PongTournamentPages/tournamentStart.html", "texts": getTextsForLanguage(pages["tournamentBoard"])}
     elif request.path == remoteId:
         context = {"content": "PongTournamentPages/remoteLobby.html"}
     else:

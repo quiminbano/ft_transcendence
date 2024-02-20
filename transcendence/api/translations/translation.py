@@ -6,6 +6,7 @@ from .pongSingle import dictionary as pongSingle
 from .pongSingle1v1 import dictionary as pongSingle1v1
 from .pongSingle2v2 import dictionary as pongSingle2v2
 from .tournament import dictionary as tournament
+from .tournamentBoard import dictionary as tournamentBoard
 
 pages = {
     "main": main,
@@ -16,4 +17,5 @@ pages = {
     "pongSingle1v1": pongSingle1v1,
     "pongSingle2v2": pongSingle2v2,
     "tournament": tournament,
+    "tournamentBoard": tournamentBoard
 }

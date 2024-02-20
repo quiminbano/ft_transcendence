@@ -9,20 +9,10 @@ class AddPlayerModal {
 		this.submitButton = document.getElementById("modalSumbitButton");
 		this.bg = document.getElementById("registerNewPlayerModalBg");
 	}
-	#updateText() {
-		if (this.isNew) {
-			this.title.innerHTML = "Add new player";
-			this.submitButton.innerHTML = "Add";
-		} else {
-			this.title.innerHTML = "Edit player";
-			this.submitButton.innerHTML = "Confirm";
-		}
-	}
 	open() {
 		this.isShow = true;
 		this.element.style.display = "flex";
 		this.bg.style.display = "flex";
-		this.#updateText();
 	}
 	close() {
 		this.isShow = false;
