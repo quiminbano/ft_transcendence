@@ -135,3 +135,24 @@ const saveGameInDatabase = async (id, data) => {
 	}
 	hideLoadingSpinner();
 }
+
+const changeLanguage = async (language) => {
+	showLoadingSpinner();
+	const url = `/api/Language`;
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			body: JSON.stringify({language}),
+			headers: {
+				flag: true,
+				destination: location.pathname
+			}
+		})
+		if (!response.ok)
+			throw response;
+		console.log(response);
+	} catch (error) {
+		console.log(error);
+	}
+	hideLoadingSpinner();
+}
