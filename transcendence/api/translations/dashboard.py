@@ -1,82 +1,82 @@
 dictionary = {
     "lastGames": {
         "eng": "Last games",
-        "fin": "",
-        "swe": ""
+        "fin": "Viimeisimmät pelit",
+        "swe": "Senaste spel"
     },
     "noGamesPlayed": {
         "eng": "No games played yet",
-        "fin": "",
-        "swe": ""
+        "fin": "Ei peliä pelattu vielä",
+        "swe": "Inga spel har spelats än"
     },
     "showAllGames": {
         "eng": "Show all matches",
-        "fin": "",
-        "swe": ""
+        "fin": "Näytä kaikki ottelut",
+        "swe": "Visa alla matcher"
     },
     "Stats": {
         "eng": "Stats",
-        "fin": "",
-        "swe": ""
+        "fin": "Tilastot",
+        "swe": "Statistik"
     },
     "winPercent": {
         "eng": "Percentage of wins",
-        "fin": "",
-        "swe": ""
+        "fin": "Voittojen osuus",
+        "swe": "Vinstprocent"
     },
     "loosePercent": {
         "eng": "Percentage of losses",
-        "fin": "",
-        "swe": ""
+        "fin": "Häviöiden osuus",
+        "swe": "Förlustprocent"
     },
     "totalMatches": {
         "eng": "Total matches",
-        "fin": "",
-        "swe": ""
+        "fin": "Kaikki ottelut",
+        "swe": "Totalt antal matcher"
     },
     "totalWins": {
         "eng": "Total wins",
-        "fin": "",
-        "swe": ""
+        "fin": "Kaikki voitot",
+        "swe": "Totalt antal vinster"
     },
     "totalLosses": {
         "eng": "Total losses",
-        "fin": "",
-        "swe": ""
+        "fin": "Kaikki häviöt",
+        "swe": "Totalt antal förluster"
     },
     "tournamentsPlayed": {
         "eng": "Tournaments played",
-        "fin": "",
-        "swe": ""
+        "fin": "Peliturnaukset pelattu",
+        "swe": "Spelade turneringar"
     },
     "tournamentsWon": {
         "eng": "Tournaments won",
-        "fin": "",
-        "swe": ""
+        "fin": "Peliturnaukset voittu",
+        "swe": "Vunna turneringar"
     },
     "totalPointsScored": {
         "eng": "Total points scored",
-        "fin": "",
-        "swe": ""
+        "fin": "Kaikki pisteet pistettynä",
+        "swe": "Totalt antal poäng"
     },
     "totalPointsConceded": {
         "eng": "Total points conceded",
-        "fin": "",
-        "swe": ""
+        "fin": "Kaikki pisteet myönnetty",
+        "swe": "Totalt antal poäng som gavs"
     },
     "changePicture": {
         "eng": "Change picture",
-        "fin": "",
-        "swe": ""
+        "fin": "Vaihda kuvaa",
+        "swe": "Byt bild"
     },
     "dropDescription": {
         "eng": "Drop the image here or click to upload it",
-        "fin": "",
-        "swe": ""
+        "fin": "Pudota kuva tähän tai klikkaa ladataksesi sen",
+        "swe": "Släpp bilden här eller klicka för att ladda upp den"
     },
     "saveButton": {
         "eng": "Save",
-        "fin": "",
-        "swe": ""
+        "fin": "Tallenna",
+        "swe": "Spara"
     },
 }

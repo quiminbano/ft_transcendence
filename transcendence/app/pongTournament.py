@@ -24,7 +24,7 @@ def pongInterface(request):
                 "source": source,
                 "is_42" : is_42,
 		        "hasPin": False,
-                "texts": getTextsForLanguage(pages["pong"])
+                "texts": getTextsForLanguage(pages["pong"], request=request)
             }
         case "/pong/single/1v1":
             context={"content": "Pong1v1pages/OnevOne.html", "source": source}

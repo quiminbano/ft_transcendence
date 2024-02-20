@@ -49,6 +49,11 @@ class SignupForm(CustomUserCreationForm):
         ('The Foragers', 'The Foragers'),
         ('The Guards', 'The Guards'),
     ), widget=forms.RadioSelect)
+    language = forms.ChoiceField(choices=(
+        ('eng', 'English'),
+        ('fin', 'Finnish'),
+        ('swe', 'Swedish'),
+    ), widget=forms.RadioSelect)
     password1 = forms.CharField(
         label='password',
         widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"}),
@@ -98,6 +103,7 @@ class SignupForm(CustomUserCreationForm):
         )
         user.coallition = self.cleaned_data['coallition']
         user.is_42 = False
+        user.prefered_language = self.cleaned_data['language']
         try:
             f = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(f)
@@ -144,6 +150,11 @@ class ChangeProfile(forms.Form):
         label="Email",
         widget=forms.EmailInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
+    language = forms.ChoiceField(choices=(
+        ('eng', 'English'),
+        ('fin', 'Finnish'),
+        ('swe', 'Swedish'),
+    ), widget=forms.RadioSelect, label="Select your prefered language")
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"},),
@@ -165,6 +176,7 @@ class ChangeProfile(forms.Form):
         if (len(self.cleaned_data['password1']) > 0):
             userModel.set_password(self.cleaned_data['password1'])
         userModel.email = self.cleaned_data['email']
+        userModel.prefered_language = self.cleaned_data['language']
         if not default_storage.exists(str(userModel.avatar_image)):
             userModel.avatar_image = None
         try:

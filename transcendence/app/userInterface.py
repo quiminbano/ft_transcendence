@@ -32,8 +32,16 @@ def dashboard(request):
         match = processUserMatch(match, request.user.username)
     reversedMatches = matches[::-1]
     stats = setStats(data)
-    context = { "content": "dashboard.html", "coallition": coallition, "form" : form, "source" : source, "lastGames": reversedMatches, "stats": stats, "menus": getTextsForLanguage(pages["menus"]), "dashboardTexts": getTextsForLanguage(pages["dashboard"])}
-    print(context["menus"])
+    context = {
+        "content": "dashboard.html",
+        "coallition": coallition,
+        "form" : form,
+        "source" : source,
+        "lastGames": reversedMatches,
+        "stats": stats,
+        "menus": getTextsForLanguage(pages["menus"], request),
+        "dashboardTexts": getTextsForLanguage(pages["dashboard"], request)
+        }
     return render(request, "index.html", context)
 
 def getFriendState(request, friend_requests, friends):
@@ -172,6 +180,7 @@ def getSettings(request):
         'email': request.user.email,
         'firstName': request.user.first_name,
         'lastName': request.user.last_name,
+        'language': request.user.prefered_language,
     })
     context = {
         "form": form,
