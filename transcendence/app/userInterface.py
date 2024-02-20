@@ -123,7 +123,7 @@ def postLoginUser(request):
 
 def loginUser(request):
     if request.user.is_authenticated:
-        return dashboard(request)
+        return redirect('/')
     match request.method:
         case "GET":
             return getLoginUser(request)
