@@ -23,19 +23,32 @@ def pongInterface(request):
                 "content": "PongTournamentPages/pong.html",
                 "source": source,
                 "is_42" : is_42,
-		        "hasPin": False,
-                "texts": getTextsForLanguage(pages["pong"], request=request)
+                "hasPin": False,
+                "texts": getTextsForLanguage(pages["pong"], request=request),
+                "menus": getTextsForLanguage(pages["menus"], request),
             }
         case "/pong/single/1v1":
-            context={"content": "Pong1v1pages/OnevOne.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle1v1"], request)}
+            context={
+                "content": "Pong1v1pages/OnevOne.html",
+                "source": source,
+                "texts": getTextsForLanguage(pages["pongSingle1v1"], request),
+            }
         case "/pong/single/2v2":
-            context={"content": "Pong1v1pages/twoVtwo.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle2v2"], request)}
+            context={
+                "content": "Pong1v1pages/twoVtwo.html",
+                "source": source,
+                "texts": getTextsForLanguage(pages["pongSingle2v2"], request),
+            }
         case "/pong/single":
-          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle"], request)}
+          context = {
+                "content": "Pong1v1pages/singleMatchPage.html",
+                "source": source, "texts": getTextsForLanguage(pages["pongSingle"], request),
+                "menus": getTextsForLanguage(pages["menus"], request),
+        }
         case "/pong/tournament":
             context = {
                 "content": "PongTournamentPages/tournamentCreation.html",
-				"username": request.user.get_username,
+                "username": request.user.get_username,
                 "texts": getTextsForLanguage(pages["tournament"], request)
             }
         case _:

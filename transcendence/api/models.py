@@ -92,6 +92,9 @@ class Database(AbstractUser):
     def get_coallition(self):
         return self.coallition
 
+    def get_language(self):
+        return self.prefered_language
+
     def __str__(self):
         return self.username
 

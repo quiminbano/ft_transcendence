@@ -74,8 +74,8 @@
         "fin": "Jatka",
         "swe": "Fortsätt"
     },
-    "congradulations": {
-        "eng": "Congradulations",
+    "congratulations": {
+        "eng": "Congratulations",
         "fin": "Onnittelut",
         "swe": "Grattis"
     },
