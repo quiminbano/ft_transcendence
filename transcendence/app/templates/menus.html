@@ -1,3 +1,4 @@
+{{ user.get_language|json_script:"language" }}
 <nav class="protectedNavbar menu">
     {% if user.is_authenticated %}
 	<div id="search-container">
