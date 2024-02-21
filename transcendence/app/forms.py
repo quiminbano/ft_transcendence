@@ -65,7 +65,7 @@ class TournamentForm(forms.Form):
     def clean_player(self):
         if len(self.cleaned_data['player']) > 150:
             raise ValidationError("Invalid credentials")
-        return self.cleaned_data['player']
+        return self.cleaned_data['player'].lower()
 
     def clean_password(self):
         if len(self.cleaned_data['password']) > 128:
