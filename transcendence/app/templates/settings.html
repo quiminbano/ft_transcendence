@@ -1,26 +1,47 @@
 <div class="container-fluid settingsContainer">
 	<div class="row">
 		<div class="col-10 offset-1 col-md-8 offset-md-2 settingsBox">
-			<h2>Edit profile</h2>
+			<h2>{{ texts.seccion }}</h2>
 			<form onsubmit="handleChangeProfile(event)" method="put" action="{% url 'settings' %}">
 				{% csrf_token %}
-				{% for field in form %}
-					{% if field.name != "password3" %}
-					<label for="{{ form.username.id_for_label }}" class="loginLabel">{{field.label}}</label>
-					<p class="signupErrorMessage" id="invalidUpdateUsername"></p>
-					{{ field }}
-    				{% endif %}
-				{% endfor %}
+				<div class="form-group">
+					<label for="{{ form.username.id_for_label}}" class="loginLabel">{{ texts.username }}</label>
+					{{ form.username }}
+				</div>
+				<div class="form-group" id="loginPasswordGroup">
+					<label for="{{ form.firstName.id_for_label}}" class="loginLabel">{{ texts.firstName }}</label>
+					{{ form.firstName }}
+				</div>
+				<div class="form-group" id="loginPasswordGroup">
+					<label for="{{ form.lastName.id_for_label}}" class="loginLabel">{{ texts.lastName }}</label>
+					{{ form.lastName }}
+				</div>
+				<div class="form-group" id="loginPasswordGroup">
+					<label for="{{ form.password1.id_for_label}}" class="loginLabel">{{ texts.password1 }}</label>
+					{{ form.password1 }}
+				</div>
+				<div class="form-group" id="loginPasswordGroup">
+					<label for="{{ form.password2.id_for_label}}" class="loginLabel">{{ texts.passwordConfirmation }}</label>
+					{{ form.password2 }}
+				</div>
+				<div class="form-group" id="loginPasswordGroup">
+					<label for="{{ form.email.id_for_label}}" class="loginLabel">{{ texts.email }}</label>
+					{{ form.email }}
+				</div>
+				<div class="form-group" id="loginPasswordGroup">
+					<label for="{{ form.language.id_for_label}}" class="loginLabel">{{ texts.languageMessage }}</label>
+					{{ form.language }}
+				</div>
 				<button
 					type="button"
 					class="btn btn-success w-100 changeProfileButton"
 					onclick="openSettingsModal()"
-				>Confirm</button>
+				>{{ texts.confirmButton }}</button>
 				<button
 					type="button"
 					class="btn btn-danger w-100 changeProfileButton"
 					onclick="navigateTo('/')"
-				>Cancel</button>
+				>{{ texts.cancelButton }}</button>
 				{% include "settingsModal.html" %}
 			</form>
 		</div>

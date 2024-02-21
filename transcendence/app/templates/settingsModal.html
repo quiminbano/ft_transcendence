@@ -1,18 +1,18 @@
 <div id="settingsModalContainer">
 	<div class="bracketBg" onclick="closeSettingsModal()"></div>
 	<div id="confirmationBox">
-		<p>Are you sure you want to save the new changes?</p>
-		<label for="{{ form.username.id_for_label}}" class="loginLabel">{{form.password3.label}}</label>
+		<p>{{ texts.confirmationMessage }}</p>
+		<label for="{{ form.username.id_for_label}}" class="loginLabel">{{ texts.password3 }}</label>
 		<p class="signupErrorMessage" id="invalidPassword3"></p>
 		{{form.password3}}
 		<button
 			class="btn btn-success w-100 mt-2"
 			type="submit"
-		>Yes</button>
+		>{{ texts.yesButton }}</button>
 		<button
 			type="button"
 			class="btn btn-danger w-100 mt-2"
 			onclick="closeSettingsModal()"
-		>No</button>
+		>{{ texts.noButton }}</button>
 	</div>
 </div>
