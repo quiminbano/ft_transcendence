@@ -3,6 +3,11 @@ dictionary = { #UserController
 		"eng": "user does not exist",
 		"fin": "käyttäjää ei ole olemassa",
 		"swe": "användaren finns inte"
+	},	
+		"IncorrectPassword": {
+		"eng": "Incorrect Password",
+		"fin": "salasana on väärä",
+		"swe": "lösenordet är felaktigt"
 	},
 		"FriendIsSelf": {
 		"eng": "user can't add themselves",

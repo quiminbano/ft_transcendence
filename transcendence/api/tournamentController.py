@@ -9,14 +9,14 @@ import json
 #==========================================
 #      Validate user for Tournaments
 #==========================================
-def validateUser(playerName, password):
+def validateUser(playerName, password, request):
     try:
         user = Database.objects.filter(username=playerName).get()
     except Database.DoesNotExist:
-        errors = "Player nor found"
+        errors = getTextsForLanguage(pages["error"], request)["NonExistingUser"]
         return None, errors
     if not check_password(password, user.password):
-        errors = "Incorrect password"
+        errors = getTextsForLanguage(pages["error"], request)["IncorrectPassword"]
         return None, errors
     return user, ""
 
@@ -60,7 +60,7 @@ def saveTournament(request, tournament, winnerTeam):
 #       Tournament | PLAYER | Functions
 #==========================================
 def tournamentAddPlayer(playerName, password, existing_tournament, request):
-    player, reason = validateUser(playerName, password)
+    player, reason = validateUser(playerName, password, request)
     if player is None:
         return JsonResponse({'error': reason}, status=400)
     if existing_tournament.players.filter(username=player).first() is not None:
