@@ -11,6 +11,7 @@ from .login import dictionary as login
 from .games import dictionary as games
 from .signup import dictionary as signup
 from .usersPage import dictionary as usersPage
+from .password42 import dictionary as password42
 
 pages = {
     "main": main,
@@ -25,5 +26,6 @@ pages = {
     "tournament": tournament,
     "tournamentBoard": tournamentBoard,
     "games": games,
-	"usersPage": usersPage
+    "usersPage": usersPage,
+    "password42": password42
 }
