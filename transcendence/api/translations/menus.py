@@ -1,27 +1,27 @@
 dictionary = {
     "dashboard": {
         "eng": "Dashboard",
-        "fin": "",
-        "swe": ""
+        "fin": "Kojelauta",
+        "swe": "Instrumentpanel"
     },
     "searchPlaceholder": {
         "eng": "Search for friends",
-        "fin": "",
-        "swe": ""
+        "fin": "Etsi ystäviä",
+        "swe": "Sök efter vänner"
     },
     "England": {
         "eng": "English",
-        "fin": "",
-        "swe": ""
+        "fin": "Englanti",
+        "swe": "Engelska"
     },
     "Finland": {
         "eng": "Finnish",
-        "fin": "",
-        "swe": ""
+        "fin": "Suomi",
+        "swe": "Swedish"
     },
     "Sweden": {
         "eng": "Swedish",
-        "fin": "",
-        "swe": ""
+        "fin": "Ruotsi",
+        "swe": "Svenska"
     }
 }
