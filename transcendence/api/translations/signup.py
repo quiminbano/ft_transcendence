@@ -42,7 +42,7 @@ dictionary = {
     "passwordConfirmation": {
         "eng": "Confirm password:",
         "fin": "Vahvista salasana:",
-        "swe": "Bekrätfa lösenord:"
+        "swe": "Bekräfta lösenord:"
     },
 	"registerButton": {
         "eng": "Register",

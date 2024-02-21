@@ -11,7 +11,7 @@
     },
     "swedishButton": {
         "eng": "Swedish",
-        "fin": "Finska",
+        "fin": "Ruotsi",
         "swe": "Svenska",
     },
     "register": {

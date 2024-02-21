@@ -9,12 +9,14 @@ from .tournament import dictionary as tournament
 from .tournamentBoard import dictionary as tournamentBoard
 from .login import dictionary as login
 from .signup import dictionary as signup
+from .settings import dictionary as settings
 
 pages = {
     "main": main,
 	"login": login,
     "signup": signup,
     "menus": menus,
+    "settings": settings,
     "dashboard": dashboard,
     "pong": pong,
     "pongSingle": pongSingle,
