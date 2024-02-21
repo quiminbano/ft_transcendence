@@ -1,8 +1,11 @@
 <div class="registerContainer">
+	<nav id="navbar">
+		<a href="/signup" onclick="route()" class="homepageNavbarElement">{{ texts.register }}</a>
+		{% include "changeLanguage.html" %}
+	</nav>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12 col-md-6 offset-md-3">
-				{% include "changeLanguage.html" %}
 				<div id="sign-up-box">
 					<div class="row">
 						<div class="col-12">

@@ -1,21 +1,22 @@
 from django.http import JsonResponse
 from django.contrib.auth.hashers import check_password
 from .models import Tournament, Database, Match, Team
-from app.utils import stringifyImage
+from app.utils import stringifyImage, getTextsForLanguage
 from app.forms import TournamentForm, TournamentCreation
+from .translations.translation import pages
 import json
 
 #==========================================
 #      Validate user for Tournaments
 #==========================================
-def validateUser(playerName, password):
+def validateUser(playerName, password, request):
     try:
         user = Database.objects.filter(username=playerName).get()
     except Database.DoesNotExist:
-        errors = "Player nor found"
+        errors = getTextsForLanguage(pages["error"], request)["NonExistingUser"]
         return None, errors
     if not check_password(password, user.password):
-        errors = "Incorrect password"
+        errors = getTextsForLanguage(pages["error"], request)["IncorrectPassword"]
         return None, errors
     return user, ""
 
@@ -43,8 +44,8 @@ def JSONTournamentResponse(tournament, message):
         }
     return (response)
 
-def unknownMethod():
-    return JsonResponse({'error': 'Method not supported'}, status=405)
+def unknownMethod(request):
+    return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MethodUnsupported"]}, status=405)
 
 def saveTournament(request, tournament, winnerTeam):
     for player in tournament.players.all():
@@ -58,14 +59,14 @@ def saveTournament(request, tournament, winnerTeam):
 #==========================================
 #       Tournament | PLAYER | Functions
 #==========================================
-def tournamentAddPlayer(playerName, password, existing_tournament):
-    player, reason = validateUser(playerName, password)
+def tournamentAddPlayer(playerName, password, existing_tournament, request):
+    player, reason = validateUser(playerName, password, request)
     if player is None:
         return JsonResponse({'error': reason}, status=400)
     if existing_tournament.players.filter(username=player).first() is not None:
-        return JsonResponse({'error': 'Player already in match'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["PlayerInMatch"]}, status=400)
     if existing_tournament.players.count() >= existing_tournament.player_amount:
-        return JsonResponse({'error': 'Too many players'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MaxPlayers"]}, status=400)
     existing_tournament.players.add(player)
     playerToReturn = {
         "username": player.username,
@@ -73,10 +74,10 @@ def tournamentAddPlayer(playerName, password, existing_tournament):
     }
     return JsonResponse({'message': 'Player added successfully', 'player':  playerToReturn}, status=200)
 
-def tournamentDeletePlayer(playerName, existing_tournament):
+def tournamentDeletePlayer(playerName, existing_tournament, request):
     player = Database.objects.filter(username=playerName).first()
     if player is None or existing_tournament.players.filter(username=player.username).first() is None:
-        return JsonResponse({'error': 'player does not exist within tournament or database'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["NonExistingUser"]}, status=400)
     else:
         existing_tournament.players.remove(player)
         return JsonResponse({'succes!': 'player got removed'}, status=200)
@@ -89,7 +90,7 @@ def tournamentDeletePlayer(playerName, existing_tournament):
 def createTurnament(request):
     data = json.loads(request.body)
     if "name" not in data or "number" not in data:
-        return JsonResponse({'error': 'missing fields in request body'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MissingFieldsBody"]}, status=400)
     form = TournamentCreation(data)
     if not form.is_valid():
         return JsonResponse({'error': 'Invalid fields in form'}, status=400)
@@ -129,7 +130,7 @@ def updatePlayers(teamData, match, team, otherTeamScore):
 def tournamentAddMatch(request, existing_tournament):
     data = json.loads(request.body)
     if 'teamOne' not in data or 'teamTwo' not in data or 'players' not in data['teamOne'] or 'players' not in data['teamTwo'] or 'score' not in data['teamTwo'] or 'score' not in data['teamOne']:
-        return JsonResponse({'error': 'missing felds in body'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MissingFieldsBody"]}, status=400)
     teamOne = data["teamOne"]
     teamTwo = data["teamTwo"]
 
@@ -170,7 +171,7 @@ def tournamentAddMatch(request, existing_tournament):
 #==========================================
 def tournamentManager(request):
     if not request.user.is_authenticated:
-        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["UnauthenticatedUser"]}, status=401)
     existing_tournament = request.user.tournament
     if existing_tournament is not None:
         # Call the function from the switch dictionary
@@ -183,12 +184,12 @@ def tournamentManager(request):
                 deleteTournament(request, existing_tournament)
                 return createTurnament(request)
             case _:
-                return unknownMethod()
+                return unknownMethod(request)
     else:
         if request.method == "POST":
             return createTurnament(request)
         else:
-            return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
+            return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["NoOngoingTournament"]}, status=404)
 
 
 #==========================================
@@ -204,9 +205,9 @@ def tournamentManagerID(request, id=None):
             case "DELETE":
                 return deleteTournament(request, existing_tournament)
             case _:
-                return unknownMethod()
+                return unknownMethod(request)
     else:
-        return JsonResponse({'error': 'User does not have an tournament going'}, status=404)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["NoOngoingTournament"]}, status=404)
 
 #==========================================
 #         Tournament ID Player Management
@@ -222,13 +223,13 @@ def tournamentPlayerManager(request, id=None):
                     errors = {field: form.errors[field][0] for field in form.errors}
                     reason = next(val for val in errors.values())
                     return JsonResponse({"success": "false", "error":reason}, status=400)
-                return tournamentAddPlayer(data['player'], data['password'], existing_tournament)
+                return tournamentAddPlayer(data['player'], data['password'], existing_tournament, request)
             case "DELETE":
-                return tournamentDeletePlayer(data['player'], existing_tournament)
+                return tournamentDeletePlayer(data['player'], existing_tournament, request)
             case _:
-                return unknownMethod()
+                return unknownMethod(request)
     else:
-        return JsonResponse({'error': 'something went wrong'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["Wrong"]}, status=400)
 
 #==========================================
 #         Tournament ID Match Management
@@ -240,6 +241,6 @@ def tournamentMatchManager(request, id=None):
             case "POST":
                 return tournamentAddMatch(request, existing_tournament)
             case _:
-                return unknownMethod()
+                return unknownMethod(request)
     else:
-        return JsonResponse({'error': 'something went wrong'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["Wrong"]}, status=400)

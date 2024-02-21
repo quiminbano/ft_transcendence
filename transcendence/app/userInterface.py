@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
-from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage
+from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage, getLanguage
 from api.userController import getUser
 from api.api42 import getTokens
 import json
@@ -43,7 +43,7 @@ def dashboard(request):
         "dashboardTexts": getTextsForLanguage(pages["dashboard"], request),
         "gamesTexts": getTextsForLanguage(pages["games"], request),
         "invitationsTexts": getTextsForLanguage(pages["invitations"], request),
-        "language": request.user.prefered_language
+        "language": getLanguage(request)
         }
     return render(request, "index.html", context)
 
@@ -110,7 +110,8 @@ def getLoginUser(request, language):
     context = {
         "form": form,
         "content": "login.html",
-        "texts": getTextsForLanguage(pages["login"], request)
+        "texts": getTextsForLanguage(pages["login"], request),
+        "language": getLanguage(request)
     }
     return render(request, 'index.html', context)
 
@@ -163,7 +164,8 @@ def getSignup(request, language):
     context = {
         "form": form,
         "content": "signup.html",
-        "texts": getTextsForLanguage(pages["signup"], request)
+        "texts": getTextsForLanguage(pages["signup"], request),
+		"language": getLanguage(request)
     }
     return render(request, 'index.html', context)
 

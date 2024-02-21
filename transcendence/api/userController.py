@@ -2,9 +2,10 @@ from django.http import JsonResponse, QueryDict
 from django.forms.models import model_to_dict
 from .models import Database
 from app.forms import ProfilePicture
-from app.utils import stringifyImage, setOffline, setOnline
+from app.utils import stringifyImage, setOffline, setOnline, getTextsForLanguage
 from django.shortcuts import redirect
 from django.contrib.auth import logout
+from .translations.translation import pages
 import json
 
 #==========================================================================
@@ -30,15 +31,15 @@ def friendRequest(request, friendName=None):
         return JsonResponse(requests, status=200, safe=False)
     potentailFriend = Database.objects.filter(username=friendName).first()
     if potentailFriend is None:
-        return JsonResponse({"message":"user does not exist"}, status=400)
+        return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["NonExistingUser"]}, status=400)
     if user == potentailFriend:
-        return JsonResponse({"message":"you cant manipulate yourself"}, status=400)
+        return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["FriendIsSelf"]}, status=400)
     match request.method:
         case "POST":
             if user.friends.filter(username=potentailFriend.username).exists():
-                return JsonResponse({"message":"already friends"}, status=400)
+                return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["FriendsAlready"]}, status=400)
             if potentailFriend.friend_requests.filter(username=user.username).exists():
-                return JsonResponse({"message":"already sent friend request"}, status=400)
+                return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["FriendsRequestSentAlready"]}, status=400)
             if user.friend_requests.filter(username=potentailFriend.username).exists():
                 user.friend_requests.remove(potentailFriend)
                 user.friends.add(potentailFriend)
@@ -52,9 +53,9 @@ def friendRequest(request, friendName=None):
                 user.full_clean()
                 user.save()
                 return JsonResponse({"message":"Success removed friend request"}, status=200)
-            return JsonResponse({"message":"No friend request sent"}, status=200)
+            return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["NoFriendRequestSent"]}, status=400)
         case _:
-            return JsonResponse({"message": "Method not implemented"}, status=501)
+            return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=501)
 
 
 
@@ -75,21 +76,21 @@ def friends(request, friendName=None):
     setOnline(user=request.user)
     friend = Database.objects.filter(username=friendName).first()
     if friend is None:
-        return JsonResponse({"message":"this user does not exist"}, status=400)
+        return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["NonExistingUser"]}, status=400)
     match request.method:
         case "POST":
             if user.friend_requests.filter(username=friend.username).exists():
                 user.friend_requests.remove(friend)
                 user.friends.add(friend)
                 return JsonResponse({"message":"Success added friend"}, status=200)
-            return JsonResponse({"message":"No friend request from that user"}, status=400)
+            return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["NoFriendRequest"]}, status=400)
         case "DELETE":
             if user.friends.filter(username=friend.username).exists():
                 user.friends.remove(friend)
                 return JsonResponse({"message":"Success removed friend"}, status=200)
-            return JsonResponse({"message":"you are not friends"}, status=400)
+            return JsonResponse({"message":getTextsForLanguage(pages["error"], request)["NotFriends"]}, status=400)
         case _:
-            return JsonResponse({"message": "Method not implemented"}, status=501)
+            return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=501)
 
 
 
@@ -106,7 +107,7 @@ def getFriends(request):
         return redirect('/login')
     setOnline(user=request.user)
     if request.method != "GET":
-        return JsonResponse({"message": "Method not implemented"}, status=501)
+        return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=501)
     user_friends = []
     for friend in user.friends.all():
         user_friend = {
@@ -130,7 +131,7 @@ def searchUsers(request, search=None):
         return redirect('/login')
     setOnline(user=request.user)
     if request.method != "GET":
-        return JsonResponse({"message": "Method not implemented"}, status=501)
+        return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=501)
     users = Database.objects.filter(username__icontains=search)
     user_friends = []
     for user in users:
@@ -200,11 +201,11 @@ def getUser(request, userName=None):
 #I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The completed is not gonna change, because getUser is being called just there.
     user = Database.objects.filter(username=userName).first()
     if user is None:
-        return JsonResponse({'error': 'user does not exist'}, status=400)
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["NonExistingUser"]}, status=400)
     if request.method == "GET":
         userInfo = getUserStats(user)
         return JsonResponse(userInfo, status=200, safe=False)
-    return JsonResponse({"message": "Method not implemented"}, status=501)
+    return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=501)
 
 #==========================================================
 #         GET LOGGED IN USER
@@ -226,7 +227,7 @@ def Users(request):
             user.delete()
             return JsonResponse({"message":"Success"}, status=200, safe=False)
         case _:
-            return JsonResponse({"message": "Method not implemented"}, status=501)
+            return JsonResponse({"message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=501)
 
 
 #==========================================
@@ -248,6 +249,6 @@ def profilePicture(request):
             source = stringifyImage(request.user)
             return JsonResponse({"source": source, "message": "Avatar image updated sucessfully"}, status=200)
         else:
-            return JsonResponse({"success": "false", "message": "Failed to update the avatar picture"}, status=400)
-    return JsonResponse({"success": "false", "message": "Accessing to an API route, not allowed"}, status=400)
+            return JsonResponse({"success": "false", "message": getTextsForLanguage(pages["error"], request)["FailedToUpdateAvatarImage"]}, status=400)
+    return JsonResponse({"success": "false", "message": getTextsForLanguage(pages["error"], request)["MethodNotImplemented"]}, status=400)
 

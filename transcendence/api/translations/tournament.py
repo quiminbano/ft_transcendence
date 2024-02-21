@@ -59,4 +59,9 @@
         "fin": "Lisää",
         "swe": "Lägg till"
     },
+	"congratulations": {
+        "eng": "Congratulations",
+        "fin": "Onnittelut",
+        "swe": "Grattis"
+    },
 }

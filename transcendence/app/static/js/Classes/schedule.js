@@ -68,40 +68,76 @@ class Schedule {
     }
     getCurrentStage() {
         switch (this.amount) {
-            case 4:
-                return this.#getCurrentStage4Teams();
-                break;
             case 8:
                 return this.#getCurrentStage8Teams();
                 break;
             default:
-                return this.#getCurrentStage16Teams();
+                return this.#getCurrentStage4Teams();
         }
     }
     #getCurrentStage4Teams() {
         if (this.nextGame.id <= 2)
-            return "Semi Final";
+            return this.#getTranslatedStage("Semi Final");
         else
-            return "Final";
+            return this.#getTranslatedStage("Final");
     }
     #getCurrentStage8Teams() {
         if (this.nextGame.id <= 4)
-            return "Quarter Finals"
+            return this.#getTranslatedStage("Quarter Finals")
         else if (this.nextGame.id >= 5 && this.nextGame.id <= 6)
-            return "Semi Final"
+            return this.#getTranslatedStage("Semi Final")
         else
-            return "Final";
+            return this.#getTranslatedStage("Final");
     }
-    #getCurrentStage16Teams() {
-        if (this.nextGame.id <= 8)
-            return "Round 1";
-        else if (this.nextGame.id >= 9 && this.nextGame.id <= 12)
-            return "Quarter Finals";
-        else if (this.nextGame.id >= 13 && this.nextGame.id <= 14)
-            return "Semi Final"
-        else
-            return "Final";
-    }
+	#getTranslatedStage(stage) {
+		let text;
+		try {
+			const language = JSON.parse(document.getElementById('currentLanguage').textContent);
+			switch(stage) {
+				case "Quarter Finals":
+					switch(language) {
+						case "fin":
+							text = "puolivälierä";
+							break;
+						case "swe":
+							text = "Kvartsfinaler";
+							break;
+						default:
+							text = stage;
+					}
+					break;
+				case "Semi Final":
+					switch(language) {
+						case "fin":
+							text = "Välierä";
+							break;
+						case "swe":
+							text = "Semifinal";
+							break;
+						default:
+							text = stage;
+					}
+					break;
+				case "Final":
+					switch(language) {
+						case "fin":
+							text = "Finaali";
+							break;
+						case "swe":
+							text = "Final";
+							break;
+						default:
+							text = stage;
+					}
+					break;
+				default:
+					text = stage;
+			}
+		} catch(error) {
+			text = stage;
+		}
+		return text;
+	}
     getMatch(id) {
         const match = this.matches.find(m => m.id === id);
         return match;
