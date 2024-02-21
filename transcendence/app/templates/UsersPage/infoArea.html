@@ -21,9 +21,9 @@
             </div>
             <p class="text-center" id="userName">{{client.info.username}}</p>
             {% if client.info.online %}
-            <p id="useronline_status"><span style="background-color: green"></span>Online</p>
+            <p id="useronline_status"><span style="background-color: green"></span>{{ usersPage.online }}</p>
             {% else %}
-            <p id="useronline_status"><span style="background-color: red"></span>Offline</p>
+            <p id="useronline_status"><span style="background-color: red"></span>{{ usersPage.offline }}</p>
             {% endif %}
         </div>
     </div>
@@ -32,10 +32,10 @@
 <div class="row">
     <div class="col-12">
 		{{ client.info.username|json_script:"username" }}
-        <button class="btn btn-secondary w-100 friendButton" onclick="challengeForPong()">Challenge for pong</button>
-        <button class="btn btn-danger w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'T' %} nonActive {% endif %}" id="removeFriendBtn" onclick="removeFromFriend('{{client.info.username}}')">Remove as friend</button>
-        <button class="btn btn-secondary w-100 friendButton {% if client.info.isFriend == 'P' %} active{% endif %}{% if client.info.isFriend != 'P' %} nonActive {% endif %}" disabled id="waitingFriendBtn">Waiting acceptence</button>
-        <button class="btn btn-success w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'F' %} nonActive {% endif %}" onclick="inviteToBeFriend('{{client.info.username}}')" id="addFriendBtn">Add as friend</button>
+        <button class="btn btn-secondary w-100 friendButton" onclick="challengeForPong()">{{ usersPage.challenge }}</button>
+        <button class="btn btn-danger w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'T' %} nonActive {% endif %}" id="removeFriendBtn" onclick="removeFromFriend('{{client.info.username}}')">{{ usersPage.removeFriends }}</button>
+        <button class="btn btn-secondary w-100 friendButton {% if client.info.isFriend == 'P' %} active{% endif %}{% if client.info.isFriend != 'P' %} nonActive {% endif %}" disabled id="waitingFriendBtn">{{ usersPage.waitingAcceptance }}</button>
+        <button class="btn btn-success w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'F' %} nonActive {% endif %}" onclick="inviteToBeFriend('{{client.info.username}}')" id="addFriendBtn">{{ usersPage.addAsFriends }}</button>
     </div>
 </div>
 {% endif %}

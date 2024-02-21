@@ -60,11 +60,31 @@ const updateNotification = async () => {
 const createNotificationElement = (amount) => {
 	if (amount === 0) return;
 	const div = document.createElement("div");
-	div.textContent = `You have ${amount} friend request${amount > 1 ? "s" : ""} pending`;
+	div.textContent = getNotificationText(amount);
 	div.setAttribute("class", "friendNotificationBox");
 	const parentDiv = document.getElementById("friendsDropdown");
 	div.addEventListener("click", openInvitationsModal);
 	parentDiv.appendChild(div);
+}
+
+const getNotificationText = (amount) => {
+	let message;
+	try {
+		const language = JSON.parse(document.getElementById('language').textContent);
+		switch(language) {
+			case "fin":
+				message = amount === 1 ? "Sinulla on 1 ystävyyden pyyntö odottamassa" : `Sinulla on ${amount} ystävyyden pyyntöä odottamassa`
+				break;
+			case "swe":
+				message = amount === 1 ? "Du har 1 vänförfrågan väntande" : `Du har ${amount} vänförfrågan väntande`
+				break;
+			default:
+				message = `You have ${amount} friend request${amount > 1 ? "s" : ""} pending`;
+		}
+	} catch(error) {
+		message = `You have ${amount} friend request${amount > 1 ? "s" : ""} pending`;
+	}
+	return message;
 }
 
 const openInvitationsModal = async () => {

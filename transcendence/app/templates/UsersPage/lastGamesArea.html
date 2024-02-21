@@ -8,11 +8,11 @@
     {% endfor %}
     {% if client.lastGames|length > 3 %}
     <div class="col-12 d-flex justify-content-end align-items-center">
-        <button class="showAllMatchesButton" onclick="openAllGamesModal()">Show all matches</button>
+        <button class="showAllMatchesButton" onclick="openAllGamesModal()">{{ usersPage.showAllMatches }}</button>
     </div>
     {% endif %}
     {% else %}
-    <p>No info available</p>
+    <p>{{ usersPage.noInfo }}</p>
     {% endif %}
 </div>
 {% include "allLastGamesModal.html" %}

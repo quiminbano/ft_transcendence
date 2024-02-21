@@ -27,16 +27,16 @@ def pongInterface(request):
                 "texts": getTextsForLanguage(pages["pong"], request=request)
             }
         case "/pong/single/1v1":
-            context={"content": "Pong1v1pages/OnevOne.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle1v1"])}
+            context={"content": "Pong1v1pages/OnevOne.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle1v1"], request)}
         case "/pong/single/2v2":
-            context={"content": "Pong1v1pages/twoVtwo.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle2v2"])}
+            context={"content": "Pong1v1pages/twoVtwo.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle2v2"], request)}
         case "/pong/single":
-          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle"])}
+          context = {"content": "Pong1v1pages/singleMatchPage.html", "source": source, "texts": getTextsForLanguage(pages["pongSingle"], request)}
         case "/pong/tournament":
             context = {
                 "content": "PongTournamentPages/tournamentCreation.html",
 				"username": request.user.get_username,
-                "texts": getTextsForLanguage(pages["tournament"])
+                "texts": getTextsForLanguage(pages["tournament"], request)
             }
         case _:
             context = {"content": "index.html"}
@@ -56,11 +56,11 @@ def pongInterfaceWithId(request, id : int):
     startLocalTournament = tournamentId + "/start"
     remoteId = "/pong/remoteTournament/" + str(id)
     if request.path == tournamentId:
-        context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user), "texts": getTextsForLanguage(pages["tournament"])}
+        context = {"content": "PongTournamentPages/pongTournament.html", "source": stringifyImage(request.user), "texts": getTextsForLanguage(pages["tournament"], request)}
     elif request.path == startLocalTournament:
         if "flag" not in request.headers or not request.headers["flag"]:
             return redirect("/404")
-        context = {"content": "PongTournamentPages/tournamentStart.html", "texts": getTextsForLanguage(pages["tournamentBoard"])}
+        context = {"content": "PongTournamentPages/tournamentStart.html", "texts": getTextsForLanguage(pages["tournamentBoard"], request)}
     elif request.path == remoteId:
         context = {"content": "PongTournamentPages/remoteLobby.html"}
     else:
