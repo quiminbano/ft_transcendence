@@ -1,6 +1,7 @@
 <div id="homepageContainer">
 	<nav id="navbar">
 		<a href="/signup" onclick="route()" class="homepageNavbarElement">{{ texts.register }}</a>
+		{% include "changeLanguage.html" %}
 	</nav>
 	<h1 id="homepageTitle">Ft-Transcendence</h1>
 	{% if error %}
@@ -17,7 +18,6 @@
 			</a>
 			<p id="orText">{{ texts.or }}</p>
 			<a href="/login" class="homepageButton" onclick="route()" id="button">{{ texts.button }}</a>
-			{% include "changeLanguage.html" %}
 		</div>
 </div>
 

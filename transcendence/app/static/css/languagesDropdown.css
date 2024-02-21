@@ -1,0 +1,58 @@
+.languageDropdown-div {
+	position: relative;
+	margin-left: 10px;
+}
+
+.languageDropdown-button {
+	width: 75px;
+	height: 75px;
+	position: relative;
+	background: transparent;
+	border: none;
+	outline: none;
+}
+.languageDropdown-button img {
+	width: 100%;
+	height: 100%;
+}
+
+.languageDropdown-menu {
+	position: absolute;
+	background: whitesmoke;
+	border-radius: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	display: none;
+	top: 100%;
+	right: 0;
+}
+
+.dropdownActive {
+	display: block;
+}
+
+.languageDropdownOption {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+}
+.languageDropdownOption p {
+	font-family: PressStart;
+	font-size: 12px;
+	position: relative;
+	top: 10px;
+	margin-left: 8px;
+}
+
+.languageDropdownOptionsButton {
+	background: transparent;
+	border: none;
+	width: 100%;
+	padding: 5px 15px;
+}
+.languageDropdownOptionsButton:hover {
+	background-color: rgba(33, 33, 166, 0.833);
+}
+.languageDropdownOptionsIcon {
+	width: 30px;
+}
