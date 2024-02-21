@@ -2,7 +2,6 @@ const generator = new FragmentGenerator("/getDoc/searchItem");
 const friendsFragment = new FragmentGenerator("/getDoc/friendItem");
 
 const loadMenus = () => {
-	loadLanguageDropDown();
 	const searchButton = document.getElementById("searchButton");
 	if (!searchButton)
 		return;
@@ -257,35 +256,4 @@ const closeFriendsMenuEventHandler = (e) => {
 	if (!(e.target === friendsButton || e.target === friendsImage)) {
 		collapseFriendsMenu();
 	}
-}
-
-
-const loadLanguageDropDown  = () => {
-	const button = document.getElementById("lan-currentLanguage");
-	if (!button)
-		return;
-	button.setAttribute("src", "/static/images/england.png");
-}
-
-const toggleDropdown = (e) => {
-	const isDropdownButton = e.target.matches("[data-lan-dropdown-btn]");
-	if (!isDropdownButton && e.target.closest('[data-dropdown') !== null)
-		return;
-	let currentDropdown;
-	if (isDropdownButton) {
-		currentDropdown = e.target.closest('[data-dropdown]');
-		currentDropdown.classList.toggle("active");
-	}
-	document.querySelectorAll("[data-dropdown].active").forEach(dropdown => {
-		if (dropdown === currentDropdown)
-			return;
-		dropdown.classList.remove('active');
-	})
-}
-
-const selectLanguage = (value) => {
-	const button = document.getElementById("lan-currentLanguage");
-	button.setAttribute("src", `/static/images/${value}.png`);
-	const dropdown = document.getElementById("language-dropdown");
-	dropdown.classList.remove("active");
 }
