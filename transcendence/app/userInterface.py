@@ -151,15 +151,16 @@ def logoutUser(request):
     logout(request)
     return JsonResponse({"success": "true", "message": "logout succeeded"}, status=200)
 
-def getSignup(request):
+def getSignup(request, language):
     form = SignupForm()
     context = {
         "form": form,
-        "content": "signup.html"
+        "content": "signup.html",
+        "texts": getTextsForLanguage(pages["signup"], request)
     }
     return render(request, 'index.html', context)
 
-def postSignup(request):
+def postSignup(request, language):
     data = json.loads(request.body)
     form = SignupForm(data)
     if form.is_valid():
@@ -170,13 +171,16 @@ def postSignup(request):
         return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
 
 def signup(request):
+    language = request.session.get('lang')
+    if (language is None) or ((language != "eng") and (language != "fin") and (language != "swe")):
+        request.session['lang'] = 'eng'
     if request.user.is_authenticated:
         return redirect('/')
     match request.method:
         case "GET":
-            return getSignup(request)
+            return getSignup(request, language)
         case "POST":
-            return postSignup(request)
+            return postSignup(request, language)
 
 #@login_required(login_url="/login")
 def getSettings(request):
