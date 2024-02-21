@@ -230,38 +230,6 @@ def Users(request):
 
 
 #==========================================
-#          Mtach Hisory
-#==========================================
-def getMatchHistory(request, userName):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-    if request.user.is_login == False:
-        setOffline(user=request.user)
-        logout(request)
-        return redirect('/login')
-    setOnline(user=request.user)
-    user = Database.objects.filter(username=userName).first()
-    if user is None:
-        return redirect('/')
-    if request.method == "GET":
-        history = []
-        for matches in user.completed_tournaments.all():
-            match = {
-            'id': matches.id,
-            "tournament_name": matches.tournament_name,
-            "player_amount": matches.player_amount,
-            "completed": matches.completed,
-            "date": matches.date,
-            "players": [
-                {'name': player.username} for player in matches.players.all()
-            ]
-            }
-            history.append(match)
-        return JsonResponse(history, status=200, safe=False)
-    return JsonResponse({"message": "Method not implemented"}, status=501)
-
-
-#==========================================
 #          Profile Picture
 #==========================================
 
