@@ -101,7 +101,7 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 	}
 	if (matches.length === 0) {
 		const noMatches = document.createElement("div");
-		noMatches.textContent = "No Matches";
+		noMatches.textContent = getNoMatchText();
 		noMatches.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noMatches);
 	} else {
@@ -111,6 +111,26 @@ const displayDropdownElements = (matches = [], parentDiv) => {
 				searchMatchItem(match.avatar_image || "/static/images/profileIcon.png", match.username, parentDiv)
 		});
 	}
+}
+
+const getNoMatchText = () => {
+	let message;
+	try {
+		const language = JSON.parse(document.getElementById('language').textContent);
+		switch(language) {
+			case "fin":
+				message = "Ei osumia"
+				break;
+			case "swe":
+				message = "Inga träffar"
+				break;
+			default:
+				message = "No Matches";
+		}
+	} catch(error) {
+		message = "No Matches";
+	}
+	return message;
 }
 
 const searchMatchItem = async (src, name, parentDiv) => {
