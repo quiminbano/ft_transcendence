@@ -10,3 +10,4 @@
 <div id="localTournamentScoreAfterMatch">
     {% include "./LocalTournament/scorePage.html" %}
 </div>
+{{ user.get_language|json_script:"currentLanguage" }}
