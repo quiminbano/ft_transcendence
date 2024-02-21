@@ -194,6 +194,18 @@ const closeAllGamesModal = () => {
 	allGamesModal.close();
 }
 
+
+const loadLanguagesDropdown = () => {
+	
+}
+
+const openLanguageDropdown = () => {
+	const languageDropdownMenu = document.getElementById("languageDropdown-menu");
+	if (!languageDropdownMenu)
+		return;
+	languageDropdownMenu.classList.toggle("dropdownActive");
+}
+
 const pictureDictionary = {
 	invalidformatFile: {
 		eng: "Invalid file format",

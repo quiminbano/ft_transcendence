@@ -1,5 +1,41 @@
-<div>
-    <button onclick="changeLanguage('eng')">{{ texts.englishButton }}</button>
-    <button onclick="changeLanguage('fin')">{{ texts.finnishButton }}</button>
-    <button onclick="changeLanguage('swe')">{{ texts.swedishButton }}</button>
+<div class="languageDropdown-div">
+	<button class="languageDropdown-button" onclick="openLanguageDropdown()">
+		<img
+			alt="current language"
+			class="languageDropdown"
+			src="{% if language == 'eng' %} /static/images/england.png {% elif language == 'fin' %} /static/images/finland.png {% else %} /static/images/sweden.png {% endif %}"
+		/>
+	</button>
+	<div id="languageDropdown-menu" class="languageDropdown-menu">
+		<button onclick="changeLanguage('eng')" class="languageDropdownOptionsButton">
+			<div class="languageDropdownOption">
+				<img
+					alt="Choose English"
+					src="/static/images/england.png"
+					class="languageDropdownOptionsIcon"
+				/>
+				<p>{{ texts.englishButton }}</p>
+			</div>
+		</button>
+		<button onclick="changeLanguage('fin')" class="languageDropdownOptionsButton">
+			<div class="languageDropdownOption">
+				<img
+					alt="Choose Finnish"
+					src="/static/images/finland.png"
+					class="languageDropdownOptionsIcon"
+				/>
+				<p>{{ texts.finnishButton }}</p>
+			</div>
+		</button>
+		<button onclick="changeLanguage('swe')" class="languageDropdownOptionsButton">
+			<div class="languageDropdownOption">
+				<img
+					alt="Choose Swedish"
+					src="/static/images/sweden.png"
+					class="languageDropdownOptionsIcon"
+				/>
+				<p>{{ texts.swedishButton }}</p>
+			</div>
+		</button>
+	</div>
 </div>
