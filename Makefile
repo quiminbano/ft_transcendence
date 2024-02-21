@@ -3,7 +3,7 @@ NAME_C = ft_transcendence_transcendence_1 ft_transcendence_db_1
 VOL = ft_transcendence_pgdata
 
 all:
-	docker-compose up -d
+	docker-compose up
 
 down:
 	docker-compose down
