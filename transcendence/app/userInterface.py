@@ -42,6 +42,8 @@ def dashboard(request):
         "menus": getTextsForLanguage(pages["menus"], request),
         "dashboardTexts": getTextsForLanguage(pages["dashboard"], request),
         "gamesTexts": getTextsForLanguage(pages["games"], request),
+        "invitationsTexts": getTextsForLanguage(pages["invitations"], request),
+        "language": request.user.prefered_language
         }
     return render(request, "index.html", context)
 

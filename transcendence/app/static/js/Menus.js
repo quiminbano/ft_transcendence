@@ -176,7 +176,25 @@ const displayFriendsElements = async (friends = [], parentDiv) => {
 	await updateNotification();
 	if (friends.length === 0) {
 		const noFriends = document.createElement("div");
-		noFriends.textContent = "No Friends";
+		let message;
+		try {
+			const language = JSON.parse(document.getElementById('language').textContent);
+			switch(language){
+				case "eng":
+					case "fin":
+						message = "Ei ystäviä";
+						break;
+					case "swe":
+						message = "Inga vänner";
+						break;
+					default:
+						message = "No friends";
+
+			}
+		} catch(error) {
+			message = "No friends"
+		}
+		noFriends.textContent = message;
 		noFriends.setAttribute("class", "searchItemName");
 		parentDiv.appendChild(noFriends);
 	} else {
