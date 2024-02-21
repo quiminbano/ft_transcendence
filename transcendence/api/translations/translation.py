@@ -8,6 +8,7 @@ from .pongSingle2v2 import dictionary as pongSingle2v2
 from .tournament import dictionary as tournament
 from .tournamentBoard import dictionary as tournamentBoard
 from .login import dictionary as login
+from .games import dictionary as games
 
 pages = {
     "main": main,
@@ -19,5 +20,6 @@ pages = {
     "pongSingle1v1": pongSingle1v1,
     "pongSingle2v2": pongSingle2v2,
     "tournament": tournament,
-    "tournamentBoard": tournamentBoard
+    "tournamentBoard": tournamentBoard,
+    "games": games
 }

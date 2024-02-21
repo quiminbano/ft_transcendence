@@ -40,7 +40,8 @@ def dashboard(request):
         "lastGames": reversedMatches,
         "stats": stats,
         "menus": getTextsForLanguage(pages["menus"], request),
-        "dashboardTexts": getTextsForLanguage(pages["dashboard"], request)
+        "dashboardTexts": getTextsForLanguage(pages["dashboard"], request),
+        "gamesTexts": getTextsForLanguage(pages["games"], request),
         }
     return render(request, "index.html", context)
 
