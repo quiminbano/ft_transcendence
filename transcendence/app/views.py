@@ -38,7 +38,7 @@ def bracketFourTemplate(request):
     if not request.headers.get("flag"):
         return redirect("/404")
     context = {
-        "texts": getTextsForLanguage(pages["tournamentBoard"])
+        "texts": getTextsForLanguage(pages["tournamentBoard"], request)
     }
     return render(request, "TournamentBrackets/tournamentBracket4.html", context)
 def bracketEightTemplate(request):
@@ -58,4 +58,7 @@ def getInvitationItemTemplate(request):
         return redirect("/404")
     if not request.headers.get("flag"):
         return redirect("/404")
-    return render(request, "SearchElements/invitationItem.html", {})
+    context = {
+        "texts": getTextsForLanguage(pages["invitations"], request)
+    }
+    return render(request, "SearchElements/invitationItem.html", context)

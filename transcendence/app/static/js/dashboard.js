@@ -28,7 +28,7 @@ const loadDashboard = () => {
 			const image = e.target.files[0];
 			files.push(image);
 			if (!isValidImage(files[0])) {
-				setDragAreaInvalid("Invalid file format");
+				setDragAreaInvalid(getTranslation(pictureDictionary.invalidformatFile));
 				return;
 			} else {
 				return uploadImage(files[0])
@@ -47,7 +47,7 @@ const loadDashboard = () => {
 			const image = e.dataTransfer.files[0];
 			files.push(image);
 			if (!isValidImage(files[0])) {
-				setDragAreaInvalid("Invalid file format");
+				setDragAreaInvalid(getTranslation(pictureDictionary.invalidformatFile));
 			} else {
 				return uploadImage(files[0]);
 			}
@@ -69,10 +69,10 @@ const loadDashboard = () => {
 				fr.readAsArrayBuffer(image);
 			})
 			if (!isFile) {
-				setDragAreaInvalid("Error: something happened");
-				throw new Error("Couldn't read the file");
+				setDragAreaInvalid(getTranslation(pictureDictionary.somethingHappened));
+				throw new Error(getTranslation(pictureDictionary.cantReadFile));
 			}
-			pElement.innerHTML = "Added " + image.name;
+			pElement.innerHTML = getTranslation(pictureDictionary.added) + image.name;
 			upload(image);
 		}
 		const upload = async (file) => {
@@ -90,7 +90,7 @@ const savePicture = async (file) => {
 	const dragArea = document.querySelector(".dropArea");
 	const pElement = dragArea.querySelector("p");
 	const fd = new FormData();
-	pElement.textContent = "Uploading...";
+	pElement.textContent = getTranslation(pictureDictionary.uploading);
 	fd.append("avatar_image", file);
 
 	try {
@@ -109,14 +109,34 @@ const savePicture = async (file) => {
 			const url = data.source;
 			profilePicture.setAttribute("src", url);
 			sideMenuPic.setAttribute("src", url);
-			pElement.textContent = "Completed";
+			pElement.textContent = getTranslation(pictureDictionary.completed);
 			dragArea.setAttribute("class", "dropArea");
 		} else {
-			throw new Error("Failed to upload image");
+			throw new Error(getTranslation(pictureDictionary.failedToUpload));
 		}
 	} catch (error) {
-		setDragAreaInvalid("Upload failed. Please try again");
+		setDragAreaInvalid(getTranslation(pictureDictionary.uploadFail));
 	}
+}
+
+const getTranslation = (texts) => {
+	let message;
+	try {
+		const language = JSON.parse(document.getElementById('language').textContent);
+		switch(language) {
+			case "fin":
+				message = texts["fin"];
+				break;
+			case "swe":
+				message = texts["swe"];
+				break;
+			default:
+				message = texts['eng'];
+		}
+	} catch(error) {
+		message = texts["eng"];
+	}
+	return message;
 }
 
 const clearFiles = () => {
@@ -145,7 +165,7 @@ const resetDragArea = () => {
 	dragArea.setAttribute("class", "dropArea");
 	saveButton.style.display = "none";
 	img.style.display = "none";
-	pElement.textContent = "Drop the image here or click to upload it";
+	pElement.textContent = getTranslation(pictureDictionary.resetDragText);
 }
 
 const setDragAreaInvalid = (message) => {
@@ -172,4 +192,52 @@ const openAllGamesModal = () => {
 
 const closeAllGamesModal = () => {
 	allGamesModal.close();
+}
+
+const pictureDictionary = {
+	invalidformatFile: {
+		eng: "Invalid file format",
+		fin: "Virheellinen tiedostomuoto",
+		swe: "Ogiltigt filformat"
+	},
+	somethingHappened: {
+		eng: "Error: something happened",
+		fin: "Virhe: jotain meni pieleen",
+		swe: "Fel: något hände"
+	},
+	added: {
+		eng: "Added ",
+		fin: "Lisätty ",
+		swe: "Tillagd "
+	},
+	uploading: {
+		eng: "Uploading...",
+		fin: "Ladataan...",
+		swe: "Laddar..."
+	},
+	completed: {
+		eng: "Completed",
+		fin: "Valmis",
+		swe: "Färdig"
+	},
+	cantReadFile: {
+		eng: "Couldn't read the file",
+		fin: "Ei voitu lukea tiedostoa",
+		swe: "Kunde inte läsa filen"
+	},
+	failedToUpload: {
+		eng: "Failed to upload image",
+		fin: "Lataus epäonnistui",
+		swe: "Uppladdningen misslyckades"
+	},
+	uploadFail: {
+		eng: "Upload failed. Please try again",
+		fin: "Lataus epäonnistui. Yritä uudelleen",
+		swe: "Uppladdningen misslyckades. Försök igen"
+	},
+	resetDragText: {
+		eng: "Drop the image here or click to upload it",
+		fin: "Pudota kuva tähän tai napsauta ladataksesi sen",
+		swe: "Släpp bilden här eller klicka för att ladda upp den"
+	}
 }

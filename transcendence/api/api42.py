@@ -3,7 +3,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDict
-from app.utils import setOffline
+from app.utils import setOffline, getTextsForLanguage
 from .models import Database, Users42
 from app.forms import password42
 from app.forms import ProfilePicture
@@ -13,6 +13,7 @@ import io
 import mimetypes
 import http.client
 import urllib.parse
+from .translations.translation import pages
 
 #==========================================
 #     GET IMAGE AND ADD TO DATABASE
@@ -175,7 +176,8 @@ def getRestInfo(request):
             context = {
                 "form": form,
                 "content": "set42password.html",
-                "data": data
+                "data": data,
+                "texts": getTextsForLanguage(pages["password42"], request)
             }
             return  render(request, "index.html", context)
         case _:
@@ -258,7 +260,7 @@ def getTokens(code, type, typeCode, destination, request):
         setOffline(request.user)
         logout(request)
     return redirect('/')
-        
+
 
 
 

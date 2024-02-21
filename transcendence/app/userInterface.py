@@ -40,7 +40,10 @@ def dashboard(request):
         "lastGames": reversedMatches,
         "stats": stats,
         "menus": getTextsForLanguage(pages["menus"], request),
-        "dashboardTexts": getTextsForLanguage(pages["dashboard"], request)
+        "dashboardTexts": getTextsForLanguage(pages["dashboard"], request),
+        "gamesTexts": getTextsForLanguage(pages["games"], request),
+        "invitationsTexts": getTextsForLanguage(pages["invitations"], request),
+        "language": request.user.prefered_language
         }
     return render(request, "index.html", context)
 
@@ -65,7 +68,7 @@ def usersPage(request, name):
         setOffline(user=request.user)
         logout(request)
         return redirect('/login')
-    setOnline(user=request.user) 
+    setOnline(user=request.user)
     source = stringifyImage(request.user)
     expectedUser = getUser(request, name)
     if expectedUser == None:
@@ -90,10 +93,15 @@ def usersPage(request, name):
         "stats": stats,
         "lastGames": reversedMatches
     }
+    gamesTexts = getTextsForLanguage(pages["games"], request)
+    usersPage = getTextsForLanguage(pages["usersPage"], request)
     context = {
         "content": "usersPage.html",
         "source": source,
-        "client": client
+        "client": client,
+        "gamesTexts": gamesTexts,
+        "usersPage": usersPage,
+        "dashboardTexts": getTextsForLanguage(pages["dashboard"], request),
     }
     return render(request, "index.html", context)
 
@@ -243,7 +251,7 @@ def processUserMatch(match, userName):
             match["myTeam"] = match["teamTwo"]
             match["opponentTeam"] = match["teamOne"]
             return match
-    
+
 def setStats(stats):
     stats["totalGames"] = stats["matches_played"]
     stats["totalWins"] = stats["matches_won"]
