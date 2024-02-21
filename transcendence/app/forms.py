@@ -29,8 +29,8 @@ User = get_user_model()
 
 class LoginForm(forms.Form):
 
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), label="Hello")
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}), label="Hello")
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
 
 class TournamentForm(forms.Form):
     player = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
