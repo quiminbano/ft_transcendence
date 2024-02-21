@@ -8,10 +8,12 @@ from .pongSingle2v2 import dictionary as pongSingle2v2
 from .tournament import dictionary as tournament
 from .tournamentBoard import dictionary as tournamentBoard
 from .login import dictionary as login
+from .signup import dictionary as signup
 
 pages = {
     "main": main,
 	"login": login,
+    "signup": signup,
     "menus": menus,
     "dashboard": dashboard,
     "pong": pong,

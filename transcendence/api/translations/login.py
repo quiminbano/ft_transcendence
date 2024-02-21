@@ -1,4 +1,19 @@
 dictionary = {
+    "englishButton": {
+        "eng": "English",
+        "fin": "Englantti",
+        "swe": "Engelska",
+    },
+    "finnishButton": {
+        "eng": "Finnish",
+        "fin": "Suomi",
+        "swe": "Finska",
+    },
+    "swedishButton": {
+        "eng": "Swedish",
+        "fin": "Ruotsi",
+        "swe": "Svenska",
+    },
 	"username": {
 		"eng": "Username:",
 		"fin": "Käyttäjänimi:",
