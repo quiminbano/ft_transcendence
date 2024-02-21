@@ -16,7 +16,7 @@ def validateUser(playerName, password, request):
         errors = getTextsForLanguage(pages["error"], request)["NonExistingUser"]
         return None, errors
     if not check_password(password, user.password):
-        errors = getTextsForLanguage(pages["error"], request)["NonExistingUser"]
+        errors = getTextsForLanguage(pages["error"], request)["IncorrectPassword"]
         return None, errors
     return user, ""
 
