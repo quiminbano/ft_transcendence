@@ -5,6 +5,8 @@ from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from api.imageValidation import validateFileType, validationImageSize
+from app.utils import getTextsForLanguage
+from api.translations.translation import pages
 from api.models import Users42
 from django.core.files import File
 from django.http import JsonResponse
