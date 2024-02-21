@@ -12,6 +12,9 @@ def index(request):
         return dashboard(request)
     uid = getenv('UID')
     encodedCallback = urllib.parse.quote(getenv('REDIRECT_URI'), safe='')
+    language = request.session.get("lang")
+    if (language != "eng") and (language != "fin") and (language != "swe"):
+        request.session["lang"] = "eng"
     if error is not None:
         errorString = error
         request.session["error_42"] = None
@@ -28,7 +31,6 @@ def index(request):
         "content": "main.html",
         "url42" : "https://api.intra.42.fr/oauth/authorize?client_id=" + uid + "&redirect_uri=" + encodedCallback + "&response_type=code",
         "error" : errorString,
-        "texts": getTextsForLanguage(pages["main"]),
-        "language": "eng"
+        "texts": getTextsForLanguage(pages["main"], request)
     }
     return render(request, "index.html", context)

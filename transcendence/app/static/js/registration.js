@@ -105,6 +105,7 @@ const handleChangeProfile = async (event) => {
 	const password = formData.get("password1");
 	const confirmPassword = formData.get("password2");
 	const email = formData.get("email");
+	const language = formData.get("language");
 	const password3 = formData.get("password3");
 
 	data = {
@@ -113,6 +114,7 @@ const handleChangeProfile = async (event) => {
 		lastName: lastname,
 		password1: password,
 		password2: confirmPassword,
+		language,
 		password3,
 		email
 	}

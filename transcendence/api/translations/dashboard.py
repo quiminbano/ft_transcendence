@@ -46,8 +46,8 @@
     },
     "tournamentsPlayed": {
         "eng": "Tournaments played",
-        "fin": "Pelatut turnaukset",
-        "swe": "Turneringar spelade"
+        "fin": "",
+        "swe": ""
     },
     "tournamentsWon": {
         "eng": "Tournaments won",

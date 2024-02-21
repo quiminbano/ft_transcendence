@@ -25,7 +25,10 @@ def setOffline(user : Database):
     user.full_clean()
     user.save()
 
-def getTextsForLanguage(dictionary):
-    language = "fin" #TODO: CHANGE THIS TO GET THE CORRECT LANGUAGE!!!!!!!
+def getTextsForLanguage(dictionary, request):
+    if request.user.is_authenticated:
+        language = request.user.prefered_language
+    else:
+        language = request.session["lang"]
     texts_for_language = {key: value.get(language, '') for key, value in dictionary.items()}
     return texts_for_language

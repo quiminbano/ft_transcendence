@@ -71,6 +71,7 @@ class Database(AbstractUser):
     refresh_token = models.CharField(blank=True)
     expiration_time = models.BigIntegerField(default=0)
     avatar_image = models.FileField(upload_to=defineNameImage, validators=[validationImageSize, validateFileType], blank=True)
+    prefered_language = models.CharField(blank=True)
 
     tournament = models.OneToOneField(Tournament, on_delete=models.SET_NULL, null=True, blank=True)
     completed_matches = models.ManyToManyField(Match, blank=True, related_name="completed_matches")

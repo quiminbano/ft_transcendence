@@ -128,6 +128,7 @@ def postGetRestInfo(request, data):
     user42.refresh_token = refresh_token
     user42.expiration_time = expiration_time
     user42.online_status = True
+    user42.prefered_language = "eng"
     user42.full_clean()
     user42.save()
     auth = authenticate(request, username=loginUser, password=password)
