@@ -1,84 +1,84 @@
 dictionary = { #UserController
-    "NonExistingUser": {
-        "eng": "user does not exists",
-        "fin": "",
-        "swe": ""
-    },
-	"FriendIsSelf": {
-        "eng": "user cant add youself",
-        "fin": "",
-        "swe": ""
-    },
-	"FriendsAlready": {
-        "eng": "already friends",
-        "fin": "",
-        "swe": ""
-    },
+		"NonExistingUser": {
+		"eng": "user does not exist",
+		"fin": "käyttäjää ei ole olemassa",
+		"swe": "användaren finns inte"
+	},
+		"FriendIsSelf": {
+		"eng": "user can't add themselves",
+		"fin": "käyttäjä ei voi lisätä itseään",
+		"swe": "användaren kan inte lägga till sig själv"
+	},
+		"FriendsAlready": {
+		"eng": "already friends",
+		"fin": "on jo ystävät",
+		"swe": "är redan vänner"
+	},
 		"FriendsRequestSentAlready": {
-        "eng": "already sent friend request",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "friend request already sent",
+		"fin": "ystävyyskutsu on jo lähetetty",
+		"swe": "vänförfrågan har redan skickats"
+	},
 		"MethodNotImplemented": {
-        "eng": "Method not implemented",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "method not implemented",
+		"fin": "menetelmää ei ole toteutettu",
+		"swe": "metoden är inte implementerad"
+	},
 		"NoFriendRequestSent": {
-        "eng": "No friend request sent",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "no friend request sent",
+		"fin": "ystävyyskutsua ei ole lähetetty",
+		"swe": "ingen vänförfrågan har skickats"
+	},
 		"NoFriendRequest": {
-        "eng": "No friend request from that user",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "no friend request from that user",
+		"fin": "ei ystävyyskutsua käyttäjältä",
+		"swe": "ingen vänförfrågan från den användaren"
+	},
 		"NotFriends": {
-        "eng": "you are not friends",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "you are not friends",
+		"fin": "et ole ystäviä",
+		"swe": "ni är inte vänner"
+	},
 		"FailedToUpdateAvatarImage": {
-        "eng": "Failed to update the avatar picture",
-        "fin": "",
-        "swe": ""
-    }, #Tournament Controller
+		"eng": "failed to update the avatar picture",
+		"fin": "avatarin päivittäminen epäonnistui",
+		"swe": "uppdateringen av profilbilden misslyckades"
+	},
 		"MethodUnsupported": {
-        "eng": "Method not supported",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "method not supported",
+		"fin": "menetelmää ei tueta",
+		"swe": "metoden stöds inte"
+	},
 		"PlayerInMatch": {
-        "eng": "Player already in match",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "player already in match",
+		"fin": "pelaaja on jo ottelussa",
+		"swe": "spelaren är redan i matchen"
+	},
 		"MaxPlayers": {
-        "eng": "Too many players",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "too many players",
+		"fin": "liikaa pelaajia",
+		"swe": "för många spelare"
+	},
 		"MissingFieldsBody": {
-        "eng": "missing fields in request body",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "missing fields in request body",
+		"fin": "puuttuvat kentät pyynnön levinnyksessä",
+		"swe": "saknade fält i förfrågningskroppen"
+	},
 		"UnauthenticatedUser": {
-        "eng": "User is not authenticated",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "user is not authenticated",
+		"fin": "käyttäjä ei ole todennettu",
+		"swe": "användaren är inte autentiserad"
+	},
 		"NoOngoingTournament": {
-        "eng": "User does not have an tournament going",
-        "fin": "",
-        "swe": ""
-    },
+		"eng": "user does not have a tournament going",
+		"fin": "käyttäjällä ei ole meneillään turnausta",
+		"swe": "användaren har ingen pågående turnering"
+	},
 		"Wrong": {
-        "eng": "something went wrong",
-        "fin": "",
-        "swe": ""
-    }, # forms.py
+		"eng": "something went wrong",
+		"fin": "jotain meni pieleen",
+		"swe": "något gick fel"
+	}, # forms.py
 		"Username is too long": {
         "eng": "Username is too long",
         "fin": "",
