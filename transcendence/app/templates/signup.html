@@ -6,7 +6,7 @@
 				<div id="sign-up-box">
 					<div class="row">
 						<div class="col-12">
-							<h1 class="registerTitle" id="signupTitle">Register</h1>
+							<h1 class="registerTitle" id="signupTitle">{{ texts.title }}</h1>
 						</div>
 					</div>
 					<div class="row">
@@ -14,17 +14,17 @@
 							<form onsubmit="submitSignup(event)" method="POST" action="{% url 'postSignup' %}">
 								{% csrf_token %}
 								<div class="form-group">
-									<label for="{{ form.username.id_for_label }}" class="loginLabel">Username:</label>
+									<label for="{{ form.username.id_for_label }}" class="loginLabel">{{ texts.username }}</label>
 									{{form.username}}
 									<p class="signupErrorMessage" id="signupUsernameError"></p>
 								</div>
 								<div class="form-group">
-									<label for="{{ form.email.id_for_label}}" class="loginLabel">Email:</label>
+									<label for="{{ form.email.id_for_label}}" class="loginLabel">{{ texts.email }}</label>
 									{{form.email}}
 									<p class="signupErrorMessage" id="signupEmailError"></p>
 								</div>
 								<div>
-									<label for="{{ form.coallition.id_for_label }}" class="loginLabel">Coallition:</label>
+									<label for="{{ form.coallition.id_for_label }}" class="loginLabel">{{ texts.coalition }}</label>
 									<ul id="coallitionOptions">
 										{% for radio in form.coallition %}
 										<li class="coallitionOption">
@@ -36,18 +36,18 @@
 									</ul>
 								</div>
 								<div class="form-group">
-									<label for="{{ form.password1.id_for_label }}" class="loginLabel">Password:</label>
+									<label for="{{ form.password1.id_for_label }}" class="loginLabel">{{ texts.password }}</label>
 									{{form.password1}}
 									<p class="signupErrorMessage" id="signupPassword1Error"></p>
 								</div>
 								<div class="form-group">
-									<label for="{{ form.password2.id_for_label }}" class="loginLabel">Confirm password:</label>
+									<label for="{{ form.password2.id_for_label }}" class="loginLabel">{{ texts.passwordConfirmation }}</label>
 									{{form.password2}}
 									<p class="signupErrorMessage" id="signupPassword2Error"></p>
 								</div>
 								<button type="submit"
 										class="btn btn-success w-100 mt-4">
-									Register
+									{{ texts.registerButton }}
 								</button>
 							</form>
 						</div>
@@ -56,12 +56,12 @@
 						<div class="col-8 offset-2">
 							<a href="login"
 							   onclick="route()"
-							   class="registerLink">Already have account? Login here</a>
+							   class="registerLink">{{ texts.loginMessage }}</a>
 						</div>
 						<div class="col-md-4 offset-4">
 							<button class="btn btn-danger w-100"
 									onclick="navigateTo('/')">
-								Cancel
+								{{ texts.cancelButton }}
 							</button>
 						</div>
 					</div>
