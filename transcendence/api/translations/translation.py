@@ -10,15 +10,13 @@ from .tournamentBoard import dictionary as tournamentBoard
 from .login import dictionary as login
 from .games import dictionary as games
 from .signup import dictionary as signup
-from .usersPage import dictionary as usersPage
-from .password42 import dictionary as password42
-from .invitations import dictionary as invitations
 
 pages = {
     "main": main,
 	"login": login,
     "signup": signup,
     "menus": menus,
+    "settings": settings,
     "dashboard": dashboard,
     "pong": pong,
     "pongSingle": pongSingle,

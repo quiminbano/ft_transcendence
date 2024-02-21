@@ -190,21 +190,22 @@ def signup(request):
             return postSignup(request, language)
 
 #@login_required(login_url="/login")
-def getSettings(request):
+def getSettings(request, language):
     form = ChangeProfile(initial={
         'username': request.user.username,
         'email': request.user.email,
         'firstName': request.user.first_name,
         'lastName': request.user.last_name,
-        'language': request.user.prefered_language,
+        'language': request.user.prefered_language
     })
     context = {
         "form": form,
-        "content": "settings.html"
+        "content": "settings.html",
+        "texts": getTextsForLanguage(pages["settings"], request)
     }
     return render(request, 'index.html', context)
 
-def putSettings(request):
+def putSettings(request, language):
     data = json.loads(request.body)
     form = ChangeProfile(data)
     if not form.is_valid():
@@ -227,11 +228,16 @@ def settings(request):
         setOffline(user=request.user)
         logout(request)
         return redirect('/login')
+    language = request.user.prefered_language
+    if (language is None) or ((language != "eng") and (language != "fin") and (language != "swe")):
+        request.user.prefered_language = 'eng'
+        request.user.save()
+        language = 'eng'
     match request.method:
         case "GET":
-            return getSettings(request)
+            return getSettings(request, language)
         case "PUT":
-            return putSettings(request)
+            return putSettings(request, language)
 
 def processUserMatch(match, userName):
     match["score"] = str(match["teamOne"]["score"]) + "-" + str(match["teamTwo"]["score"])
