@@ -10,6 +10,7 @@ from .tournamentBoard import dictionary as tournamentBoard
 from .login import dictionary as login
 from .games import dictionary as games
 from .signup import dictionary as signup
+from .error import dictionary as error
 from .settings import dictionary as settings
 from .usersPage import dictionary as usersPage
 from .password42 import dictionary as password42
@@ -28,6 +29,7 @@ pages = {
     "pongSingle2v2": pongSingle2v2,
     "tournament": tournament,
     "tournamentBoard": tournamentBoard,
+    "error": error,
     "games": games,
     "usersPage": usersPage,
     "password42": password42,
