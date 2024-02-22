@@ -1,3 +1,4 @@
+{% load static %}
 <div class="container-fluid settingsContainer">
 	<div class="row">
 		<div class="col-10 offset-1 col-md-8 offset-md-2 settingsBox">
@@ -28,20 +29,27 @@
 					<label for="{{ form.email.id_for_label}}" class="loginLabel">{{ texts.email }}</label>
 					{{ form.email }}
 				</div>
-				<div class="form-group" id="loginPasswordGroup">
-					<label for="{{ form.language.id_for_label}}" class="loginLabel">{{ texts.languageMessage }}</label>
-					{{ form.language }}
-				</div>
-				<button
-					type="button"
-					class="btn btn-success w-100 changeProfileButton"
-					onclick="openSettingsModal()"
-				>{{ texts.confirmButton }}</button>
-				<button
-					type="button"
-					class="btn btn-danger w-100 changeProfileButton"
-					onclick="navigateTo('/')"
-				>{{ texts.cancelButton }}</button>
+				<p class="loginLabel">{{ texts.languageMessage }}:</p>
+				<ul class="settingsLanguageUl">
+					{% for option in form.language %}
+					<li class="settingsLanguageLi">
+						<img alt="{{ option.choice_label }} flag"
+							 class="settingsLanguageFlag"
+							 src="{% static 'images/' %}{{ option.choice_label }}.png" />
+						{{ option.tag }}
+					</li>
+					{% endfor %}
+				</ul>
+				<button type="button"
+						class="btn btn-success w-100 changeProfileButton"
+						onclick="openSettingsModal()">
+					{{ texts.confirmButton }}
+				</button>
+				<button type="button"
+						class="btn btn-danger w-100 changeProfileButton"
+						onclick="navigateTo('/')">
+					{{ texts.cancelButton }}
+				</button>
 				{% include "settingsModal.html" %}
 			</form>
 		</div>

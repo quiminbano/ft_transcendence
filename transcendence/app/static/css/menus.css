@@ -183,6 +183,12 @@
 
 .sideMenuItem p {
     font-family: PressStart;
+    width: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    text-align: center;
 }
 
 .sideMenuItemIcon {

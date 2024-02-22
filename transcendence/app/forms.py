@@ -185,9 +185,9 @@ class ChangeProfile(forms.Form):
         widget=forms.EmailInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
     language = forms.ChoiceField(choices=(
-        ('eng', 'English'),
-        ('fin', 'Finnish'),
-        ('swe', 'Swedish'),
+        ('eng', 'england'),
+        ('fin', 'finland'),
+        ('swe', 'sweden'),
     ), widget=forms.RadioSelect, label="Select your prefered language")
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
