@@ -30,18 +30,19 @@ class CustomUserChangeForm(UserChangeForm):
 User = get_user_model()
 
 class TournamentCreation(forms.Form):
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), min_length=4, max_length=15)
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=15, required=False)
     number = forms.IntegerField()
 
     def clean_name(self):
-        if (len(self.cleaned_data['name']) > 15 and len(self.cleaned_data['name']) < 4):
+        if (len(self.cleaned_data['name']) > 15):
             raise ValidationError("Invalid tournament name")
         return self.cleaned_data['name']
 
     def clean_number(self):
-        if (self.cleaned_data['number'] != 4 and self.cleaned_data['number'] != 8):
+        ammountPlayers = self.cleaned_data['number']
+        if (ammountPlayers != 4 and ammountPlayers != 8 and ammountPlayers != 2):
             raise ValidationError("Invalid ammount of players")
-        return self.cleaned_data['number']
+        return ammountPlayers
 
 class LoginForm(forms.Form):
 

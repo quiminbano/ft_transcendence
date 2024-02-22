@@ -132,6 +132,8 @@ def postLoginUser(request, language):
         if user:
             userDatabase.online_status = True
             userDatabase.is_login = True
+            if not userDatabase.prefered_language:
+                userDatabase.prefered_language = language
             userDatabase.full_clean()
             userDatabase.save()
             login(request, user)
