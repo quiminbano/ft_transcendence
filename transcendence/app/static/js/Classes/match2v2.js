@@ -1,7 +1,7 @@
 class Match2v2 extends Match {
 	constructor(id) {
 		super(id);
-		this.registeredPlayers = [];
+		this.registeredPlayers = [null, null, null, null];
 		this.teamOne = [];
 		this.teamTwo = [];
 		this.playersrequired = 4;
@@ -15,7 +15,7 @@ class Match2v2 extends Match {
 			username: player.username,
 			picture: player.picture
 		}
-		this.registeredPlayers.push(playerToAdd);
+		this.registeredPlayers[playerNumber - 1] = playerToAdd;
 		if (playerNumber === 1 || playerNumber === 4)
 			this.teamOne.push(playerToAdd);
 		else
@@ -24,6 +24,9 @@ class Match2v2 extends Match {
 		this.amountPlayersRegistered++;
 		if (this.amountPlayersRegistered === this.playersrequired)
 			this.readyToPlay = true;
+		console.log("team one: ", this.teamOne);
+		console.log("team two: ", this.teamTwo);
+		console.log(this);
 	}
 	removePlayer(username, playerNumber) {
 		const indexToRemove = this.registeredPlayers.indexOf(player => username === player.username);
