@@ -120,7 +120,7 @@ const confirmPlayer = async (e, playerNumber) => {
 			errorMessageElement.innerText = error.error;
 			errorMessageElement.style.display = "block";
 		}
-		console.log(error);
+		// console.log(error);
 	}
 	e.target.elements[1].value = "";
 	hideLoadingSpinner();
@@ -172,7 +172,7 @@ const unregisterPlayer = async (playerNumber) => {
 			unregisterErrorElement.innerText = "Something happened. Try again";
 			unregisterErrorElement.style.display = "block";
 		}
-		console.log(error);
+		// console.log(error);
 	}
 	hideLoadingSpinner();
 }

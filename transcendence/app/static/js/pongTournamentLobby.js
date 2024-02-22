@@ -28,7 +28,7 @@ const removePlayer = async (id) => {
 			tournament.removePlayer(id);
 		}
 	} catch (error) {
-		console.log(error.message);
+		// console.log(error.message);
 	}
     hideLoadingSpinner();
 }
@@ -116,6 +116,6 @@ const cancelAndDeleteTournament = async () => {
 	if (response.succeded) {
 		navigateTo('/pong');
 	} else {
-		console.log("Failed to delete tournament");
+		// console.log("Failed to delete tournament");
 	}
 }

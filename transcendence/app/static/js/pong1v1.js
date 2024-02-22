@@ -23,7 +23,7 @@ const loadOneVOne = async () => {
 		const picture = JSON.parse(document.getElementById('picture').textContent);
 		match1v1.addPlayer1({username, picture})
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		navigateTo('/404');
 	}
 }
@@ -72,11 +72,9 @@ const inviteOpponent1v1 = async (e) => {
 		player: username,
 		password
 	};
-	//TODO Make the request to the backend to check if opponent is a valid user!!!!!
 	const errorElement = document.getElementById("errorMessage1v1Invite");
 	try {
 		const response = await postRequest(url, userToInvite)
-		console.log(response);
 		if (response.succeded) {
 			if (errorElement) {
 				errorElement.innerText = "";
@@ -131,7 +129,7 @@ const create1v1Tournament = async () => {
 			throw response;
 		}
 	} catch(error) {
-		console.log(error);
+		// console.log(error);
 		throw error;
 	}
 }
@@ -160,6 +158,6 @@ const play1v1Again = async () => {
 		match1v1 = tempMatch;
 		oneVonePlay();
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }

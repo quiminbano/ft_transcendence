@@ -131,7 +131,7 @@ const saveGameInDatabase = async (id, data) => {
 		if (!response.succeded)
 			throw response;
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 	hideLoadingSpinner();
 }
@@ -155,7 +155,7 @@ const changeLanguage = async (language) => {
 			throw response;
 		navigateTo(destination);
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		navigateTo('/404');
 	}
 	hideLoadingSpinner();

@@ -69,7 +69,7 @@ const onSearch = async (event) => {
 			hideDropdown(menu);
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }
 const onInput = debounce(onSearch);
@@ -184,7 +184,7 @@ const showFriendsMenu = async () => {
 			throw response;
 		}
 	} catch(error) {
-		console.log(error);
+		// console.log(error);
 	}
 }
 
