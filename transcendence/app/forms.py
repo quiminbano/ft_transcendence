@@ -110,13 +110,6 @@ class SignupForm(CustomUserCreationForm):
             raise ValidationError("Usename Already Exist")
         return username
 
-    def clean_email(self):
-        email = self.cleaned_data['email'].lower()
-        new = Database.objects.filter(email=email)
-        if new.count():
-            raise ValidationError("Email Already Exist")
-        return email
-
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
