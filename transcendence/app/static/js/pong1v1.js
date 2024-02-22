@@ -24,6 +24,7 @@ const loadOneVOne = async () => {
 		match1v1.addPlayer1({username, picture})
 	} catch (error) {
 		console.log(error);
+		navigateTo('/404');
 	}
 }
 

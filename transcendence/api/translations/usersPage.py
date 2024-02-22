@@ -1,7 +1,7 @@
 dictionary = {
-	"offline": {
+	"online": {
 		"eng": "offline",
-		"fin": "offline",
+		"fin": "online",
 		"swe": "offline"
 	},
 	"offline": {
@@ -38,5 +38,15 @@ dictionary = {
 		"eng": "No info available",
 		"fin": "Ei tietoa saatavilla",
 		"swe": "Ingen information tillgänglig"
-	}
+	},
+	"lastGames": {
+        "eng": "Last games",
+        "fin": "Viimeiset pelit",
+        "swe": "Senaste spelen"
+    },
+	"noUser": {
+		"eng": "That user does not exist",
+		"fin": "Käyttäjää ei ole olemassa",
+		"swe": "Användaren finns inte"
+    },
 }

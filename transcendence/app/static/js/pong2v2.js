@@ -30,7 +30,7 @@ const load2v2Page = async () => {
 		}
 		match2v2.addPlayer(hostPlayer, 1);
 	} catch (error) {
-		navigateTo("/pong/single");
+		navigateTo("/404");
 	}
 }
 
