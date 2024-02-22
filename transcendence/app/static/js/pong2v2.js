@@ -63,9 +63,29 @@ const UpdateEndGameScene2v2 = (score) => {
 	for (let i = 0; i < 4; i++) {
 		const element = document.getElementById(`score2v2Player${i + 1}Name`);
 		if (element) {
-			element.innerText = match2v2.registeredPlayers[i].username || `Player ${i + 1}`;
+			element.innerText = match2v2.registeredPlayers[i].username || getTranslationFor2v2() + ` ${i + 1}`;
 		}
 	}
+}
+
+const getTranslationFor2v2 = () => {
+	let str;
+	try {
+		const language = JSON.parse(document.getElementById('userLanguage').textContent);
+		switch (language) {
+			case "fin":
+				str = "Pelaaja";
+				break;
+			case "swe":
+				str = "Spelare";
+                break;
+			default:
+				str = "Player";
+		}
+	} catch (error) {
+		str = "Player";
+	}
+	return str;
 }
 
 const twoVtwoContinue = () => {
@@ -168,7 +188,7 @@ const showRegisterContent = (playerNumber) => {
 	const playerNameDiv = document.getElementById(`player${playerNumber}-name`);
 	if (!playerNameDiv)
 	return;
-	playerNameOnBoard.innerText = `Player ${playerNumber}`
+	playerNameOnBoard.innerText = getTranslationFor2v2() + ` ${playerNumber}`
 	playerNameDiv.innerText = "";
 	if (!match2v2.readyToPlay) {
 		const play2v2ButtonArea = document.getElementById("play2v2ButtonArea");
