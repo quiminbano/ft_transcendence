@@ -199,7 +199,7 @@ const create2v2Tournament = async () => {
 	const url = "/api/tournament";
 	try {
 		const body = {
-			name: "2v2Game",
+			name: "",
 			number: 4,
 			player: "",
 		}

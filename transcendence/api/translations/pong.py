@@ -7,7 +7,7 @@
     "descriptionTournament": {
         "eng": "Step into the world of competitive pong with the 'FT-Transcendence Pong' tournament, where skill, precision, and transcendence collide on the virtual table. This ping pong extravaganza invites players of all levels to showcase their mastery in a series of exhilarating matches.",
         "fin": "Astuppa kilpapongin maailmaan 'FT-Transcendence Pong' -turnauksessa, missä taito, tarkkuus ja ylittäminen kohtaavat virtuaalisella pöydällä. Tämä pingisjuhla kutsuu kaiken tasoisia pelaajia näyttämään taitonsa sarjassa jännittäviä otteluita",
-        "swe": "Kliva in i den tävlingsinriktade pongvärlden med 'FT-Transcendence Pong'-turneringen, där skicklighet, precision och transcendens kolliderar på den virtuella bordet. Detta pingisextravaganza inbjuder spelare på alla nivåer att visa upp sin mästerlighet i en serie hänförande matcher."
+        "swe": "Kliv in i den tävlingsinriktade pongvärlden med 'FT-Transcendence Pong'-turneringen, där skicklighet, precision och transcendens kolliderar på det virtuella bordet. Detta pingisextravaganza inbjuder spelare på alla nivåer att visa upp sin mästerlighet i en serie hänförande matcher."
     },
     "startTournamentButton": {
         "eng": "Start Tournament",
