@@ -145,11 +145,11 @@ const openSettingsModal = () => {
 	try {
 		isUsernameValid(usernameField.value);
 		const password3 = document.getElementById("id_password3");
-		password3.focus();
-		password3.value = "";
 		const errorFields = document.querySelectorAll(".signupErrorMessage");
 		errorFields.forEach(field => field.style.display = "none");
 		settingsModal.open();
+		password3.focus();
+		password3.value = "";
 
 	} catch (error) {
 		const usernameErrorField = document.getElementById("invalidUpdateUsername");

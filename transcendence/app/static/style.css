@@ -353,9 +353,9 @@ body {
 .settingsBox h2 {
 	text-align: center;
 }
-.settingsBox form input {
-	border: 3px solid black;
-}
+	.settingsBox form input:not([type="radio"]) {
+		border: 3px solid black;
+	}
 .changeProfileButton {
 	margin: 5px auto;
 }
@@ -404,4 +404,33 @@ body {
 }
 .confirmChangesDiv input {
 	border: 2px solid black;
+}
+
+.settingsLanguageUl {
+	display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+	flex-wrap: wrap;
+}
+
+.settingsLanguageLi {
+	position: relative;
+	list-style: none;
+	border: none;
+}
+.settingsLanguageLi img {
+	width: 60px;
+	cursor: pointer;
+}
+.settingsLanguageLi input {
+    all: unset;
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+}
+.settingsLanguageLi:has(input:checked) {
+    transform: scale(1.05);
+    border-bottom: 5px solid rgba(173, 178, 174, 0.909);
+    border-radius: 2px;
+    padding: 8px 5px;
 }
