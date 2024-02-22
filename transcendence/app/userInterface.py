@@ -107,6 +107,7 @@ def usersPage(request, name):
         "source": source,
         "client": client,
         "gamesTexts": gamesTexts,
+        "menus": getTextsForLanguage(pages["menus"], request),
         "usersPage": usersPage,
         "dashboardTexts": getTextsForLanguage(pages["dashboard"], request),
     }
