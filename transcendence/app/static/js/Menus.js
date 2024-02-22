@@ -198,17 +198,19 @@ const displayFriendsElements = async (friends = [], parentDiv) => {
 		let message;
 		try {
 			const language = JSON.parse(document.getElementById('language').textContent);
-			switch(language){
+			switch (language) {
 				case "eng":
-					case "fin":
-						message = "Ei ystäviä";
-						break;
-					case "swe":
-						message = "Inga vänner";
-						break;
-					default:
-						message = "No friends";
-
+					message = "No friends";
+					break;
+				case "fin":
+					message = "Ei ystäviä";
+					break;
+				case "swe":
+					message = "Inga vänner";
+					break;
+				default:
+					message = "No friends";
+					break;
 			}
 		} catch(error) {
 			message = "No friends"
