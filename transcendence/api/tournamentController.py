@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.contrib.auth.hashers import check_password
 from .models import Tournament, Database, Match, Team
 from app.utils import stringifyImage, getTextsForLanguage
-from app.forms import TournamentForm
+from app.forms import TournamentForm, TournamentCreation
 from .translations.translation import pages
 import json
 
@@ -91,6 +91,9 @@ def createTurnament(request):
     data = json.loads(request.body)
     if "name" not in data or "number" not in data:
         return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MissingFieldsBody"]}, status=400)
+    form = TournamentCreation(data)
+    if not form.is_valid():
+        return JsonResponse({'error': 'Invalid fields in form'}, status=400)
     tournament = Tournament.objects.create(tournament_name=data['name'], player_amount=data['number'])
     tournament.players.add(request.user)
     request.user.tournament = tournament

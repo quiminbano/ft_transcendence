@@ -29,14 +29,48 @@ class CustomUserChangeForm(UserChangeForm):
 # enforces our custom user table on users.
 User = get_user_model()
 
+class TournamentCreation(forms.Form):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), min_length=4, max_length=15)
+    number = forms.IntegerField()
+
+    def clean_name(self):
+        if (len(self.cleaned_data['name']) > 15 and len(self.cleaned_data['name']) < 4):
+            raise ValidationError("Invalid tournament name")
+        return self.cleaned_data['name']
+
+    def clean_number(self):
+        if (self.cleaned_data['number'] != 4 and self.cleaned_data['number'] != 8):
+            raise ValidationError("Invalid ammount of players")
+        return self.cleaned_data['number']
+
 class LoginForm(forms.Form):
 
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}))
 
+    def clean_username(self):
+        if len(self.cleaned_data['username']) > 150:
+            raise ValidationError("Invalid credentials")
+        return self.cleaned_data['username']
+
+    def clean_password(self):
+        if len(self.cleaned_data['password']) > 128:
+            raise ValidationError("Invalid credentials")
+        return self.cleaned_data['password']
+
 class TournamentForm(forms.Form):
     player = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}), max_length=150)
+
+    def clean_player(self):
+        if len(self.cleaned_data['player']) > 150:
+            raise ValidationError("Invalid credentials")
+        return self.cleaned_data['player'].lower()
+
+    def clean_password(self):
+        if len(self.cleaned_data['password']) > 128:
+            raise ValidationError("Invalid credentials")
+        return self.cleaned_data['password']
 
 class SignupForm(CustomUserCreationForm):
 
@@ -52,12 +86,7 @@ class SignupForm(CustomUserCreationForm):
         ('The Builders', 'The Builders'),
         ('The Foragers', 'The Foragers'),
         ('The Guards', 'The Guards'),
-    ), widget=forms.RadioSelect)
-    language = forms.ChoiceField(choices=(
-        ('eng', 'English'),
-        ('fin', 'Finnish'),
-        ('swe', 'Swedish'),
-    ), widget=forms.RadioSelect)
+    ), widget=forms.RadioSelect, label="coallitionOptions")
     password1 = forms.CharField(
         label='password',
         widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"}),
@@ -80,7 +109,7 @@ class SignupForm(CustomUserCreationForm):
             raise ValidationError("Usename Already Exist")
         return username
 
-    def email_clean(self):
+    def clean_email(self):
         email = self.cleaned_data['email'].lower()
         new = Database.objects.filter(email=email)
         if new.count():
@@ -99,6 +128,14 @@ class SignupForm(CustomUserCreationForm):
 
         return password2
 
+    def clean_coallition(self):
+        value = self.cleaned_data['coallition']
+        if  (value != 'The Foragers' and value != 'The Guards' and value != 'The Builders'):
+            raise ValidationError("Invalid coalition provided")
+        if len(value) > 150:
+            raise ValidationError("Invalid coalition provided")            
+        return value
+
     def save(self, commit = True):
         user = Database.objects.create_user(
             self.cleaned_data['username'],
@@ -107,7 +144,6 @@ class SignupForm(CustomUserCreationForm):
         )
         user.coallition = self.cleaned_data['coallition']
         user.is_42 = False
-        user.prefered_language = self.cleaned_data['language']
         try:
             f = open("app/static/images/profileIconWhite.png", "rb")
             djangoFile = File(f)
@@ -164,6 +200,45 @@ class ChangeProfile(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"},),
         max_length=128
     )
+
+    def clean_username(self):
+        if len(self.cleaned_data['username']) > 150:
+            raise ValidationError("Invalid username")
+        return self.cleaned_data['username']
+
+    def clean_firstName(self):
+        if len(self.cleaned_data['firstName']) > 150:
+            raise ValidationError("Invalid first name")
+        return self.cleaned_data['firstName']
+
+    def clean_lastName(self):
+        if len(self.cleaned_data['lastName']) > 150:
+            raise ValidationError("Invalid last name")
+        return self.cleaned_data['lastName']
+
+    def clean_password1(self):
+        if len(self.cleaned_data['password1']) > 128:
+            raise ValidationError("Invalid password")
+        return self.cleaned_data['password1']
+
+    def clean_password2(self):
+        if len(self.cleaned_data['password2']) > 128:
+            raise ValidationError("Invalid password")
+        return self.cleaned_data['password2']
+
+    def clean_password3(self):
+        if len(self.cleaned_data['password3']) > 128:
+            raise ValidationError("Invalid password")
+        return self.cleaned_data['password3']
+
+    def clean_language(self):
+        value = self.cleaned_data['language']
+        if  (value != 'eng' and value != 'fin' and value != 'swe'):
+            raise ValidationError("Invalid language provided")
+        if len(value) > 150:
+            raise ValidationError("Invalid language provided")            
+        return value
+
 
     def isPasswordValid(self, userModel : Database):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:

@@ -119,7 +119,7 @@ def postLoginUser(request, language):
     data = json.loads(request.body)
     form = LoginForm(data)
     if form.is_valid():
-        username = form.cleaned_data['username']
+        username = form.cleaned_data['username'].lower()
         password = form.cleaned_data['password']
         userModel = get_user_model()
         try:
@@ -139,7 +139,7 @@ def postLoginUser(request, language):
         else:
             return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
     else:
-        return JsonResponse({"success": "false", "message": "the form is invalid"}, status=400)
+        return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
 
 def loginUser(request):
     if request.user.is_authenticated:
@@ -173,7 +173,9 @@ def postSignup(request, language):
     data = json.loads(request.body)
     form = SignupForm(data)
     if form.is_valid():
-        form.save()
+        user = form.save()
+        user.prefered_language = language
+        user.save()
         return JsonResponse({"success": "true", "message": "user created successfuly"}, status=200)
     else:
         errors = {field: form.errors[field][0] for field in form.errors}
