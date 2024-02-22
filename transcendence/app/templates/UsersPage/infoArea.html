@@ -31,11 +31,12 @@
 {% if client.info.username != user.get_username %}
 <div class="row">
     <div class="col-12">
-		{{ client.info.username|json_script:"username" }}
+        {{ client.info.username|json_script:"username" }}
         <button class="btn btn-secondary w-100 friendButton" onclick="challengeForPong()">{{ usersPage.challenge }}</button>
         <button class="btn btn-danger w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'T' %} nonActive {% endif %}" id="removeFriendBtn" onclick="removeFromFriend('{{client.info.username}}')">{{ usersPage.removeFriends }}</button>
         <button class="btn btn-secondary w-100 friendButton {% if client.info.isFriend == 'P' %} active{% endif %}{% if client.info.isFriend != 'P' %} nonActive {% endif %}" disabled id="waitingFriendBtn">{{ usersPage.waitingAcceptance }}</button>
         <button class="btn btn-success w-100 friendButton {% if client.info.isFriend == 'T' %} active{% endif %}{% if client.info.isFriend != 'F' %} nonActive {% endif %}" onclick="inviteToBeFriend('{{client.info.username}}')" id="addFriendBtn">{{ usersPage.addAsFriends }}</button>
+        <button class="btn btn-success w-100 friendButton {% if client.info.isFriend == 'I' %} active{% endif %}{% if client.info.isFriend != 'I' %} nonActive {% endif %}" onclick="acceptInvite('{{client.info.username}}')" id="acceptFriendBtn">{{ usersPage.acceptFriend }}</button>
     </div>
 </div>
 {% endif %}

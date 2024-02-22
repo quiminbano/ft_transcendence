@@ -49,4 +49,9 @@ dictionary = {
 		"fin": "Käyttäjää ei ole olemassa",
 		"swe": "Användaren finns inte"
     },
+	"acceptFriend": {
+        "eng": "Accept friend",
+        "fin": "Hyväksy ystävä",
+        "swe": "Acceptera vän"
+    },
 }
