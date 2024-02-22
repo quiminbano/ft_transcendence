@@ -33,8 +33,19 @@ def getTextsForLanguage(dictionary, request):
     texts_for_language = {key: value.get(language, '') for key, value in dictionary.items()}
     return texts_for_language
 
+def swapErrors(errors, dictionary, language):
+    newErrors = {}
+    for key, value in errors.items():
+        try:
+            newErrors[key] = dictionary[key][value][language]
+        except KeyError:
+            newErrors[key] = dictionary[key]["Undefined error"][language]
+    return newErrors
+        
+
 def getLanguage(request):
     if request.user.is_authenticated:
         return request.user.prefered_language
     else:
         return request.session.get("lang")
+    

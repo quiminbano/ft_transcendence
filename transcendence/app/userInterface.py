@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from .forms import SignupForm, LoginForm, ChangeProfile, ProfilePicture
 from django.http import JsonResponse
-from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage, getLanguage
+from .utils import stringifyImage, setOffline, setOnline, getTextsForLanguage, getLanguage, swapErrors
 from api.userController import getUser
 from api.api42 import getTokens
 import json
 import time
 from api.translations.translation import pages
+from api.translations.forms.formTranslation import formPages
 
 #@login_required(login_url="/login")
 def dashboard(request):
@@ -188,6 +189,7 @@ def postSignup(request, language):
         return JsonResponse({"success": "true", "message": "user created successfuly"}, status=200)
     else:
         errors = {field: form.errors[field][0] for field in form.errors}
+        errors = swapErrors(errors=errors, dictionary=formPages["signup"], language=language)
         return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
 
 def signup(request):
