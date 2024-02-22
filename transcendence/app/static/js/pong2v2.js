@@ -30,7 +30,7 @@ const load2v2Page = async () => {
 		}
 		match2v2.addPlayer(hostPlayer, 1);
 	} catch (error) {
-		navigateTo("/pong/single");
+		navigateTo("/404");
 	}
 }
 
@@ -199,7 +199,7 @@ const create2v2Tournament = async () => {
 	const url = "/api/tournament";
 	try {
 		const body = {
-			name: "",
+			name: "2v2Game",
 			number: 4,
 			player: "",
 		}

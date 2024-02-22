@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-12 col-xl-8 offset-xl-2 d-flex justify-content-center">
 			{% if client is None %}
-			<h3>That user does not exist</h3>
+			<h3>{{ usersPage.noUser }}</h3>
 			<button class="btn btn-secondary" onclick="goBack()">Go back</button>
 			{% else %}
 			<div class="friendsBox">
@@ -17,7 +17,7 @@
 				</div>
 				<div class="row">
 					<div class="col-12 col-md-10 col-lg-8 offset-sm-1 offset-md-1 offset-lg-2">
-						<h3 class="text-center">Last Games</h3>
+						<h3 class="text-center">{{ usersPage.lastGames }}</h3>
 						{% include "UsersPage/lastGamesArea.html" %}
 					</div>
 				</div>

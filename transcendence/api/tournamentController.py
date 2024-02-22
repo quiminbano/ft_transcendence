@@ -93,6 +93,8 @@ def createTurnament(request):
         return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MissingFieldsBody"]}, status=400)
     form = TournamentCreation(data)
     if not form.is_valid():
+        errors = {field: form.errors[field][0] for field in form.errors}
+        print(errors)
         return JsonResponse({'error': 'Invalid fields in form'}, status=400)
     tournament = Tournament.objects.create(tournament_name=data['name'], player_amount=data['number'])
     tournament.players.add(request.user)

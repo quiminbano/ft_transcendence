@@ -24,6 +24,7 @@ const loadOneVOne = async () => {
 		match1v1.addPlayer1({username, picture})
 	} catch (error) {
 		console.log(error);
+		navigateTo('/404');
 	}
 }
 
@@ -119,7 +120,7 @@ const create1v1Tournament = async () => {
 	const url = "/api/tournament";
 	try {
 		const body = {
-			name: "",
+			name: "1v1game",
 			number: 2,
 			player: "",
 		}
