@@ -68,7 +68,7 @@
 	overflow-y: auto;
 }
 .bracketBox {
-	background-image: url(https://cms-assets.tutsplus.com/cdn-cgi/image/width=480/legacy-premium-tutorials/posts/25462/images/25462_b92f519db9cdcecbff3eb2c0e2d459ea.png);
+	background-image: url("/static/images/neonPong.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 	padding: 30px 20px;

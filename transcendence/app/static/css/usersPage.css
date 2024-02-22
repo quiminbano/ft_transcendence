@@ -1,6 +1,6 @@
 #friendsPageContainer {
 	width: 100vw;
-	background-image: url(https://icbstexas.com/wp-content/uploads/split-color-background.jpg);
+	background-image: url("/static/images/splitColorBackground.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }

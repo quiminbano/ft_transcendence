@@ -205,23 +205,23 @@
 }
 
 #sideMenuPongIcon {
-    content: url(../images/icons8-ping-pong-100.png);
+    content: url("/static/images/icons8-ping-pong-100.png");
 }
 
 #sideMenuSnakeIcon {
-    content: url(../images/icons8-snake-50.png);
+    content: url("/static/images/icons8-snake-50.png");
 }
 
 #sideMenuDashboardIcon {
-    content: url(../images/dashboardIcon.png);
+    content: url("/static/images/dashboardIcon.png");
 }
 
 #sideMenuSettingsIcon {
-    content: url(../images/settingsIcon.png);
+    content: url("/static/images/settingsIcon.png");
 }
 
 #sideMenuLogoutIcon {
-    content: url(../images/logoutIcon.png);
+    content: url("/static/images/logoutIcon.png");
 }
 
 @media only screen and (max-width: 776px) {
