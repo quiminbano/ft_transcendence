@@ -83,7 +83,6 @@ def usersPage(request, name):
     data = json.loads(expectedUser.content.decode())
     matchesList = data["completed_matches"]
     matches = matchesList.copy()
-    #TODO: change this data to the real user data!!!!!!!!!
     for match in matches:
         match = processUserMatch(match, name)
     reversedMatches = matches[::-1]

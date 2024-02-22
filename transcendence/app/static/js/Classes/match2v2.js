@@ -24,9 +24,6 @@ class Match2v2 extends Match {
 		this.amountPlayersRegistered++;
 		if (this.amountPlayersRegistered === this.playersrequired)
 			this.readyToPlay = true;
-		console.log("team one: ", this.teamOne);
-		console.log("team two: ", this.teamTwo);
-		console.log(this);
 	}
 	removePlayer(username, playerNumber) {
 		const indexToRemove = this.registeredPlayers.indexOf(player => username === player.username);

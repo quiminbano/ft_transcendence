@@ -19,7 +19,7 @@ class CircleChart {
             const content = doc.body.innerHTML;
             return content;
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
     async createFragment() {

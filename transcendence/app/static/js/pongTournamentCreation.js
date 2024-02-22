@@ -43,7 +43,7 @@ const createTournament = async (event) => {
 		loadTournamentLobbyInfo = response;
 		await navigateTo(`tournament/${response.tournament.id}`);
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }
 

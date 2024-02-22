@@ -28,7 +28,6 @@ const generateTournamentSchedule = () => {
 }
 const cancelLocalTournament = () => {
 	tournament = null;
-	//TODO: DELETE THE LOCAL TOURNAMENT FROM THE DATABASE!!!
 	navigateTo("/pong");
 }
 

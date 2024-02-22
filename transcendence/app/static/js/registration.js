@@ -90,7 +90,7 @@ const logoutUser = async () => {
 			navigateTo("/");
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }
 
@@ -187,11 +187,11 @@ const loginWith42 = async () => {
 	try {
 		const response = await getRequest(url);
 		if (response.succeded) {
-			console.log("Successfuly logged with 42")
+			console.log("Successfully logged with 42")
 		} else {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }

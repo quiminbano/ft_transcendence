@@ -71,7 +71,7 @@ window.addEventListener("beforeunload", async (e) => {
 	try {
 		await getRequest("/api/exit", {"triggerWindow": true});
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 	e.returnValue = '';
 	returnValue = undefined;

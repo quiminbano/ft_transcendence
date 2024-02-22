@@ -102,7 +102,7 @@ class LocalTournament {
             this.#populateDisplay(doc);
             this.#updateButtons();
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
     }
     isRepeatedPlayer(name) {

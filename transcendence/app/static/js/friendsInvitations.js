@@ -14,7 +14,7 @@ const getFriendsInvitations = async () => {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		return null;
 	}
 }
@@ -29,7 +29,7 @@ const inviteToBeFriend = async (username) => {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 }
 
@@ -165,7 +165,7 @@ const acceptInvite = async (username) => {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 	hideLoadingSpinner();
 }
@@ -181,7 +181,7 @@ const rejectInvitation = async (username) => {
 			throw response;
 		}
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 	hideLoadingSpinner();
 }
