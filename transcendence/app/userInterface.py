@@ -47,16 +47,23 @@ def dashboard(request):
         }
     return render(request, "index.html", context)
 
-def getFriendState(request, friend_requests, friends):
+def getFriendState(request, friend_requests, friends, name):
+    myUser = getUser(request, request.user.username)
+    myData = json.loads(myUser.content.decode())
+    myFriendRequests = myData["friend_requests"]
     friendState = "F"
+    for request_data in myFriendRequests:
+        if request_data["username"] == name:
+            friendState = "I"
+            return friendState
     for request_data in friend_requests:
         if request_data["username"] == request.user.username:
             friendState = "P"
-            break
+            return friendState
     for request_data in friends:
         if request_data["username"] == request.user.username:
             friendState = "T"
-            break
+            return friendState
     return friendState
 
 def usersPage(request, name):
@@ -83,7 +90,7 @@ def usersPage(request, name):
     info = {
         "username": name,
         "online": data["online_status"],
-        "isFriend": getFriendState(request, data["friend_requests"], data["friends"]),
+        "isFriend": getFriendState(request, data["friend_requests"], data["friends"], name),
         "coallition": data["coallition"],
         "picture": data["avatar_image"]
     }

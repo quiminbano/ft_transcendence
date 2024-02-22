@@ -105,7 +105,9 @@ const toggleButtons = (buttonToActivate) => {
 	buttons.push(document.getElementById("addFriendBtn"));
 	buttons.push(document.getElementById("waitingFriendBtn"));
 	buttons.push(document.getElementById("removeFriendBtn"));
+	buttons.push(document.getElementById("acceptFriendBtn"));
 	buttons.forEach(button => {
+		if (!button) return;
 		if (button.id === buttonToActivate) {
 			button.classList.add("active");
 			button.classList.remove("nonActive");
@@ -158,6 +160,7 @@ const acceptInvite = async (username) => {
 		const response = await postRequest(url, "");
 		if (response.succeded) {
 			removeItem(username);
+			toggleButtons("removeFriendBtn");
 		} else {
 			throw response;
 		}
