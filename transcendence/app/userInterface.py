@@ -132,7 +132,7 @@ def postLoginUser(request, language):
         try:
             userDatabase = userModel.objects.filter(username=username).get()
         except userModel.DoesNotExist:
-           return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
+           return JsonResponse({"success": "false", "message": getTextsForLanguage(pages["login"], request=request)["credentials"]}, status=400)
         if userDatabase.is_42 == True:
            return JsonResponse({"success": "false", "message": "Invalid credentials"}, status=400)
         user = authenticate(request, username=username, password=password)
