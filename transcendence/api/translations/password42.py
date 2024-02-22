@@ -11,15 +11,20 @@ dictionary = {
 	},
 	"password": {
 		"eng": "Password:",
-		"fin": "Salasana",
-		"swe": "Lösenord",
+		"fin": "Salasana:",
+		"swe": "Lösenord:",
 	},
 	"confirm": {
 		"eng": "Confirm password",
 		"fin": "Vahvista salasana",
 		"swe": "Bekräfta lösenord"
 	},
-	"cancel": {
+    "confirmButton": {
+        "eng": "Confirm",
+        "fin": "Vahvista",
+        "swe": "Bekräfta"
+	},
+	"cancelButton": {
 		"eng": "Cancel",
 		"fin": "Peruuta",
 		"swe": "Avbryt"

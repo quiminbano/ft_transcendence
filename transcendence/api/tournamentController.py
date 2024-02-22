@@ -93,8 +93,17 @@ def createTurnament(request):
         return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["MissingFieldsBody"]}, status=400)
     form = TournamentCreation(data)
     if not form.is_valid():
-        errors = {field: form.errors[field][0] for field in form.errors}
-        print(errors)
+        return JsonResponse({'error': 'Invalid fields in form'}, status=400)
+    flag = request.session["tournament"]
+    if ((flag is None) or (flag != "1v1" and flag != "2v2" and flag != "tournament")):
+        return JsonResponse({'error': 'Invalid fields in form'}, status=400)
+    name = form.cleaned_data['name']
+    number = form.cleaned_data['number']
+    if (request.session["tournament"] == "tournament") and (len(name) < 4 or number == 1 or number == 2):
+        return JsonResponse({'error': 'Invalid fields in form'}, status=400)
+    if (request.session["tournament"] == "1v1") and (number == 8 or number == 4):
+        return JsonResponse({'error': 'Invalid fields in form'}, status=400)
+    if (request.session["tournament"] == "2v2") and (number == 8 or number == 2):
         return JsonResponse({'error': 'Invalid fields in form'}, status=400)
     tournament = Tournament.objects.create(tournament_name=data['name'], player_amount=data['number'])
     tournament.players.add(request.user)
@@ -216,7 +225,10 @@ def tournamentManagerID(request, id=None):
 #==========================================
 def tournamentPlayerManager(request, id=None):
     existing_tournament = Tournament.objects.filter(id=id).first()
-    data = json.loads(request.body)
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["Wrong"]}, status=400)
     if "player" in data and existing_tournament is not None:
         match request.method:
             case "POST":
