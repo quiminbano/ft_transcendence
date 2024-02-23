@@ -21,9 +21,9 @@ dictionary = {
             "swe": "Användarnamnet finns redan"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "email": {
@@ -33,9 +33,9 @@ dictionary = {
             "swe": "Epost innehåller ogiltiga tecken"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "coallition": {
@@ -45,9 +45,9 @@ dictionary = {
             "swe": "Ogiltigt samarbetsorgan"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "password2": {
@@ -82,9 +82,9 @@ dictionary = {
             "swe": "Detta lösenord är för vanligt"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     }
 }

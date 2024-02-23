@@ -21,9 +21,9 @@ dictionary = {
             "swe": "Lösenordet är för kort"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     }
 }

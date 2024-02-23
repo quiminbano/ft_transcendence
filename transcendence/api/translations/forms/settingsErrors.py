@@ -1,14 +1,29 @@
 dictionary = {
     "username": {
-        "Invalid username": {
-            "eng": "Invalid username",
-            "fin": "Virheellinen käyttäjätunnus",
-            "swe": "Ogiltigt användarnamn"
+        "Username is too long": {
+            "eng": "Username is too long",
+            "fin": "Käyttäjätunnus on liian pitkä",
+            "swe": "Användarnamnet är för långt"
+        },
+        "Username is too short": {
+            "eng": "Username is too short",
+            "fin": "Käyttäjätunnus on liian lyhyt",
+            "swe": "Användarnamnet är för kort"
+        },
+        "Username has invalid characters in it": {
+            "eng": "Username has invalid characters in it",
+            "fin": "Käyttäjätunnuksessa on virheellisiä merkkejä",
+            "swe": "Användarnamnet innehåller ogiltiga tecken"
+        },
+        "Username already exist": {
+            "eng": "Username already exist",
+            "fin": "Käyttäjätunnus on jo olemassa",
+            "swe": "Användarnamnet finns redan"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "firstName": {
@@ -18,9 +33,9 @@ dictionary = {
             "swe": "Ogiltigt förnamn"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "lastName": {
@@ -30,9 +45,9 @@ dictionary = {
             "swe": "Ogiltigt efternamn"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "password1": {
@@ -42,9 +57,9 @@ dictionary = {
             "swe": "Ogiltigt lösenord"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "password2": {
@@ -59,9 +74,9 @@ dictionary = {
             "swe": "Nya lösenord matchar inte"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "password3" : {
@@ -76,9 +91,9 @@ dictionary = {
             "swe": "Ditt nuvarande lösenord är inte korrekt"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "language": {
@@ -88,9 +103,9 @@ dictionary = {
             "swe": "Ogiltigt språk"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
     },
     "validation": {
@@ -100,9 +115,9 @@ dictionary = {
             "swe": "Det uppstod ett problem när användarnamnet skulle  ändras"
         },
         "Undefined error": {
-            "eng": "Undefined error",
-            "fin": "Määrittelemätön virhe",
-            "swe": "Odefinierat fel"
+            "eng": "Something went wrong",
+            "fin": "Jotain meni pieleen",
+            "swe": "Något gick fel"
         }
 	}
 }
