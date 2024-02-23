@@ -94,4 +94,14 @@
         "fin": "Jatka",
         "swe": "Fortsätt"
     },
+	"arrowUp": {
+		"eng": "Arrow up",
+		"fin": "Nousu",
+		"swe": "Uppåt"
+	},
+	"arrowDown": {
+		"eng": "Arrow down",
+		"fin": "Alas",
+		"swe": "Ner"
+	}
 }

@@ -72,7 +72,7 @@ const loadDashboard = () => {
 				setDragAreaInvalid(getTranslation(pictureDictionary.somethingHappened));
 				throw new Error(getTranslation(pictureDictionary.cantReadFile));
 			}
-			pElement.innerHTML = getTranslation(pictureDictionary.added) + image.name;
+			pElement.innerText = getTranslation(pictureDictionary.added) + image.name;
 			upload(image);
 		}
 		const upload = async (file) => {
@@ -171,7 +171,7 @@ const resetDragArea = () => {
 const setDragAreaInvalid = (message) => {
 	const dragArea = document.querySelector(".dropArea");
 	const pElement = dragArea.querySelector("p");
-	pElement.innerHTML = message;
+	pElement.innerText = message;
 	dragArea.setAttribute("class", "dropArea invalid");
 }
 
@@ -196,7 +196,7 @@ const closeAllGamesModal = () => {
 
 
 const loadLanguagesDropdown = () => {
-	
+
 }
 
 const openLanguageDropdown = () => {
