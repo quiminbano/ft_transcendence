@@ -51,6 +51,11 @@ dictionary = {
         }
     },
     "password2": {
+		"The password is too similar to the email address.": {
+			"eng": "The password is too similar to the email address.",
+            "fin": "Salasana on liian samanlainen sähköpostiosoitteeseen.",
+            "swe": "Lösenordet är för likt e-postadressen."
+        },
         "Passwords don't match": {
             "eng": "Passwords don't match",
             "fin": "Salasanat eivät täsmää",

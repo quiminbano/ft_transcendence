@@ -198,7 +198,8 @@ def getUserStats(user):
 
 
 def getUser(request, userName=None):
-#I removed the check for if the user is authenticated or not. Because, before calling getUser, we check it in usersPage function. The completed is not gonna change, because getUser is being called just there.
+    if not request.user.is_authenticated:
+        return redirect('/login')
     user = Database.objects.filter(username=userName).first()
     if user is None:
         return JsonResponse({'error': getTextsForLanguage(pages["error"], request)["NonExistingUser"]}, status=400)
