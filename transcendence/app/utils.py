@@ -39,6 +39,8 @@ def swapErrors(errors, dictionary, language):
     newErrors = {}
     for key, value in errors.items():
         try:
+            if key == "validation":
+                print(value)
             newErrors[key] = dictionary[key][value][language]
         except KeyError:
             newErrors[key] = dictionary[key]["Undefined error"][language]

@@ -135,6 +135,16 @@ const handleUpdateErrors = (errors) => {
 		handleError(errorPassword3Field, errors["password2"]);
 	else if (errors["password3"])
 		handleError(errorPassword3Field, errors["password3"]);
+	else if (errors["username"])
+		handleError(errorPassword3Field, errors["username"]);
+	else if (errors["firstName"])
+		handleError(errorPassword3Field, errors["firstName"]);
+	else if (errors["lastName"])
+		handleError(errorPassword3Field, errors["lastName"]);
+	else if (errors["language"])
+		handleError(errorPassword3Field, errors["language"]);
+	else if (errors["email"])
+		handleError(errorPassword3Field, errors["email"]);
 	else if (errors["validation"])
 		handleError(errorPassword3Field, errors["validation"]);
 }

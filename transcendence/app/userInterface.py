@@ -225,12 +225,14 @@ def putSettings(request, language):
     form = ChangeProfile(data)
     if not form.is_valid():
         errors = {field: form.errors[field][0] for field in form.errors}
+        errors = swapErrors(errors=errors, dictionary=formPages["settings"], language=language)
         return JsonResponse({"message": "Failed to update profile", "errors": errors}, status=400)
     passwordValidation, response = form.isPasswordValid(request.user)
     if not passwordValidation:
         return response
     flag, reason = form.save(request.user)
     if not flag:
+        reason = swapErrors(errors=reason, dictionary=formPages["settings"], language=language)
         return JsonResponse({"message": "Failed to update profile", "errors": reason}, status=400)
     user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
     login(request, user)

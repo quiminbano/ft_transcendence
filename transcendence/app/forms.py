@@ -150,31 +150,25 @@ class SignupForm(CustomUserCreationForm):
 
 class ChangeProfile(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        min_length=5,
-        max_length=150
+        widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"})
         )
     firstName = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False,
-        max_length=150
+        required=False
         )
     lastName = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
-        required=False,
-        max_length=150
+        required=False
         )
     password1 = forms.CharField(
         label="New password",
         widget=forms.PasswordInput(
         attrs={'class': 'form-control', "autocomplete": "on"}),
-        max_length=128,
         required=False
     )
     password2 = forms.CharField(
         label="Confirm new password",
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        max_length=128,
         required=False
     )
     email = forms.EmailField(
@@ -188,12 +182,16 @@ class ChangeProfile(forms.Form):
     ), widget=forms.RadioSelect, label="Select your prefered language")
     password3 = forms.CharField(
         label="Confirm your password to apply the changes",
-        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"},),
-        max_length=128
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
 
     def clean_username(self):
-        if len(self.cleaned_data['username']) > 150:
+        if len(self.cleaned_data['username']) > 150 or len(self.cleaned_data['username']) < 5:
+            raise ValidationError("Invalid username")
+        validator = UnicodeUsernameValidator()
+        try:
+            validator(self.cleaned_data['username'])
+        except ValidationError:
             raise ValidationError("Invalid username")
         return self.cleaned_data['username']
 
@@ -219,6 +217,8 @@ class ChangeProfile(forms.Form):
 
     def clean_password3(self):
         if len(self.cleaned_data['password3']) > 128:
+            raise ValidationError("Invalid password")
+        if len(self.cleaned_data['password3']) < 8:
             raise ValidationError("Invalid password")
         return self.cleaned_data['password3']
 
@@ -262,7 +262,7 @@ class ChangeProfile(forms.Form):
         try:
             data_42 = Users42.objects.filter(user_in_database=old_username).get()
         except Users42.DoesNotExist:
-            return False, "Unspecified error"
+            return False, {"validation": "Undefined error"}
         data_42.user_in_database = self.cleaned_data['username']
         try:
             data_42.full_clean()
