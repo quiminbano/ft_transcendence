@@ -38,5 +38,10 @@ dictionary = {
 		"eng": "Cancel",
 		"fin": "Peruuta",
 		"swe": "Avbryt"
+	},
+	"credentials": {
+		"eng": "Invalid credentials",
+        "fin": "Virheelliset tunnukset",
+        "swe": "Ogiltiga inloggningsuppgifter"
 	}
 }

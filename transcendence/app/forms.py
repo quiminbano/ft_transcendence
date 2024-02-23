@@ -5,8 +5,7 @@ from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
 from api.imageValidation import validateFileType, validationImageSize
-from app.utils import getTextsForLanguage
-from api.translations.translation import pages
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from api.models import Users42
 from django.core.files import File
 from django.http import JsonResponse
@@ -76,8 +75,6 @@ class TournamentForm(forms.Form):
 class SignupForm(CustomUserCreationForm):
 
     username = forms.CharField(label='Username',
-        min_length=5,
-        max_length=150,
         widget=forms.TextInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
     email = forms.EmailField(
@@ -90,44 +87,58 @@ class SignupForm(CustomUserCreationForm):
     ), widget=forms.RadioSelect, label="coallitionOptions")
     password1 = forms.CharField(
         label='password',
-        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"}),
-        max_length=128
+        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
     password2 = forms.CharField(
         label='Confirm password',
-        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"}),
-        max_length=128
+        widget=forms.PasswordInput(attrs={"class": "form-control", "autocomplete": "on"})
     )
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
-
         if len(username) > 150:
             raise ValidationError("Username is too long")
-
+        if len(username) < 5:
+            raise ValidationError("Username is too short")
+        validator = UnicodeUsernameValidator()
+        try:
+            validator(username)
+        except ValidationError:
+            raise ValidationError("Username has invalid characters in it")
         new = Database.objects.filter(username = username)
         if new.count():
-            raise ValidationError("Usename Already Exist")
+            raise ValidationError("Username already exist")
         return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        validator = UnicodeUsernameValidator()
+        try:
+            validator(email)
+        except ValidationError:
+            raise ValidationError("Email has invalid characters in it")
+        return email
 
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
-
         if password1 and password2 and password1 != password2:
             raise ValidationError("Passwords don't match")
-
-        if len(password2) > 150:
+        if len(password2) > 128:
             raise ValidationError("Password is too long")
-
+        if len(password2) < 8:
+            raise ValidationError("Password is too short")
+        validator = UnicodeUsernameValidator()
+        try:
+            validator(password2)
+        except ValidationError:
+            raise ValidationError("Password has invalid characters in it")
         return password2
 
     def clean_coallition(self):
         value = self.cleaned_data['coallition']
         if  (value != 'The Foragers' and value != 'The Guards' and value != 'The Builders'):
-            raise ValidationError("Invalid coalition provided")
-        if len(value) > 150:
-            raise ValidationError("Invalid coalition provided")            
+            raise ValidationError("Invalid coalition provided") 
         return value
 
     def save(self, commit = True):
