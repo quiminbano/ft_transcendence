@@ -40,10 +40,19 @@ const createTournament = async (event) => {
 			player: hostName
 		}
 		const response = await postRequest(url, data);
-		loadTournamentLobbyInfo = response;
-		await navigateTo(`tournament/${response.tournament.id}`);
+		if (response.succeded) {
+			loadTournamentLobbyInfo = response;
+			await navigateTo(`tournament/${response.tournament.id}`);
+		} else {
+			throw response
+		}
+		
 	} catch (error) {
-		// console.log(error);
+		console.log(error);
+		const errorDiv = document.getElementById("createTournamentError");
+		if (error) {
+            errorDiv.textContent = error.error;
+        }
 	}
 }
 
