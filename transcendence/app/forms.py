@@ -185,15 +185,18 @@ class ChangeProfile(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
 
-    def clean_username(self):
-        if len(self.cleaned_data['username']) > 150 or len(self.cleaned_data['username']) < 5:
-            raise ValidationError("Invalid username")
+    def clean_username(self):    
+        username = self.cleaned_data['username'].lower()
+        if len(username) > 150:
+            raise ValidationError("Username is too long")
+        if len(username) < 5:
+            raise ValidationError("Username is too short")
         validator = UnicodeUsernameValidator()
         try:
-            validator(self.cleaned_data['username'])
+            validator(username)
         except ValidationError:
-            raise ValidationError("Invalid username")
-        return self.cleaned_data['username']
+            raise ValidationError("Username has invalid characters in it")
+        return username
 
     def clean_firstName(self):
         if len(self.cleaned_data['firstName']) > 150:
@@ -249,6 +252,10 @@ class ChangeProfile(forms.Form):
         userModel.prefered_language = self.cleaned_data['language']
         if not default_storage.exists(str(userModel.avatar_image)):
             userModel.avatar_image = None
+        if userModel.username != old_username:
+            new = Database.objects.filter(username=userModel.username)
+            if new.count():
+                return False, {"username": "Username already exist"}
         try:
             userModel.full_clean()
             userModel.save()
