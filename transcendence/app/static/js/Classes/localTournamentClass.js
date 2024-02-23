@@ -7,7 +7,7 @@ class LocalTournament {
         this.players = [];
         this.errorElement = "";
         this.playersDisplay = ""
-        document.getElementById("tournamentTitle").innerHTML = name;
+        document.getElementById("tournamentTitle").innerText = name;
         this.currentPlayersText = document.getElementById("currentNumberPlayers");
         this.startButton = document.getElementById("startTournamentBtn");
         this.startButton.style.display = "none";
@@ -18,7 +18,7 @@ class LocalTournament {
         this.state = state;
     }
     #updateCurrentPlayersText() {
-        this.currentPlayersText.innerHTML = `${this.players.length} / ${this.totalPlayers}`;
+        this.currentPlayersText.innerText = `${this.players.length} / ${this.totalPlayers}`;
     }
     addPlayer(player) {
         if (this.players.length >= this.totalPlayers)
@@ -26,7 +26,7 @@ class LocalTournament {
         if (this.isRepeatedPlayer())
             return;
         this.players.push(player);
-        this.errorElement.innerHTML = "";
+        this.errorElement.innerText = "";
 		this.inputField.value = "";
         this.#updateCurrentPlayersText();
         this.#updateDisplay();
@@ -65,8 +65,8 @@ class LocalTournament {
             while (tempDiv.firstChild)
                 fragment.appendChild(tempDiv.firstChild);
             fragment.getElementById("playerItem").setAttribute("data-id", this.players[i].id);
-            fragment.getElementById("index").innerHTML = i + 1;
-            fragment.getElementById("playerName").innerHTML = this.players[i].name;
+            fragment.getElementById("index").innerText = i + 1;
+            fragment.getElementById("playerName").innerText = this.players[i].name;
 			const deleteIcon = fragment.querySelector('.unregisterUserButton[alt="Remove user button"]');
 			if (i != 0) {
 				if (deleteIcon)
@@ -111,7 +111,7 @@ class LocalTournament {
         return false;
     }
     setErrorMessage(message) {
-        this.errorElement.innerHTML = message;
+        this.errorElement.innerText = message;
     }
     getName() { return this.name; }
     setSchedule(schedule) {
