@@ -17,7 +17,7 @@ const submitLogin = async event => {
 	const result = await postRequest(url, data)
 	const success = result.success === "true";
 	if (success === false) {
-		errorMessageParagraph.innerHTML = result.message;
+		errorMessageParagraph.innerText = result.message;
 		errorMessageParagraph.style.display = "block";
 	} else {
 		navigateTo("/");
@@ -29,7 +29,7 @@ const submitLogin = async event => {
 
 const handleError = (element, error) => {
 	if (error) {
-		element.innerHTML = error;
+		element.innerText = error;
 		element.style.display = "block";
 	} else {
 		element.value = "";
