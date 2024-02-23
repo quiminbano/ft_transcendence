@@ -3,7 +3,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.datastructures import MultiValueDict
-from app.utils import setOffline, getTextsForLanguage
+from app.utils import setOffline, getTextsForLanguage, swapErrors
+from .translations.forms.formTranslation import formPages
 from .models import Database, Users42
 from app.forms import password42
 from app.forms import ProfilePicture
@@ -101,6 +102,7 @@ def postGetRestInfo(request, data):
     form = password42(passwordData)
     if not form.is_valid():
         errors = {field: form.errors[field][0] for field in form.errors}
+        errors = swapErrors(errors=errors, dictionary=formPages["password42"], language=request.session.get("lang"))
         return JsonResponse({"success": "false", "message": "the form is invalid", "errors":errors}, status=400)
     token = data['access_token']
     refresh_token = data['refresh_token']
