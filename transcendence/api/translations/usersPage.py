@@ -1,8 +1,8 @@
 dictionary = {
 	"online": {
-		"eng": "offline",
+		"eng": "online",
 		"fin": "online",
-		"swe": "offline"
+		"swe": "online"
 	},
 	"offline": {
 		"eng": "offline",
