@@ -48,7 +48,7 @@ const createTournament = async (event) => {
 		}
 		
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 		const errorDiv = document.getElementById("createTournamentError");
 		if (error) {
             errorDiv.textContent = error.error;

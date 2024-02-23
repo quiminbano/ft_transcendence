@@ -11,7 +11,8 @@ class ContentDisplayManager {
             element: element
         }
         this.contentList.push(content);
-        element.style.display = "none";
+        if (element)
+            element.style.display = "none";
     }
     setActive(name) {
         for (let i = 0; i < this.contentList.length; i++) {
