@@ -110,15 +110,6 @@ class SignupForm(CustomUserCreationForm):
             raise ValidationError("Username already exist")
         return username
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        validator = UnicodeUsernameValidator()
-        try:
-            validator(email)
-        except ValidationError:
-            raise ValidationError("Email has invalid characters in it")
-        return email
-
     def clean_password2(self):
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
@@ -128,11 +119,6 @@ class SignupForm(CustomUserCreationForm):
             raise ValidationError("Password is too long")
         if len(password2) < 8:
             raise ValidationError("Password is too short")
-        validator = UnicodeUsernameValidator()
-        try:
-            validator(password2)
-        except ValidationError:
-            raise ValidationError("Password has invalid characters in it")
         return password2
 
     def clean_coallition(self):
@@ -302,15 +288,11 @@ class password42(forms.Form):
     password1 = forms.CharField(
         label="New password",
         widget=forms.PasswordInput(
-        attrs={'class': 'form-control', "autocomplete": "on"}),
-        min_length=8,
-        max_length=128
+        attrs={'class': 'form-control', "autocomplete": "on"})
     )
     password2 = forms.CharField(
         label="Confirm new password",
-        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"}),
-        min_length=8,
-        max_length=128
+        widget=forms.PasswordInput(attrs={'class': 'form-control', "autocomplete": "on"})
     )
 
     def clean_password2(self):
@@ -322,6 +304,9 @@ class password42(forms.Form):
 
         if len(password2) > 128:
             raise ValidationError("Password is too long")
+        
+        if len(password2) < 8:
+            raise ValidationError("Password is too short")
 
         return password2
 

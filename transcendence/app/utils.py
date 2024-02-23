@@ -34,6 +34,8 @@ def getTextsForLanguage(dictionary, request):
     return texts_for_language
 
 def swapErrors(errors, dictionary, language):
+    if (language is None) or (language != "eng" and language != "fin" and language != "swe"):
+        language = "eng"
     newErrors = {}
     for key, value in errors.items():
         try:

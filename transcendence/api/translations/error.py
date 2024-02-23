@@ -83,41 +83,5 @@ dictionary = { #UserController
 		"eng": "something went wrong",
 		"fin": "jotain meni pieleen",
 		"swe": "något gick fel"
-	}, # forms.py
-		"Username is too long": {
-        "eng": "Username is too long",
-        "fin": "",
-        "swe": ""
-    },
-		"": {
-        "eng": "",
-        "fin": "",
-        "swe": ""
-    },
-		"": {
-        "eng": "",
-        "fin": "",
-        "swe": ""
-    },
-		"": {
-        "eng": "",
-        "fin": "",
-        "swe": ""
-    },
-		"": {
-        "eng": "",
-        "fin": "",
-        "swe": ""
-    },
-		"": {
-        "eng": "",
-        "fin": "",
-        "swe": ""
-    },
-		"": {
-        "eng": "",
-        "fin": "",
-        "swe": ""
-    },
-	
+	}	
 }
